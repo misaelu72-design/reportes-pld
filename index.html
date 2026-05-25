@@ -7,259 +7,74 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --azul:    #1F3864;
-    --azul2:   #2E75B6;
-    --verde:   #375623;
-    --naranja: #E26B0A;
-    --bg:      #F4F6FA;
-    --card:    #FFFFFF;
-    --texto:   #1a1a2e;
-    --muted:   #6b7280;
-    --border:  #e5e7eb;
-    --pos:     #16a34a;
-    --neg:     #dc2626;
-    --pos-bg:  #dcfce7;
-    --neg-bg:  #fee2e2;
+    --azul:#1F3864; --azul2:#2E75B6; --verde:#375623; --naranja:#E26B0A;
+    --bg:#F4F6FA; --card:#FFFFFF; --texto:#1a1a2e; --muted:#6b7280; --border:#e5e7eb;
+    --pos:#16a34a; --neg:#dc2626; --pos-bg:#dcfce7; --neg-bg:#fee2e2;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--texto);
-    min-height: 100vh;
-  }
-
-  /* Header */
-  header {
-    background: var(--azul);
-    color: white;
-    padding: 0 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(31,56,100,.4);
-  }
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: var(--naranja);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 600;
-  }
-  .logo-text { font-size: 16px; font-weight: 600; letter-spacing: -.3px; }
-  .logo-sub { font-size: 11px; opacity: .65; font-weight: 300; }
-  .corte-badge {
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 12px;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: .5px;
-  }
-
-  /* Layout */
-  main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-
-  /* Section titles */
-  .section-title {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1rem;
-    margin-top: 2.5rem;
-  }
-
-  /* KPI cards */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 14px;
-    margin-bottom: .5rem;
-  }
-  .kpi {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform .15s, box-shadow .15s;
-  }
-  .kpi:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-  .kpi-accent {
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-  .kpi-label { font-size: 12px; color: var(--muted); font-weight: 400; margin-bottom: 6px; }
-  .kpi-value { font-size: 28px; font-weight: 600; letter-spacing: -1px; line-height: 1; }
-  .kpi-delta {
-    display: inline-flex; align-items: center; gap: 3px;
-    font-size: 12px; font-weight: 500; font-family: 'DM Mono', monospace;
-    margin-top: 8px; padding: 2px 8px; border-radius: 20px;
-  }
-  .delta-pos { background: var(--pos-bg); color: var(--pos); }
-  .delta-neg { background: var(--neg-bg); color: var(--neg); }
-  .delta-neu { background: #f3f4f6; color: var(--muted); }
-
-  /* Tabla sucursales */
-  .table-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .table-header {
-    padding: 1rem 1.25rem;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-  .table-header h3 { font-size: 14px; font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  thead th {
-    background: #f9fafb;
-    padding: 10px 16px;
-    text-align: left;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .8px;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-  }
-  thead th:not(:first-child) { text-align: right; }
-  tbody tr { border-bottom: 1px solid #f3f4f6; transition: background .1s; }
-  tbody tr:hover { background: #f9fafb; }
-  tbody tr:last-child { border-bottom: none; }
-  td { padding: 12px 16px; }
-  td:not(:first-child) { text-align: right; font-family: 'DM Mono', monospace; }
-  .suc-name { font-weight: 500; display: flex; align-items: center; gap: 8px; }
-  .suc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .num-total { font-weight: 600; }
-  .var-pos { color: var(--pos); font-weight: 500; }
-  .var-neg { color: var(--neg); font-weight: 500; }
-  .var-neu { color: var(--muted); }
-  .pill {
-    display: inline-block; padding: 2px 8px;
-    border-radius: 20px; font-size: 11px; font-weight: 500;
-    font-family: 'DM Mono', monospace;
-  }
-  .pill-pos { background: var(--pos-bg); color: var(--pos); }
-  .pill-neg { background: var(--neg-bg); color: var(--neg); }
-  .pill-neu { background: #f3f4f6; color: var(--muted); }
-
-  /* Barras de progreso */
-  .bar-wrap { width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; margin-top: 4px; }
-  .bar-fill  { height: 4px; border-radius: 2px; }
-
-  /* Cards de status */
-  .status-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-  }
-  .status-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .status-card-title {
-    font-size: 12px; font-weight: 600; color: var(--muted);
-    text-transform: uppercase; letter-spacing: .8px; margin-bottom: 12px;
-  }
-  .status-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px;
-  }
-  .status-item:last-child { border-bottom: none; }
-  .status-label { color: var(--texto); }
-  .status-val { font-family: 'DM Mono', monospace; font-weight: 500; }
-
-  /* Descargas */
-  .downloads-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
-  }
-  .dl-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-    color: var(--texto);
-    transition: transform .15s, box-shadow .15s, border-color .15s;
-  }
-  .dl-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.08);
-    border-color: var(--azul2);
-  }
-  .dl-icon {
-    width: 42px; height: 42px; border-radius: 10px;
-    background: #e8f0fe; display: flex; align-items: center;
-    justify-content: center; flex-shrink: 0; font-size: 20px;
-  }
-  .dl-info { flex: 1; }
-  .dl-name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
-  .dl-meta { font-size: 11px; color: var(--muted); }
-  .dl-arrow { color: var(--muted); font-size: 18px; }
-
-  /* Documentación stats */
-  .doc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-  }
-  .doc-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .doc-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-  .doc-pct { font-size: 26px; font-weight: 600; margin-bottom: 2px; }
-  .doc-count { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
-  .progress {
-    width: 100%; height: 6px; background: #e5e7eb;
-    border-radius: 3px; margin-top: 10px; overflow: hidden;
-  }
-  .progress-bar { height: 100%; border-radius: 3px; }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--muted);
-    font-size: 12px;
-    border-top: 1px solid var(--border);
-    margin-top: 3rem;
-  }
-
-  /* Colores sucursales */
-  .c1{background:#1F3864} .c2{background:#2E75B6} .c3{background:#375623}
-  .c4{background:#E26B0A} .c5{background:#7B3F00} .c6{background:#5B2D8E}
-  .c7{background:#B5451B} .c8{background:#0D6E8C} .c9{background:#2D6A4F}
-
-  @media(max-width:640px) {
-    main { padding: 1rem; }
-    .kpi-value { font-size: 22px; }
-  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
+  header{background:var(--azul);color:white;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+  .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-icon{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600}
+  .logo-text{font-size:16px;font-weight:600;letter-spacing:-.3px}
+  .logo-sub{font-size:11px;opacity:.65;font-weight:300}
+  .corte-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace;letter-spacing:.5px}
+  main{max-width:1200px;margin:0 auto;padding:2rem}
+  .section-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;margin-top:2.5rem}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:.5rem}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+  .kpi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
+  .kpi-label{font-size:12px;color:var(--muted);font-weight:400;margin-bottom:6px}
+  .kpi-value{font-size:28px;font-weight:600;letter-spacing:-1px;line-height:1}
+  .kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
+  .delta-pos{background:var(--pos-bg);color:var(--pos)}
+  .delta-neg{background:var(--neg-bg);color:var(--neg)}
+  .delta-neu{background:#f3f4f6;color:var(--muted)}
+  .table-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .table-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+  .table-header h3{font-size:14px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead th{background:#f9fafb;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+  thead th:not(:first-child){text-align:right}
+  tbody tr{border-bottom:1px solid #f3f4f6;transition:background .1s}
+  tbody tr:hover{background:#f9fafb}
+  tbody tr:last-child{border-bottom:none}
+  td{padding:12px 16px}
+  td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+  .suc-name{font-weight:500;display:flex;align-items:center;gap:8px}
+  .suc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .num-total{font-weight:600}
+  .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+  .pill-pos{background:var(--pos-bg);color:var(--pos)}
+  .pill-neg{background:var(--neg-bg);color:var(--neg)}
+  .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .status-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+  .status-card-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+  .status-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
+  .status-item:last-child{border-bottom:none}
+  .status-val{font-family:'DM Mono',monospace;font-weight:500}
+  .downloads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .dl-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--texto);transition:transform .15s,box-shadow .15s,border-color .15s}
+  .dl-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-color:var(--azul2)}
+  .dl-icon{width:42px;height:42px;border-radius:10px;background:#e8f0fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+  .dl-info{flex:1}
+  .dl-name{font-weight:600;font-size:13px;margin-bottom:2px}
+  .dl-meta{font-size:11px;color:var(--muted)}
+  .dl-arrow{color:var(--muted);font-size:18px}
+  .doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .doc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+  .doc-label{font-size:12px;color:var(--muted);margin-bottom:4px}
+  .doc-pct{font-size:26px;font-weight:600;margin-bottom:2px}
+  .doc-count{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+  .progress{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
+  .progress-bar{height:100%;border-radius:3px}
+  footer{text-align:center;padding:2rem;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:3rem}
+  .c1{background:#1F3864}.c2{background:#2E75B6}.c3{background:#375623}
+  .c4{background:#E26B0A}.c5{background:#7B3F00}.c6{background:#5B2D8E}
+  .c7{background:#B5451B}.c8{background:#0D6E8C}.c9{background:#2D6A4F}
+  @media(max-width:640px){main{padding:1rem}.kpi-value{font-size:22px}}
 </style>
 </head>
 <body>
@@ -273,58 +88,56 @@
         <div class="logo-sub">Prevención de Lavado de Dinero</div>
       </div>
     </div>
-    <div class="corte-badge">Corte: 26-Abr vs 17-May 2026</div>
+    <div class="corte-badge">Corte: 26-Abr vs 24-May 2026</div>
   </div>
 </header>
 
 <main>
 
-  <!-- KPIs globales -->
   <div class="section-title">Resumen global · 9 sucursales</div>
   <div class="kpi-grid">
     <div class="kpi">
       <div class="kpi-accent" style="background:var(--azul)"></div>
       <div class="kpi-label">Total clientes en base</div>
-      <div class="kpi-value">501,629</div>
-      <div class="kpi-delta delta-pos">▲ +2,440 vs corte anterior</div>
+      <div class="kpi-value">502,395</div>
+      <div class="kpi-delta delta-pos">▲ +3,202 vs corte anterior</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:var(--naranja)"></div>
       <div class="kpi-label">Clientes nuevos</div>
-      <div class="kpi-value">2,440</div>
-      <div class="kpi-delta delta-pos">▲ +0.5% de la base</div>
+      <div class="kpi-value">3,204</div>
+      <div class="kpi-delta delta-pos">▲ +0.6% de la base</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:#7c3aed"></div>
       <div class="kpi-label">Cambios de estatus</div>
-      <div class="kpi-value">5,208</div>
-      <div class="kpi-delta delta-neu">1.0% de la base</div>
+      <div class="kpi-value">7,304</div>
+      <div class="kpi-delta delta-neu">1.5% de la base</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:var(--verde)"></div>
       <div class="kpi-label">Verificados KYC</div>
-      <div class="kpi-value">9,373</div>
-      <div class="kpi-delta delta-pos">▲ +2,153 vs anterior</div>
+      <div class="kpi-value">10,306</div>
+      <div class="kpi-delta delta-pos">▲ +3,086 vs anterior</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:var(--neg)"></div>
       <div class="kpi-label">Bloqueados por KYC</div>
-      <div class="kpi-value">4,561</div>
-      <div class="kpi-delta delta-neg">▼ -32 vs anterior</div>
+      <div class="kpi-value">4,740</div>
+      <div class="kpi-delta delta-neg">▲ +147 vs anterior</div>
     </div>
     <div class="kpi">
       <div class="kpi-accent" style="background:#0891b2"></div>
       <div class="kpi-label">Pend. Validación KYC</div>
-      <div class="kpi-value">6,939</div>
-      <div class="kpi-delta delta-neg">▼ -1,668 (mejora)</div>
+      <div class="kpi-value">5,803</div>
+      <div class="kpi-delta delta-neg">▼ -2,804 (mejora)</div>
     </div>
   </div>
 
-  <!-- Tabla por sucursal -->
-  <div class="section-title">Desglose por sucursal</div>
+  <div class="section-title">Desglose por sucursal · 24 Mayo 2026</div>
   <div class="table-card">
     <div class="table-header">
-      <h3>Totales al 17 de Mayo 2026</h3>
+      <h3>Totales al 24 de Mayo 2026</h3>
       <span style="font-size:12px;color:var(--muted)">vs 26 de Abril 2026</span>
     </div>
     <table>
@@ -342,277 +155,174 @@
       <tbody>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c1"></span>Ajijic</div></td>
-          <td class="num-total">37,827</td>
-          <td>17,833</td>
-          <td>18,888</td>
-          <td>198</td>
-          <td>390</td>
-          <td><span class="pill pill-pos">+116</span></td>
+          <td class="num-total">37,871</td><td>17,839</td><td>18,879</td><td>238</td><td>317</td>
+          <td><span class="pill pill-pos">+158</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c2"></span>Allende</div></td>
-          <td class="num-total">29,129</td>
-          <td>13,318</td>
-          <td>14,486</td>
-          <td>179</td>
-          <td>726</td>
-          <td><span class="pill pill-pos">+72</span></td>
+          <td class="num-total">29,155</td><td>13,329</td><td>14,482</td><td>168</td><td>726</td>
+          <td><span class="pill pill-pos">+98</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c3"></span>Esmeralda</div></td>
-          <td class="num-total">7,160</td>
-          <td>5,808</td>
-          <td>494</td>
-          <td>149</td>
-          <td>320</td>
-          <td><span class="pill pill-pos">+68</span></td>
+          <td class="num-total">7,181</td><td>5,816</td><td>492</td><td>145</td><td>320</td>
+          <td><span class="pill pill-pos">+89</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c4"></span>Guadalupe</div></td>
-          <td class="num-total">219,966</td>
-          <td>124,718</td>
-          <td>85,222</td>
-          <td>1,467</td>
-          <td>1,376</td>
-          <td><span class="pill pill-pos">+518</span></td>
+          <td class="num-total">220,136</td><td>124,758</td><td>85,184</td><td>1,498</td><td>1,633</td>
+          <td><span class="pill pill-pos">+688</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c5"></span>Irapuato</div></td>
-          <td class="num-total">3,627</td>
-          <td>2,761</td>
-          <td>155</td>
-          <td>82</td>
-          <td>288</td>
-          <td><span class="pill pill-pos">+70</span></td>
+          <td class="num-total">3,660</td><td>2,756</td><td>153</td><td>76</td><td>288</td>
+          <td><span class="pill pill-pos">+103</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c6"></span>Mitras</div></td>
-          <td class="num-total">136,336</td>
-          <td>111,516</td>
-          <td>15,872</td>
-          <td>1,375</td>
-          <td>2,852</td>
-          <td><span class="pill pill-pos">+667</span></td>
+          <td class="num-total">136,551</td><td>111,583</td><td>15,849</td><td>1,416</td><td>3,106</td>
+          <td><span class="pill pill-pos">+882</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c7"></span>Neza</div></td>
-          <td class="num-total">13,894</td>
-          <td>10,188</td>
-          <td>2,386</td>
-          <td>173</td>
-          <td>186</td>
-          <td><span class="pill pill-pos">+90</span></td>
+          <td class="num-total">13,926</td><td>10,202</td><td>2,385</td><td>232</td><td>475</td>
+          <td><span class="pill pill-pos">+122</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c8"></span>Satélite</div></td>
-          <td class="num-total">18,031</td>
-          <td>15,699</td>
-          <td>751</td>
-          <td>706</td>
-          <td>747</td>
+          <td class="num-total">18,033</td><td>15,699</td><td>751</td><td>706</td><td>747</td>
           <td><span class="pill pill-pos">+16</span></td>
         </tr>
         <tr>
           <td><div class="suc-name"><span class="suc-dot c9"></span>Sendero</div></td>
-          <td class="num-total">35,659</td>
-          <td>27,548</td>
-          <td>1,258</td>
-          <td>232</td>
-          <td>2,488</td>
-          <td><span class="pill pill-pos">+823</span></td>
+          <td class="num-total">35,882</td><td>27,704</td><td>1,222</td><td>261</td><td>2,694</td>
+          <td><span class="pill pill-pos">+1,046</span></td>
         </tr>
         <tr style="background:#f9fafb;font-weight:600;">
           <td>Total</td>
-          <td class="num-total">501,629</td>
-          <td>329,389</td>
-          <td>139,512</td>
-          <td>4,561</td>
-          <td>9,373</td>
-          <td><span class="pill pill-pos">+2,440</span></td>
+          <td class="num-total">502,395</td><td>329,686</td><td>139,397</td><td>4,740</td><td>10,306</td>
+          <td><span class="pill pill-pos">+3,202</span></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Status global -->
-  <div class="section-title">Estatus global · 17 Mayo 2026</div>
+  <div class="section-title">Estatus global · 24 Mayo 2026</div>
   <div class="status-grid">
     <div class="status-card">
-      <div class="status-card-title" style="color:#1F3864">Operaciones</div>
-      <div class="status-item">
-        <span class="status-label">Bloqueado</span>
-        <span class="status-val">139,512</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Info Actualizada</span>
-        <span class="status-val">1,441</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Registro Completo</span>
-        <span class="status-val">1,113</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Verificado</span>
-        <span class="status-val">6,407</span>
-      </div>
+      <div class="status-card-title" style="color:var(--azul)">Operaciones</div>
+      <div class="status-item"><span>Bloqueado</span><span class="status-val">139,397</span></div>
+      <div class="status-item"><span>Info Actualizada</span><span class="status-val">—</span></div>
+      <div class="status-item"><span>Registro Completo</span><span class="status-val">—</span></div>
+      <div class="status-item"><span>Verificado</span><span class="status-val">—</span></div>
       <div class="status-item" style="border-top:1px solid #e5e7eb;margin-top:4px;padding-top:10px">
         <span style="font-weight:600">Subtotal</span>
-        <span class="status-val" style="font-weight:600">148,473</span>
+        <span class="status-val" style="font-weight:600">148,782</span>
       </div>
     </div>
     <div class="status-card">
-      <div class="status-card-title" style="color:#375623">KYC-PLD</div>
-      <div class="status-item">
-        <span class="status-label">Bloqueado KYC</span>
-        <span class="status-val">4,561</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Info Actualizada KYC</span>
-        <span class="status-val">2,894</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Pend. Validación KYC</span>
-        <span class="status-val">6,939</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Verificado KYC</span>
-        <span class="status-val" style="color:var(--pos);font-weight:600">9,373</span>
-      </div>
+      <div class="status-card-title" style="color:var(--verde)">KYC-PLD</div>
+      <div class="status-item"><span>Bloqueado KYC</span><span class="status-val" style="color:var(--neg)">4,740</span></div>
+      <div class="status-item"><span>Info Actualizada KYC</span><span class="status-val">—</span></div>
+      <div class="status-item"><span>Pend. Validación KYC</span><span class="status-val">5,803</span></div>
+      <div class="status-item"><span>Verificado KYC</span><span class="status-val" style="color:var(--pos);font-weight:600">10,306</span></div>
       <div class="status-item" style="border-top:1px solid #e5e7eb;margin-top:4px;padding-top:10px">
         <span style="font-weight:600">Subtotal</span>
-        <span class="status-val" style="font-weight:600">23,767</span>
+        <span class="status-val" style="font-weight:600">23,924</span>
       </div>
     </div>
     <div class="status-card">
-      <div class="status-card-title" style="color:#E26B0A">Registro Express</div>
-      <div class="status-item">
-        <span class="status-label">Total</span>
-        <span class="status-val" style="font-size:20px;font-weight:600">329,389</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">% de la base</span>
-        <span class="status-val">65.7%</span>
-      </div>
-      <div class="status-item">
-        <span class="status-label">Variación</span>
-        <span class="status-val var-pos">+945</span>
-      </div>
-      <div class="bar-wrap" style="margin-top:16px">
-        <div class="bar-fill" style="width:65.7%;background:var(--naranja)"></div>
+      <div class="status-card-title" style="color:var(--naranja)">Registro Express</div>
+      <div class="status-item"><span>Total</span><span class="status-val" style="font-size:20px;font-weight:600">329,686</span></div>
+      <div class="status-item"><span>% de la base</span><span class="status-val">65.6%</span></div>
+      <div class="status-item"><span>Variación</span><span class="status-val" style="color:var(--pos)">+1,242</span></div>
+      <div style="width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:16px;overflow:hidden">
+        <div style="width:65.6%;height:100%;background:var(--naranja);border-radius:3px"></div>
       </div>
     </div>
   </div>
 
-  <!-- Documentación -->
-  <div class="section-title">Indicadores de documentación · 17 Mayo 2026</div>
+  <div class="section-title">Indicadores de documentación · 24 Mayo 2026</div>
   <div class="doc-grid">
     <div class="doc-card">
       <div class="doc-label">Con Aviso de Privacidad</div>
-      <div class="doc-pct">56.4%</div>
-      <div class="doc-count">282,988 de 501,629</div>
-      <div class="progress"><div class="progress-bar" style="width:56.4%;background:var(--azul2)"></div></div>
+      <div class="doc-pct">56.5%</div>
+      <div class="doc-count">283,867 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:56.5%;background:var(--azul2)"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">Con Huella Digital</div>
-      <div class="doc-pct">41.6%</div>
-      <div class="doc-count">208,630 de 501,629</div>
-      <div class="progress"><div class="progress-bar" style="width:41.6%;background:var(--verde)"></div></div>
+      <div class="doc-pct">41.7%</div>
+      <div class="doc-count">209,563 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:41.7%;background:var(--verde)"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">ID Vencida (≤ 31/12/2025)</div>
-      <div class="doc-pct" style="color:var(--neg)">54.1%</div>
-      <div class="doc-count">271,148 de 501,629</div>
-      <div class="progress"><div class="progress-bar" style="width:54.1%;background:var(--neg)"></div></div>
+      <div class="doc-pct" style="color:var(--neg)">53.9%</div>
+      <div class="doc-count">270,837 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:53.9%;background:var(--neg)"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">Sin Aviso de Privacidad</div>
-      <div class="doc-pct" style="color:var(--neg)">43.6%</div>
-      <div class="doc-count">218,641 de 501,629</div>
-      <div class="progress"><div class="progress-bar" style="width:43.6%;background:#f97316"></div></div>
+      <div class="doc-pct" style="color:var(--neg)">43.5%</div>
+      <div class="doc-count">218,528 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:43.5%;background:#f97316"></div></div>
     </div>
   </div>
 
-  <!-- Descargas -->
   <div class="section-title">Descargar reportes</div>
   <div class="downloads-grid">
-    <a class="dl-card" href="Reporte_PLD_TODAS_SUCURSALES_2026-MAYO-24.xlsx" download>
+    <a class="dl-card" href="Reporte_PLD_TODAS_SUCURSALES_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon">📊</div>
       <div class="dl-info">
         <div class="dl-name">Reporte Consolidado · Todas las Sucursales</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026 · 11 hojas</div>
+        <div class="dl-meta">26 Abril vs 24 Mayo 2026 · 11 hojas</div>
       </div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Ajijic_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Ajijic_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Ajijic — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Ajijic — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Allende_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Allende_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Allende — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Allende — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Esmeralda_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Esmeralda_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Esmeralda — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Esmeralda — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Guadalupe_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Guadalupe_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Guadalupe — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Guadalupe — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Irapuato_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Irapuato_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Irapuato — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Irapuato — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Mitras_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Mitras_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Mitras — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Mitras — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Neza_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Neza_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Neza — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Neza — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Satelite_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Satelite_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Satélite — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Satélite — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
-    <a class="dl-card" href="Sendero_Comparativa_PLD_26Abr_vs_17May.xlsx" download>
+    <a class="dl-card" href="Sendero_Comparativa_PLD_26Abr_vs_24May.xlsx" download>
       <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">Sendero — Comparativa</div>
-        <div class="dl-meta">26 Abril vs 17 Mayo 2026</div>
-      </div>
+      <div class="dl-info"><div class="dl-name">Sendero — Comparativa</div><div class="dl-meta">26 Abril vs 24 Mayo 2026</div></div>
       <span class="dl-arrow">↓</span>
     </a>
   </div>
@@ -620,7 +330,7 @@
 </main>
 
 <footer>
-  CECOM · Reportes PLD · Corte 26 de Abril vs 17 de Mayo 2026 · Actualizado automáticamente
+  CECOM · Reportes PLD · Corte 26 de Abril vs 24 de Mayo 2026 · Actualizado automáticamente
 </footer>
 
 </body>
