@@ -288,7 +288,7 @@ function buildOpsChart(ops){
 }
 
 
-function buildTransicionesTable(trans, totalCambios){
+function buildTransicionesTable(trans, totalCambios, fechaAnt, fechaAct){
   if(!trans || !trans.length) return "";
   // Ordenar por cantidad descendente
   const sorted = [...trans].sort((a,b) => b.N - a.N);
@@ -330,8 +330,8 @@ function buildTransicionesTable(trans, totalCambios){
       <table>
         <thead><tr>
           <th style="width:40px">#</th>
-          <th>Status Anterior (${m?.fecha_anterior_corta ?? ""})</th>
-          <th>Status Nuevo (${m?.fecha_actual_corta ?? ""})</th>
+          <th>Status Anterior (${fechaAnt})</th>
+          <th>Status Nuevo (${fechaAct})</th>
           <th style="text-align:right">Cantidad</th>
           <th style="text-align:right">% del Total</th>
         </tr></thead>
@@ -581,7 +581,7 @@ function render(d){
 
   const transHtml = (d.top_transiciones && d.top_transiciones.length) ? `
   <div class="section-title">Cambio de estatus · ${m.fecha_anterior_corta} vs ${m.fecha_actual_corta}</div>
-  ${buildTransicionesTable(d.top_transiciones, k.cambios_status)}` : "";
+  ${buildTransicionesTable(d.top_transiciones, k.cambios_status, m.fecha_anterior_corta, m.fecha_actual_corta)}` : "";
 
   const opsHtml = d.reporte_operaciones ? `
   <div class="section-title">Reporte de operaciones · ${d.meta.fecha_anterior_corta} al ${d.meta.fecha_actual_corta}</div>
