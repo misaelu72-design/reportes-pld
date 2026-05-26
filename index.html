@@ -341,6 +341,51 @@ function buildTransicionesTable(trans, totalCambios, fechaAnt, fechaAct){
   </div>`;
 }
 
+
+function buildKycTable(ops){
+  if(!ops || !ops.sucursales) return "";
+  const ORDEN = ["Allende","Ajijic","Satelite","Neza","Esmeralda","Sendero","Irapuato","Mitras","Guadalupe"];
+  const sorted = [...ops.sucursales]
+    .filter(s => s.kyc_total > 0)
+    .sort((a,b)=>{
+      const ia=ORDEN.indexOf(a.nombre); const ib=ORDEN.indexOf(b.nombre);
+      return (ia===-1?999:ia)-(ib===-1?999:ib);
+    });
+  const cols = [
+    {key:"kyc_bloq",    lbl:"Bloqueado KYC",         bg:"#fff0f0"},
+    {key:"kyc_info_act",lbl:"Info Actualizada KYC",   bg:"#f0f9f0"},
+    {key:"kyc_pend",    lbl:"Pend. Validación KYC",   bg:"#f0f5ff"},
+    {key:"kyc_verif",   lbl:"Verificado KYC",         bg:"#f0fff4"},
+  ];
+  const thead = `<tr>
+    <th>Sucursal</th><th>Total</th>
+    ${cols.map(c=>`<th>${c.lbl}</th>`).join("")}
+  </tr>`;
+  const tbody = sorted.map(s=>`
+    <tr>
+      <td style="font-weight:500">${s.nombre}</td>
+      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(s.kyc_total)}</td>
+      ${cols.map(c=>`<td style="background:${c.bg};text-align:right;font-family:'DM Mono',monospace">${fmt(s[c.key]??0)}</td>`).join("")}
+    </tr>`).join("");
+  const totales = cols.map(c=>sorted.reduce((a,s)=>a+(s[c.key]??0),0));
+  const totalGeneral = sorted.reduce((a,s)=>a+(s.kyc_total??0),0);
+  const tfooter = `<tr style="background:#f9fafb;font-weight:600">
+    <td>Total</td>
+    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalGeneral)}</td>
+    ${totales.map((t,i)=>`<td style="background:${cols[i].bg};text-align:right;font-family:'DM Mono',monospace">${fmt(t)}</td>`).join("")}
+  </tr>`;
+  return `
+  <div class="table-card" style="margin-top:14px">
+    <div class="table-header">
+      <h3>Clientes nuevos KYC-PLD en el período</h3>
+      <span class="ops-periodo">${ops.fecha_inicio} – ${ops.fecha_fin}</span>
+    </div>
+    <div class="ops-table-wrap">
+      <table><thead>${thead}</thead><tbody>${tbody}${tfooter}</tbody></table>
+    </div>
+  </div>`;
+}
+
 function buildOpsTable(ops){
   if(!ops || !ops.sucursales) return "";
   const cols = [
@@ -588,7 +633,8 @@ function render(d){
   <div class="table-card" style="padding:1.5rem;margin-bottom:14px">
     ${buildOpsChart(d.reporte_operaciones)}
   </div>
-  ${buildOpsTable(d.reporte_operaciones)}` : "";
+  ${buildOpsTable(d.reporte_operaciones)}
+  ${buildKycTable(d.reporte_operaciones)}` : "";
 
   document.getElementById("contenido").innerHTML =
     kpiHtml + donutHtml + tablaHtml + docHtml + transHtml + opsHtml + dlHtml;
