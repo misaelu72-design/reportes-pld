@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generado": "26/05/2026 12:32",
+    "generado": "26/05/2026 15:14",
     "fecha_anterior_corta": "17-May",
     "fecha_actual_corta": "24-May",
     "fecha_anterior_larga": "17 de Mayo 2026",
@@ -355,6 +355,56 @@
       "_STATUS_ANT": "Verificado por Kyc",
       "_STATUS_ACT": "Bloqueado por KYC",
       "N": 46
+    },
+    {
+      "_STATUS_ANT": "Verificado por Kyc",
+      "_STATUS_ACT": "Información actualizada Kyc",
+      "N": 44
+    },
+    {
+      "_STATUS_ANT": "Registro express",
+      "_STATUS_ACT": "Pendente Validacion Kyc",
+      "N": 37
+    },
+    {
+      "_STATUS_ANT": "Información actualizada Kyc",
+      "_STATUS_ACT": "Bloqueado por KYC",
+      "N": 25
+    },
+    {
+      "_STATUS_ANT": "Verificado por operaciones",
+      "_STATUS_ACT": "Pendente Validacion Kyc",
+      "N": 13
+    },
+    {
+      "_STATUS_ANT": "Bloqueado por KYC",
+      "_STATUS_ACT": "Verificado por Kyc",
+      "N": 8
+    },
+    {
+      "_STATUS_ANT": "Registro express",
+      "_STATUS_ACT": "Bloqueado por operaciones",
+      "N": 7
+    },
+    {
+      "_STATUS_ANT": "Bloqueado por operaciones",
+      "_STATUS_ACT": "Pendente Validacion Kyc",
+      "N": 4
+    },
+    {
+      "_STATUS_ANT": "Registro completo",
+      "_STATUS_ACT": "Pendente Validacion Kyc",
+      "N": 3
+    },
+    {
+      "_STATUS_ANT": "Bloqueado por KYC",
+      "_STATUS_ACT": "Pendente Validacion Kyc",
+      "N": 1
+    },
+    {
+      "_STATUS_ANT": "Información actualizada operaciones",
+      "_STATUS_ACT": "Verificado por Kyc",
+      "N": 1
     }
   ],
   "reporte_operaciones": {

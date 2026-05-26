@@ -113,7 +113,6 @@
   .ops-table-wrap{overflow-x:auto}
   .ops-periodo{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 <body class="suc-colors">
 
@@ -220,72 +219,6 @@ function buildDonut(kpis, total){
   </div>`;
 }
 
-
-
-function buildOpsChart(ops){
-  if(!ops || !ops.sucursales) return "";
-  const sorted = [...ops.sucursales]
-    .filter(s => s.total > 0)
-    .sort((a,b) => b.total - a.total);
-  const labels  = sorted.map(s => s.nombre);
-  const totales = sorted.map(s => s.total);
-  const uid = "opsChart_" + Date.now();
-  setTimeout(() => {
-    const ctx = document.getElementById(uid);
-    if(!ctx) return;
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels,
-        datasets: [
-          {label:"Reg. Completo",  data:sorted.map(s=>s.reg_completo), backgroundColor:"#1F3864"},
-          {label:"Verif. Ops",     data:sorted.map(s=>s.verif_ops),    backgroundColor:"#2E75B6"},
-          {label:"Bloq. Ops",      data:sorted.map(s=>s.bloq_ops),     backgroundColor:"#C00000"},
-          {label:"Info Act. Ops",  data:sorted.map(s=>s.info_act_ops), backgroundColor:"#70AD47"},
-          {label:"Reg. Express",   data:sorted.map(s=>s.re),           backgroundColor:"#FFC000"},
-        ]
-      },
-      options:{
-        indexAxis:"y", responsive:true, maintainAspectRatio:false,
-        plugins:{
-          legend:{display:false},
-          tooltip:{
-            callbacks:{
-              footer:(items)=>`Total: ${totales[items[0].dataIndex].toLocaleString("es-MX")}`,
-              label:(item)=>` ${item.dataset.label}: ${item.raw.toLocaleString("es-MX")}`
-            }
-          }
-        },
-        scales:{
-          x:{stacked:true, grid:{color:"rgba(0,0,0,0.06)"},
-             ticks:{color:"#888780", font:{size:11},
-                    callback:v=>v>=1000?(v/1000).toFixed(1)+"k":v}},
-          y:{stacked:true, grid:{display:false},
-             ticks:{color:"#444441", font:{size:12}}}
-        }
-      }
-    });
-  }, 100);
-  const leyenda = [
-    {color:"#1F3864", lbl:"Reg. Completo"},
-    {color:"#2E75B6", lbl:"Verif. Operaciones"},
-    {color:"#C00000", lbl:"Bloq. Operaciones"},
-    {color:"#70AD47", lbl:"Info Act. Ops"},
-    {color:"#FFC000", lbl:"Reg. Express"},
-  ].map(l=>`<span style="display:flex;align-items:center;gap:5px">
-    <span style="width:10px;height:10px;border-radius:2px;background:${l.color}"></span>
-    <span style="font-size:12px;color:var(--muted)">${l.lbl}</span>
-  </span>`).join("");
-  const h = Math.max(280, sorted.length * 44 + 60);
-  return `
-  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px">${leyenda}</div>
-  <div style="position:relative;width:100%;height:${h}px">
-    <canvas id="${uid}" role="img"
-      aria-label="Gráfica de barras apiladas de operaciones YTD por sucursal">
-      ${sorted.map((s,i)=>`${s.nombre}: ${totales[i].toLocaleString("es-MX")}`).join(" · ")}
-    </canvas>
-  </div>`;
-}
 
 function buildOpsTable(ops){
   if(!ops || !ops.sucursales) return "";
@@ -527,9 +460,6 @@ function render(d){
 
   const opsHtml = d.reporte_operaciones ? `
   <div class="section-title">Reporte de operaciones · ${d.meta.fecha_anterior_corta} al ${d.meta.fecha_actual_corta}</div>
-  <div class="table-card" style="padding:1.5rem;margin-bottom:14px">
-    ${buildOpsChart(d.reporte_operaciones)}
-  </div>
   ${buildOpsTable(d.reporte_operaciones)}` : "";
 
   document.getElementById("contenido").innerHTML =
