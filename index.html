@@ -198,10 +198,15 @@ function render(d){
         ${s.nombre}
       </div></td>
       <td style="font-weight:600">${fmt(s.total_act)}</td>
+      <td style="background:#f0f5fb">${fmt(s.bloq_ops)}</td>
+      <td style="background:#f0f5fb">${fmt(s.info_act_ops ?? 0)}</td>
+      <td style="background:#f0f5fb">${fmt(s.reg_completo ?? 0)}</td>
+      <td style="background:#f0f5fb">${fmt(s.verif_ops ?? 0)}</td>
+      <td style="background:#f0f9f0">${fmt(s.bloq_kyc)}</td>
+      <td style="background:#f0f9f0">${fmt(s.info_act_kyc ?? 0)}</td>
+      <td style="background:#f0f9f0">${fmt(s.pend_kyc)}</td>
+      <td style="background:#f0f9f0">${fmt(s.verif_kyc)}</td>
       <td>${fmt(s.re_act)}</td>
-      <td>${fmt(s.bloq_ops)}</td>
-      <td>${fmt(s.bloq_kyc)}</td>
-      <td>${fmt(s.verif_kyc)}</td>
       <td>${delta(s.delta)}</td>
     </tr>`).join("");
 
@@ -209,10 +214,15 @@ function render(d){
     <tr style="background:#f9fafb;font-weight:600">
       <td>Total</td>
       <td>${fmt(k.total_act)}</td>
+      <td style="background:#e8f0f8">${fmt(k.bloq_ops_act)}</td>
+      <td style="background:#e8f0f8">${fmt(k.info_act_ops_act ?? 0)}</td>
+      <td style="background:#e8f0f8">${fmt(k.reg_completo_act ?? 0)}</td>
+      <td style="background:#e8f0f8">${fmt(k.verif_ops_act ?? 0)}</td>
+      <td style="background:#e4f2e4">${fmt(k.bloq_kyc_act)}</td>
+      <td style="background:#e4f2e4">${fmt(k.info_act_kyc_act ?? 0)}</td>
+      <td style="background:#e4f2e4">${fmt(k.pend_kyc_act)}</td>
+      <td style="background:#e4f2e4">${fmt(k.verif_kyc_act)}</td>
       <td>${fmt(k.re_act)}</td>
-      <td>${fmt(k.bloq_ops_act)}</td>
-      <td>${fmt(k.bloq_kyc_act)}</td>
-      <td>${fmt(k.verif_kyc_act)}</td>
       <td>${delta(k.delta_total)}</td>
     </tr>`;
 
