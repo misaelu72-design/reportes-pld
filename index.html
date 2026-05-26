@@ -369,6 +369,12 @@ function render(d){
       <div class="doc-count">${fmt(tc - k.aviso_act)} de ${fmt(tc)}</div>
       <div class="progress"><div class="progress-bar" style="width:${pSinAv}%;background:#f97316"></div></div>
     </div>
+    <div class="doc-card">
+      <div class="doc-label">Sin Huella Digital</div>
+      <div class="doc-pct" style="color:var(--neg)">${(100-pHuella).toFixed(1)}%</div>
+      <div class="doc-count">${fmt(tc - k.huella_act)} de ${fmt(tc)}</div>
+      <div class="progress"><div class="progress-bar" style="width:${(100-pHuella).toFixed(1)}%;background:#7c3aed"></div></div>
+    </div>
   </div>`;
 
   // Descargas — se generan automáticamente por sucursal
