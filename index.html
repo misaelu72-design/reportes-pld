@@ -221,11 +221,9 @@ function render(d){
   const ss = d.sucursales;
   const tc = k.total_act;
 
-  // Header
-  document.getElementById("badge-corte").textContent =
-    `Corte: ${m.fecha_anterior_corta} vs ${m.fecha_actual_corta}`;
-  document.getElementById("badge-upd").textContent =
-    `Actualizado: ${m.generado}`;
+  // Header — actualizar solo badge-upd (badge-corte fue reemplazado por el selector)
+  const badgeUpd = document.getElementById("badge-upd");
+  if(badgeUpd) badgeUpd.textContent = `Actualizado: ${m.generado}`;
 
   // KPIs
   const kpiHtml = `
