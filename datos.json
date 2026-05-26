@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generado": "26/05/2026 10:12",
+    "generado": "26/05/2026 12:07",
     "fecha_anterior_corta": "17-May",
     "fecha_actual_corta": "24-May",
     "fecha_anterior_larga": "17 de Mayo 2026",
@@ -65,7 +65,12 @@
       "pct_id_venc": 63.5,
       "pct_aviso": 43.5,
       "pct_huella": 32.2,
-      "pct_verif_kyc": 0.8
+      "pct_verif_kyc": 0.8,
+      "ops_reg_completo": 35,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 36
     },
     {
       "nombre": "Allende",
@@ -89,7 +94,12 @@
       "pct_id_venc": 64.8,
       "pct_aviso": 40.5,
       "pct_huella": 27.1,
-      "pct_verif_kyc": 2.5
+      "pct_verif_kyc": 2.5,
+      "ops_reg_completo": 10,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 49
     },
     {
       "nombre": "Esmeralda",
@@ -113,7 +123,12 @@
       "pct_id_venc": 27.0,
       "pct_aviso": 93.7,
       "pct_huella": 77.7,
-      "pct_verif_kyc": 4.5
+      "pct_verif_kyc": 4.5,
+      "ops_reg_completo": 30,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 18
     },
     {
       "nombre": "Guadalupe",
@@ -137,7 +152,12 @@
       "pct_id_venc": 65.7,
       "pct_aviso": 42.3,
       "pct_huella": 29.0,
-      "pct_verif_kyc": 0.7
+      "pct_verif_kyc": 0.7,
+      "ops_reg_completo": 24,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 320
     },
     {
       "nombre": "Irapuato",
@@ -161,7 +181,12 @@
       "pct_id_venc": 14.5,
       "pct_aviso": 72.9,
       "pct_huella": 98.9,
-      "pct_verif_kyc": 7.9
+      "pct_verif_kyc": 7.9,
+      "ops_reg_completo": 71,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 0
     },
     {
       "nombre": "Mitras",
@@ -185,7 +210,12 @@
       "pct_id_venc": 46.6,
       "pct_aviso": 65.6,
       "pct_huella": 45.2,
-      "pct_verif_kyc": 2.3
+      "pct_verif_kyc": 2.3,
+      "ops_reg_completo": 9,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 428
     },
     {
       "nombre": "Neza",
@@ -209,7 +239,12 @@
       "pct_id_venc": 33.2,
       "pct_aviso": 95.4,
       "pct_huella": 60.0,
-      "pct_verif_kyc": 3.4
+      "pct_verif_kyc": 3.4,
+      "ops_reg_completo": 3,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 69
     },
     {
       "nombre": "Satelite",
@@ -233,7 +268,12 @@
       "pct_id_venc": 29.8,
       "pct_aviso": 96.0,
       "pct_huella": 62.6,
-      "pct_verif_kyc": 4.1
+      "pct_verif_kyc": 4.1,
+      "ops_reg_completo": 0,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 2
     },
     {
       "nombre": "Sendero",
@@ -257,7 +297,12 @@
       "pct_id_venc": 19.9,
       "pct_aviso": 91.3,
       "pct_huella": 97.7,
-      "pct_verif_kyc": 7.5
+      "pct_verif_kyc": 7.5,
+      "ops_reg_completo": 22,
+      "ops_verif_ops": 0,
+      "ops_bloq_ops": 0,
+      "ops_info_act_ops": 0,
+      "ops_re": 477
     }
   ],
   "top_transiciones": [
@@ -311,5 +356,92 @@
       "_STATUS_ACT": "Bloqueado por KYC",
       "N": 46
     }
-  ]
+  ],
+  "reporte_operaciones": {
+    "fecha_inicio": "11/05/2026",
+    "fecha_fin": "24/05/2026",
+    "sucursales": [
+      {
+        "nombre": "Ajijic",
+        "total": 71,
+        "reg_completo": 35,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 36
+      },
+      {
+        "nombre": "Allende",
+        "total": 59,
+        "reg_completo": 10,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 49
+      },
+      {
+        "nombre": "Esmeralda",
+        "total": 48,
+        "reg_completo": 30,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 18
+      },
+      {
+        "nombre": "Guadalupe",
+        "total": 344,
+        "reg_completo": 24,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 320
+      },
+      {
+        "nombre": "Irapuato",
+        "total": 71,
+        "reg_completo": 71,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 0
+      },
+      {
+        "nombre": "Mitras",
+        "total": 437,
+        "reg_completo": 9,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 428
+      },
+      {
+        "nombre": "Neza",
+        "total": 72,
+        "reg_completo": 3,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 69
+      },
+      {
+        "nombre": "Satelite",
+        "total": 2,
+        "reg_completo": 0,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 2
+      },
+      {
+        "nombre": "Sendero",
+        "total": 499,
+        "reg_completo": 22,
+        "verif_ops": 0,
+        "bloq_ops": 0,
+        "info_act_ops": 0,
+        "re": 477
+      }
+    ]
+  }
 }
