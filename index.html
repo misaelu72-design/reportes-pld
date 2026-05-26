@@ -101,6 +101,13 @@
   .donut-lbl{flex:1;color:var(--texto)}
   .donut-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
   .donut-pct{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:38px;text-align:right}
+
+  /* Selector de corte */
+  .corte-selector{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .corte-select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace;color:white;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white' opacity='.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+  .corte-select option{background:#1F3864;color:white}
+  .corte-loading{font-size:11px;opacity:.5;animation:pulse 1.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
 </style>
 </head>
 <body class="suc-colors">
@@ -115,8 +122,12 @@
       </div>
     </div>
     <div class="header-right">
-      <span class="corte-badge" id="badge-corte">Cargando...</span>
-      <span class="upd-badge" id="badge-upd"></span>
+      <div class="corte-selector">
+        <select class="corte-select" id="selector-corte" onchange="cargarCorte(this.value)">
+          <option value="">Cargando cortes...</option>
+        </select>
+        <span class="upd-badge" id="badge-upd"></span>
+      </div>
     </div>
   </div>
 </header>
@@ -400,24 +411,61 @@ function render(d){
     `CECOM · Reportes PLD · ${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · Generado el ${m.generado}`;
 }
 
-// Cargar datos.json automáticamente
-fetch("datos.json?v=" + Date.now())
-  .then(r => {
-    if(!r.ok) throw new Error("No se encontró datos.json");
-    return r.json();
+// ── Historial de cortes ──────────────────────────────────
+function cargarCorte(archivo){
+  if(!archivo) return;
+  document.getElementById("loading").style.display  = "block";
+  document.getElementById("contenido").style.display = "none";
+
+  fetch(archivo + "?v=" + Date.now())
+    .then(r => { if(!r.ok) throw new Error("No encontrado"); return r.json(); })
+    .then(d => {
+      document.getElementById("loading").style.display  = "none";
+      document.getElementById("contenido").style.display = "block";
+      render(d);
+    })
+    .catch(() => {
+      document.getElementById("loading").innerHTML =
+        `<div class="error-box"><p>No se pudo cargar el corte seleccionado.</p></div>`;
+    });
+}
+
+function poblarSelector(cortes, archivoActual){
+  const sel = document.getElementById("selector-corte");
+  sel.innerHTML = cortes.map(c =>
+    `<option value="${c.archivo}" ${c.archivo===archivoActual?"selected":""}>
+      ${c.etiqueta}
+    </option>`
+  ).join("");
+}
+
+// Cargar lista de cortes desde cortes.json
+fetch("cortes.json?v=" + Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(cortes => {
+    if(!cortes.length) throw new Error("Sin cortes");
+    poblarSelector(cortes, cortes[0].archivo);
+    cargarCorte(cortes[0].archivo);
   })
-  .then(d => {
-    document.getElementById("loading").style.display  = "none";
-    document.getElementById("contenido").style.display = "block";
-    render(d);
-  })
-  .catch(err => {
-    document.getElementById("loading").innerHTML = `
-      <div class="error-box">
-        <p style="font-weight:600;margin-bottom:8px">No se encontró datos.json</p>
-        <p style="font-size:13px">Corre el script de Python para generar los datos,<br>
-        luego sube <strong>datos.json</strong> a GitHub junto con los Excel.</p>
-      </div>`;
+  .catch(() => {
+    // Fallback: intentar datos.json directo (compatibilidad hacia atrás)
+    fetch("datos.json?v=" + Date.now())
+      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
+      .then(d => {
+        const sel = document.getElementById("selector-corte");
+        sel.innerHTML = `<option value="datos.json">${d.meta.fecha_anterior_corta} vs ${d.meta.fecha_actual_corta}</option>`;
+        document.getElementById("loading").style.display  = "none";
+        document.getElementById("contenido").style.display = "block";
+        render(d);
+      })
+      .catch(() => {
+        document.getElementById("loading").innerHTML =
+          `<div class="error-box">
+            <p style="font-weight:600;margin-bottom:8px">No se encontró datos.json</p>
+            <p style="font-size:13px">Corre el script de Python para generar los datos,<br>
+            luego sube <strong>datos.json</strong> y <strong>cortes.json</strong> a GitHub.</p>
+          </div>`;
+      });
   });
 </script>
 </body>
