@@ -108,6 +108,10 @@
   .corte-select option{background:#1F3864;color:white}
   .corte-loading{font-size:11px;opacity:.5;animation:pulse 1.2s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* Reporte operaciones */
+  .ops-table-wrap{overflow-x:auto}
+  .ops-periodo{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
 </style>
 </head>
 <body class="suc-colors">
@@ -212,6 +216,52 @@ function buildDonut(kpis, total){
       </div>
     </div>
     <div class="donut-legend">${legendItems}</div>
+  </div>`;
+}
+
+
+function buildOpsTable(ops){
+  if(!ops || !ops.sucursales) return "";
+  const cols = [
+    {key:"reg_completo",  lbl:"Registro Completo",               bg:"#f0f5fb"},
+    {key:"verif_ops",     lbl:"Verificado por Operaciones",       bg:"#f0f5fb"},
+    {key:"bloq_ops",      lbl:"Bloqueo por Operaciones",          bg:"#fff0f0"},
+    {key:"info_act_ops",  lbl:"Info Actualizada Operaciones",     bg:"#f0f5fb"},
+    {key:"re",            lbl:"Registro Express",                  bg:"#fffbea"},
+  ];
+  const ORDEN = ["Allende","Ajijic","Satelite","Neza","Esmeralda","Sendero","Irapuato","Mitras","Guadalupe"];
+  const sorted = [...ops.sucursales].sort((a,b)=>{
+    const ia = ORDEN.indexOf(a.nombre); const ib = ORDEN.indexOf(b.nombre);
+    return (ia===-1?999:ia) - (ib===-1?999:ib);
+  });
+  const thead = `<tr>
+    <th>Sucursal</th>
+    <th>Total</th>
+    ${cols.map(c=>`<th>${c.lbl}</th>`).join("")}
+  </tr>`;
+  const tbody = sorted.map(s=>`
+    <tr>
+      <td style="font-weight:500">${s.nombre}</td>
+      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(s.total)}</td>
+      ${cols.map(c=>`<td style="background:${c.bg};text-align:right;font-family:'DM Mono',monospace">${fmt(s[c.key])}</td>`).join("")}
+    </tr>`).join("");
+  // Fila total
+  const totales = cols.map(c=>sorted.reduce((a,s)=>a+s[c.key],0));
+  const totalGeneral = sorted.reduce((a,s)=>a+s.total,0);
+  const tfooter = `<tr style="background:#f9fafb;font-weight:600">
+    <td>Total</td>
+    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalGeneral)}</td>
+    ${totales.map((t,i)=>`<td style="background:${cols[i].bg};text-align:right;font-family:'DM Mono',monospace">${fmt(t)}</td>`).join("")}
+  </tr>`;
+  return `
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Clientes nuevos en el período</h3>
+      <span class="ops-periodo">${ops.fecha_inicio} – ${ops.fecha_fin}</span>
+    </div>
+    <div class="ops-table-wrap">
+      <table><thead>${thead}</thead><tbody>${tbody}${tfooter}</tbody></table>
+    </div>
   </div>`;
 }
 
@@ -408,8 +458,12 @@ function render(d){
     ${buildDonut(k, k.total_act)}
   </div>`;
 
+  const opsHtml = d.reporte_operaciones ? `
+  <div class="section-title">Reporte de operaciones · ${d.meta.fecha_anterior_corta} al ${d.meta.fecha_actual_corta}</div>
+  ${buildOpsTable(d.reporte_operaciones)}` : "";
+
   document.getElementById("contenido").innerHTML =
-    kpiHtml + donutHtml + tablaHtml + docHtml + dlHtml;
+    kpiHtml + donutHtml + tablaHtml + docHtml + opsHtml + dlHtml;
 
   document.getElementById("footer").innerHTML =
     `CECOM · Reportes PLD · ${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · Generado el ${m.generado}`;
