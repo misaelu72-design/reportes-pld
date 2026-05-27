@@ -637,7 +637,7 @@ function render(d){
   ${buildKycTable(d.reporte_operaciones)}` : "";
 
   document.getElementById("contenido").innerHTML =
-    kpiHtml + donutHtml + tablaHtml + docHtml + transHtml + opsHtml + dlHtml;
+    kpiHtml + donutHtml + tablaHtml + docHtml + transHtml + opsHtml;
 
   document.getElementById("footer").innerHTML =
     `CECOM · Reportes PLD · ${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · Generado el ${m.generado}`;
