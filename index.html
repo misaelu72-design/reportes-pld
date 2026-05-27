@@ -85,6 +85,7 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 .lbtn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
 .lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
 @media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
+.hr select option{background:#1F3864;color:white}
 </style>
 </head>
 <body>
@@ -341,7 +342,7 @@ function poblarSelector(cortes){
   // Convertir badge a selector si hay más de 1 corte
   if(cortes.length>1){
     const sel=document.createElement('select');
-    sel.style.cssText='background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:"DM Mono",monospace;color:white;outline:none;cursor:pointer';
+    sel.style.cssText='background:#1F3864;border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;font-size:12px;font-family:"DM Mono",monospace;color:white;outline:none;cursor:pointer';
     cortes.forEach((c,i)=>{
       const opt=document.createElement('option');
       opt.value=c.archivo; opt.textContent=c.etiqueta;
