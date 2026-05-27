@@ -112,6 +112,24 @@
   /* Reporte operaciones */
   .ops-table-wrap{overflow-x:auto}
   .ops-periodo{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+
+  /* Login */
+  .login-overlay{position:fixed;inset:0;background:var(--azul);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
+  .login-box{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .login-logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
+  .login-logo-icon{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:white}
+  .login-logo-text{font-size:18px;font-weight:600;color:var(--azul)}
+  .login-logo-sub{font-size:12px;color:var(--muted)}
+  .login-field{margin-bottom:1rem}
+  .login-label{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.8px}
+  .login-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-sizing:border-box}
+  .login-input:focus{border-color:var(--azul2)}
+  .login-btn{width:100%;padding:12px;background:var(--azul);color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;margin-top:.5rem}
+  .login-btn:hover{background:#162d56}
+  .login-error{background:#fee2e2;color:#dc2626;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+  .login-user{font-size:12px;color:rgba(255,255,255,.7);margin-top:8px;text-align:center}
+  .logout-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+  .logout-btn:hover{background:rgba(255,255,255,.2)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
@@ -133,6 +151,8 @@
         </select>
         <span class="upd-badge" id="badge-upd"></span>
       </div>
+      <span class="login-user" id="headerUser" style="display:none"></span>
+      <button class="logout-btn" id="logoutBtn" style="display:none" onclick="doLogout()">Cerrar sesión</button>
     </div>
   </div>
 </header>
@@ -643,6 +663,67 @@ function render(d){
     `CECOM · Reportes PLD · ${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · Generado el ${m.generado}`;
 }
 
+
+// ── Sistema de Login ─────────────────────────────────────
+async function sha256(msg){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+let USUARIOS = [];  // se carga desde datos.json
+
+function mostrarLogin(){ document.getElementById("loginOverlay").style.display="flex"; }
+function ocultarLogin(){ document.getElementById("loginOverlay").style.display="none"; }
+
+function checkSesion(){
+  const sess = sessionStorage.getItem("pld_user");
+  if(sess){
+    const u = JSON.parse(sess);
+    mostrarUsuarioHeader(u.nombre);
+    ocultarLogin();
+    return true;
+  }
+  mostrarLogin();
+  return false;
+}
+
+function mostrarUsuarioHeader(nombre){
+  const el = document.getElementById("headerUser");
+  const btn = document.getElementById("logoutBtn");
+  if(el){ el.textContent = nombre; el.style.display="inline"; }
+  if(btn){ btn.style.display="inline-block"; }
+}
+
+async function doLogin(){
+  const user = document.getElementById("loginUser").value.trim().toLowerCase();
+  const pass = document.getElementById("loginPass").value;
+  const err  = document.getElementById("loginError");
+  if(!user || !pass){ err.style.display="block"; return; }
+  const hash = await sha256(pass);
+  const found = USUARIOS.find(u => u.u === user && u.h === hash);
+  if(found){
+    sessionStorage.setItem("pld_user", JSON.stringify({usuario:found.u, nombre:found.n}));
+    err.style.display="none";
+    mostrarUsuarioHeader(found.n);
+    ocultarLogin();
+  } else {
+    err.style.display="block";
+    document.getElementById("loginPass").value="";
+    document.getElementById("loginPass").focus();
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem("pld_user");
+  const el = document.getElementById("headerUser");
+  const btn = document.getElementById("logoutBtn");
+  if(el){ el.style.display="none"; }
+  if(btn){ btn.style.display="none"; }
+  mostrarLogin();
+  document.getElementById("loginUser").value="";
+  document.getElementById("loginPass").value="";
+}
+
 // ── Historial de cortes ──────────────────────────────────
 function cargarCorte(archivo){
   if(!archivo) return;
@@ -672,6 +753,17 @@ function poblarSelector(cortes, archivoActual){
 }
 
 // Cargar lista de cortes desde cortes.json
+// Cargar usuarios desde usuarios.json
+fetch("usuarios.json?v=" + Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject("Sin usuarios.json"))
+  .then(u => { USUARIOS = u; })
+  .catch(() => { console.warn("usuarios.json no encontrado"); })
+  .finally(() => {
+    if(!checkSesion()) return;
+    iniciarApp();
+  });
+
+function iniciarApp(){
 fetch("cortes.json?v=" + Date.now())
   .then(r => r.ok ? r.json() : Promise.reject())
   .then(cortes => {
@@ -699,6 +791,33 @@ fetch("cortes.json?v=" + Date.now())
           </div>`;
       });
   });
+} // fin iniciarApp
 </script>
+
+<!-- Login overlay -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">C</div>
+      <div>
+        <div class="login-logo-text">CECOM — PLD</div>
+        <div class="login-logo-sub">Portal de Reportes</div>
+      </div>
+    </div>
+    <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+    <div class="login-field">
+      <label class="login-label">Usuario</label>
+      <input class="login-input" id="loginUser" type="text" placeholder="tu usuario"
+             autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-field">
+      <label class="login-label">Contraseña</label>
+      <input class="login-input" id="loginPass" type="password" placeholder="••••••••"
+             autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Iniciar sesión</button>
+  </div>
+</div>
+
 </body>
 </html>
