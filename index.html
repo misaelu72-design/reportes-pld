@@ -2,160 +2,137 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Reportes PLD — CECOM</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#FFFFFF;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
-  header{background:var(--azul);color:white;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
-  .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;flex-wrap:wrap;gap:8px}
-  .logo{display:flex;align-items:center;gap:12px}
-  .logo-icon{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600}
-  .logo-text{font-size:16px;font-weight:600}
-  .logo-sub{font-size:11px;opacity:.65;font-weight:300}
-  .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .corte-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace}
-  .upd-badge{font-size:11px;opacity:.55}
-  main{max-width:1200px;margin:0 auto;padding:2rem}
-  .section-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;margin-top:2.5rem}
-
-  /* Loading */
-  .loading{text-align:center;padding:4rem;color:var(--muted)}
-  .spinner{width:32px;height:32px;border:3px solid #e5e7eb;border-top-color:var(--azul2);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  /* Error */
-  .error-box{background:#fff5f5;border:1px solid #fecaca;border-radius:12px;padding:1.5rem;text-align:center;color:var(--neg)}
-
-  /* KPIs */
-  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
-  .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
-  .kpi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
-  .kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
-  .kpi-label{font-size:12px;color:var(--muted);margin-bottom:6px}
-  .kpi-value{font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
-  .kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
-  .delta-pos{background:var(--pos-bg);color:var(--pos)}
-  .delta-neg{background:var(--neg-bg);color:var(--neg)}
-  .delta-neu{background:#f3f4f6;color:var(--muted)}
-
-
-  /* Tabla */
-  .table-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-  .table-card table{overflow-x:auto}
-  .table-wrap{overflow-x:auto}
-  .table-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
-  .table-header h3{font-size:14px;font-weight:600}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  thead th{background:#f9fafb;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
-  thead th:not(:first-child){text-align:right}
-  thead th[colspan]{text-align:center !important}
-  tbody tr{border-bottom:1px solid #f3f4f6;transition:background .1s}
-  tbody tr:hover{background:#f9fafb}
-  tbody tr:last-child{border-bottom:none}
-  td{padding:12px 16px}
-  td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
-  .suc-name{font-weight:500;display:flex;align-items:center;gap:8px}
-  .suc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-  .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
-  .pill-pos{background:var(--pos-bg);color:var(--pos)}
-  .pill-neg{background:var(--neg-bg);color:var(--neg)}
-  .pill-neu{background:#f3f4f6;color:var(--muted)}
-
-  /* Documentación */
-  .doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-  .doc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-  .doc-label{font-size:12px;color:var(--muted);margin-bottom:4px}
-  .doc-pct{font-size:26px;font-weight:600;margin-bottom:2px}
-  .doc-count{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
-  .progress{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
-  .progress-bar{height:100%;border-radius:3px;transition:width .6s ease}
-
-  /* Descargas */
-  .downloads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-  .dl-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--texto);transition:transform .15s,box-shadow .15s,border-color .15s}
-  .dl-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-color:var(--azul2)}
-  .dl-icon{width:42px;height:42px;border-radius:10px;background:#e8f0fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
-  .dl-info{flex:1}
-  .dl-name{font-weight:600;font-size:13px;margin-bottom:2px}
-  .dl-meta{font-size:11px;color:var(--muted)}
-
-  footer{text-align:center;padding:2rem;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:3rem}
-
-  .suc-colors{--c0:#1F3864;--c1:#2E75B6;--c2:#375623;--c3:#E26B0A;--c4:#7B3F00;--c5:#5B2D8E;--c6:#B5451B;--c7:#0D6E8C;--c8:#2D6A4F}
-
-  /* Donut chart */
-  .donut-section{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
-  @media(max-width:640px){.donut-section{grid-template-columns:1fr}}
-  .donut-wrap{position:relative;width:220px;height:220px;margin:0 auto}
-  .donut-svg{transform:rotate(-90deg)}
-  .donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-  .donut-center-val{font-size:22px;font-weight:600;letter-spacing:-1px;color:var(--texto)}
-  .donut-center-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-  .donut-legend{display:flex;flex-direction:column;gap:8px}
-  .donut-item{display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background .1s}
-  .donut-item:hover{background:#f3f4f6}
-  .donut-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
-  .donut-lbl{flex:1;color:var(--texto)}
-  .donut-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
-  .donut-pct{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:38px;text-align:right}
-
-  /* Selector de corte */
-  .corte-selector{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .corte-select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace;color:white;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white' opacity='.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-  .corte-select option{background:#1F3864;color:white}
-  .corte-loading{font-size:11px;opacity:.5;animation:pulse 1.2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
-
-  /* Reporte operaciones */
-  .ops-table-wrap{overflow-x:auto}
-  .ops-periodo{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
-
-  /* Login */
-  .login-overlay{position:fixed;inset:0;background:var(--azul);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
-  .login-box{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-  .login-logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
-  .login-logo-icon{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:white}
-  .login-logo-text{font-size:18px;font-weight:600;color:var(--azul)}
-  .login-logo-sub{font-size:12px;color:var(--muted)}
-  .login-field{margin-bottom:1rem}
-  .login-label{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.8px}
-  .login-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-sizing:border-box}
-  .login-input:focus{border-color:var(--azul2)}
-  .login-btn{width:100%;padding:12px;background:var(--azul);color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;margin-top:.5rem}
-  .login-btn:hover{background:#162d56}
-  .login-error{background:#fee2e2;color:#dc2626;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
-  .login-user{font-size:12px;color:rgba(255,255,255,.7);margin-top:8px;text-align:center}
-  .logout-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
-  .logout-btn:hover{background:rgba(255,255,255,.2)}
-
-  /* Modal detalle cambios */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
-  .modal-box{background:var(--card);border-radius:16px;width:100%;max-width:780px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-  .modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-  .modal-title{font-size:15px;font-weight:600}
-  .modal-sub{font-size:12px;color:var(--muted);margin-top:2px}
-  .modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .1s}
-  .modal-close:hover{background:#f3f4f6}
-  .modal-body{overflow-y:auto;flex:1}
-  .modal-body table{width:100%;border-collapse:collapse;font-size:13px}
-  .modal-body thead th{background:#f9fafb;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);position:sticky;top:0}
-  .modal-body tbody tr{border-bottom:1px solid #f3f4f6}
-  .modal-body tbody tr:hover{background:#f9fafb}
-  .modal-body td{padding:10px 16px;font-size:13px}
-  .modal-footer{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
-  .trans-row{cursor:pointer;transition:background .1s}
-  .trans-row:hover{background:#f0f5ff !important}
-  .trans-row td:first-child::after{content:" 🔍";font-size:11px;opacity:.4}
-</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;
+  --bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;
+  --pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto)}
+/* Header */
+header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+.hinner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.logo-text{font-size:16px;font-weight:600}
+.logo-sub{font-size:11px;opacity:.65}
+.hright{display:flex;align-items:center;gap:10px}
+.corte-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace}
+.upd-badge{font-size:11px;opacity:.55}
+.user-badge{font-size:12px;opacity:.8}
+.logout-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.logout-btn:hover{background:rgba(255,255,255,.2)}
+/* Layout */
+main{max-width:1200px;margin:0 auto;padding:2rem}
+.sec-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1rem}
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.kpi-value{font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
+.kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
+.d-pos{background:var(--pos-bg);color:var(--pos)}
+.d-neg{background:var(--neg-bg);color:var(--neg)}
+.d-neu{background:#f3f4f6;color:var(--muted)}
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.card-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.card-header h3{font-size:14px;font-weight:600}
+.card-sub{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+/* Tabla */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#f9fafb;padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+thead th[colspan]{text-align:center!important}
+thead th:not(:first-child):not([colspan]){text-align:right}
+tbody tr{border-bottom:1px solid #f3f4f6;transition:background .1s}
+tbody tr:hover{background:#f9fafb}
+tbody tr:last-child{border-bottom:none}
+td{padding:11px 14px}
+td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+.suc-name{font-weight:500;display:flex;align-items:center;gap:8px}
+.suc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.num-bold{font-weight:600}
+.num-right{text-align:right!important}
+.num-center{text-align:center!important;color:var(--muted);font-size:12px}
+.bold{font-weight:600}
+.muted{color:var(--muted)}
+.bg-ops{background:#f0f5fb}
+.bg-kyc{background:#f0f9f0}
+.bg-ops-l{background:#f0f5fb}
+.bg-kyc-l{background:#f0f9f0}
+.bg-red-l{background:#fff5f5}
+.bg-yel-l{background:#fffbea}
+.total-row{background:#f9fafb!important;font-weight:600}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+.pill-pos{background:var(--pos-bg);color:var(--pos)}
+.pill-neg{background:var(--neg-bg);color:var(--neg)}
+.pill-neu{background:#f3f4f6;color:var(--muted)}
+/* Doc cards */
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.doc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.doc-label{font-size:12px;color:var(--muted);margin-bottom:4px}
+.doc-pct{font-size:26px;font-weight:600;margin-bottom:2px}
+.doc-count{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+.progress{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
+.progress-bar{height:100%;border-radius:3px}
+/* Donut */
+.donut-section{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;padding:1.5rem}
+.donut-wrap{position:relative;width:200px;height:200px}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.donut-center-val{font-size:20px;font-weight:600;letter-spacing:-1px}
+.donut-center-lbl{font-size:11px;color:var(--muted)}
+.donut-legend{display:flex;flex-direction:column;gap:6px}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.donut-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.donut-lbl{flex:1}
+.donut-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:60px;text-align:right}
+.donut-pct{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:40px;text-align:right}
+/* Trans row clickeable */
+.trans-row{cursor:pointer}
+.trans-row:hover{background:#f0f5ff!important}
+.trans-row td:first-child::after{content:" 🔍";font-size:10px;opacity:.4}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--card);border-radius:16px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+.modal-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.modal-sub{font-size:12px;color:var(--muted)}
+.modal-close{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:15px;color:var(--muted)}
+.modal-body{overflow-y:auto;flex:1}
+.modal-body table{font-size:13px}
+.modal-body thead th{position:sticky;top:0;z-index:1}
+.modal-footer{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
+/* Login */
+.login-overlay{position:fixed;inset:0;background:var(--azul);display:none;align-items:center;justify-content:center;z-index:9999}
+.login-overlay.active{display:flex}
+.login-box{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
+.login-logo-icon{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
+.login-logo-text{font-size:18px;font-weight:600;color:var(--azul)}
+.login-logo-sub{font-size:12px;color:var(--muted)}
+.login-field{margin-bottom:1rem}
+.login-label{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.8px}
+.login-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-sizing:border-box}
+.login-input:focus{border-color:var(--azul2)}
+.login-btn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
+.login-btn:hover{background:#162d56}
+.login-error{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+@media(max-width:640px){main{padding:1rem}.donut-section{grid-template-columns:1fr}}
+</style>
 </head>
-<body class="suc-colors">
+<body>
 
 <header>
-  <div class="header-inner">
+  <div class="hinner">
     <div class="logo">
       <div class="logo-icon">C</div>
       <div>
@@ -163,702 +140,585 @@
         <div class="logo-sub">Prevención de Lavado de Dinero</div>
       </div>
     </div>
-    <div class="header-right">
-      <div class="corte-selector">
-        <select class="corte-select" id="selector-corte" onchange="cargarCorte(this.value)">
-          <option value="">Cargando cortes...</option>
-        </select>
-        <span class="upd-badge" id="badge-upd"></span>
-      </div>
-      <span class="login-user" id="headerUser" style="display:none"></span>
-      <button class="logout-btn" id="logoutBtn" style="display:none" onclick="doLogout()">Cerrar sesión</button>
+    <div class="hright">
+      <span class="corte-badge">17-May vs 24-May</span>
+      <span class="upd-badge">Actualizado: 26/05/2026 15:23</span>
+      <span class="user-badge" id="headerUser"></span>
+      <button class="logout-btn" id="logoutBtn" onclick="doLogout()" style="display:none">Cerrar sesión</button>
     </div>
   </div>
 </header>
 
 <main>
-  <div id="loading" class="loading">
-    <div class="spinner"></div>
-    <p>Cargando datos...</p>
+
+  <div class="sec-title">Resumen global · 9 sucursales</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-accent" style="background:#1F3864"></div>
+      <div class="kpi-label">Total clientes en base</div>
+      <div class="kpi-value">502,395</div>
+      <div class="kpi-delta d-pos">▲ +764 vs anterior</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:#E26B0A"></div>
+      <div class="kpi-label">Clientes nuevos</div>
+      <div class="kpi-value">764</div>
+      <div class="kpi-delta d-pos">▲ +764</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:#7c3aed"></div>
+      <div class="kpi-label">Cambios de estatus</div>
+      <div class="kpi-value">2,367</div>
+      <div class="kpi-delta d-neu">0.5% de la base</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div>
+      <div class="kpi-label">Verificados KYC</div>
+      <div class="kpi-value">10,306</div>
+      <div class="kpi-delta d-pos">▲ +933 vs anterior</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:#dc2626"></div>
+      <div class="kpi-label">Bloqueados por KYC</div>
+      <div class="kpi-value">4,740</div>
+      <div class="kpi-delta d-neg">▲ +179 vs anterior</div>
+    </div>
+    <div class="kpi"><div class="kpi-accent" style="background:#0891b2"></div>
+      <div class="kpi-label">Pend. Validación KYC</div>
+      <div class="kpi-value">5,803</div>
+      <div class="kpi-delta d-neg">▼ -1,136 (mejora)</div>
+    </div>
   </div>
-  <div id="contenido" style="display:none"></div>
-</main>
 
-<footer id="footer"></footer>
-
-<script>
-const COLORES_SUC = [
-  "#1F3864","#2E75B6","#375623","#E26B0A",
-  "#7B3F00","#5B2D8E","#B5451B","#0D6E8C","#2D6A4F"
-];
-
-function fmt(n){return Number(n).toLocaleString("es-MX")}
-function pct(n,t){return t?((n/t)*100).toFixed(1)+"%":"0.0%"}
-function delta(n){
-  if(n>0) return `<span class="pill pill-pos">+${fmt(n)}</span>`;
-  if(n<0) return `<span class="pill pill-neg">${fmt(n)}</span>`;
-  return `<span class="pill pill-neu">0</span>`;
-}
-function deltaKpi(n){
-  if(n>0) return `<span class="kpi-delta delta-pos">▲ +${fmt(n)}</span>`;
-  if(n<0) return `<span class="kpi-delta delta-neg">▼ ${fmt(n)}</span>`;
-  return `<span class="kpi-delta delta-neu">sin cambio</span>`;
-}
-
-
-
-function buildDonut(kpis, total){
-  const segmentos = [
-    {lbl:"Registro Express",    val:kpis.re_act,            color:"#FFC000"},
-    {lbl:"Bloq. Operaciones",   val:kpis.bloq_ops_act,      color:"#1F3864"},
-    {lbl:"Info Act. Ops",       val:kpis.info_act_ops_act??0,color:"#2E75B6"},
-    {lbl:"Reg. Completo",       val:kpis.reg_completo_act??0,color:"#70AD47"},
-    {lbl:"Verif. Operaciones",  val:kpis.verif_ops_act??0,  color:"#4472C4"},
-    {lbl:"Bloq. KYC",           val:kpis.bloq_kyc_act,      color:"#C00000"},
-    {lbl:"Info Act. KYC",       val:kpis.info_act_kyc_act??0,color:"#FF7C80"},
-    {lbl:"Pend. Valid. KYC",    val:kpis.pend_kyc_act,      color:"#ED7D31"},
-    {lbl:"Verificado KYC",      val:kpis.verif_kyc_act,     color:"#375623"},
-  ];
-  const R=90, cx=110, cy=110, stroke=28;
-  const circ = 2*Math.PI*R;
-  let offset = 0;
-  let paths = "";
-  segmentos.forEach((seg,i)=>{
-    const frac = seg.val/total;
-    const dash = frac*circ;
-    paths += `<circle
-      cx="${cx}" cy="${cy}" r="${R}"
-      fill="none" stroke="${seg.color}" stroke-width="${stroke}"
-      stroke-dasharray="${dash} ${circ-dash}"
-      stroke-dashoffset="${-offset}"
-      style="transition:stroke-dasharray .6s ease"
-      data-idx="${i}"/>`;
-    offset += dash;
-  });
-  const legendItems = segmentos.map((seg,i)=>{
-    const p = total?(seg.val/total*100).toFixed(1):"0.0";
-    return `<div class="donut-item">
-      <div class="donut-dot" style="background:${seg.color}"></div>
-      <span class="donut-lbl">${seg.lbl}</span>
-      <span class="donut-val">${fmt(seg.val)}</span>
-      <span class="donut-pct" style="color:${seg.color}">${p}%</span>
-    </div>`;
-  }).join("");
-  return `
-  <div class="donut-section">
-    <div class="donut-wrap">
-      <svg class="donut-svg" viewBox="0 0 220 220" width="220" height="220">
-        ${paths}
-      </svg>
-      <div class="donut-center">
-        <div class="donut-center-val">${fmt(total)}</div>
-        <div class="donut-center-lbl">clientes totales</div>
+  <div class="sec-title">Distribución de estatus · 24 de Mayo 2026</div>
+  <div class="card">
+    <div class="donut-section">
+      <div class="donut-wrap">
+        <canvas id="donutChart" width="200" height="200" style="width:200px!important;height:200px!important"></canvas>
+        <div class="donut-center">
+          <div class="donut-center-val">502,395</div>
+          <div class="donut-center-lbl">clientes totales</div>
+        </div>
       </div>
+      <div class="donut-legend" id="donutLegend"></div>
     </div>
-    <div class="donut-legend">${legendItems}</div>
-  </div>`;
-}
+  </div>
 
-
-
-function buildOpsChart(ops){
-  if(!ops || !ops.sucursales) return "";
-  const sorted = [...ops.sucursales]
-    .filter(s => s.total > 0)
-    .sort((a,b) => b.total - a.total);
-  const labels  = sorted.map(s => s.nombre);
-  const totales = sorted.map(s => s.total);
-  const uid = "opsChart_" + Date.now();
-  setTimeout(() => {
-    const ctx = document.getElementById(uid);
-    if(!ctx) return;
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels,
-        datasets: [
-          {label:"Reg. Completo",  data:sorted.map(s=>s.reg_completo), backgroundColor:"#1F3864"},
-          {label:"Verif. Ops",     data:sorted.map(s=>s.verif_ops),    backgroundColor:"#2E75B6"},
-          {label:"Bloq. Ops",      data:sorted.map(s=>s.bloq_ops),     backgroundColor:"#C00000"},
-          {label:"Info Act. Ops",  data:sorted.map(s=>s.info_act_ops), backgroundColor:"#70AD47"},
-          {label:"Reg. Express",   data:sorted.map(s=>s.re),           backgroundColor:"#FFC000"},
-        ]
-      },
-      options:{
-        indexAxis:"y", responsive:true, maintainAspectRatio:false,
-        plugins:{
-          legend:{display:false},
-          tooltip:{
-            callbacks:{
-              footer:(items)=>`Total: ${totales[items[0].dataIndex].toLocaleString("es-MX")}`,
-              label:(item)=>` ${item.dataset.label}: ${item.raw.toLocaleString("es-MX")}`
-            }
-          }
-        },
-        scales:{
-          x:{stacked:true, grid:{color:"rgba(0,0,0,0.06)"},
-             ticks:{color:"#888780", font:{size:11},
-                    callback:v=>v>=1000?(v/1000).toFixed(1)+"k":v}},
-          y:{stacked:true, grid:{display:false},
-             ticks:{color:"#444441", font:{size:12}}}
-        }
-      }
-    });
-  }, 100);
-  const leyenda = [
-    {color:"#1F3864", lbl:"Reg. Completo"},
-    {color:"#2E75B6", lbl:"Verif. Operaciones"},
-    {color:"#C00000", lbl:"Bloq. Operaciones"},
-    {color:"#70AD47", lbl:"Info Act. Ops"},
-    {color:"#FFC000", lbl:"Reg. Express"},
-  ].map(l=>`<span style="display:flex;align-items:center;gap:5px">
-    <span style="width:10px;height:10px;border-radius:2px;background:${l.color}"></span>
-    <span style="font-size:12px;color:var(--muted)">${l.lbl}</span>
-  </span>`).join("");
-  const h = Math.max(280, sorted.length * 44 + 60);
-  return `
-  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px">${leyenda}</div>
-  <div style="position:relative;width:100%;height:${h}px">
-    <canvas id="${uid}" role="img"
-      aria-label="Gráfica de barras apiladas de operaciones YTD por sucursal">
-      ${sorted.map((s,i)=>`${s.nombre}: ${totales[i].toLocaleString("es-MX")}`).join(" · ")}
-    </canvas>
-  </div>`;
-}
-
-
-
-// ── Modal detalle cambios ──────────────────────────────────
-let _detalleCambios = [];
-
-function abrirModal(ant, act, total){
-  const filtrados = _detalleCambios.filter(c => c.ant === ant && c.act === act);
-  if(!filtrados.length){
-    alert("No hay detalle disponible — vuelve a correr el script para generarlo.");
-    return;
-  }
-  document.getElementById("modalTitle").textContent =
-    `${ant}  →  ${act}`;
-  document.getElementById("modalSub").textContent =
-    `${filtrados.length.toLocaleString("es-MX")} cliente(s) con este cambio`;
-  document.getElementById("modalFooter").textContent =
-    `${filtrados.length.toLocaleString("es-MX")} registros`;
-
-  const tbody = document.getElementById("modalBody");
-  tbody.innerHTML = filtrados.map(c => `
-    <tr>
-      <td>${c.sucursal}</td>
-      <td style="font-family:'DM Mono',monospace;font-size:12px">${c.id}</td>
-    </tr>`).join("");
-
-  document.getElementById("modalOverlay").style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-
-function cerrarModal(){
-  document.getElementById("modalOverlay").style.display = "none";
-  document.body.style.overflow = "";
-}
-
-document.addEventListener("keydown", e => { if(e.key === "Escape") cerrarModal(); });
-
-function buildTransicionesTable(trans, totalCambios, fechaAnt, fechaAct){
-  if(!trans || !trans.length) return "";
-  // Ordenar por cantidad descendente
-  const sorted = [...trans].sort((a,b) => b.N - a.N);
-  const rows = sorted.map((t, i) => {
-    const pct = totalCambios ? (t.N / totalCambios * 100).toFixed(1) + "%" : "0.0%";
-    const bgAnt = {
-      "Bloqueado por KYC":                    "#fff0f0",
-      "Bloqueado por operaciones":             "#fff5ee",
-      "Información actualizada Kyc":           "#f0f9f0",
-      "Información actualizada operaciones":   "#f0f5fb",
-      "Pendente Validacion Kyc":               "#f0f5ff",
-      "Registro completo":                     "#f5f5ff",
-      "Registro express":                      "#fffbea",
-      "Verificado por Kyc":                    "#f0fff4",
-      "Verificado por operaciones":            "#f0f8ff",
-    }[t._STATUS_ANT] || "#ffffff";
-    const onclick = esClickeable
-      ? `onclick="abrirModal('${t._STATUS_ANT.replace(/'/g,"\\'")}','${t._STATUS_ACT.replace(/'/g,"\\'")}',${t.N})"`
-      : "";
-    return `<tr class="${esClickeable?'trans-row':''}" ${onclick}>
-      <td style="text-align:center;color:var(--muted);font-size:12px">${i+1}</td>
-      <td style="background:${bgAnt}">${t._STATUS_ANT}</td>
-      <td>${t._STATUS_ACT}</td>
-      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(t.N)}</td>
-      <td style="font-family:'DM Mono',monospace;text-align:right;color:var(--muted)">${pct}</td>
-    </tr>`;
-  });
-  // Fila total
-  const totalRow = `<tr style="background:#f9fafb;font-weight:600">
-    <td></td>
-    <td colspan="2">TOTAL CAMBIOS</td>
-    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalCambios)}</td>
-    <td style="text-align:right;font-family:'DM Mono',monospace">100.0%</td>
-  </tr>`;
-  return `
-  <div class="table-card">
-    <div class="table-header">
-      <h3>Cambio de estatus · Todos los movimientos</h3>
-      <span style="font-size:12px;color:var(--muted)">${fmt(totalCambios)} cambios totales · ordenado mayor a menor</span>
+  <div class="sec-title">Desglose por sucursal · 24 de Mayo 2026</div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Totales al 24 de Mayo 2026</h3>
+      <span class="card-sub">vs 17 de Mayo 2026</span>
     </div>
-    <div style="overflow-x:auto">
+    <div class="tbl-wrap">
       <table>
-        <thead><tr>
-          <th style="width:40px">#</th>
-          <th>Status Anterior (${fechaAnt})</th>
-          <th>Status Nuevo (${fechaAct})</th>
-          <th style="text-align:right">Cantidad</th>
-          <th style="text-align:right">% del Total</th>
-        </tr></thead>
-        <tbody>${rows.join("")}${totalRow}</tbody>
+        <thead>
+          <tr>
+            <th rowspan="2" style="vertical-align:middle">Sucursal</th>
+            <th rowspan="2" style="vertical-align:middle;text-align:right">Total</th>
+            <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864">OPERACIONES</th>
+            <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623">KYC-PLD</th>
+            <th rowspan="2" style="vertical-align:middle;text-align:right">Reg. Express</th>
+            <th rowspan="2" style="vertical-align:middle;text-align:right">Variación</th>
+          </tr>
+          <tr>
+            <th style="background:#dce6f3;color:#1F3864;text-align:right">Bloqueado</th>
+            <th style="background:#dce6f3;color:#1F3864;text-align:right">Info Act</th>
+            <th style="background:#dce6f3;color:#1F3864;text-align:right">Reg Completo</th>
+            <th style="background:#dce6f3;color:#1F3864;text-align:right">Verificado</th>
+            <th style="background:#d6e8d0;color:#375623;text-align:right">Bloqueado</th>
+            <th style="background:#d6e8d0;color:#375623;text-align:right">Info Act</th>
+            <th style="background:#d6e8d0;color:#375623;text-align:right">Pend Valid</th>
+            <th style="background:#d6e8d0;color:#375623;text-align:right">Verificado</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#1F3864"></span>Ajijic</div></td>
+          <td class="num-bold">37,871</td>
+          <td class="bg-ops">18,879</td>
+          <td class="bg-ops">102</td>
+          <td class="bg-ops">111</td>
+          <td class="bg-ops">191</td>
+          <td class="bg-kyc">238</td>
+          <td class="bg-kyc">121</td>
+          <td class="bg-kyc">72</td>
+          <td class="bg-kyc">317</td>
+          <td>17,839</td>
+          <td><span class="pill pill-pos">+44</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#2E75B6"></span>Allende</div></td>
+          <td class="num-bold">29,155</td>
+          <td class="bg-ops">14,482</td>
+          <td class="bg-ops">70</td>
+          <td class="bg-ops">62</td>
+          <td class="bg-ops">205</td>
+          <td class="bg-kyc">168</td>
+          <td class="bg-kyc">64</td>
+          <td class="bg-kyc">49</td>
+          <td class="bg-kyc">726</td>
+          <td>13,329</td>
+          <td><span class="pill pill-pos">+26</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#375623"></span>Esmeralda</div></td>
+          <td class="num-bold">7,181</td>
+          <td class="bg-ops">492</td>
+          <td class="bg-ops">23</td>
+          <td class="bg-ops">69</td>
+          <td class="bg-ops">204</td>
+          <td class="bg-kyc">145</td>
+          <td class="bg-kyc">60</td>
+          <td class="bg-kyc">52</td>
+          <td class="bg-kyc">320</td>
+          <td>5,816</td>
+          <td><span class="pill pill-pos">+21</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#E26B0A"></span>Guadalupe</div></td>
+          <td class="num-bold">220,136</td>
+          <td class="bg-ops">85,184</td>
+          <td class="bg-ops">626</td>
+          <td class="bg-ops">518</td>
+          <td class="bg-ops">1,174</td>
+          <td class="bg-kyc">1,498</td>
+          <td class="bg-kyc">847</td>
+          <td class="bg-kyc">3,898</td>
+          <td class="bg-kyc">1,633</td>
+          <td>124,758</td>
+          <td><span class="pill pill-pos">+170</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#7B3F00"></span>Irapuato</div></td>
+          <td class="num-bold">3,660</td>
+          <td class="bg-ops">153</td>
+          <td class="bg-ops">33</td>
+          <td class="bg-ops">100</td>
+          <td class="bg-ops">145</td>
+          <td class="bg-kyc">76</td>
+          <td class="bg-kyc">81</td>
+          <td class="bg-kyc">28</td>
+          <td class="bg-kyc">288</td>
+          <td>2,756</td>
+          <td><span class="pill pill-pos">+33</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#5B2D8E"></span>Mitras</div></td>
+          <td class="num-bold">136,551</td>
+          <td class="bg-ops">15,849</td>
+          <td class="bg-ops">422</td>
+          <td class="bg-ops">396</td>
+          <td class="bg-ops">1,531</td>
+          <td class="bg-kyc">1,416</td>
+          <td class="bg-kyc">1,410</td>
+          <td class="bg-kyc">838</td>
+          <td class="bg-kyc">3,106</td>
+          <td>111,583</td>
+          <td><span class="pill pill-pos">+215</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#B5451B"></span>Neza</div></td>
+          <td class="num-bold">13,926</td>
+          <td class="bg-ops">2,385</td>
+          <td class="bg-ops">27</td>
+          <td class="bg-ops">44</td>
+          <td class="bg-ops">288</td>
+          <td class="bg-kyc">232</td>
+          <td class="bg-kyc">142</td>
+          <td class="bg-kyc">131</td>
+          <td class="bg-kyc">475</td>
+          <td>10,202</td>
+          <td><span class="pill pill-pos">+32</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#0D6E8C"></span>Satelite</div></td>
+          <td class="num-bold">18,033</td>
+          <td class="bg-ops">751</td>
+          <td class="bg-ops">2</td>
+          <td class="bg-ops">8</td>
+          <td class="bg-ops">87</td>
+          <td class="bg-kyc">706</td>
+          <td class="bg-kyc">13</td>
+          <td class="bg-kyc">18</td>
+          <td class="bg-kyc">747</td>
+          <td>15,699</td>
+          <td><span class="pill pill-neu">0</span></td>
+        </tr>
+        <tr>
+          <td><div class="suc-name"><span class="suc-dot" style="background:#2D6A4F"></span>Sendero</div></td>
+          <td class="num-bold">35,882</td>
+          <td class="bg-ops">1,222</td>
+          <td class="bg-ops">280</td>
+          <td class="bg-ops">99</td>
+          <td class="bg-ops">2,568</td>
+          <td class="bg-kyc">261</td>
+          <td class="bg-kyc">337</td>
+          <td class="bg-kyc">717</td>
+          <td class="bg-kyc">2,694</td>
+          <td>27,704</td>
+          <td><span class="pill pill-pos">+223</span></td>
+        </tr>
+        <tr class="total-row">
+          <td>Total</td>
+          <td class="num-bold">502,395</td>
+          <td class="bg-ops">139,397</td>
+          <td class="bg-ops">1,585</td>
+          <td class="bg-ops">1,407</td>
+          <td class="bg-ops">6,393</td>
+          <td class="bg-kyc">4,740</td>
+          <td class="bg-kyc">3,075</td>
+          <td class="bg-kyc">5,803</td>
+          <td class="bg-kyc">10,306</td>
+          <td>329,686</td>
+          <td><span class="pill pill-pos">+764</span></td>
+        </tr></tbody>
       </table>
     </div>
-  </div>`;
-}
+  </div>
 
-
-function buildKycTable(ops){
-  if(!ops || !ops.sucursales) return "";
-  const ORDEN = ["Allende","Ajijic","Satelite","Neza","Esmeralda","Sendero","Irapuato","Mitras","Guadalupe"];
-  const sorted = [...ops.sucursales]
-    .filter(s => s.kyc_total > 0)
-    .sort((a,b)=>{
-      const ia=ORDEN.indexOf(a.nombre); const ib=ORDEN.indexOf(b.nombre);
-      return (ia===-1?999:ia)-(ib===-1?999:ib);
-    });
-  const cols = [
-    {key:"kyc_bloq",    lbl:"Bloqueado KYC",         bg:"#fff0f0"},
-    {key:"kyc_info_act",lbl:"Info Actualizada KYC",   bg:"#f0f9f0"},
-    {key:"kyc_pend",    lbl:"Pend. Validación KYC",   bg:"#f0f5ff"},
-    {key:"kyc_verif",   lbl:"Verificado KYC",         bg:"#f0fff4"},
-  ];
-  const thead = `<tr>
-    <th>Sucursal</th><th>Total</th>
-    ${cols.map(c=>`<th>${c.lbl}</th>`).join("")}
-  </tr>`;
-  const tbody = sorted.map(s=>`
-    <tr>
-      <td style="font-weight:500">${s.nombre}</td>
-      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(s.kyc_total)}</td>
-      ${cols.map(c=>`<td style="background:${c.bg};text-align:right;font-family:'DM Mono',monospace">${fmt(s[c.key]??0)}</td>`).join("")}
-    </tr>`).join("");
-  const totales = cols.map(c=>sorted.reduce((a,s)=>a+(s[c.key]??0),0));
-  const totalGeneral = sorted.reduce((a,s)=>a+(s.kyc_total??0),0);
-  const tfooter = `<tr style="background:#f9fafb;font-weight:600">
-    <td>Total</td>
-    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalGeneral)}</td>
-    ${totales.map((t,i)=>`<td style="background:${cols[i].bg};text-align:right;font-family:'DM Mono',monospace">${fmt(t)}</td>`).join("")}
-  </tr>`;
-  return `
-  <div class="table-card" style="margin-top:14px">
-    <div class="table-header">
-      <h3>Clientes nuevos KYC-PLD en el período</h3>
-      <span class="ops-periodo">${ops.fecha_inicio} – ${ops.fecha_fin}</span>
-    </div>
-    <div class="ops-table-wrap">
-      <table><thead>${thead}</thead><tbody>${tbody}${tfooter}</tbody></table>
-    </div>
-  </div>`;
-}
-
-function buildOpsTable(ops){
-  if(!ops || !ops.sucursales) return "";
-  const cols = [
-    {key:"reg_completo",  lbl:"Registro Completo",               bg:"#f0f5fb"},
-    {key:"verif_ops",     lbl:"Verificado por Operaciones",       bg:"#f0f5fb"},
-    {key:"bloq_ops",      lbl:"Bloqueo por Operaciones",          bg:"#fff0f0"},
-    {key:"info_act_ops",  lbl:"Info Actualizada Operaciones",     bg:"#f0f5fb"},
-    {key:"re",            lbl:"Registro Express",                  bg:"#fffbea"},
-  ];
-  const ORDEN = ["Allende","Ajijic","Satelite","Neza","Esmeralda","Sendero","Irapuato","Mitras","Guadalupe"];
-  const sorted = [...ops.sucursales].sort((a,b)=>{
-    const ia = ORDEN.indexOf(a.nombre); const ib = ORDEN.indexOf(b.nombre);
-    return (ia===-1?999:ia) - (ib===-1?999:ib);
-  });
-  const thead = `<tr>
-    <th>Sucursal</th>
-    <th>Total</th>
-    ${cols.map(c=>`<th>${c.lbl}</th>`).join("")}
-  </tr>`;
-  const tbody = sorted.map(s=>`
-    <tr>
-      <td style="font-weight:500">${s.nombre}</td>
-      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(s.total)}</td>
-      ${cols.map(c=>`<td style="background:${c.bg};text-align:right;font-family:'DM Mono',monospace">${fmt(s[c.key])}</td>`).join("")}
-    </tr>`).join("");
-  // Fila total
-  const totales = cols.map(c=>sorted.reduce((a,s)=>a+s[c.key],0));
-  const totalGeneral = sorted.reduce((a,s)=>a+s.total,0);
-  const tfooter = `<tr style="background:#f9fafb;font-weight:600">
-    <td>Total</td>
-    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalGeneral)}</td>
-    ${totales.map((t,i)=>`<td style="background:${cols[i].bg};text-align:right;font-family:'DM Mono',monospace">${fmt(t)}</td>`).join("")}
-  </tr>`;
-  return `
-  <div class="table-card">
-    <div class="table-header">
-      <h3>Clientes nuevos en el período</h3>
-      <span class="ops-periodo">${ops.fecha_inicio} – ${ops.fecha_fin}</span>
-    </div>
-    <div class="ops-table-wrap">
-      <table><thead>${thead}</thead><tbody>${tbody}${tfooter}</tbody></table>
-    </div>
-  </div>`;
-}
-
-function render(d){
-  const m  = d.meta;
-  const k  = d.kpis;
-  const ss = d.sucursales;
-  const tc = k.total_act;
-  // Cargar detalle de cambios para el modal
-  _detalleCambios = d.detalle_cambios || [];
-
-  // Header — actualizar solo badge-upd (badge-corte fue reemplazado por el selector)
-  const badgeUpd = document.getElementById("badge-upd");
-  if(badgeUpd) badgeUpd.textContent = `Actualizado: ${m.generado}`;
-
-  // KPIs
-  const kpiHtml = `
-  <div class="section-title">Resumen global · ${m.num_sucursales} sucursales</div>
-  <div class="kpi-grid">
-    <div class="kpi">
-      <div class="kpi-accent" style="background:#1F3864"></div>
-      <div class="kpi-label">Total clientes en base</div>
-      <div class="kpi-value">${fmt(k.total_act)}</div>
-      ${deltaKpi(k.delta_total)}
-    </div>
-    <div class="kpi">
-      <div class="kpi-accent" style="background:#E26B0A"></div>
-      <div class="kpi-label">Clientes nuevos</div>
-      <div class="kpi-value">${fmt(k.clientes_nuevos)}</div>
-      ${deltaKpi(k.clientes_nuevos)}
-    </div>
-    <div class="kpi">
-      <div class="kpi-accent" style="background:#7c3aed"></div>
-      <div class="kpi-label">Cambios de estatus</div>
-      <div class="kpi-value">${fmt(k.cambios_status)}</div>
-      <span class="kpi-delta delta-neu">${pct(k.cambios_status, k.total_act)} de la base</span>
-    </div>
-    <div class="kpi">
-      <div class="kpi-accent" style="background:#375623"></div>
-      <div class="kpi-label">Verificados KYC</div>
-      <div class="kpi-value">${fmt(k.verif_kyc_act)}</div>
-      ${deltaKpi(k.verif_kyc_act - k.verif_kyc_ant)}
-    </div>
-    <div class="kpi">
-      <div class="kpi-accent" style="background:#dc2626"></div>
-      <div class="kpi-label">Bloqueados por KYC</div>
-      <div class="kpi-value">${fmt(k.bloq_kyc_act)}</div>
-      ${deltaKpi(k.bloq_kyc_act - k.bloq_kyc_ant)}
-    </div>
-    <div class="kpi">
-      <div class="kpi-accent" style="background:#0891b2"></div>
-      <div class="kpi-label">Pend. Validación KYC</div>
-      <div class="kpi-value">${fmt(k.pend_kyc_act)}</div>
-      ${deltaKpi(k.pend_kyc_act - k.pend_kyc_ant)}
-    </div>
-  </div>`;
-
-
-  // Tabla sucursales
-  const tablaSucs = ss.map((s, i) => `
-    <tr>
-      <td><div class="suc-name">
-        <span class="suc-dot" style="background:${COLORES_SUC[i%COLORES_SUC.length]}"></span>
-        ${s.nombre}
-      </div></td>
-      <td style="font-weight:600">${fmt(s.total_act)}</td>
-      <td style="background:#f0f5fb">${fmt(s.bloq_ops)}</td>
-      <td style="background:#f0f5fb">${fmt(s.info_act_ops ?? 0)}</td>
-      <td style="background:#f0f5fb">${fmt(s.reg_completo ?? 0)}</td>
-      <td style="background:#f0f5fb">${fmt(s.verif_ops ?? 0)}</td>
-      <td style="background:#f0f9f0">${fmt(s.bloq_kyc)}</td>
-      <td style="background:#f0f9f0">${fmt(s.info_act_kyc ?? 0)}</td>
-      <td style="background:#f0f9f0">${fmt(s.pend_kyc)}</td>
-      <td style="background:#f0f9f0">${fmt(s.verif_kyc)}</td>
-      <td>${fmt(s.re_act)}</td>
-      <td>${delta(s.delta)}</td>
-    </tr>`).join("");
-
-  const totalRow = `
-    <tr style="background:#f9fafb;font-weight:600">
-      <td>Total</td>
-      <td>${fmt(k.total_act)}</td>
-      <td style="background:#e8f0f8">${fmt(k.bloq_ops_act)}</td>
-      <td style="background:#e8f0f8">${fmt(k.info_act_ops_act ?? 0)}</td>
-      <td style="background:#e8f0f8">${fmt(k.reg_completo_act ?? 0)}</td>
-      <td style="background:#e8f0f8">${fmt(k.verif_ops_act ?? 0)}</td>
-      <td style="background:#e4f2e4">${fmt(k.bloq_kyc_act)}</td>
-      <td style="background:#e4f2e4">${fmt(k.info_act_kyc_act ?? 0)}</td>
-      <td style="background:#e4f2e4">${fmt(k.pend_kyc_act)}</td>
-      <td style="background:#e4f2e4">${fmt(k.verif_kyc_act)}</td>
-      <td>${fmt(k.re_act)}</td>
-      <td>${delta(k.delta_total)}</td>
-    </tr>`;
-
-  const tablaHtml = `
-  <div class="section-title">Desglose por sucursal · ${m.fecha_actual_larga}</div>
-  <div class="table-card">
-    <div class="table-header">
-      <h3>Totales al ${m.fecha_actual_larga}</h3>
-      <span style="font-size:12px;color:var(--muted)">vs ${m.fecha_anterior_larga}</span>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr>
-          <th rowspan="2">Sucursal</th>
-          <th rowspan="2">Total</th>
-          <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864;border-bottom:1px solid #c5d4e8">OPERACIONES</th>
-          <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623;border-bottom:1px solid #b8d8ae">KYC-PLD</th>
-          <th rowspan="2">Reg. Express</th>
-          <th rowspan="2">Variación</th>
-        </tr>
-        <tr>
-          <th style="background:#dce6f3;color:#1F3864">Bloqueado</th>
-          <th style="background:#dce6f3;color:#1F3864">Info Act</th>
-          <th style="background:#dce6f3;color:#1F3864">Reg. Completo</th>
-          <th style="background:#dce6f3;color:#1F3864">Verificado</th>
-          <th style="background:#d6e8d0;color:#375623">Bloqueado</th>
-          <th style="background:#d6e8d0;color:#375623">Info Act</th>
-          <th style="background:#d6e8d0;color:#375623">Pend. Valid</th>
-          <th style="background:#d6e8d0;color:#375623">Verificado</th>
-        </tr>
-      </thead>
-      <tbody>${tablaSucs}${totalRow}</tbody>
-    </table></div>
-  </div>`;
-
-  // Documentación
-  const pAviso  = tc ? (k.aviso_act / tc * 100).toFixed(1) : 0;
-  const pHuella = tc ? (k.huella_act / tc * 100).toFixed(1) : 0;
-  const pIdVenc = tc ? (k.id_venc_act / tc * 100).toFixed(1) : 0;
-  const pSinAv  = tc ? ((tc - k.aviso_act) / tc * 100).toFixed(1) : 0;
-
-  const docHtml = `
-  <div class="section-title">Indicadores de documentación · ${m.fecha_actual_larga}</div>
+  <div class="sec-title">Indicadores de documentación · 24 de Mayo 2026</div>
   <div class="doc-grid">
     <div class="doc-card">
       <div class="doc-label">Con Aviso de Privacidad</div>
-      <div class="doc-pct">${pAviso}%</div>
-      <div class="doc-count">${fmt(k.aviso_act)} de ${fmt(tc)}</div>
-      <div class="progress"><div class="progress-bar" style="width:${pAviso}%;background:#2E75B6"></div></div>
+      <div class="doc-pct">56.5%</div>
+      <div class="doc-count">283,867 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:56.5%;background:#2E75B6"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">Sin Aviso de Privacidad</div>
-      <div class="doc-pct" style="color:var(--neg)">${pSinAv}%</div>
-      <div class="doc-count">${fmt(tc - k.aviso_act)} de ${fmt(tc)}</div>
-      <div class="progress"><div class="progress-bar" style="width:${pSinAv}%;background:#f97316"></div></div>
+      <div class="doc-pct" style="color:var(--neg)">43.5%</div>
+      <div class="doc-count">218,528 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:43.5%;background:#f97316"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">Con Huella Digital</div>
-      <div class="doc-pct">${pHuella}%</div>
-      <div class="doc-count">${fmt(k.huella_act)} de ${fmt(tc)}</div>
-      <div class="progress"><div class="progress-bar" style="width:${pHuella}%;background:#375623"></div></div>
+      <div class="doc-pct">41.7%</div>
+      <div class="doc-count">209,563 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:41.7%;background:#375623"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">Sin Huella Digital</div>
-      <div class="doc-pct" style="color:var(--neg)">${(100-pHuella).toFixed(1)}%</div>
-      <div class="doc-count">${fmt(tc - k.huella_act)} de ${fmt(tc)}</div>
-      <div class="progress"><div class="progress-bar" style="width:${(100-pHuella).toFixed(1)}%;background:#7c3aed"></div></div>
+      <div class="doc-pct" style="color:var(--neg)">58.3%</div>
+      <div class="doc-count">292,832 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:58.3%;background:#7c3aed"></div></div>
     </div>
     <div class="doc-card">
       <div class="doc-label">ID Vencida (≤ 31/12/2025)</div>
-      <div class="doc-pct" style="color:var(--neg)">${pIdVenc}%</div>
-      <div class="doc-count">${fmt(k.id_venc_act)} de ${fmt(tc)}</div>
-      <div class="progress"><div class="progress-bar" style="width:${pIdVenc}%;background:#dc2626"></div></div>
+      <div class="doc-pct" style="color:var(--neg)">53.9%</div>
+      <div class="doc-count">270,837 de 502,395</div>
+      <div class="progress"><div class="progress-bar" style="width:53.9%;background:#dc2626"></div></div>
     </div>
-  </div>`;
-
-  // Descargas — se generan automáticamente por sucursal
-  const dlSucursales = ss.map(s => `
-    <a class="dl-card" href="${s.nombre}_Comparativa_PLD_${m.fecha_anterior_corta}_vs_${m.fecha_actual_corta}.xlsx" download>
-      <div class="dl-icon" style="background:#e8f4ff">📋</div>
-      <div class="dl-info">
-        <div class="dl-name">${s.nombre} — Comparativa</div>
-        <div class="dl-meta">${m.fecha_anterior_larga} vs ${m.fecha_actual_larga}</div>
-      </div>
-      <span style="color:var(--muted);font-size:18px">↓</span>
-    </a>`).join("");
-
-  const dlHtml = `
-  <div class="section-title">Descargar reportes</div>
-  <div class="downloads-grid">
-    <a class="dl-card" href="Reporte_PLD_TODAS_SUCURSALES_${m.fecha_anterior_corta}_vs_${m.fecha_actual_corta}.xlsx" download>
-      <div class="dl-icon">📊</div>
-      <div class="dl-info">
-        <div class="dl-name">Reporte Consolidado · Todas las Sucursales</div>
-        <div class="dl-meta">${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · 11 hojas</div>
-      </div>
-      <span style="color:var(--muted);font-size:18px">↓</span>
-    </a>
-    ${dlSucursales}
-  </div>`;
-
-  const donutHtml = `
-  <div class="section-title">Distribución de estatus · ${m.fecha_actual_larga}</div>
-  <div class="table-card" style="padding:1.5rem">
-    ${buildDonut(k, k.total_act)}
-  </div>`;
-
-  const transHtml = (d.top_transiciones && d.top_transiciones.length) ? `
-  <div class="section-title">Cambio de estatus · ${m.fecha_anterior_corta} vs ${m.fecha_actual_corta}</div>
-  ${buildTransicionesTable(d.top_transiciones, k.cambios_status, m.fecha_anterior_corta, m.fecha_actual_corta)}` : "";
-
-  const opsHtml = d.reporte_operaciones ? `
-  <div class="section-title">Reporte de operaciones · ${d.meta.fecha_anterior_corta} al ${d.meta.fecha_actual_corta}</div>
-  <div class="table-card" style="padding:1.5rem;margin-bottom:14px">
-    ${buildOpsChart(d.reporte_operaciones)}
   </div>
-  ${buildOpsTable(d.reporte_operaciones)}
-  ${buildKycTable(d.reporte_operaciones)}` : "";
 
-  document.getElementById("contenido").innerHTML =
-    kpiHtml + donutHtml + tablaHtml + docHtml + transHtml + opsHtml;
+  <div class="sec-title">Cambio de estatus · 17-May vs 24-May</div>
+  <div class="card">
+    <div class="card-header">
+      <h3>Todos los movimientos</h3>
+      <span class="card-sub">2,367 cambios · ordenado mayor a menor</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:40px">#</th>
+          <th>Status Anterior (17-May)</th>
+          <th>Status Nuevo (24-May)</th>
+          <th style="text-align:right">Cantidad</th>
+          <th style="text-align:right">% del Total</th>
+        </tr></thead>
+        <tbody id="transTbody">
+        <tr>
+          <td class="num-center">1</td>
+          <td style="background:#ede9fe">Pendente Validacion Kyc</td>
+          <td>Verificado por Kyc</td>
+          <td class="num-right bold">828</td>
+          <td class="num-right muted">35.0%</td>
+        </tr>
+        <tr>
+          <td class="num-center">2</td>
+          <td style="background:#ede9fe">Pendente Validacion Kyc</td>
+          <td>Bloqueado por KYC</td>
+          <td class="num-right bold">267</td>
+          <td class="num-right muted">11.3%</td>
+        </tr>
+        <tr>
+          <td class="num-center">3</td>
+          <td style="background:#fefce8">Registro express</td>
+          <td>Registro completo</td>
+          <td class="num-right bold">208</td>
+          <td class="num-right muted">8.8%</td>
+        </tr>
+        <tr>
+          <td class="num-center">4</td>
+          <td style="background:#ede9fe">Pendente Validacion Kyc</td>
+          <td>Información actualizada Kyc</td>
+          <td class="num-right bold">198</td>
+          <td class="num-right muted">8.4%</td>
+        </tr>
+        <tr>
+          <td class="num-center">5</td>
+          <td style="background:#dcfce7">Información actualizada Kyc</td>
+          <td>Verificado por Kyc</td>
+          <td class="num-right bold">186</td>
+          <td class="num-right muted">7.9%</td>
+        </tr>
+        <tr>
+          <td class="num-center">6</td>
+          <td style="background:#fee2e2">Bloqueado por KYC</td>
+          <td>Información actualizada Kyc</td>
+          <td class="num-right bold">150</td>
+          <td class="num-right muted">6.3%</td>
+        </tr>
+        <tr>
+          <td class="num-center">7</td>
+          <td style="background:#fefce8">Registro express</td>
+          <td>Información actualizada operaciones</td>
+          <td class="num-right bold">125</td>
+          <td class="num-right muted">5.3%</td>
+        </tr>
+        <tr>
+          <td class="num-center">8</td>
+          <td style="background:#fef3c7">Bloqueado por operaciones</td>
+          <td>Información actualizada operaciones</td>
+          <td class="num-right bold">118</td>
+          <td class="num-right muted">5.0%</td>
+        </tr>
+        <tr>
+          <td class="num-center">9</td>
+          <td style="background:#dbeafe">Información actualizada operaciones</td>
+          <td>Pendente Validacion Kyc</td>
+          <td class="num-right bold">98</td>
+          <td class="num-right muted">4.1%</td>
+        </tr>
+        <tr>
+          <td class="num-center">10</td>
+          <td style="background:#dcfce7">Verificado por Kyc</td>
+          <td>Bloqueado por KYC</td>
+          <td class="num-right bold">46</td>
+          <td class="num-right muted">1.9%</td>
+        </tr>
+        <tr>
+          <td class="num-center">11</td>
+          <td style="background:#dcfce7">Verificado por Kyc</td>
+          <td>Información actualizada Kyc</td>
+          <td class="num-right bold">44</td>
+          <td class="num-right muted">1.9%</td>
+        </tr>
+        <tr>
+          <td class="num-center">12</td>
+          <td style="background:#fefce8">Registro express</td>
+          <td>Pendente Validacion Kyc</td>
+          <td class="num-right bold">37</td>
+          <td class="num-right muted">1.6%</td>
+        </tr>
+        <tr>
+          <td class="num-center">13</td>
+          <td style="background:#dcfce7">Información actualizada Kyc</td>
+          <td>Bloqueado por KYC</td>
+          <td class="num-right bold">25</td>
+          <td class="num-right muted">1.1%</td>
+        </tr>
+        <tr>
+          <td class="num-center">14</td>
+          <td style="background:#dbeafe">Verificado por operaciones</td>
+          <td>Pendente Validacion Kyc</td>
+          <td class="num-right bold">13</td>
+          <td class="num-right muted">0.5%</td>
+        </tr>
+        <tr>
+          <td class="num-center">15</td>
+          <td style="background:#fee2e2">Bloqueado por KYC</td>
+          <td>Verificado por Kyc</td>
+          <td class="num-right bold">8</td>
+          <td class="num-right muted">0.3%</td>
+        </tr>
+        <tr>
+          <td class="num-center">16</td>
+          <td style="background:#fefce8">Registro express</td>
+          <td>Bloqueado por operaciones</td>
+          <td class="num-right bold">7</td>
+          <td class="num-right muted">0.3%</td>
+        </tr>
+        <tr>
+          <td class="num-center">17</td>
+          <td style="background:#fef3c7">Bloqueado por operaciones</td>
+          <td>Pendente Validacion Kyc</td>
+          <td class="num-right bold">4</td>
+          <td class="num-right muted">0.2%</td>
+        </tr>
+        <tr>
+          <td class="num-center">18</td>
+          <td style="background:#f0fdf4">Registro completo</td>
+          <td>Pendente Validacion Kyc</td>
+          <td class="num-right bold">3</td>
+          <td class="num-right muted">0.1%</td>
+        </tr>
+        <tr>
+          <td class="num-center">19</td>
+          <td style="background:#fee2e2">Bloqueado por KYC</td>
+          <td>Pendente Validacion Kyc</td>
+          <td class="num-right bold">1</td>
+          <td class="num-right muted">0.0%</td>
+        </tr>
+        <tr>
+          <td class="num-center">20</td>
+          <td style="background:#dbeafe">Información actualizada operaciones</td>
+          <td>Verificado por Kyc</td>
+          <td class="num-right bold">1</td>
+          <td class="num-right muted">0.0%</td>
+        </tr>
+        <tr class="total-row">
+          <td></td><td colspan="2">TOTAL CAMBIOS</td>
+          <td class="num-right">2,367</td>
+          <td class="num-right">100.0%</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
 
-  document.getElementById("footer").innerHTML =
-    `CECOM · Reportes PLD · ${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · Generado el ${m.generado}`;
-}
+  <div class="sec-title">Reporte de operaciones · 01/01/2026 al 24/05/2026</div>
+  <div class="card" style="padding:1.5rem;margin-bottom:14px">
+    <canvas id="opsChart" style="max-height:320px"></canvas>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-header">
+      <h3>Clientes nuevos en el período — Operaciones</h3>
+      <span class="card-sub">01/01/2026 – 24/05/2026</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Sucursal</th><th style="text-align:right">Total</th>
+          <th style="text-align:right" class="bg-ops-l">Reg. Completo</th>
+          <th style="text-align:right" class="bg-ops-l">Verif. Ops</th>
+          <th style="text-align:right" class="bg-red-l">Bloq. Ops</th>
+          <th style="text-align:right" class="bg-ops-l">Info Act. Ops</th>
+          <th style="text-align:right" class="bg-yel-l">Reg. Express</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>Allende</td>
+          <td class="num-bold num-right">506</td>
+          <td class="num-right bg-ops-l">11</td>
+          <td class="num-right bg-ops-l">200</td>
+          <td class="num-right bg-red-l">159</td>
+          <td class="num-right bg-ops-l">10</td>
+          <td class="num-right bg-yel-l">126</td>
+        </tr>
+        <tr>
+          <td>Ajijic</td>
+          <td class="num-bold num-right">853</td>
+          <td class="num-right bg-ops-l">51</td>
+          <td class="num-right bg-ops-l">187</td>
+          <td class="num-right bg-red-l">482</td>
+          <td class="num-right bg-ops-l">29</td>
+          <td class="num-right bg-yel-l">104</td>
+        </tr>
+        <tr>
+          <td>Satelite</td>
+          <td class="num-bold num-right">217</td>
+          <td class="num-right bg-ops-l">0</td>
+          <td class="num-right bg-ops-l">84</td>
+          <td class="num-right bg-red-l">126</td>
+          <td class="num-right bg-ops-l">1</td>
+          <td class="num-right bg-yel-l">6</td>
+        </tr>
+        <tr>
+          <td>Neza</td>
+          <td class="num-bold num-right">662</td>
+          <td class="num-right bg-ops-l">6</td>
+          <td class="num-right bg-ops-l">276</td>
+          <td class="num-right bg-red-l">137</td>
+          <td class="num-right bg-ops-l">7</td>
+          <td class="num-right bg-yel-l">236</td>
+        </tr>
+        <tr>
+          <td>Esmeralda</td>
+          <td class="num-bold num-right">500</td>
+          <td class="num-right bg-ops-l">59</td>
+          <td class="num-right bg-ops-l">201</td>
+          <td class="num-right bg-red-l">190</td>
+          <td class="num-right bg-ops-l">16</td>
+          <td class="num-right bg-yel-l">34</td>
+        </tr>
+        <tr>
+          <td>Sendero</td>
+          <td class="num-bold num-right">5,653</td>
+          <td class="num-right bg-ops-l">43</td>
+          <td class="num-right bg-ops-l">2,524</td>
+          <td class="num-right bg-red-l">1,103</td>
+          <td class="num-right bg-ops-l">185</td>
+          <td class="num-right bg-yel-l">1,798</td>
+        </tr>
+        <tr>
+          <td>Irapuato</td>
+          <td class="num-bold num-right">367</td>
+          <td class="num-right bg-ops-l">89</td>
+          <td class="num-right bg-ops-l">144</td>
+          <td class="num-right bg-red-l">112</td>
+          <td class="num-right bg-ops-l">22</td>
+          <td class="num-right bg-yel-l">0</td>
+        </tr>
+        <tr>
+          <td>Mitras</td>
+          <td class="num-bold num-right">4,171</td>
+          <td class="num-right bg-ops-l">26</td>
+          <td class="num-right bg-ops-l">1,513</td>
+          <td class="num-right bg-red-l">1,110</td>
+          <td class="num-right bg-ops-l">100</td>
+          <td class="num-right bg-yel-l">1,422</td>
+        </tr>
+        <tr>
+          <td>Guadalupe</td>
+          <td class="num-bold num-right">3,341</td>
+          <td class="num-right bg-ops-l">46</td>
+          <td class="num-right bg-ops-l">1,155</td>
+          <td class="num-right bg-red-l">915</td>
+          <td class="num-right bg-ops-l">78</td>
+          <td class="num-right bg-yel-l">1,147</td>
+        </tr>
+        <tr class="total-row">
+          <td>Total</td>
+          <td class="num-bold num-right">16,270</td>
+          <td class="num-right bg-ops-l">331</td>
+          <td class="num-right bg-ops-l">6,284</td>
+          <td class="num-right bg-red-l">4,334</td>
+          <td class="num-right bg-ops-l">448</td>
+          <td class="num-right bg-yel-l">4,873</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" style="padding:1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <h3 style="font-size:14px;font-weight:600">Clientes nuevos en el período — KYC-PLD</h3>
+      <span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace">01/01/2026 – 24/05/2026</span>
+    </div>
+    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:13px;color:#92400e">
+      ⚠️ Vuelve a correr el script <strong>reporte_pld_todas_sucursales.py</strong> para generar 
+      los datos KYC-PLD actualizados y sube el nuevo <strong>index.html</strong>.
+    </div>
+  </div></div>
 
+</main>
 
-// ── Sistema de Login ─────────────────────────────────────
-async function sha256(msg){
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
-}
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)cerrarModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-sub" id="modalSub"></div>
+      </div>
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <table>
+        <thead><tr><th>Sucursal</th><th>Player ID</th></tr></thead>
+        <tbody id="modalBody"></tbody>
+      </table>
+    </div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
 
-let USUARIOS = [];  // se carga desde datos.json
-
-function mostrarLogin(){ document.getElementById("loginOverlay").style.display="flex"; }
-function ocultarLogin(){ document.getElementById("loginOverlay").style.display="none"; }
-
-function checkSesion(){
-  const sess = sessionStorage.getItem("pld_user");
-  if(sess){
-    const u = JSON.parse(sess);
-    mostrarUsuarioHeader(u.nombre);
-    ocultarLogin();
-    return true;
-  }
-  mostrarLogin();
-  return false;
-}
-
-function mostrarUsuarioHeader(nombre){
-  const el = document.getElementById("headerUser");
-  const btn = document.getElementById("logoutBtn");
-  if(el){ el.textContent = nombre; el.style.display="inline"; }
-  if(btn){ btn.style.display="inline-block"; }
-}
-
-async function doLogin(){
-  const user = document.getElementById("loginUser").value.trim().toLowerCase();
-  const pass = document.getElementById("loginPass").value;
-  const err  = document.getElementById("loginError");
-  if(!user || !pass){ err.style.display="block"; return; }
-  const hash = await sha256(pass);
-  const found = USUARIOS.find(u => u.u === user && u.h === hash);
-  if(found){
-    sessionStorage.setItem("pld_user", JSON.stringify({usuario:found.u, nombre:found.n}));
-    err.style.display="none";
-    mostrarUsuarioHeader(found.n);
-    ocultarLogin();
-    iniciarApp();
-  } else {
-    err.style.display="block";
-    document.getElementById("loginPass").value="";
-    document.getElementById("loginPass").focus();
-  }
-}
-
-function doLogout(){
-  sessionStorage.removeItem("pld_user");
-  const el = document.getElementById("headerUser");
-  const btn = document.getElementById("logoutBtn");
-  if(el){ el.style.display="none"; }
-  if(btn){ btn.style.display="none"; }
-  mostrarLogin();
-  document.getElementById("loginUser").value="";
-  document.getElementById("loginPass").value="";
-}
-
-// ── Historial de cortes ──────────────────────────────────
-function cargarCorte(archivo){
-  if(!archivo) return;
-  document.getElementById("loading").style.display  = "block";
-  document.getElementById("contenido").style.display = "none";
-
-  fetch(archivo + "?v=" + Date.now())
-    .then(r => { if(!r.ok) throw new Error("No encontrado"); return r.json(); })
-    .then(d => {
-      document.getElementById("loading").style.display  = "none";
-      document.getElementById("contenido").style.display = "block";
-      render(d);
-    })
-    .catch(() => {
-      document.getElementById("loading").innerHTML =
-        `<div class="error-box"><p>No se pudo cargar el corte seleccionado.</p></div>`;
-    });
-}
-
-function poblarSelector(cortes, archivoActual){
-  const sel = document.getElementById("selector-corte");
-  sel.innerHTML = cortes.map(c =>
-    `<option value="${c.archivo}" ${c.archivo===archivoActual?"selected":""}>
-      ${c.etiqueta}
-    </option>`
-  ).join("");
-}
-
-// Cargar lista de cortes desde cortes.json
-// Cargar usuarios desde usuarios.json
-fetch("usuarios.json?v=" + Date.now())
-  .then(r => r.ok ? r.json() : Promise.reject("Sin usuarios.json"))
-  .then(u => { USUARIOS = u; })
-  .catch(() => { console.warn("usuarios.json no encontrado"); })
-  .finally(() => {
-    const sesionActiva = checkSesion();
-    if(sesionActiva){
-      iniciarApp();
-    }
-    // Si no hay sesión, el login se muestra y el usuario llama a iniciarApp al hacer login
-  });
-
-function iniciarApp(){
-fetch("cortes.json?v=" + Date.now())
-  .then(r => r.ok ? r.json() : Promise.reject())
-  .then(cortes => {
-    if(!cortes.length) throw new Error("Sin cortes");
-    poblarSelector(cortes, cortes[0].archivo);
-    cargarCorte(cortes[0].archivo);
-  })
-  .catch(() => {
-    // Fallback: intentar datos.json directo (compatibilidad hacia atrás)
-    fetch("datos.json?v=" + Date.now())
-      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
-      .then(d => {
-        const sel = document.getElementById("selector-corte");
-        sel.innerHTML = `<option value="datos.json">${d.meta.fecha_anterior_corta} vs ${d.meta.fecha_actual_corta}</option>`;
-        document.getElementById("loading").style.display  = "none";
-        document.getElementById("contenido").style.display = "block";
-        render(d);
-      })
-      .catch(() => {
-        document.getElementById("loading").innerHTML =
-          `<div class="error-box">
-            <p style="font-weight:600;margin-bottom:8px">No se encontró datos.json</p>
-            <p style="font-size:13px">Corre el script de Python para generar los datos,<br>
-            luego sube <strong>datos.json</strong> y <strong>cortes.json</strong> a GitHub.</p>
-          </div>`;
-      });
-  });
-} // fin iniciarApp
-</script>
-
-<!-- Login overlay -->
-<div class="login-overlay" id="loginOverlay">
+<!-- Login -->
+<div class="login-overlay active" id="loginOverlay">
   <div class="login-box">
     <div class="login-logo">
       <div class="login-logo-icon">C</div>
@@ -871,40 +731,174 @@ fetch("cortes.json?v=" + Date.now())
     <div class="login-field">
       <label class="login-label">Usuario</label>
       <input class="login-input" id="loginUser" type="text" placeholder="tu usuario"
-             autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+             onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <div class="login-field">
       <label class="login-label">Contraseña</label>
       <input class="login-input" id="loginPass" type="password" placeholder="••••••••"
-             autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+             onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="login-btn" onclick="doLogin()">Iniciar sesión</button>
   </div>
 </div>
 
+<script>
+// ── Datos embebidos (actualizados por el script de Python) ──
+const DONUT_DATA = [{"lbl": "Registro Express", "val": 329686, "color": "#FFC000"}, {"lbl": "Bloq. Operaciones", "val": 139397, "color": "#1F3864"}, {"lbl": "Info Act. Ops", "val": 1585, "color": "#2E75B6"}, {"lbl": "Reg. Completo", "val": 1407, "color": "#70AD47"}, {"lbl": "Verif. Ops", "val": 6393, "color": "#4472C4"}, {"lbl": "Bloq. KYC", "val": 4740, "color": "#C00000"}, {"lbl": "Info Act. KYC", "val": 3075, "color": "#FF7C80"}, {"lbl": "Pend. Valid. KYC", "val": 5803, "color": "#ED7D31"}, {"lbl": "Verificado KYC", "val": 10306, "color": "#375623"}];
+const OPS_CHART  = {"labels": ["Sendero", "Mitras", "Guadalupe", "Ajijic", "Neza", "Allende", "Esmeralda", "Irapuato", "Satelite"], "reg_completo": [43, 26, 46, 51, 6, 11, 59, 89, 0], "verif_ops": [2524, 1513, 1155, 187, 276, 200, 201, 144, 84], "bloq_ops": [1103, 1110, 915, 482, 137, 159, 190, 112, 126], "info_act_ops": [185, 100, 78, 29, 7, 10, 16, 22, 1], "re": [1798, 1422, 1147, 104, 236, 126, 34, 0, 6], "totales": [5653, 4171, 3341, 853, 662, 506, 500, 367, 217]};
+const DETALLE_CAMBIOS = [];  // se carga desde datos.json si está disponible
 
-<!-- Modal detalle cambios -->
-<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="if(event.target===this)cerrarModal()">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div>
-        <div class="modal-title" id="modalTitle">Detalle de cambios</div>
-        <div class="modal-sub" id="modalSub"></div>
-      </div>
-      <button class="modal-close" onclick="cerrarModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <table>
-        <thead><tr>
-          <th>Sucursal</th>
-          <th>Player ID</th>
-        </tr></thead>
-        <tbody id="modalBody"></tbody>
-      </table>
-    </div>
-    <div class="modal-footer" id="modalFooter"></div>
-  </div>
-</div>
+// ── Usuarios (hash SHA-256) ──
+const USUARIOS = [{"u":"misael","h":"b7fe6ccadfe0f4376e11bd2da6effab51230322c5b31e4f88ebf95e4c785d285","n":"Misael Urbina"},{"u":"nydia","h":"b7fe6ccadfe0f4376e11bd2da6effab51230322c5b31e4f88ebf95e4c785d285","n":"Nydia Salas"},{"u":"pld","h":"b7fe6ccadfe0f4376e11bd2da6effab51230322c5b31e4f88ebf95e4c785d285","n":"Equipo PLD"}];
 
+// ── Login ────────────────────────────────────────────────────
+async function sha256(msg){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function doLogin(){
+  const user = document.getElementById('loginUser').value.trim().toLowerCase();
+  const pass = document.getElementById('loginPass').value;
+  const err  = document.getElementById('loginError');
+  if(!user||!pass){ err.style.display='block'; return; }
+  const hash = await sha256(pass);
+  const found = USUARIOS.find(u=>u.u===user&&u.h===hash);
+  if(found){
+    sessionStorage.setItem('pld_user', JSON.stringify({usuario:found.u,nombre:found.n}));
+    err.style.display='none';
+    document.getElementById('loginOverlay').classList.remove('active');
+    document.getElementById('headerUser').textContent = found.n;
+    document.getElementById('logoutBtn').style.display = 'inline-block';
+    iniciarGraficas();
+  } else {
+    err.style.display='block';
+    document.getElementById('loginPass').value='';
+    document.getElementById('loginPass').focus();
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem('pld_user');
+  document.getElementById('loginOverlay').classList.add('active');
+  document.getElementById('headerUser').textContent='';
+  document.getElementById('logoutBtn').style.display='none';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+
+// ── Verificar sesión al cargar ───────────────────────────────
+window.addEventListener('DOMContentLoaded', ()=>{
+  const sess = sessionStorage.getItem('pld_user');
+  if(sess){
+    const u = JSON.parse(sess);
+    document.getElementById('loginOverlay').classList.remove('active');
+    document.getElementById('headerUser').textContent = u.nombre;
+    document.getElementById('logoutBtn').style.display = 'inline-block';
+  }
+  iniciarGraficas();
+  cargarDetalleCambios();
+});
+
+// ── Gráficas ─────────────────────────────────────────────────
+function iniciarGraficas(){
+  // Donut
+  const total = DONUT_DATA.reduce((a,d)=>a+d.val,0);
+  const circ  = 2*Math.PI*90;
+  let offset  = 0;
+  const paths = DONUT_DATA.map(d=>{
+    const dash = d.val/total*circ;
+    const el = `<circle cx="110" cy="110" r="90" fill="none" stroke="${d.color}"
+      stroke-width="28" stroke-dasharray="${dash} ${circ-dash}"
+      stroke-dashoffset="${-offset}"/>`;
+    offset += dash;
+    return el;
+  }).join('');
+  document.querySelector('.donut-wrap').innerHTML = `
+    <svg viewBox="0 0 220 220" width="200" height="200" style="transform:rotate(-90deg)">${paths}</svg>
+    <div class="donut-center">
+      <div class="donut-center-val">502,395</div>
+      <div class="donut-center-lbl">clientes totales</div>
+    </div>`;
+  document.getElementById('donutLegend').innerHTML = DONUT_DATA.map(d=>{
+    const p=(d.val/total*100).toFixed(1);
+    return `<div class="donut-item">
+      <div class="donut-dot" style="background:${d.color}"></div>
+      <span class="donut-lbl">${d.lbl}</span>
+      <span class="donut-val">${d.val.toLocaleString('es-MX')}</span>
+      <span class="donut-pct" style="color:${d.color}">${p}%</span>
+    </div>`;
+  }).join('');
+
+  // Gráfica barras operaciones
+  const ctx = document.getElementById('opsChart');
+  if(ctx && typeof Chart !== 'undefined'){
+    new Chart(ctx, {
+      type:'bar',
+      data:{
+        labels: OPS_CHART.labels,
+        datasets:[
+          {label:'Reg. Completo', data:OPS_CHART.reg_completo, backgroundColor:'#1F3864'},
+          {label:'Verif. Ops',    data:OPS_CHART.verif_ops,    backgroundColor:'#2E75B6'},
+          {label:'Bloq. Ops',     data:OPS_CHART.bloq_ops,     backgroundColor:'#C00000'},
+          {label:'Info Act. Ops', data:OPS_CHART.info_act_ops, backgroundColor:'#70AD47'},
+          {label:'Reg. Express',  data:OPS_CHART.re,           backgroundColor:'#FFC000'},
+        ]
+      },
+      options:{
+        indexAxis:'y', responsive:true,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{
+            footer:items=>`Total: ${OPS_CHART.totales[items[0].dataIndex].toLocaleString('es-MX')}`,
+            label:item=>` ${item.dataset.label}: ${item.raw.toLocaleString('es-MX')}`
+          }}
+        },
+        scales:{
+          x:{stacked:true,ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'k':v,color:'#888780',font:{size:11}}},
+          y:{stacked:true,grid:{display:false},ticks:{color:'#444441',font:{size:12}}}
+        }
+      }
+    });
+  }
+}
+
+// ── Modal detalle cambios ────────────────────────────────────
+let _detalle = [];
+function cargarDetalleCambios(){
+  fetch('datos.json?v='+Date.now())
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(d=>{
+      _detalle = d.detalle_cambios||[];
+      if(_detalle.length){
+        document.querySelectorAll('#transTbody tr').forEach(tr=>{
+          tr.classList.add('trans-row');
+          const celdas = tr.querySelectorAll('td');
+          if(celdas.length>=4){
+            const ant = celdas[1]?.textContent?.trim();
+            const act = celdas[2]?.textContent?.trim();
+            if(ant&&act) tr.onclick = ()=>abrirModal(ant,act);
+          }
+        });
+      }
+    })
+    .catch(()=>{});
+}
+function abrirModal(ant,act){
+  const filtrados = _detalle.filter(c=>c.ant===ant&&c.act===act);
+  if(!filtrados.length){ alert('No hay detalle disponible — vuelve a correr el script.'); return; }
+  document.getElementById('modalTitle').textContent = ant+' → '+act;
+  document.getElementById('modalSub').textContent   = filtrados.length.toLocaleString('es-MX')+' cliente(s)';
+  document.getElementById('modalFooter').textContent= filtrados.length.toLocaleString('es-MX')+' registros';
+  document.getElementById('modalBody').innerHTML    = filtrados.map(c=>
+    `<tr><td>${c.sucursal}</td><td style="font-family:'DM Mono',monospace;font-size:12px">${c.id}</td></tr>`
+  ).join('');
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function cerrarModal(){
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarModal();});
+</script>
 </body>
 </html>
