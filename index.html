@@ -2,535 +2,909 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reportes PLD — CECOM</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto)}
-header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
-.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:12px}
-.li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
-.lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
-.hr{display:flex;align-items:center;gap:10px}
-.cb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace}
-.ub{font-size:11px;opacity:.55}.un{font-size:12px;opacity:.8}
-.lo{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
-main{max-width:1200px;margin:0 auto;padding:2rem}
-.st{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1rem}
-.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
-.kp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden}
-.ka{position:absolute;top:0;left:0;right:0;height:3px}
-.kl{font-size:12px;color:var(--muted);margin-bottom:6px}
-.kv{font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
-.kd{display:inline-flex;align-items:center;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
-.dp{background:var(--pos-bg);color:var(--pos)}.dn{background:var(--neg-bg);color:var(--neg)}.dz{background:#f3f4f6;color:var(--muted)}
-.cd{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.ch{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
-.ch h3{font-size:14px;font-weight:600}.cs{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{background:#f9fafb;padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
-thead th[colspan]{text-align:center!important}
-thead th:not(:first-child):not([colspan]){text-align:right}
-tbody tr{border-bottom:1px solid #f3f4f6}
-tbody tr:hover{background:#f9fafb}
-td{padding:11px 14px}
-td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
-.sn{font-weight:500;display:flex;align-items:center;gap:8px}
-.sd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.nb{font-weight:600}.muted{color:var(--muted)}
-.bo{background:#f0f5fb}.bk{background:#f0f9f0}.br{background:#fff5f5}.by{background:#fffbea}
-.tr2{background:#f9fafb!important;font-weight:600}
-.pl{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
-.pp{background:var(--pos-bg);color:var(--pos)}.pn{background:var(--neg-bg);color:var(--neg)}.pz{background:#f3f4f6;color:var(--muted)}
-.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-.dc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-.dl{font-size:12px;color:var(--muted);margin-bottom:4px}.dv{font-size:26px;font-weight:600;margin-bottom:2px}
-.dc2{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
-.pg{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
-.pb{height:100%;border-radius:3px}
-.ds{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center;padding:1.5rem}
-.dw{position:relative;width:200px;height:200px}
-.dc3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-.dv2{font-size:20px;font-weight:600;letter-spacing:-1px}.dl2{font-size:11px;color:var(--muted)}
-.dle{display:flex;flex-direction:column;gap:6px}
-.di{display:flex;align-items:center;gap:8px;font-size:12px}
-.dd{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-.da{flex:1}.dq{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:60px;text-align:right}
-.dp2{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:40px;text-align:right}
-.xr{cursor:pointer}.xr:hover{background:#f0f5ff!important}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
-.mo.on{display:flex}
-.mb{background:var(--card);border-radius:16px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.mh{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
-.mt{font-size:14px;font-weight:600;margin-bottom:3px}.ms{font-size:12px;color:var(--muted)}
-.mc{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:15px;color:var(--muted)}
-.mx{overflow-y:auto;flex:1}.mx table{font-size:13px}
-.mx thead th{position:sticky;top:0;z-index:1}
-.mf{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
-.lo2{position:fixed;inset:0;background:var(--azul);display:none;align-items:center;justify-content:center;z-index:9999}
-.lo2.on{display:flex}
-.lb{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:340px}
-.ll{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
-.li2{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
-.lt2{font-size:18px;font-weight:600;color:var(--azul)}.ls2{font-size:12px;color:var(--muted)}
-.lf{margin-bottom:1rem}
-.llab{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.8px}
-.lin{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-sizing:border-box}
-.lin:focus{border-color:var(--azul2)}
-.lbtn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
-.lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
-@media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
-.hr select option{background:#1F3864;color:white}
+  :root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#FFFFFF;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
+  header{background:var(--azul);color:white;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+  .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;flex-wrap:wrap;gap:8px}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-icon{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600}
+  .logo-text{font-size:16px;font-weight:600}
+  .logo-sub{font-size:11px;opacity:.65;font-weight:300}
+  .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .corte-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace}
+  .upd-badge{font-size:11px;opacity:.55}
+  main{max-width:1200px;margin:0 auto;padding:2rem}
+  .section-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;margin-top:2.5rem}
+
+  /* Loading */
+  .loading{text-align:center;padding:4rem;color:var(--muted)}
+  .spinner{width:32px;height:32px;border:3px solid #e5e7eb;border-top-color:var(--azul2);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Error */
+  .error-box{background:#fff5f5;border:1px solid #fecaca;border-radius:12px;padding:1.5rem;text-align:center;color:var(--neg)}
+
+  /* KPIs */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+  .kpi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
+  .kpi-label{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .kpi-value{font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
+  .kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
+  .delta-pos{background:var(--pos-bg);color:var(--pos)}
+  .delta-neg{background:var(--neg-bg);color:var(--neg)}
+  .delta-neu{background:#f3f4f6;color:var(--muted)}
+
+
+  /* Tabla */
+  .table-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .table-card table{overflow-x:auto}
+  .table-wrap{overflow-x:auto}
+  .table-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+  .table-header h3{font-size:14px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead th{background:#f9fafb;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+  thead th:not(:first-child){text-align:right}
+  thead th[colspan]{text-align:center !important}
+  tbody tr{border-bottom:1px solid #f3f4f6;transition:background .1s}
+  tbody tr:hover{background:#f9fafb}
+  tbody tr:last-child{border-bottom:none}
+  td{padding:12px 16px}
+  td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+  .suc-name{font-weight:500;display:flex;align-items:center;gap:8px}
+  .suc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+  .pill-pos{background:var(--pos-bg);color:var(--pos)}
+  .pill-neg{background:var(--neg-bg);color:var(--neg)}
+  .pill-neu{background:#f3f4f6;color:var(--muted)}
+
+  /* Documentación */
+  .doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .doc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+  .doc-label{font-size:12px;color:var(--muted);margin-bottom:4px}
+  .doc-pct{font-size:26px;font-weight:600;margin-bottom:2px}
+  .doc-count{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+  .progress{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
+  .progress-bar{height:100%;border-radius:3px;transition:width .6s ease}
+
+  /* Descargas */
+  .downloads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .dl-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--texto);transition:transform .15s,box-shadow .15s,border-color .15s}
+  .dl-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-color:var(--azul2)}
+  .dl-icon{width:42px;height:42px;border-radius:10px;background:#e8f0fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+  .dl-info{flex:1}
+  .dl-name{font-weight:600;font-size:13px;margin-bottom:2px}
+  .dl-meta{font-size:11px;color:var(--muted)}
+
+  footer{text-align:center;padding:2rem;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:3rem}
+
+  .suc-colors{--c0:#1F3864;--c1:#2E75B6;--c2:#375623;--c3:#E26B0A;--c4:#7B3F00;--c5:#5B2D8E;--c6:#B5451B;--c7:#0D6E8C;--c8:#2D6A4F}
+
+  /* Donut chart */
+  .donut-section{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+  @media(max-width:640px){.donut-section{grid-template-columns:1fr}}
+  .donut-wrap{position:relative;width:220px;height:220px;margin:0 auto}
+  .donut-svg{transform:rotate(-90deg)}
+  .donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+  .donut-center-val{font-size:22px;font-weight:600;letter-spacing:-1px;color:var(--texto)}
+  .donut-center-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+  .donut-legend{display:flex;flex-direction:column;gap:8px}
+  .donut-item{display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background .1s}
+  .donut-item:hover{background:#f3f4f6}
+  .donut-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .donut-lbl{flex:1;color:var(--texto)}
+  .donut-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
+  .donut-pct{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:38px;text-align:right}
+
+  /* Selector de corte */
+  .corte-selector{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .corte-select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace;color:white;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white' opacity='.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+  .corte-select option{background:#1F3864;color:white}
+  .corte-loading{font-size:11px;opacity:.5;animation:pulse 1.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* Reporte operaciones */
+  .ops-table-wrap{overflow-x:auto}
+  .ops-periodo{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+
+  /* Login */
+  .login-overlay{position:fixed;inset:0;background:var(--azul);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
+  .login-box{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .login-logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
+  .login-logo-icon{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:white}
+  .login-logo-text{font-size:18px;font-weight:600;color:var(--azul)}
+  .login-logo-sub{font-size:12px;color:var(--muted)}
+  .login-field{margin-bottom:1rem}
+  .login-label{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.8px}
+  .login-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-sizing:border-box}
+  .login-input:focus{border-color:var(--azul2)}
+  .login-btn{width:100%;padding:12px;background:var(--azul);color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;margin-top:.5rem}
+  .login-btn:hover{background:#162d56}
+  .login-error{background:#fee2e2;color:#dc2626;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+  .login-user{font-size:12px;color:rgba(255,255,255,.7);margin-top:8px;text-align:center}
+  .logout-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+  .logout-btn:hover{background:rgba(255,255,255,.2)}
+
+  /* Modal detalle cambios */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
+  .modal-box{background:var(--card);border-radius:16px;width:100%;max-width:780px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .modal-title{font-size:15px;font-weight:600}
+  .modal-sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .1s}
+  .modal-close:hover{background:#f3f4f6}
+  .modal-body{overflow-y:auto;flex:1}
+  .modal-body table{width:100%;border-collapse:collapse;font-size:13px}
+  .modal-body thead th{background:#f9fafb;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);position:sticky;top:0}
+  .modal-body tbody tr{border-bottom:1px solid #f3f4f6}
+  .modal-body tbody tr:hover{background:#f9fafb}
+  .modal-body td{padding:10px 16px;font-size:13px}
+  .modal-footer{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
+  .trans-row{cursor:pointer;transition:background .1s}
+  .trans-row:hover{background:#f0f5ff !important}
+  .trans-row td:first-child::after{content:" 🔍";font-size:11px;opacity:.4}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
-<body>
+<body class="suc-colors">
 
 <header>
-  <div class="hi">
+  <div class="header-inner">
     <div class="logo">
-      <div class="li">C</div>
-      <div><div class="lt">CECOM — Reportes PLD</div><div class="ls">Prevención de Lavado de Dinero</div></div>
+      <div class="logo-icon">C</div>
+      <div>
+        <div class="logo-text">CECOM — Reportes PLD</div>
+        <div class="logo-sub">Prevención de Lavado de Dinero</div>
+      </div>
     </div>
-    <div class="hr">
-      <span class="cb" id="hCorte">—</span>
-      <span class="ub" id="hUpd"></span>
-      <span class="un" id="hUser"></span>
-      <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
+    <div class="header-right">
+      <div class="corte-selector">
+        <select class="corte-select" id="selector-corte" onchange="cargarCorte(this.value)">
+          <option value="">Cargando cortes...</option>
+        </select>
+        <span class="upd-badge" id="badge-upd"></span>
+      </div>
+      <span class="login-user" id="headerUser" style="display:none"></span>
+      <button class="logout-btn" id="logoutBtn" style="display:none" onclick="doLogout()">Cerrar sesión</button>
     </div>
   </div>
 </header>
 
-<main id="main" style="display:none">
-  <!-- KPIs -->
-  <div class="st" id="stKpis"></div>
-  <div class="kg" id="kpis"></div>
-
-  <!-- Donut -->
-  <div class="st" id="stDonut"></div>
-  <div class="cd">
-    <div class="ds">
-      <div class="dw" id="donutWrap">
-        <div class="dc3"><div class="dv2" id="donutVal"></div><div class="dl2">clientes totales</div></div>
-      </div>
-      <div class="dle" id="donutLegend"></div>
-    </div>
+<main>
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando datos...</p>
   </div>
-
-  <!-- Tabla sucursales -->
-  <div class="st" id="stTabla"></div>
-  <div class="cd">
-    <div class="ch"><h3 id="tablaH3"></h3><span class="cs" id="tablaCs"></span></div>
-    <div class="tw"><table>
-      <thead>
-        <tr>
-          <th rowspan="2" style="vertical-align:middle">Sucursal</th>
-          <th rowspan="2" style="vertical-align:middle;text-align:right">Total</th>
-          <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864">OPERACIONES</th>
-          <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623">KYC-PLD</th>
-          <th rowspan="2" style="vertical-align:middle;text-align:right">Reg. Express</th>
-          <th rowspan="2" style="vertical-align:middle;text-align:right">Variación</th>
-        </tr>
-        <tr>
-          <th style="background:#dce6f3;color:#1F3864;text-align:right">Bloqueado</th>
-          <th style="background:#dce6f3;color:#1F3864;text-align:right">Info Act</th>
-          <th style="background:#dce6f3;color:#1F3864;text-align:right">Reg Completo</th>
-          <th style="background:#dce6f3;color:#1F3864;text-align:right">Verificado</th>
-          <th style="background:#d6e8d0;color:#375623;text-align:right">Bloqueado</th>
-          <th style="background:#d6e8d0;color:#375623;text-align:right">Info Act</th>
-          <th style="background:#d6e8d0;color:#375623;text-align:right">Pend Valid</th>
-          <th style="background:#d6e8d0;color:#375623;text-align:right">Verificado</th>
-        </tr>
-      </thead>
-      <tbody id="tbSuc"></tbody>
-    </table></div>
-  </div>
-
-  <!-- Documentación -->
-  <div class="st" id="stDoc"></div>
-  <div class="dg" id="docGrid"></div>
-
-  <!-- Transiciones -->
-  <div class="st" id="stTrans"></div>
-  <div class="cd">
-    <div class="ch"><h3>Todos los movimientos</h3><span class="cs" id="transCs"></span></div>
-    <div class="tw"><table>
-      <thead><tr>
-        <th style="width:40px">#</th>
-        <th id="thAnt"></th><th id="thAct"></th>
-        <th style="text-align:right">Cantidad</th>
-        <th style="text-align:right">% del Total</th>
-      </tr></thead>
-      <tbody id="tbTrans"></tbody>
-    </table></div>
-  </div>
-
-  <!-- Gráfica ops -->
-  <div class="st" id="stOps"></div>
-  <div class="cd" style="padding:1.5rem;margin-bottom:14px">
-    <canvas id="opsChart" style="max-height:300px"></canvas>
-  </div>
-
-  <!-- Tabla ops -->
-  <div class="cd" style="margin-bottom:14px">
-    <div class="ch"><h3>Clientes nuevos — Operaciones</h3><span class="cs" id="opsPer"></span></div>
-    <div class="tw"><table>
-      <thead><tr>
-        <th>Sucursal</th><th style="text-align:right">Total</th>
-        <th style="text-align:right;background:#f0f5fb">Reg. Completo</th>
-        <th style="text-align:right;background:#f0f5fb">Verif. Ops</th>
-        <th style="text-align:right;background:#fff5f5">Bloq. Ops</th>
-        <th style="text-align:right;background:#f0f5fb">Info Act. Ops</th>
-        <th style="text-align:right;background:#fffbea">Reg. Express</th>
-      </tr></thead>
-      <tbody id="tbOps"></tbody>
-    </table></div>
-  </div>
-
-  <!-- Tabla KYC ops -->
-  <div class="cd">
-    <div class="ch"><h3>Clientes nuevos — KYC-PLD</h3><span class="cs" id="kycPer"></span></div>
-    <div class="tw"><table>
-      <thead><tr>
-        <th>Sucursal</th><th style="text-align:right">Total</th>
-        <th style="text-align:right;background:#fff5f5">Bloq. KYC</th>
-        <th style="text-align:right;background:#f0f9f0">Info Act. KYC</th>
-        <th style="text-align:right;background:#f0f5fb">Pend. Valid. KYC</th>
-        <th style="text-align:right;background:#f0f9f0">Verif. KYC</th>
-      </tr></thead>
-      <tbody id="tbKyc"></tbody>
-    </table></div>
-  </div>
+  <div id="contenido" style="display:none"></div>
 </main>
 
-<!-- Modal -->
-<div class="mo" id="modal" onclick="if(event.target===this)cerrar()">
-  <div class="mb">
-    <div class="mh">
-      <div><div class="mt" id="mTit"></div><div class="ms" id="mSub"></div></div>
-      <button class="mc" onclick="cerrar()">✕</button>
-    </div>
-    <div class="mx">
-      <table><thead><tr><th>Sucursal</th><th>Player ID</th></tr></thead>
-      <tbody id="mBody"></tbody></table>
-    </div>
-    <div class="mf" id="mFoot"></div>
-  </div>
-</div>
-
-<!-- Login -->
-<div class="lo2 on" id="login">
-  <div class="lb">
-    <div class="ll">
-      <div class="li2">C</div>
-      <div><div class="lt2">CECOM — PLD</div><div class="ls2">Portal de Reportes</div></div>
-    </div>
-    <div class="lerr" id="lerr">Usuario o contraseña incorrectos</div>
-    <div class="lf">
-      <label class="llab">Usuario</label>
-      <input class="lin" id="lu" type="text" onkeydown="if(event.key==='Enter')login()">
-    </div>
-    <div class="lf">
-      <label class="llab">Contraseña</label>
-      <input class="lin" id="lp" type="password" onkeydown="if(event.key==='Enter')login()">
-    </div>
-    <button class="lbtn" onclick="login()">Iniciar sesión</button>
-  </div>
-</div>
+<footer id="footer"></footer>
 
 <script>
-// ── Utilidades ──────────────────────────────────────────────
-const F = n => Number(n).toLocaleString('es-MX');
-const P = (n,t) => t ? (n/t*100).toFixed(1)+'%' : '0.0%';
-const D = n => n>0?`<span class="pl pp">+${F(n)}</span>`:n<0?`<span class="pl pn">${F(n)}</span>`:`<span class="pl pz">0</span>`;
-const COLS=['#1F3864','#2E75B6','#375623','#E26B0A','#7B3F00','#5B2D8E','#B5451B','#0D6E8C','#2D6A4F'];
-const CSTS={'Bloqueado por KYC':'#fee2e2','Bloqueado por operaciones':'#fef3c7','Información actualizada Kyc':'#dcfce7','Información actualizada operaciones':'#dbeafe','Pendente Validacion Kyc':'#ede9fe','Registro completo':'#f0fdf4','Registro express':'#fefce8','Verificado por Kyc':'#dcfce7','Verificado por operaciones':'#dbeafe'};
-const ORDEN=['Allende','Ajijic','Satelite','Neza','Esmeralda','Sendero','Irapuato','Mitras','Guadalupe'];
+const COLORES_SUC = [
+  "#1F3864","#2E75B6","#375623","#E26B0A",
+  "#7B3F00","#5B2D8E","#B5451B","#0D6E8C","#2D6A4F"
+];
 
-// ── Datos globales ───────────────────────────────────────────
-let DATA = null;
-let DETALLE = [];
-let USUARIOS = [];
-let TRANS_LIST = [];
-let opsChartInst = null;
-
-// ── Login ────────────────────────────────────────────────────
-async function sha256(m){
-  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));
-  return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+function fmt(n){return Number(n).toLocaleString("es-MX")}
+function pct(n,t){return t?((n/t)*100).toFixed(1)+"%":"0.0%"}
+function delta(n){
+  if(n>0) return `<span class="pill pill-pos">+${fmt(n)}</span>`;
+  if(n<0) return `<span class="pill pill-neg">${fmt(n)}</span>`;
+  return `<span class="pill pill-neu">0</span>`;
 }
-async function login(){
-  const u=document.getElementById('lu').value.trim().toLowerCase();
-  const p=document.getElementById('lp').value;
-  const err=document.getElementById('lerr');
-  if(!u||!p){err.style.display='block';return;}
-  // Intentar cargar usuarios desde archivo si no están cargados
-  if(!USUARIOS.length){
-    try{
-      const r=await fetch('usuarios.json?v='+Date.now());
-      if(r.ok) USUARIOS=await r.json();
-    }catch(e){}
-  }
-  const h=await sha256(p);
-  const found=USUARIOS.find(x=>x.u===u&&x.h===h);
-  if(found){
-    sessionStorage.setItem('pld',JSON.stringify({u:found.u,n:found.n}));
-    err.style.display='none';
-    mostrarApp(found.n);
-  }else{
-    err.style.display='block';
-    document.getElementById('lp').value='';
-    document.getElementById('lp').focus();
-  }
-}
-function logout(){
-  sessionStorage.removeItem('pld');
-  document.getElementById('login').classList.add('on');
-  document.getElementById('main').style.display='none';
-  document.getElementById('hUser').textContent='';
-  document.getElementById('hLogout').style.display='none';
-  document.getElementById('lu').value='';
-  document.getElementById('lp').value='';
-}
-function mostrarApp(nombre){
-  document.getElementById('login').classList.remove('on');
-  document.getElementById('hUser').textContent=nombre;
-  document.getElementById('hLogout').style.display='inline-block';
-  if(DATA) renderizar(DATA);
-  else cargarDatos();
+function deltaKpi(n){
+  if(n>0) return `<span class="kpi-delta delta-pos">▲ +${fmt(n)}</span>`;
+  if(n<0) return `<span class="kpi-delta delta-neg">▼ ${fmt(n)}</span>`;
+  return `<span class="kpi-delta delta-neu">sin cambio</span>`;
 }
 
-// ── Carga de datos ───────────────────────────────────────────
-async function cargarDatos(){
-  document.getElementById('main').style.display='block';
-  try{
-    // Intentar cortes.json primero
-    let datos = null;
-    try{
-      const rc=await fetch('cortes.json?v='+Date.now());
-      if(rc.ok){
-        const cortes=await rc.json();
-        if(cortes.length){
-          poblarSelector(cortes);
-          const rd=await fetch(cortes[0].archivo+'?v='+Date.now());
-          if(rd.ok) datos=await rd.json();
+
+
+function buildDonut(kpis, total){
+  const segmentos = [
+    {lbl:"Registro Express",    val:kpis.re_act,            color:"#FFC000"},
+    {lbl:"Bloq. Operaciones",   val:kpis.bloq_ops_act,      color:"#1F3864"},
+    {lbl:"Info Act. Ops",       val:kpis.info_act_ops_act??0,color:"#2E75B6"},
+    {lbl:"Reg. Completo",       val:kpis.reg_completo_act??0,color:"#70AD47"},
+    {lbl:"Verif. Operaciones",  val:kpis.verif_ops_act??0,  color:"#4472C4"},
+    {lbl:"Bloq. KYC",           val:kpis.bloq_kyc_act,      color:"#C00000"},
+    {lbl:"Info Act. KYC",       val:kpis.info_act_kyc_act??0,color:"#FF7C80"},
+    {lbl:"Pend. Valid. KYC",    val:kpis.pend_kyc_act,      color:"#ED7D31"},
+    {lbl:"Verificado KYC",      val:kpis.verif_kyc_act,     color:"#375623"},
+  ];
+  const R=90, cx=110, cy=110, stroke=28;
+  const circ = 2*Math.PI*R;
+  let offset = 0;
+  let paths = "";
+  segmentos.forEach((seg,i)=>{
+    const frac = seg.val/total;
+    const dash = frac*circ;
+    paths += `<circle
+      cx="${cx}" cy="${cy}" r="${R}"
+      fill="none" stroke="${seg.color}" stroke-width="${stroke}"
+      stroke-dasharray="${dash} ${circ-dash}"
+      stroke-dashoffset="${-offset}"
+      style="transition:stroke-dasharray .6s ease"
+      data-idx="${i}"/>`;
+    offset += dash;
+  });
+  const legendItems = segmentos.map((seg,i)=>{
+    const p = total?(seg.val/total*100).toFixed(1):"0.0";
+    return `<div class="donut-item">
+      <div class="donut-dot" style="background:${seg.color}"></div>
+      <span class="donut-lbl">${seg.lbl}</span>
+      <span class="donut-val">${fmt(seg.val)}</span>
+      <span class="donut-pct" style="color:${seg.color}">${p}%</span>
+    </div>`;
+  }).join("");
+  return `
+  <div class="donut-section">
+    <div class="donut-wrap">
+      <svg class="donut-svg" viewBox="0 0 220 220" width="220" height="220">
+        ${paths}
+      </svg>
+      <div class="donut-center">
+        <div class="donut-center-val">${fmt(total)}</div>
+        <div class="donut-center-lbl">clientes totales</div>
+      </div>
+    </div>
+    <div class="donut-legend">${legendItems}</div>
+  </div>`;
+}
+
+
+
+function buildOpsChart(ops){
+  if(!ops || !ops.sucursales) return "";
+  const sorted = [...ops.sucursales]
+    .filter(s => s.total > 0)
+    .sort((a,b) => b.total - a.total);
+  const labels  = sorted.map(s => s.nombre);
+  const totales = sorted.map(s => s.total);
+  const uid = "opsChart_" + Date.now();
+  setTimeout(() => {
+    const ctx = document.getElementById(uid);
+    if(!ctx) return;
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [
+          {label:"Reg. Completo",  data:sorted.map(s=>s.reg_completo), backgroundColor:"#1F3864"},
+          {label:"Verif. Ops",     data:sorted.map(s=>s.verif_ops),    backgroundColor:"#2E75B6"},
+          {label:"Bloq. Ops",      data:sorted.map(s=>s.bloq_ops),     backgroundColor:"#C00000"},
+          {label:"Info Act. Ops",  data:sorted.map(s=>s.info_act_ops), backgroundColor:"#70AD47"},
+          {label:"Reg. Express",   data:sorted.map(s=>s.re),           backgroundColor:"#FFC000"},
+        ]
+      },
+      options:{
+        indexAxis:"y", responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            callbacks:{
+              footer:(items)=>`Total: ${totales[items[0].dataIndex].toLocaleString("es-MX")}`,
+              label:(item)=>` ${item.dataset.label}: ${item.raw.toLocaleString("es-MX")}`
+            }
+          }
+        },
+        scales:{
+          x:{stacked:true, grid:{color:"rgba(0,0,0,0.06)"},
+             ticks:{color:"#888780", font:{size:11},
+                    callback:v=>v>=1000?(v/1000).toFixed(1)+"k":v}},
+          y:{stacked:true, grid:{display:false},
+             ticks:{color:"#444441", font:{size:12}}}
         }
       }
-    }catch(e){}
-    // Fallback a datos.json
-    if(!datos){
-      const rd=await fetch('datos.json?v='+Date.now());
-      if(!rd.ok) throw new Error('No encontrado');
-      datos=await rd.json();
-      const sel=document.getElementById('hCorte');
-      if(sel) sel.textContent=datos.meta.fecha_anterior_corta+' vs '+datos.meta.fecha_actual_corta;
-    }
-    DATA=datos;
-    DETALLE=datos.detalle_cambios||[];
-    renderizar(datos);
-  }catch(e){
-    document.getElementById('main').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">No se encontró datos.json. Corre el script para generar los datos.</div>';
-  }
-}
-
-function poblarSelector(cortes){
-  const el=document.getElementById('hCorte');
-  // Convertir badge a selector si hay más de 1 corte
-  if(cortes.length>1){
-    const sel=document.createElement('select');
-    sel.style.cssText='background:#1F3864;border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;font-size:12px;font-family:"DM Mono",monospace;color:white;outline:none;cursor:pointer';
-    cortes.forEach((c,i)=>{
-      const opt=document.createElement('option');
-      opt.value=c.archivo; opt.textContent=c.etiqueta;
-      sel.appendChild(opt);
     });
-    sel.onchange=async function(){
-      const r=await fetch(this.value+'?v='+Date.now());
-      if(r.ok){DATA=await r.json();DETALLE=DATA.detalle_cambios||[];renderizar(DATA);}
-    };
-    el.replaceWith(sel);
-  }else{
-    el.textContent=cortes[0].etiqueta;
-  }
+  }, 100);
+  const leyenda = [
+    {color:"#1F3864", lbl:"Reg. Completo"},
+    {color:"#2E75B6", lbl:"Verif. Operaciones"},
+    {color:"#C00000", lbl:"Bloq. Operaciones"},
+    {color:"#70AD47", lbl:"Info Act. Ops"},
+    {color:"#FFC000", lbl:"Reg. Express"},
+  ].map(l=>`<span style="display:flex;align-items:center;gap:5px">
+    <span style="width:10px;height:10px;border-radius:2px;background:${l.color}"></span>
+    <span style="font-size:12px;color:var(--muted)">${l.lbl}</span>
+  </span>`).join("");
+  const h = Math.max(280, sorted.length * 44 + 60);
+  return `
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px">${leyenda}</div>
+  <div style="position:relative;width:100%;height:${h}px">
+    <canvas id="${uid}" role="img"
+      aria-label="Gráfica de barras apiladas de operaciones YTD por sucursal">
+      ${sorted.map((s,i)=>`${s.nombre}: ${totales[i].toLocaleString("es-MX")}`).join(" · ")}
+    </canvas>
+  </div>`;
 }
 
-// ── Render principal ─────────────────────────────────────────
-function renderizar(d){
-  const m=d.meta, k=d.kpis, ss=d.sucursales, tc=k.total_act;
-  document.getElementById('hUpd').textContent='Actualizado: '+m.generado;
 
-  // Títulos
-  document.getElementById('stKpis').textContent='Resumen global · '+m.num_sucursales+' sucursales';
-  document.getElementById('stDonut').textContent='Distribución de estatus · '+m.fecha_actual_larga;
-  document.getElementById('stTabla').textContent='Desglose por sucursal · '+m.fecha_actual_larga;
-  document.getElementById('stDoc').textContent='Indicadores de documentación · '+m.fecha_actual_larga;
-  document.getElementById('stTrans').textContent='Cambio de estatus · '+m.fecha_anterior_corta+' vs '+m.fecha_actual_corta;
-  document.getElementById('stOps').textContent='Reporte de operaciones · '+(d.reporte_operaciones?.fecha_inicio||'')+ ' al '+(d.reporte_operaciones?.fecha_fin||'');
-  document.getElementById('tablaH3').textContent='Totales al '+m.fecha_actual_larga;
-  document.getElementById('tablaCs').textContent='vs '+m.fecha_anterior_larga;
-  document.getElementById('thAnt').textContent='Status Anterior ('+m.fecha_anterior_corta+')';
-  document.getElementById('thAct').textContent='Status Nuevo ('+m.fecha_actual_corta+')';
+
+// ── Modal detalle cambios ──────────────────────────────────
+let _detalleCambios = [];
+
+function abrirModal(ant, act, total){
+  const filtrados = _detalleCambios.filter(c => c.ant === ant && c.act === act);
+  if(!filtrados.length){
+    alert("No hay detalle disponible — vuelve a correr el script para generarlo.");
+    return;
+  }
+  document.getElementById("modalTitle").textContent =
+    `${ant}  →  ${act}`;
+  document.getElementById("modalSub").textContent =
+    `${filtrados.length.toLocaleString("es-MX")} cliente(s) con este cambio`;
+  document.getElementById("modalFooter").textContent =
+    `${filtrados.length.toLocaleString("es-MX")} registros`;
+
+  const tbody = document.getElementById("modalBody");
+  tbody.innerHTML = filtrados.map(c => `
+    <tr>
+      <td>${c.sucursal}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px">${c.id}</td>
+    </tr>`).join("");
+
+  document.getElementById("modalOverlay").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarModal(){
+  document.getElementById("modalOverlay").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", e => { if(e.key === "Escape") cerrarModal(); });
+
+function buildTransicionesTable(trans, totalCambios, fechaAnt, fechaAct){
+  if(!trans || !trans.length) return "";
+  // Ordenar por cantidad descendente
+  const sorted = [...trans].sort((a,b) => b.N - a.N);
+  const rows = sorted.map((t, i) => {
+    const pct = totalCambios ? (t.N / totalCambios * 100).toFixed(1) + "%" : "0.0%";
+    const bgAnt = {
+      "Bloqueado por KYC":                    "#fff0f0",
+      "Bloqueado por operaciones":             "#fff5ee",
+      "Información actualizada Kyc":           "#f0f9f0",
+      "Información actualizada operaciones":   "#f0f5fb",
+      "Pendente Validacion Kyc":               "#f0f5ff",
+      "Registro completo":                     "#f5f5ff",
+      "Registro express":                      "#fffbea",
+      "Verificado por Kyc":                    "#f0fff4",
+      "Verificado por operaciones":            "#f0f8ff",
+    }[t._STATUS_ANT] || "#ffffff";
+    const onclick = esClickeable
+      ? `onclick="abrirModal('${t._STATUS_ANT.replace(/'/g,"\\'")}','${t._STATUS_ACT.replace(/'/g,"\\'")}',${t.N})"`
+      : "";
+    return `<tr class="${esClickeable?'trans-row':''}" ${onclick}>
+      <td style="text-align:center;color:var(--muted);font-size:12px">${i+1}</td>
+      <td style="background:${bgAnt}">${t._STATUS_ANT}</td>
+      <td>${t._STATUS_ACT}</td>
+      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(t.N)}</td>
+      <td style="font-family:'DM Mono',monospace;text-align:right;color:var(--muted)">${pct}</td>
+    </tr>`;
+  });
+  // Fila total
+  const totalRow = `<tr style="background:#f9fafb;font-weight:600">
+    <td></td>
+    <td colspan="2">TOTAL CAMBIOS</td>
+    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalCambios)}</td>
+    <td style="text-align:right;font-family:'DM Mono',monospace">100.0%</td>
+  </tr>`;
+  return `
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Cambio de estatus · Todos los movimientos</h3>
+      <span style="font-size:12px;color:var(--muted)">${fmt(totalCambios)} cambios totales · ordenado mayor a menor</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr>
+          <th style="width:40px">#</th>
+          <th>Status Anterior (${fechaAnt})</th>
+          <th>Status Nuevo (${fechaAct})</th>
+          <th style="text-align:right">Cantidad</th>
+          <th style="text-align:right">% del Total</th>
+        </tr></thead>
+        <tbody>${rows.join("")}${totalRow}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+
+function buildKycTable(ops){
+  if(!ops || !ops.sucursales) return "";
+  const ORDEN = ["Allende","Ajijic","Satelite","Neza","Esmeralda","Sendero","Irapuato","Mitras","Guadalupe"];
+  const sorted = [...ops.sucursales]
+    .filter(s => s.kyc_total > 0)
+    .sort((a,b)=>{
+      const ia=ORDEN.indexOf(a.nombre); const ib=ORDEN.indexOf(b.nombre);
+      return (ia===-1?999:ia)-(ib===-1?999:ib);
+    });
+  const cols = [
+    {key:"kyc_bloq",    lbl:"Bloqueado KYC",         bg:"#fff0f0"},
+    {key:"kyc_info_act",lbl:"Info Actualizada KYC",   bg:"#f0f9f0"},
+    {key:"kyc_pend",    lbl:"Pend. Validación KYC",   bg:"#f0f5ff"},
+    {key:"kyc_verif",   lbl:"Verificado KYC",         bg:"#f0fff4"},
+  ];
+  const thead = `<tr>
+    <th>Sucursal</th><th>Total</th>
+    ${cols.map(c=>`<th>${c.lbl}</th>`).join("")}
+  </tr>`;
+  const tbody = sorted.map(s=>`
+    <tr>
+      <td style="font-weight:500">${s.nombre}</td>
+      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(s.kyc_total)}</td>
+      ${cols.map(c=>`<td style="background:${c.bg};text-align:right;font-family:'DM Mono',monospace">${fmt(s[c.key]??0)}</td>`).join("")}
+    </tr>`).join("");
+  const totales = cols.map(c=>sorted.reduce((a,s)=>a+(s[c.key]??0),0));
+  const totalGeneral = sorted.reduce((a,s)=>a+(s.kyc_total??0),0);
+  const tfooter = `<tr style="background:#f9fafb;font-weight:600">
+    <td>Total</td>
+    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalGeneral)}</td>
+    ${totales.map((t,i)=>`<td style="background:${cols[i].bg};text-align:right;font-family:'DM Mono',monospace">${fmt(t)}</td>`).join("")}
+  </tr>`;
+  return `
+  <div class="table-card" style="margin-top:14px">
+    <div class="table-header">
+      <h3>Clientes nuevos KYC-PLD en el período</h3>
+      <span class="ops-periodo">${ops.fecha_inicio} – ${ops.fecha_fin}</span>
+    </div>
+    <div class="ops-table-wrap">
+      <table><thead>${thead}</thead><tbody>${tbody}${tfooter}</tbody></table>
+    </div>
+  </div>`;
+}
+
+function buildOpsTable(ops){
+  if(!ops || !ops.sucursales) return "";
+  const cols = [
+    {key:"reg_completo",  lbl:"Registro Completo",               bg:"#f0f5fb"},
+    {key:"verif_ops",     lbl:"Verificado por Operaciones",       bg:"#f0f5fb"},
+    {key:"bloq_ops",      lbl:"Bloqueo por Operaciones",          bg:"#fff0f0"},
+    {key:"info_act_ops",  lbl:"Info Actualizada Operaciones",     bg:"#f0f5fb"},
+    {key:"re",            lbl:"Registro Express",                  bg:"#fffbea"},
+  ];
+  const ORDEN = ["Allende","Ajijic","Satelite","Neza","Esmeralda","Sendero","Irapuato","Mitras","Guadalupe"];
+  const sorted = [...ops.sucursales].sort((a,b)=>{
+    const ia = ORDEN.indexOf(a.nombre); const ib = ORDEN.indexOf(b.nombre);
+    return (ia===-1?999:ia) - (ib===-1?999:ib);
+  });
+  const thead = `<tr>
+    <th>Sucursal</th>
+    <th>Total</th>
+    ${cols.map(c=>`<th>${c.lbl}</th>`).join("")}
+  </tr>`;
+  const tbody = sorted.map(s=>`
+    <tr>
+      <td style="font-weight:500">${s.nombre}</td>
+      <td style="font-weight:600;font-family:'DM Mono',monospace;text-align:right">${fmt(s.total)}</td>
+      ${cols.map(c=>`<td style="background:${c.bg};text-align:right;font-family:'DM Mono',monospace">${fmt(s[c.key])}</td>`).join("")}
+    </tr>`).join("");
+  // Fila total
+  const totales = cols.map(c=>sorted.reduce((a,s)=>a+s[c.key],0));
+  const totalGeneral = sorted.reduce((a,s)=>a+s.total,0);
+  const tfooter = `<tr style="background:#f9fafb;font-weight:600">
+    <td>Total</td>
+    <td style="text-align:right;font-family:'DM Mono',monospace">${fmt(totalGeneral)}</td>
+    ${totales.map((t,i)=>`<td style="background:${cols[i].bg};text-align:right;font-family:'DM Mono',monospace">${fmt(t)}</td>`).join("")}
+  </tr>`;
+  return `
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Clientes nuevos en el período</h3>
+      <span class="ops-periodo">${ops.fecha_inicio} – ${ops.fecha_fin}</span>
+    </div>
+    <div class="ops-table-wrap">
+      <table><thead>${thead}</thead><tbody>${tbody}${tfooter}</tbody></table>
+    </div>
+  </div>`;
+}
+
+function render(d){
+  const m  = d.meta;
+  const k  = d.kpis;
+  const ss = d.sucursales;
+  const tc = k.total_act;
+  // Cargar detalle de cambios para el modal
+  _detalleCambios = d.detalle_cambios || [];
+
+  // Header — actualizar solo badge-upd (badge-corte fue reemplazado por el selector)
+  const badgeUpd = document.getElementById("badge-upd");
+  if(badgeUpd) badgeUpd.textContent = `Actualizado: ${m.generado}`;
 
   // KPIs
-  const kpisData=[
-    {ac:'#1F3864',lb:'Total clientes en base',vl:F(tc),dl:'▲ +'+F(k.delta_total)+' vs anterior',dc:'dp'},
-    {ac:'#E26B0A',lb:'Clientes nuevos',vl:F(k.clientes_nuevos),dl:'▲ +'+F(k.clientes_nuevos),dc:'dp'},
-    {ac:'#7c3aed',lb:'Cambios de estatus',vl:F(k.cambios_status),dl:(k.cambios_status/tc*100).toFixed(1)+'% de la base',dc:'dz'},
-    {ac:'#375623',lb:'Verificados KYC',vl:F(k.verif_kyc_act),dl:'▲ +'+F(k.verif_kyc_act-k.verif_kyc_ant)+' vs anterior',dc:'dp'},
-    {ac:'#dc2626',lb:'Bloqueados por KYC',vl:F(k.bloq_kyc_act),dl:(k.bloq_kyc_act>k.bloq_kyc_ant?'▲ +':'▼ -')+F(Math.abs(k.bloq_kyc_act-k.bloq_kyc_ant))+' vs anterior',dc:k.bloq_kyc_act>k.bloq_kyc_ant?'dn':'dp'},
-    {ac:'#0891b2',lb:'Pend. Validación KYC',vl:F(k.pend_kyc_act),dl:'▼ '+F(Math.abs(k.pend_kyc_act-k.pend_kyc_ant))+' (mejora)',dc:'dn'},
-  ];
-  document.getElementById('kpis').innerHTML=kpisData.map(x=>`
-    <div class="kp"><div class="ka" style="background:${x.ac}"></div>
-      <div class="kl">${x.lb}</div>
-      <div class="kv">${x.vl}</div>
-      <div class="kd ${x.dc}">${x.dl}</div>
-    </div>`).join('');
+  const kpiHtml = `
+  <div class="section-title">Resumen global · ${m.num_sucursales} sucursales</div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-accent" style="background:#1F3864"></div>
+      <div class="kpi-label">Total clientes en base</div>
+      <div class="kpi-value">${fmt(k.total_act)}</div>
+      ${deltaKpi(k.delta_total)}
+    </div>
+    <div class="kpi">
+      <div class="kpi-accent" style="background:#E26B0A"></div>
+      <div class="kpi-label">Clientes nuevos</div>
+      <div class="kpi-value">${fmt(k.clientes_nuevos)}</div>
+      ${deltaKpi(k.clientes_nuevos)}
+    </div>
+    <div class="kpi">
+      <div class="kpi-accent" style="background:#7c3aed"></div>
+      <div class="kpi-label">Cambios de estatus</div>
+      <div class="kpi-value">${fmt(k.cambios_status)}</div>
+      <span class="kpi-delta delta-neu">${pct(k.cambios_status, k.total_act)} de la base</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-accent" style="background:#375623"></div>
+      <div class="kpi-label">Verificados KYC</div>
+      <div class="kpi-value">${fmt(k.verif_kyc_act)}</div>
+      ${deltaKpi(k.verif_kyc_act - k.verif_kyc_ant)}
+    </div>
+    <div class="kpi">
+      <div class="kpi-accent" style="background:#dc2626"></div>
+      <div class="kpi-label">Bloqueados por KYC</div>
+      <div class="kpi-value">${fmt(k.bloq_kyc_act)}</div>
+      ${deltaKpi(k.bloq_kyc_act - k.bloq_kyc_ant)}
+    </div>
+    <div class="kpi">
+      <div class="kpi-accent" style="background:#0891b2"></div>
+      <div class="kpi-label">Pend. Validación KYC</div>
+      <div class="kpi-value">${fmt(k.pend_kyc_act)}</div>
+      ${deltaKpi(k.pend_kyc_act - k.pend_kyc_ant)}
+    </div>
+  </div>`;
 
-  // Donut
-  const DDATA=[
-    {lbl:'Registro Express',val:k.re_act,col:'#FFC000'},
-    {lbl:'Bloq. Operaciones',val:k.bloq_ops_act,col:'#1F3864'},
-    {lbl:'Info Act. Ops',val:k.info_act_ops_act||0,col:'#2E75B6'},
-    {lbl:'Reg. Completo',val:k.reg_completo_act||0,col:'#70AD47'},
-    {lbl:'Verif. Ops',val:k.verif_ops_act||0,col:'#4472C4'},
-    {lbl:'Bloq. KYC',val:k.bloq_kyc_act,col:'#C00000'},
-    {lbl:'Info Act. KYC',val:k.info_act_kyc_act||0,col:'#FF7C80'},
-    {lbl:'Pend. Valid. KYC',val:k.pend_kyc_act,col:'#ED7D31'},
-    {lbl:'Verificado KYC',val:k.verif_kyc_act,col:'#375623'},
-  ];
-  const circ=2*Math.PI*90; let off=0;
-  const paths=DDATA.map(x=>{const da=x.val/tc*circ;const el=`<circle cx="110" cy="110" r="90" fill="none" stroke="${x.col}" stroke-width="28" stroke-dasharray="${da} ${circ-da}" stroke-dashoffset="${-off}"/>`;off+=da;return el;}).join('');
-  document.getElementById('donutWrap').innerHTML=`<svg viewBox="0 0 220 220" width="200" height="200" style="transform:rotate(-90deg)">${paths}</svg><div class="dc3"><div class="dv2">${F(tc)}</div><div class="dl2">clientes totales</div></div>`;
-  document.getElementById('donutLegend').innerHTML=DDATA.map(x=>`<div class="di"><div class="dd" style="background:${x.col}"></div><span class="da">${x.lbl}</span><span class="dq">${F(x.val)}</span><span class="dp2" style="color:${x.col}">${(x.val/tc*100).toFixed(1)}%</span></div>`).join('');
 
   // Tabla sucursales
-  document.getElementById('tbSuc').innerHTML=ss.map((s,i)=>`
+  const tablaSucs = ss.map((s, i) => `
     <tr>
-      <td><div class="sn"><span class="sd" style="background:${COLS[i%COLS.length]}"></span>${s.nombre}</div></td>
-      <td class="nb">${F(s.total_act)}</td>
-      <td class="bo">${F(s.bloq_ops)}</td>
-      <td class="bo">${F(s.info_act_ops||0)}</td>
-      <td class="bo">${F(s.reg_completo||0)}</td>
-      <td class="bo">${F(s.verif_ops||0)}</td>
-      <td class="bk">${F(s.bloq_kyc)}</td>
-      <td class="bk">${F(s.info_act_kyc||0)}</td>
-      <td class="bk">${F(s.pend_kyc)}</td>
-      <td class="bk">${F(s.verif_kyc)}</td>
-      <td>${F(s.re_act)}</td>
-      <td>${D(s.delta)}</td>
-    </tr>`).join('')+`
-    <tr class="tr2">
-      <td>Total</td><td class="nb">${F(tc)}</td>
-      <td class="bo">${F(k.bloq_ops_act)}</td><td class="bo">${F(k.info_act_ops_act||0)}</td>
-      <td class="bo">${F(k.reg_completo_act||0)}</td><td class="bo">${F(k.verif_ops_act||0)}</td>
-      <td class="bk">${F(k.bloq_kyc_act)}</td><td class="bk">${F(k.info_act_kyc_act||0)}</td>
-      <td class="bk">${F(k.pend_kyc_act)}</td><td class="bk">${F(k.verif_kyc_act)}</td>
-      <td>${F(k.re_act)}</td><td>${D(k.delta_total)}</td>
+      <td><div class="suc-name">
+        <span class="suc-dot" style="background:${COLORES_SUC[i%COLORES_SUC.length]}"></span>
+        ${s.nombre}
+      </div></td>
+      <td style="font-weight:600">${fmt(s.total_act)}</td>
+      <td style="background:#f0f5fb">${fmt(s.bloq_ops)}</td>
+      <td style="background:#f0f5fb">${fmt(s.info_act_ops ?? 0)}</td>
+      <td style="background:#f0f5fb">${fmt(s.reg_completo ?? 0)}</td>
+      <td style="background:#f0f5fb">${fmt(s.verif_ops ?? 0)}</td>
+      <td style="background:#f0f9f0">${fmt(s.bloq_kyc)}</td>
+      <td style="background:#f0f9f0">${fmt(s.info_act_kyc ?? 0)}</td>
+      <td style="background:#f0f9f0">${fmt(s.pend_kyc)}</td>
+      <td style="background:#f0f9f0">${fmt(s.verif_kyc)}</td>
+      <td>${fmt(s.re_act)}</td>
+      <td>${delta(s.delta)}</td>
+    </tr>`).join("");
+
+  const totalRow = `
+    <tr style="background:#f9fafb;font-weight:600">
+      <td>Total</td>
+      <td>${fmt(k.total_act)}</td>
+      <td style="background:#e8f0f8">${fmt(k.bloq_ops_act)}</td>
+      <td style="background:#e8f0f8">${fmt(k.info_act_ops_act ?? 0)}</td>
+      <td style="background:#e8f0f8">${fmt(k.reg_completo_act ?? 0)}</td>
+      <td style="background:#e8f0f8">${fmt(k.verif_ops_act ?? 0)}</td>
+      <td style="background:#e4f2e4">${fmt(k.bloq_kyc_act)}</td>
+      <td style="background:#e4f2e4">${fmt(k.info_act_kyc_act ?? 0)}</td>
+      <td style="background:#e4f2e4">${fmt(k.pend_kyc_act)}</td>
+      <td style="background:#e4f2e4">${fmt(k.verif_kyc_act)}</td>
+      <td>${fmt(k.re_act)}</td>
+      <td>${delta(k.delta_total)}</td>
     </tr>`;
 
+  const tablaHtml = `
+  <div class="section-title">Desglose por sucursal · ${m.fecha_actual_larga}</div>
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Totales al ${m.fecha_actual_larga}</h3>
+      <span style="font-size:12px;color:var(--muted)">vs ${m.fecha_anterior_larga}</span>
+    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr>
+          <th rowspan="2">Sucursal</th>
+          <th rowspan="2">Total</th>
+          <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864;border-bottom:1px solid #c5d4e8">OPERACIONES</th>
+          <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623;border-bottom:1px solid #b8d8ae">KYC-PLD</th>
+          <th rowspan="2">Reg. Express</th>
+          <th rowspan="2">Variación</th>
+        </tr>
+        <tr>
+          <th style="background:#dce6f3;color:#1F3864">Bloqueado</th>
+          <th style="background:#dce6f3;color:#1F3864">Info Act</th>
+          <th style="background:#dce6f3;color:#1F3864">Reg. Completo</th>
+          <th style="background:#dce6f3;color:#1F3864">Verificado</th>
+          <th style="background:#d6e8d0;color:#375623">Bloqueado</th>
+          <th style="background:#d6e8d0;color:#375623">Info Act</th>
+          <th style="background:#d6e8d0;color:#375623">Pend. Valid</th>
+          <th style="background:#d6e8d0;color:#375623">Verificado</th>
+        </tr>
+      </thead>
+      <tbody>${tablaSucs}${totalRow}</tbody>
+    </table></div>
+  </div>`;
+
   // Documentación
-  const docData=[
-    {lb:'Con Aviso de Privacidad',vl:(k.aviso_act/tc*100).toFixed(1),n:k.aviso_act,col:'#2E75B6',neg:false},
-    {lb:'Sin Aviso de Privacidad',vl:((tc-k.aviso_act)/tc*100).toFixed(1),n:tc-k.aviso_act,col:'#f97316',neg:true},
-    {lb:'Con Huella Digital',vl:(k.huella_act/tc*100).toFixed(1),n:k.huella_act,col:'#375623',neg:false},
-    {lb:'Sin Huella Digital',vl:((tc-k.huella_act)/tc*100).toFixed(1),n:tc-k.huella_act,col:'#7c3aed',neg:true},
-    {lb:'ID Vencida (≤ 31/12/2025)',vl:(k.id_venc_act/tc*100).toFixed(1),n:k.id_venc_act,col:'#dc2626',neg:true},
-  ];
-  document.getElementById('docGrid').innerHTML=docData.map(x=>`
-    <div class="dc">
-      <div class="dl">${x.lb}</div>
-      <div class="dv"${x.neg?' style="color:var(--neg)"':''}>${x.vl}%</div>
-      <div class="dc2">${F(x.n)} de ${F(tc)}</div>
-      <div class="pg"><div class="pb" style="width:${x.vl}%;background:${x.col}"></div></div>
-    </div>`).join('');
+  const pAviso  = tc ? (k.aviso_act / tc * 100).toFixed(1) : 0;
+  const pHuella = tc ? (k.huella_act / tc * 100).toFixed(1) : 0;
+  const pIdVenc = tc ? (k.id_venc_act / tc * 100).toFixed(1) : 0;
+  const pSinAv  = tc ? ((tc - k.aviso_act) / tc * 100).toFixed(1) : 0;
 
-  // Transiciones
-  const tr=d.top_transiciones||[];
-  const tc2=k.cambios_status;
-  document.getElementById('transCs').textContent=F(tc2)+' cambios · ordenado mayor a menor';
-  TRANS_LIST=tr;
-  document.getElementById('tbTrans').innerHTML=tr.map((t,i)=>`
-    <tr class="xr" data-i="${i}" onclick="abrirModal(${i})">
-      <td style="text-align:center;color:var(--muted);font-size:12px">${i+1}</td>
-      <td style="background:${CSTS[t._STATUS_ANT]||'#fff'}">${t._STATUS_ANT}</td>
-      <td>${t._STATUS_ACT}</td>
-      <td style="font-weight:600;text-align:right">${F(t.N)}</td>
-      <td style="text-align:right;color:var(--muted)">${(t.N/tc2*100).toFixed(1)}%</td>
-    </tr>`).join('')+`
-    <tr class="tr2"><td></td><td colspan="2">TOTAL CAMBIOS</td><td style="text-align:right">${F(tc2)}</td><td style="text-align:right">100.0%</td></tr>`;
+  const docHtml = `
+  <div class="section-title">Indicadores de documentación · ${m.fecha_actual_larga}</div>
+  <div class="doc-grid">
+    <div class="doc-card">
+      <div class="doc-label">Con Aviso de Privacidad</div>
+      <div class="doc-pct">${pAviso}%</div>
+      <div class="doc-count">${fmt(k.aviso_act)} de ${fmt(tc)}</div>
+      <div class="progress"><div class="progress-bar" style="width:${pAviso}%;background:#2E75B6"></div></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-label">Sin Aviso de Privacidad</div>
+      <div class="doc-pct" style="color:var(--neg)">${pSinAv}%</div>
+      <div class="doc-count">${fmt(tc - k.aviso_act)} de ${fmt(tc)}</div>
+      <div class="progress"><div class="progress-bar" style="width:${pSinAv}%;background:#f97316"></div></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-label">Con Huella Digital</div>
+      <div class="doc-pct">${pHuella}%</div>
+      <div class="doc-count">${fmt(k.huella_act)} de ${fmt(tc)}</div>
+      <div class="progress"><div class="progress-bar" style="width:${pHuella}%;background:#375623"></div></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-label">Sin Huella Digital</div>
+      <div class="doc-pct" style="color:var(--neg)">${(100-pHuella).toFixed(1)}%</div>
+      <div class="doc-count">${fmt(tc - k.huella_act)} de ${fmt(tc)}</div>
+      <div class="progress"><div class="progress-bar" style="width:${(100-pHuella).toFixed(1)}%;background:#7c3aed"></div></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-label">ID Vencida (≤ 31/12/2025)</div>
+      <div class="doc-pct" style="color:var(--neg)">${pIdVenc}%</div>
+      <div class="doc-count">${fmt(k.id_venc_act)} de ${fmt(tc)}</div>
+      <div class="progress"><div class="progress-bar" style="width:${pIdVenc}%;background:#dc2626"></div></div>
+    </div>
+  </div>`;
 
-  // Reporte operaciones
-  const ro=d.reporte_operaciones;
-  if(ro){
-    const per=ro.fecha_inicio+' – '+ro.fecha_fin;
-    document.getElementById('opsPer').textContent=per;
-    document.getElementById('kycPer').textContent=per;
-    const sorted=[...ro.sucursales].sort((a,b)=>{const ia=ORDEN.indexOf(a.nombre),ib=ORDEN.indexOf(b.nombre);return(ia<0?99:ia)-(ib<0?99:ib);});
-    const tot={t:0,rc:0,vo:0,bo:0,ia:0,re:0,kb:0,ik:0,pk:0,vk:0,kt:0};
-    document.getElementById('tbOps').innerHTML=sorted.map(s=>{
-      const t=s.total||0,rc=s.reg_completo||0,vo=s.verif_ops||0,bo=s.bloq_ops||0,ia=s.info_act_ops||0,re=s.re||0;
-      tot.t+=t;tot.rc+=rc;tot.vo+=vo;tot.bo+=bo;tot.ia+=ia;tot.re+=re;
-      return `<tr><td>${s.nombre}</td><td class="nb">${F(t)}</td><td class="bo">${F(rc)}</td><td class="bo">${F(vo)}</td><td class="br">${F(bo)}</td><td class="bo">${F(ia)}</td><td class="by">${F(re)}</td></tr>`;
-    }).join('')+`<tr class="tr2"><td>Total</td><td class="nb">${F(tot.t)}</td><td class="bo">${F(tot.rc)}</td><td class="bo">${F(tot.vo)}</td><td class="br">${F(tot.bo)}</td><td class="bo">${F(tot.ia)}</td><td class="by">${F(tot.re)}</td></tr>`;
-    document.getElementById('tbKyc').innerHTML=sorted.map(s=>{
-      const kb=s.kyc_bloq||0,ik=s.kyc_info_act||0,pk=s.kyc_pend||0,vk=s.kyc_verif||0,kt=kb+ik+pk+vk;
-      tot.kb+=kb;tot.ik+=ik;tot.pk+=pk;tot.vk+=vk;tot.kt+=kt;
-      return `<tr><td>${s.nombre}</td><td class="nb">${F(kt)}</td><td class="br">${F(kb)}</td><td class="bk">${F(ik)}</td><td class="bo">${F(pk)}</td><td class="bk">${F(vk)}</td></tr>`;
-    }).join('')+`<tr class="tr2"><td>Total</td><td class="nb">${F(tot.kt)}</td><td class="br">${F(tot.kb)}</td><td class="bk">${F(tot.ik)}</td><td class="bo">${F(tot.pk)}</td><td class="bk">${F(tot.vk)}</td></tr>`;
+  // Descargas — se generan automáticamente por sucursal
+  const dlSucursales = ss.map(s => `
+    <a class="dl-card" href="${s.nombre}_Comparativa_PLD_${m.fecha_anterior_corta}_vs_${m.fecha_actual_corta}.xlsx" download>
+      <div class="dl-icon" style="background:#e8f4ff">📋</div>
+      <div class="dl-info">
+        <div class="dl-name">${s.nombre} — Comparativa</div>
+        <div class="dl-meta">${m.fecha_anterior_larga} vs ${m.fecha_actual_larga}</div>
+      </div>
+      <span style="color:var(--muted);font-size:18px">↓</span>
+    </a>`).join("");
 
-    // Gráfica barras
-    const labChart=[...ro.sucursales].sort((a,b)=>(b.total||0)-(a.total||0));
-    if(opsChartInst){opsChartInst.destroy();opsChartInst=null;}
-    opsChartInst=new Chart(document.getElementById('opsChart'),{
-      type:'bar',
-      data:{labels:labChart.map(s=>s.nombre),datasets:[
-        {label:'Reg. Completo',data:labChart.map(s=>s.reg_completo||0),backgroundColor:'#1F3864'},
-        {label:'Verif. Ops',data:labChart.map(s=>s.verif_ops||0),backgroundColor:'#2E75B6'},
-        {label:'Bloq. Ops',data:labChart.map(s=>s.bloq_ops||0),backgroundColor:'#C00000'},
-        {label:'Info Act.',data:labChart.map(s=>s.info_act_ops||0),backgroundColor:'#70AD47'},
-        {label:'Reg. Express',data:labChart.map(s=>s.re||0),backgroundColor:'#FFC000'},
-      ]},
-      options:{indexAxis:'y',responsive:true,
-        plugins:{legend:{display:false},tooltip:{callbacks:{footer:i=>'Total: '+F(labChart[i[0].dataIndex].total||0),label:i=>' '+i.dataset.label+': '+F(i.raw)}}},
-        scales:{x:{stacked:true,ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'k':v,color:'#888780',font:{size:11}}},y:{stacked:true,grid:{display:false},ticks:{color:'#444441',font:{size:12}}}}}
+  const dlHtml = `
+  <div class="section-title">Descargar reportes</div>
+  <div class="downloads-grid">
+    <a class="dl-card" href="Reporte_PLD_TODAS_SUCURSALES_${m.fecha_anterior_corta}_vs_${m.fecha_actual_corta}.xlsx" download>
+      <div class="dl-icon">📊</div>
+      <div class="dl-info">
+        <div class="dl-name">Reporte Consolidado · Todas las Sucursales</div>
+        <div class="dl-meta">${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · 11 hojas</div>
+      </div>
+      <span style="color:var(--muted);font-size:18px">↓</span>
+    </a>
+    ${dlSucursales}
+  </div>`;
+
+  const donutHtml = `
+  <div class="section-title">Distribución de estatus · ${m.fecha_actual_larga}</div>
+  <div class="table-card" style="padding:1.5rem">
+    ${buildDonut(k, k.total_act)}
+  </div>`;
+
+  const transHtml = (d.top_transiciones && d.top_transiciones.length) ? `
+  <div class="section-title">Cambio de estatus · ${m.fecha_anterior_corta} vs ${m.fecha_actual_corta}</div>
+  ${buildTransicionesTable(d.top_transiciones, k.cambios_status, m.fecha_anterior_corta, m.fecha_actual_corta)}` : "";
+
+  const opsHtml = d.reporte_operaciones ? `
+  <div class="section-title">Reporte de operaciones · ${d.meta.fecha_anterior_corta} al ${d.meta.fecha_actual_corta}</div>
+  <div class="table-card" style="padding:1.5rem;margin-bottom:14px">
+    ${buildOpsChart(d.reporte_operaciones)}
+  </div>
+  ${buildOpsTable(d.reporte_operaciones)}
+  ${buildKycTable(d.reporte_operaciones)}` : "";
+
+  document.getElementById("contenido").innerHTML =
+    kpiHtml + donutHtml + tablaHtml + docHtml + transHtml + opsHtml;
+
+  document.getElementById("footer").innerHTML =
+    `CECOM · Reportes PLD · ${m.fecha_anterior_larga} vs ${m.fecha_actual_larga} · Generado el ${m.generado}`;
+}
+
+
+// ── Sistema de Login ─────────────────────────────────────
+async function sha256(msg){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+let USUARIOS = [];  // se carga desde datos.json
+
+function mostrarLogin(){ document.getElementById("loginOverlay").style.display="flex"; }
+function ocultarLogin(){ document.getElementById("loginOverlay").style.display="none"; }
+
+function checkSesion(){
+  const sess = sessionStorage.getItem("pld_user");
+  if(sess){
+    const u = JSON.parse(sess);
+    mostrarUsuarioHeader(u.nombre);
+    ocultarLogin();
+    return true;
+  }
+  mostrarLogin();
+  return false;
+}
+
+function mostrarUsuarioHeader(nombre){
+  const el = document.getElementById("headerUser");
+  const btn = document.getElementById("logoutBtn");
+  if(el){ el.textContent = nombre; el.style.display="inline"; }
+  if(btn){ btn.style.display="inline-block"; }
+}
+
+async function doLogin(){
+  const user = document.getElementById("loginUser").value.trim().toLowerCase();
+  const pass = document.getElementById("loginPass").value;
+  const err  = document.getElementById("loginError");
+  if(!user || !pass){ err.style.display="block"; return; }
+  const hash = await sha256(pass);
+  const found = USUARIOS.find(u => u.u === user && u.h === hash);
+  if(found){
+    sessionStorage.setItem("pld_user", JSON.stringify({usuario:found.u, nombre:found.n}));
+    err.style.display="none";
+    mostrarUsuarioHeader(found.n);
+    ocultarLogin();
+    iniciarApp();
+  } else {
+    err.style.display="block";
+    document.getElementById("loginPass").value="";
+    document.getElementById("loginPass").focus();
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem("pld_user");
+  const el = document.getElementById("headerUser");
+  const btn = document.getElementById("logoutBtn");
+  if(el){ el.style.display="none"; }
+  if(btn){ btn.style.display="none"; }
+  mostrarLogin();
+  document.getElementById("loginUser").value="";
+  document.getElementById("loginPass").value="";
+}
+
+// ── Historial de cortes ──────────────────────────────────
+function cargarCorte(archivo){
+  if(!archivo) return;
+  document.getElementById("loading").style.display  = "block";
+  document.getElementById("contenido").style.display = "none";
+
+  fetch(archivo + "?v=" + Date.now())
+    .then(r => { if(!r.ok) throw new Error("No encontrado"); return r.json(); })
+    .then(d => {
+      document.getElementById("loading").style.display  = "none";
+      document.getElementById("contenido").style.display = "block";
+      render(d);
+    })
+    .catch(() => {
+      document.getElementById("loading").innerHTML =
+        `<div class="error-box"><p>No se pudo cargar el corte seleccionado.</p></div>`;
     });
-  }
 }
 
-// ── Modal ────────────────────────────────────────────────────
-function abrirModal(idx){
-  const t=TRANS_LIST[idx];
-  if(!t) return;
-  const filtrados=DETALLE.filter(c=>c.ant===t._STATUS_ANT&&c.act===t._STATUS_ACT);
-  document.getElementById('mTit').textContent=t._STATUS_ANT+' → '+t._STATUS_ACT;
-  document.getElementById('mSub').textContent=F(filtrados.length)+' cliente(s)';
-  document.getElementById('mFoot').textContent=F(filtrados.length)+' registros';
-  document.getElementById('mBody').innerHTML=filtrados.length
-    ? filtrados.map(c=>`<tr><td>${c.sucursal}</td><td style="font-family:'DM Mono',monospace;font-size:12px">${c.id}</td></tr>`).join('')
-    : '<tr><td colspan="2" style="text-align:center;color:var(--muted)">Vuelve a correr el script para ver el detalle</td></tr>';
-  document.getElementById('modal').classList.add('on');
-  document.body.style.overflow='hidden';
+function poblarSelector(cortes, archivoActual){
+  const sel = document.getElementById("selector-corte");
+  sel.innerHTML = cortes.map(c =>
+    `<option value="${c.archivo}" ${c.archivo===archivoActual?"selected":""}>
+      ${c.etiqueta}
+    </option>`
+  ).join("");
 }
-function cerrar(){document.getElementById('modal').classList.remove('on');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrar();});
 
-// ── Inicio ───────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
-  // Cargar usuarios
-  fetch('usuarios.json?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(u=>{USUARIOS=u;}).catch(()=>{});
-  // Verificar sesión
-  const s=sessionStorage.getItem('pld');
-  if(s){
-    const u=JSON.parse(s);
-    mostrarApp(u.n);
-  }
-  // Si no hay sesión el login ya está visible
-});
+// Cargar lista de cortes desde cortes.json
+// Cargar usuarios desde usuarios.json
+fetch("usuarios.json?v=" + Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject("Sin usuarios.json"))
+  .then(u => { USUARIOS = u; })
+  .catch(() => { console.warn("usuarios.json no encontrado"); })
+  .finally(() => {
+    const sesionActiva = checkSesion();
+    if(sesionActiva){
+      iniciarApp();
+    }
+    // Si no hay sesión, el login se muestra y el usuario llama a iniciarApp al hacer login
+  });
+
+function iniciarApp(){
+fetch("cortes.json?v=" + Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(cortes => {
+    if(!cortes.length) throw new Error("Sin cortes");
+    poblarSelector(cortes, cortes[0].archivo);
+    cargarCorte(cortes[0].archivo);
+  })
+  .catch(() => {
+    // Fallback: intentar datos.json directo (compatibilidad hacia atrás)
+    fetch("datos.json?v=" + Date.now())
+      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
+      .then(d => {
+        const sel = document.getElementById("selector-corte");
+        sel.innerHTML = `<option value="datos.json">${d.meta.fecha_anterior_corta} vs ${d.meta.fecha_actual_corta}</option>`;
+        document.getElementById("loading").style.display  = "none";
+        document.getElementById("contenido").style.display = "block";
+        render(d);
+      })
+      .catch(() => {
+        document.getElementById("loading").innerHTML =
+          `<div class="error-box">
+            <p style="font-weight:600;margin-bottom:8px">No se encontró datos.json</p>
+            <p style="font-size:13px">Corre el script de Python para generar los datos,<br>
+            luego sube <strong>datos.json</strong> y <strong>cortes.json</strong> a GitHub.</p>
+          </div>`;
+      });
+  });
+} // fin iniciarApp
 </script>
+
+<!-- Login overlay -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">C</div>
+      <div>
+        <div class="login-logo-text">CECOM — PLD</div>
+        <div class="login-logo-sub">Portal de Reportes</div>
+      </div>
+    </div>
+    <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+    <div class="login-field">
+      <label class="login-label">Usuario</label>
+      <input class="login-input" id="loginUser" type="text" placeholder="tu usuario"
+             autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-field">
+      <label class="login-label">Contraseña</label>
+      <input class="login-input" id="loginPass" type="password" placeholder="••••••••"
+             autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Iniciar sesión</button>
+  </div>
+</div>
+
+
+<!-- Modal detalle cambios -->
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="if(event.target===this)cerrarModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">Detalle de cambios</div>
+        <div class="modal-sub" id="modalSub"></div>
+      </div>
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <table>
+        <thead><tr>
+          <th>Sucursal</th>
+          <th>Player ID</th>
+        </tr></thead>
+        <tbody id="modalBody"></tbody>
+      </table>
+    </div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
 </body>
 </html>
