@@ -706,6 +706,7 @@ async function doLogin(){
     err.style.display="none";
     mostrarUsuarioHeader(found.n);
     ocultarLogin();
+    iniciarApp();
   } else {
     err.style.display="block";
     document.getElementById("loginPass").value="";
@@ -759,8 +760,11 @@ fetch("usuarios.json?v=" + Date.now())
   .then(u => { USUARIOS = u; })
   .catch(() => { console.warn("usuarios.json no encontrado"); })
   .finally(() => {
-    if(!checkSesion()) return;
-    iniciarApp();
+    const sesionActiva = checkSesion();
+    if(sesionActiva){
+      iniciarApp();
+    }
+    // Si no hay sesión, el login se muestra y el usuario llama a iniciarApp al hacer login
   });
 
 function iniciarApp(){
