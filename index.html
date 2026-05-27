@@ -724,6 +724,36 @@ function render(d){
 
 
 // ── Sistema de Login ─────────────────────────────────────
+function iniciarApp(){
+fetch("cortes.json?v=" + Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(cortes => {
+    if(!cortes.length) throw new Error("Sin cortes");
+    poblarSelector(cortes, cortes[0].archivo);
+    cargarCorte(cortes[0].archivo);
+  })
+  .catch(() => {
+    // Fallback: intentar datos.json directo (compatibilidad hacia atrás)
+    fetch("datos.json?v=" + Date.now())
+      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
+      .then(d => {
+        const sel = document.getElementById("selector-corte");
+        sel.innerHTML = `<option value="datos.json">${d.meta.fecha_anterior_corta} vs ${d.meta.fecha_actual_corta}</option>`;
+        document.getElementById("loading").style.display  = "none";
+        document.getElementById("contenido").style.display = "block";
+        render(d);
+      })
+      .catch(() => {
+        document.getElementById("loading").innerHTML =
+          `<div class="error-box">
+            <p style="font-weight:600;margin-bottom:8px">No se encontró datos.json</p>
+            <p style="font-size:13px">Corre el script de Python para generar los datos,<br>
+            luego sube <strong>datos.json</strong> y <strong>cortes.json</strong> a GitHub.</p>
+          </div>`;
+      });
+  });
+} // fin iniciarApp
+
 async function sha256(msg){
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
@@ -813,6 +843,8 @@ function poblarSelector(cortes, archivoActual){
 }
 
 // Cargar lista de cortes desde cortes.json
+
+
 // Cargar usuarios desde usuarios.json
 fetch("usuarios.json?v=" + Date.now())
   .then(r => r.ok ? r.json() : Promise.reject("Sin usuarios.json"))
@@ -826,35 +858,7 @@ fetch("usuarios.json?v=" + Date.now())
     // Si no hay sesión, el login se muestra y el usuario llama a iniciarApp al hacer login
   });
 
-function iniciarApp(){
-fetch("cortes.json?v=" + Date.now())
-  .then(r => r.ok ? r.json() : Promise.reject())
-  .then(cortes => {
-    if(!cortes.length) throw new Error("Sin cortes");
-    poblarSelector(cortes, cortes[0].archivo);
-    cargarCorte(cortes[0].archivo);
-  })
-  .catch(() => {
-    // Fallback: intentar datos.json directo (compatibilidad hacia atrás)
-    fetch("datos.json?v=" + Date.now())
-      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
-      .then(d => {
-        const sel = document.getElementById("selector-corte");
-        sel.innerHTML = `<option value="datos.json">${d.meta.fecha_anterior_corta} vs ${d.meta.fecha_actual_corta}</option>`;
-        document.getElementById("loading").style.display  = "none";
-        document.getElementById("contenido").style.display = "block";
-        render(d);
-      })
-      .catch(() => {
-        document.getElementById("loading").innerHTML =
-          `<div class="error-box">
-            <p style="font-weight:600;margin-bottom:8px">No se encontró datos.json</p>
-            <p style="font-size:13px">Corre el script de Python para generar los datos,<br>
-            luego sube <strong>datos.json</strong> y <strong>cortes.json</strong> a GitHub.</p>
-          </div>`;
-      });
-  });
-} // fin iniciarApp
+
 </script>
 
 <!-- Login overlay -->
