@@ -130,6 +130,25 @@
   .login-user{font-size:12px;color:rgba(255,255,255,.7);margin-top:8px;text-align:center}
   .logout-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
   .logout-btn:hover{background:rgba(255,255,255,.2)}
+
+  /* Modal detalle cambios */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
+  .modal-box{background:var(--card);border-radius:16px;width:100%;max-width:780px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .modal-title{font-size:15px;font-weight:600}
+  .modal-sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .1s}
+  .modal-close:hover{background:#f3f4f6}
+  .modal-body{overflow-y:auto;flex:1}
+  .modal-body table{width:100%;border-collapse:collapse;font-size:13px}
+  .modal-body thead th{background:#f9fafb;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);position:sticky;top:0}
+  .modal-body tbody tr{border-bottom:1px solid #f3f4f6}
+  .modal-body tbody tr:hover{background:#f9fafb}
+  .modal-body td{padding:10px 16px;font-size:13px}
+  .modal-footer{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
+  .trans-row{cursor:pointer;transition:background .1s}
+  .trans-row:hover{background:#f0f5ff !important}
+  .trans-row td:first-child::after{content:" 🔍";font-size:11px;opacity:.4}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
@@ -308,6 +327,41 @@ function buildOpsChart(ops){
 }
 
 
+
+// ── Modal detalle cambios ──────────────────────────────────
+let _detalleCambios = [];
+
+function abrirModal(ant, act, total){
+  const filtrados = _detalleCambios.filter(c => c.ant === ant && c.act === act);
+  if(!filtrados.length){
+    alert("No hay detalle disponible — vuelve a correr el script para generarlo.");
+    return;
+  }
+  document.getElementById("modalTitle").textContent =
+    `${ant}  →  ${act}`;
+  document.getElementById("modalSub").textContent =
+    `${filtrados.length.toLocaleString("es-MX")} cliente(s) con este cambio`;
+  document.getElementById("modalFooter").textContent =
+    `${filtrados.length.toLocaleString("es-MX")} registros`;
+
+  const tbody = document.getElementById("modalBody");
+  tbody.innerHTML = filtrados.map(c => `
+    <tr>
+      <td>${c.sucursal}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px">${c.id}</td>
+    </tr>`).join("");
+
+  document.getElementById("modalOverlay").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarModal(){
+  document.getElementById("modalOverlay").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", e => { if(e.key === "Escape") cerrarModal(); });
+
 function buildTransicionesTable(trans, totalCambios, fechaAnt, fechaAct){
   if(!trans || !trans.length) return "";
   // Ordenar por cantidad descendente
@@ -325,7 +379,10 @@ function buildTransicionesTable(trans, totalCambios, fechaAnt, fechaAct){
       "Verificado por Kyc":                    "#f0fff4",
       "Verificado por operaciones":            "#f0f8ff",
     }[t._STATUS_ANT] || "#ffffff";
-    return `<tr>
+    const onclick = esClickeable
+      ? `onclick="abrirModal('${t._STATUS_ANT.replace(/'/g,"\\'")}','${t._STATUS_ACT.replace(/'/g,"\\'")}',${t.N})"`
+      : "";
+    return `<tr class="${esClickeable?'trans-row':''}" ${onclick}>
       <td style="text-align:center;color:var(--muted);font-size:12px">${i+1}</td>
       <td style="background:${bgAnt}">${t._STATUS_ANT}</td>
       <td>${t._STATUS_ACT}</td>
@@ -456,6 +513,8 @@ function render(d){
   const k  = d.kpis;
   const ss = d.sucursales;
   const tc = k.total_act;
+  // Cargar detalle de cambios para el modal
+  _detalleCambios = d.detalle_cambios || [];
 
   // Header — actualizar solo badge-upd (badge-corte fue reemplazado por el selector)
   const badgeUpd = document.getElementById("badge-upd");
@@ -820,6 +879,30 @@ fetch("cortes.json?v=" + Date.now())
              autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="login-btn" onclick="doLogin()">Iniciar sesión</button>
+  </div>
+</div>
+
+
+<!-- Modal detalle cambios -->
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="if(event.target===this)cerrarModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">Detalle de cambios</div>
+        <div class="modal-sub" id="modalSub"></div>
+      </div>
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <table>
+        <thead><tr>
+          <th>Sucursal</th>
+          <th>Player ID</th>
+        </tr></thead>
+        <tbody id="modalBody"></tbody>
+      </table>
+    </div>
+    <div class="modal-footer" id="modalFooter"></div>
   </div>
 </div>
 
