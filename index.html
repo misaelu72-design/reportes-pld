@@ -86,6 +86,37 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 .lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
 @media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
 .hr select option{background:#1F3864;color:white}
+
+  .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
+  .panel-overlay.on{display:block;opacity:1}
+  .panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:95vw;background:var(--card, #fff);background:var(--color-background-primary);box-shadow:-4px 0 24px rgba(0,0,0,.15);z-index:501;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
+  .panel.on{transform:translateX(0)}
+  .panel-head{padding:1.25rem 1.5rem;border-bottom:.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .panel-head h3{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+  .panel-head span{font-size:12px;color:var(--color-text-secondary)}
+  .panel-close{width:30px;height:30px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-tertiary);background:none;cursor:pointer;font-size:15px;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center}
+  .panel-body{overflow-y:auto;flex:1;padding:1.25rem 1.5rem}
+  .exec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+  .exec-item:last-child{border-bottom:none}
+  .exec-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+  .exec-title{font-weight:500;font-size:13px;margin-bottom:3px;color:var(--color-text-primary)}
+  .exec-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+  .epill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500;font-family:monospace}
+  .ep-pos{background:#dcfce7;color:#166534}.ep-neg{background:#fee2e2;color:#991b1b}
+  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+  .rank-item:last-child{border-bottom:none}
+  .rank-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+  .rn-top{background:#FFF2CC;color:#7d4f00}.rn-mid{background:#f3f4f6;color:#444441}.rn-low{background:#fee2e2;color:#991b1b}
+  .rank-name{font-weight:500;font-size:13px;flex:0 0 80px;color:var(--color-text-primary)}
+  .rank-bars{display:flex;flex-direction:column;gap:3px;flex:1}
+  .brow{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+  .blbl{width:60px;flex-shrink:0}
+  .bbg{flex:1;height:4px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
+  .bfill{height:100%;border-radius:2px}
+  .rscore{font-size:12px;font-weight:500;font-family:monospace;min-width:32px;text-align:right}
+  .rsec{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin:1rem 0 .5rem}
+  .btn-panel{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+  .btn-panel:hover{background:rgba(255,255,255,.22)}
 </style>
 </head>
 <body>
@@ -100,6 +131,7 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
       <span class="cb" id="hCorte">—</span>
       <span class="ub" id="hUpd"></span>
       <span class="un" id="hUser"></span>
+      <button class="btn-panel" id="btnPanel" onclick="abrirPanel()" style="display:none">⭐ Resumen</button>
       <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
     </div>
   </div>
@@ -311,6 +343,7 @@ function logout(){
   document.getElementById('main').style.display='none';
   document.getElementById('hUser').textContent='';
   document.getElementById('hLogout').style.display='none';
+  document.getElementById('btnPanel').style.display='none';
   document.getElementById('lu').value='';
   document.getElementById('lp').value='';
 }
@@ -318,6 +351,7 @@ function mostrarApp(nombre){
   document.getElementById('login').classList.remove('on');
   document.getElementById('hUser').textContent=nombre;
   document.getElementById('hLogout').style.display='inline-block';
+  document.getElementById('btnPanel').style.display='flex';
   document.getElementById('main').style.display='block';
   if(DATA){
     renderizar(DATA);
@@ -332,6 +366,102 @@ function mostrarApp(nombre){
 }
 
 // ── Carga de datos ───────────────────────────────────────────
+
+
+// ── Panel resumen ejecutivo ──────────────────────────────────
+function abrirPanel(){
+  if(!DATA){ return; }
+  document.getElementById('panelOverlay').classList.add('on');
+  document.getElementById('panel').classList.add('on');
+  document.body.style.overflow='hidden';
+  renderizarPanel(DATA);
+}
+function cerrarPanel(){
+  document.getElementById('panelOverlay').classList.remove('on');
+  document.getElementById('panel').classList.remove('on');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarPanel(); });
+
+function renderizarPanel(d){
+  const m=d.meta, k=d.kpis, ss=d.sucursales, tc=k.total_act;
+  document.getElementById('panelSubtitle').textContent = m.fecha_anterior_corta+' vs '+m.fecha_actual_corta;
+
+  // Bullets ejecutivos
+  const deltaVerif = k.verif_kyc_act - k.verif_kyc_ant;
+  const deltaBloq  = k.bloq_kyc_act  - k.bloq_kyc_ant;
+  const deltaPend  = k.pend_kyc_act  - k.pend_kyc_ant;
+
+  // Sucursal con mayor crecimiento
+  const topCrecimiento = [...ss].sort((a,b)=>b.delta-a.delta)[0];
+  // Sucursal con más verificados KYC %
+  const topVerif = [...ss].sort((a,b)=>b.pct_verif_kyc-a.pct_verif_kyc)[0];
+
+  const bullets = [
+    {
+      icon:'📈', bg:'#dcfce7',
+      title: `Crecimiento de base <span class="epill ep-pos">+${F(k.delta_total)} clientes</span>`,
+      desc: `La base total creció a <strong>${F(tc)}</strong> clientes. ${topCrecimiento.nombre} lideró con +${F(topCrecimiento.delta)} altas.`
+    },
+    {
+      icon: deltaVerif >= 0 ? '✅' : '⚠️',
+      bg: deltaVerif >= 0 ? '#dcfce7' : '#fee2e2',
+      title: `Verificados KYC <span class="epill ${deltaVerif>=0?'ep-pos':'ep-neg'}">${deltaVerif>=0?'+':''}${F(deltaVerif)}</span>`,
+      desc: `Subieron de ${F(k.verif_kyc_ant)} a <strong>${F(k.verif_kyc_act)}</strong>. ${topVerif.nombre} lidera con ${topVerif.pct_verif_kyc}%.`
+    },
+    {
+      icon: deltaPend <= 0 ? '⬇️' : '⚠️',
+      bg: deltaPend <= 0 ? '#dcfce7' : '#fee2e2',
+      title: `Pendientes KYC <span class="epill ${deltaPend<=0?'ep-pos':'ep-neg'}">${deltaPend>=0?'+':''}${F(deltaPend)}</span>`,
+      desc: `Bajaron de ${F(k.pend_kyc_ant)} a <strong>${F(k.pend_kyc_act)}</strong>${deltaPend<=0?' — mejora en regularización':' — requiere atención'}.`
+    },
+    {
+      icon: deltaBloq > 0 ? '⚠️' : '✅',
+      bg: deltaBloq > 0 ? '#fee2e2' : '#dcfce7',
+      title: `Bloqueados KYC <span class="epill ${deltaBloq>0?'ep-neg':'ep-pos'}">${deltaBloq>=0?'+':''}${F(deltaBloq)}</span>`,
+      desc: `${deltaBloq > 0 ? 'Aumentaron' : 'Bajaron'} de ${F(k.bloq_kyc_ant)} a <strong>${F(k.bloq_kyc_act)}</strong>.`
+    },
+  ];
+
+  // Ranking de sucursales
+  const ranked = [...ss].map(s=>{
+    const score = Math.round(
+      (s.pct_verif_kyc * 3) +
+      (s.pct_aviso) +
+      ((100 - s.pct_id_venc) * 0.5)
+    );
+    return {...s, score};
+  }).sort((a,b)=>b.score-a.score);
+
+  const numCls = (i) => i<2?'rn-top':i<5?'rn-mid':'rn-low';
+  const scoreCls = (s) => s>=70?'style="color:#16a34a"':s>=40?'style="color:#d97706"':'style="color:#dc2626"';
+
+  const rankHtml = ranked.map((s,i)=>`
+    <div class="rank-item">
+      <div class="rank-num ${numCls(i)}">${i+1}</div>
+      <div class="rank-name">${s.nombre}</div>
+      <div class="rank-bars">
+        <div class="brow"><span class="blbl">Verif KYC</span><div class="bbg"><div class="bfill" style="width:${Math.min(s.pct_verif_kyc*5,100)}%;background:#375623"></div></div><span>${s.pct_verif_kyc}%</span></div>
+        <div class="brow"><span class="blbl">Con Aviso</span><div class="bbg"><div class="bfill" style="width:${s.pct_aviso}%;background:#2E75B6"></div></div><span>${s.pct_aviso}%</span></div>
+        <div class="brow"><span class="blbl">ID Vencida</span><div class="bbg"><div class="bfill" style="width:${s.pct_id_venc}%;background:#E26B0A"></div></div><span>${s.pct_id_venc}%</span></div>
+      </div>
+      <div class="rscore" ${scoreCls(s.score)}>${s.score}pts</div>
+    </div>`).join('');
+
+  document.getElementById('panelBody').innerHTML = `
+    <div class="rsec">hallazgos del corte</div>
+    ${bullets.map(b=>`
+    <div class="exec-item">
+      <div class="exec-icon" style="background:${b.bg}">${b.icon}</div>
+      <div>
+        <div class="exec-title">${b.title}</div>
+        <div class="exec-desc">${b.desc}</div>
+      </div>
+    </div>`).join('')}
+    <div class="rsec" style="margin-top:1.25rem">ranking de sucursales</div>
+    ${rankHtml}
+  `;
+}
 
 // ── Tendencias históricas ────────────────────────────────────
 let chartTotalInst = null;
@@ -650,5 +780,20 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Si no hay sesión el login ya está visible
 });
 </script>
+
+<div class="panel-overlay" id="panelOverlay" onclick="cerrarPanel()"></div>
+<div class="panel" id="panel">
+  <div class="panel-head">
+    <div>
+      <h3>Resumen ejecutivo</h3>
+      <span id="panelSubtitle"></span>
+    </div>
+    <button class="panel-close" onclick="cerrarPanel()">✕</button>
+  </div>
+  <div class="panel-body" id="panelBody">
+    <p style="color:var(--color-text-secondary);font-size:13px">Cargando...</p>
+  </div>
+</div>
+
 </body>
 </html>
