@@ -448,6 +448,133 @@ function renderizarPanel(d){
       <div class="rscore" ${scoreCls(s.score)}>${s.score}pts</div>
     </div>`).join('');
 
+  // ── Reporte de comportamiento Registro Express ──
+  const tr = d.top_transiciones || [];
+  const reAct = k.re_act || 0;
+
+  // Clientes creados en 2026 (de reporte_operaciones)
+  const clientes2026 = d.reporte_operaciones
+    ? d.reporte_operaciones.sucursales.reduce((a,s)=>a+(s.total||0),0) : 0;
+
+  // Categorías de status
+  const catKYC = ["Pendente Validacion Kyc","Información actualizada Kyc","Verificado por Kyc","Bloqueado por KYC"];
+  const catOPS = ["Información actualizada operaciones","Registro completo","Verificado por operaciones","Bloqueado por operaciones"];
+
+  const catNombre = st => {
+    if(st==="Verificado por Kyc") return "Expediente OK";
+    if(st==="Bloqueado por KYC"||st==="Bloqueado por operaciones") return "Bloqueado";
+    return "Por validar KYC";
+  };
+
+  // Filtrar transiciones desde Registro Express
+  const desdeRE = tr.filter(t=>t._STATUS_ANT==="Registro express");
+  const totalRE = desdeRE.reduce((a,t)=>a+t.N,0);
+
+  // Filtrar transiciones de Operaciones a PLD
+  const OPS_STATUS = ["Información actualizada operaciones","Registro completo","Verificado por operaciones","Bloqueado por operaciones"];
+  const opsToPLD = tr.filter(t=>OPS_STATUS.includes(t._STATUS_ANT)&&catKYC.includes(t._STATUS_ACT));
+  const totalOPS = opsToPLD.reduce((a,t)=>a+t.N,0);
+
+  // Totales por categoría (ambos grupos)
+  const todos = [...desdeRE,...opsToPLD];
+  const totalPorRev = todos.filter(t=>catNombre(t._STATUS_ACT)==="Por validar KYC").reduce((a,t)=>a+t.N,0);
+  const totalOK     = todos.filter(t=>catNombre(t._STATUS_ACT)==="Expediente OK").reduce((a,t)=>a+t.N,0);
+  const totalBloq   = todos.filter(t=>catNombre(t._STATUS_ACT)==="Bloqueado").reduce((a,t)=>a+t.N,0);
+  const totalGeneral= totalPorRev+totalOK+totalBloq;
+
+  const tablaRE = desdeRE.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
+      <thead><tr style="background:#f9fafb">
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">#</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Anterior</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Nuevo</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Categoría</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">Cant.</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">%</th>
+      </tr></thead>
+      <tbody>
+      ${desdeRE.map((t,i)=>`<tr style="border-bottom:1px solid #f3f4f6">
+        <td style="padding:6px 8px;color:#9ca3af">${tr.indexOf(t)+1}</td>
+        <td style="padding:6px 8px;background:#fefce8">${t._STATUS_ANT}</td>
+        <td style="padding:6px 8px">${t._STATUS_ACT}</td>
+        <td style="padding:6px 8px;font-size:11px;color:${catNombre(t._STATUS_ACT)==='Expediente OK'?'#166534':catNombre(t._STATUS_ACT)==='Bloqueado'?'#991b1b':'#1e40af'}">${catNombre(t._STATUS_ACT)}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:500;font-family:monospace">${F(t.N)}</td>
+        <td style="padding:6px 8px;text-align:right;color:#6b7280;font-family:monospace">${totalRE?(t.N/totalRE*100).toFixed(2)+'%':'0%'}</td>
+      </tr>`).join('')}
+      <tr style="background:#f9fafb;font-weight:600">
+        <td colspan="4" style="padding:6px 8px">Total</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalRE)}</td>
+        <td style="padding:6px 8px"></td>
+      </tr>
+      </tbody>
+    </table>` : '<p style="font-size:12px;color:#9ca3af;margin-top:6px">Sin movimientos desde Registro Express</p>';
+
+  const tablaOPS = opsToPLD.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
+      <thead><tr style="background:#f9fafb">
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">#</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Anterior</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Nuevo</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Categoría</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">Cant.</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">%</th>
+      </tr></thead>
+      <tbody>
+      ${opsToPLD.map((t,i)=>`<tr style="border-bottom:1px solid #f3f4f6">
+        <td style="padding:6px 8px;color:#9ca3af">${tr.indexOf(t)+1}</td>
+        <td style="padding:6px 8px;background:#dbeafe">${t._STATUS_ANT}</td>
+        <td style="padding:6px 8px">${t._STATUS_ACT}</td>
+        <td style="padding:6px 8px;font-size:11px;color:${catNombre(t._STATUS_ACT)==='Expediente OK'?'#166534':catNombre(t._STATUS_ACT)==='Bloqueado'?'#991b1b':'#1e40af'}">${catNombre(t._STATUS_ACT)}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:500;font-family:monospace">${F(t.N)}</td>
+        <td style="padding:6px 8px;text-align:right;color:#6b7280;font-family:monospace">${totalOPS?(t.N/totalOPS*100).toFixed(2)+'%':'0%'}</td>
+      </tr>`).join('')}
+      <tr style="background:#f9fafb;font-weight:600">
+        <td colspan="4" style="padding:6px 8px">Total</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalOPS)}</td>
+        <td style="padding:6px 8px"></td>
+      </tr>
+      </tbody>
+    </table>` : '<p style="font-size:12px;color:#9ca3af;margin-top:6px">Sin movimientos de Operaciones a PLD</p>';
+
+  const tablaResumen = `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
+      <tbody>
+        <tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:6px 8px;color:#1e40af;font-weight:500">Por revisar</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalPorRev)}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:6px 8px;color:#166534;font-weight:500">Expediente OK</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalOK)}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:6px 8px;color:#991b1b;font-weight:500">Bloqueados</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalBloq)}</td>
+        </tr>
+        <tr style="background:#f9fafb;font-weight:600">
+          <td style="padding:6px 8px">Total</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalGeneral)}</td>
+        </tr>
+      </tbody>
+    </table>`;
+
+  const reHtml = `
+    <div style="background:#f9fafb;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div><span style="color:#6b7280">Clientes creados en 2026</span><br><strong>${F(clientes2026)}</strong></div>
+        <div><span style="color:#6b7280">Registro Express actual</span><br><strong>${F(reAct)}</strong></div>
+        <div><span style="color:#6b7280">Fecha inicial</span><br><strong>${m.fecha_anterior_larga}</strong></div>
+        <div><span style="color:#6b7280">Fecha final</span><br><strong>${m.fecha_actual_larga}</strong></div>
+      </div>
+    </div>
+    <div class="rsec">cambio de express a otros estatus</div>
+    ${tablaRE}
+    <div class="rsec" style="margin-top:1rem">cambio de operaciones a pld</div>
+    ${tablaOPS}
+    <div class="rsec" style="margin-top:1rem">resumen</div>
+    ${tablaResumen}
+  `;
+
   document.getElementById('panelBody').innerHTML = `
     <div class="rsec">hallazgos del corte</div>
     ${bullets.map(b=>`
@@ -458,7 +585,9 @@ function renderizarPanel(d){
         <div class="exec-desc">${b.desc}</div>
       </div>
     </div>`).join('')}
-    <div class="rsec" style="margin-top:1.25rem">ranking de sucursales</div>
+    <div class="rsec" style="margin-top:1.25rem">reporte registro express</div>
+    ${reHtml}
+    <div class="rsec" style="margin-top:1.25rem">ranking de sucursales · kyc</div>
     ${rankHtml}
   `;
 }
