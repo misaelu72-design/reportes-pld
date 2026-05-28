@@ -318,8 +318,17 @@ function mostrarApp(nombre){
   document.getElementById('login').classList.remove('on');
   document.getElementById('hUser').textContent=nombre;
   document.getElementById('hLogout').style.display='inline-block';
-  if(DATA) renderizar(DATA);
-  else cargarDatos();
+  document.getElementById('main').style.display='block';
+  if(DATA){
+    renderizar(DATA);
+    // Re-cargar tendencias si ya hay cortes cargados
+    fetch('cortes.json?v='+Date.now())
+      .then(r=>r.ok?r.json():Promise.reject())
+      .then(cortes=>{ if(cortes&&cortes.length>=2) cargarTendencias(cortes); })
+      .catch(()=>{});
+  } else {
+    cargarDatos();
+  }
 }
 
 // ── Carga de datos ───────────────────────────────────────────
