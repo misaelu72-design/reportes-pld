@@ -1,12 +1,17 @@
 [
   {
+    "etiqueta": "17-May vs 24-May",
+    "archivo": "datos/17-May_vs_24-May.json",
+    "generado": "27/05/2026 15:44"
+  },
+  {
     "etiqueta": "26-Abr vs 24-May",
     "archivo": "datos/26-Abr_vs_24-May.json",
     "generado": "27/05/2026 17:00"
   },
   {
-    "etiqueta": "17-May vs 24-May",
-    "archivo": "datos/17-May_vs_24-May.json",
-    "generado": "27/05/2026 15:44"
+    "etiqueta": "26 de Abril 2026",
+    "archivo": "datos/26-Abr_vs_26-Abr.json",
+    "generado": "27/05/2026"
   }
 ]
