@@ -205,6 +205,24 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
       <tbody id="tbKyc"></tbody>
     </table></div>
   </div>
+
+  <!-- Tendencias históricas -->
+  <div class="st" id="stTend" style="display:none">Tendencias históricas · todos los cortes</div>
+  <div id="tendenciasSection" style="display:none">
+    <div class="cd" style="padding:1.5rem;margin-bottom:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary)" id="tendLegend1"></div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="chartTotal" role="img" aria-label="Evolución del total de clientes por corte"></canvas>
+      </div>
+    </div>
+    <div class="cd" style="padding:1.5rem">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary)" id="tendLegend2"></div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="chartKyc" role="img" aria-label="Evolución de KPIs KYC por corte"></canvas>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- Modal -->
@@ -305,6 +323,97 @@ function mostrarApp(nombre){
 }
 
 // ── Carga de datos ───────────────────────────────────────────
+
+// ── Tendencias históricas ────────────────────────────────────
+let chartTotalInst = null;
+let chartKycInst   = null;
+
+async function cargarTendencias(cortesData) {
+  if (!cortesData || cortesData.length < 2) return;
+
+  // Cargar todos los JSONs del historial
+  const datos = [];
+  for (const c of cortesData) {
+    try {
+      const r = await fetch(c.archivo + '?v=' + Date.now());
+      if (r.ok) {
+        const d = await r.json();
+        datos.push({ etiqueta: c.etiqueta, d });
+      }
+    } catch(e) {}
+  }
+  if (datos.length < 2) return;
+
+  // Ordenar cronológicamente (el más antiguo primero)
+  datos.reverse();
+
+  const labels   = datos.map(x => x.etiqueta);
+  const totales  = datos.map(x => x.d.kpis.total_act);
+  const verif    = datos.map(x => x.d.kpis.verif_kyc_act);
+  const bloq     = datos.map(x => x.d.kpis.bloq_kyc_act);
+  const pend     = datos.map(x => x.d.kpis.pend_kyc_act);
+
+  const gridColor = 'rgba(0,0,0,0.06)';
+  const tickColor = '#888780';
+  const commonOpts = {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('es-MX')}` }}
+    },
+    scales: { x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11 } } } }
+  };
+
+  // Leyenda 1
+  document.getElementById('tendLegend1').innerHTML =
+    `<span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:3px;background:#1F3864;border-radius:2px;display:inline-block"></span>Total clientes</span>`;
+
+  // Leyenda 2
+  document.getElementById('tendLegend2').innerHTML = [
+    ['#375623','Verificados KYC',''],
+    ['#dc2626','Bloqueados KYC','▲'],
+    ['#ED7D31','Pend. Valid. KYC','- -'],
+  ].map(([c,l,s]) => `<span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:3px;background:${c};border-radius:2px;display:inline-block"></span>${l}</span>`).join('');
+
+  // Gráfica total
+  if (chartTotalInst) { chartTotalInst.destroy(); chartTotalInst = null; }
+  chartTotalInst = new Chart(document.getElementById('chartTotal'), {
+    type: 'line',
+    data: { labels, datasets: [{
+      label: 'Total clientes', data: totales,
+      borderColor: '#1F3864', backgroundColor: 'rgba(31,56,100,0.08)',
+      borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#1F3864',
+      tension: 0.3, fill: true,
+    }]},
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { grid:{color:gridColor}, ticks:{ color:tickColor, font:{size:11},
+        callback: v => (v/1000).toFixed(0)+'k' },
+        min: Math.min(...totales) - 2000, max: Math.max(...totales) + 2000
+      }
+    }}
+  });
+
+  // Gráfica KYC
+  if (chartKycInst) { chartKycInst.destroy(); chartKycInst = null; }
+  chartKycInst = new Chart(document.getElementById('chartKyc'), {
+    type: 'line',
+    data: { labels, datasets: [
+      { label:'Verificados KYC', data:verif, borderColor:'#375623', borderWidth:2.5, pointRadius:5, pointBackgroundColor:'#375623', tension:0.3, fill:false },
+      { label:'Bloqueados KYC',  data:bloq,  borderColor:'#dc2626', borderWidth:2,   pointRadius:5, pointBackgroundColor:'#dc2626', pointStyle:'triangle', tension:0.3, fill:false },
+      { label:'Pend. Valid. KYC',data:pend,  borderColor:'#ED7D31', borderDash:[6,3],borderWidth:2, pointRadius:5, pointBackgroundColor:'#ED7D31', pointStyle:'rect', tension:0.3, fill:false },
+    ]},
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { grid:{color:gridColor}, ticks:{ color:tickColor, font:{size:11}, callback: v => v.toLocaleString('es-MX') }}
+    }}
+  });
+
+  // Mostrar sección
+  document.getElementById('stTend').style.display = 'block';
+  document.getElementById('tendenciasSection').style.display = 'block';
+}
+
+
 async function cargarDatos(){
   document.getElementById('main').style.display='block';
   try{
@@ -332,6 +441,8 @@ async function cargarDatos(){
     DATA=datos;
     DETALLE=datos.detalle_cambios||[];
     renderizar(datos);
+    // Cargar tendencias si hay historial
+    if(cortesData && cortesData.length >= 2) cargarTendencias(cortesData);
   }catch(e){
     document.getElementById('main').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">No se encontró datos.json. Corre el script para generar los datos.</div>';
   }
