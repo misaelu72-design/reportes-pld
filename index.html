@@ -333,19 +333,18 @@ async function cargarTendencias(cortesData) {
 
   // Cargar todos los JSONs del historial
   const datos = [];
-  for (const c of cortesData) {
+  for (const c of [...cortesData].reverse()) {
     try {
       const r = await fetch(c.archivo + '?v=' + Date.now());
       if (r.ok) {
         const d = await r.json();
         datos.push({ etiqueta: c.etiqueta, d });
+      } else {
+        console.warn('No se pudo cargar:', c.archivo);
       }
-    } catch(e) {}
+    } catch(e) { console.warn('Error cargando:', c.archivo, e); }
   }
   if (datos.length < 2) return;
-
-  // Ordenar cronológicamente (el más antiguo primero)
-  datos.reverse();
 
   const labels   = datos.map(x => x.etiqueta);
   const totales  = datos.map(x => x.d.kpis.total_act);
