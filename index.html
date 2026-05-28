@@ -417,32 +417,31 @@ async function cargarTendencias(cortesData) {
 async function cargarDatos(){
   document.getElementById('main').style.display='block';
   try{
-    // Intentar cortes.json primero
     let datos = null;
+    let cortesData = null;
     try{
       const rc=await fetch('cortes.json?v='+Date.now());
       if(rc.ok){
         const cortes=await rc.json();
-        if(cortes.length){
+        if(cortes && cortes.length){
+          cortesData=cortes;
           poblarSelector(cortes);
           const rd=await fetch(cortes[0].archivo+'?v='+Date.now());
           if(rd.ok) datos=await rd.json();
         }
       }
     }catch(e){}
-    // Fallback a datos.json
     if(!datos){
       const rd=await fetch('datos.json?v='+Date.now());
       if(!rd.ok) throw new Error('No encontrado');
       datos=await rd.json();
-      const sel=document.getElementById('hCorte');
-      if(sel) sel.textContent=datos.meta.fecha_anterior_corta+' vs '+datos.meta.fecha_actual_corta;
+      const el=document.getElementById('hCorte');
+      if(el&&el.tagName==='SPAN') el.textContent=datos.meta.fecha_anterior_corta+' vs '+datos.meta.fecha_actual_corta;
     }
     DATA=datos;
     DETALLE=datos.detalle_cambios||[];
     renderizar(datos);
-    // Cargar tendencias si hay historial
-    if(cortesData && cortesData.length >= 2) cargarTendencias(cortesData);
+    if(cortesData&&cortesData.length>=2) cargarTendencias(cortesData);
   }catch(e){
     document.getElementById('main').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">No se encontró datos.json. Corre el script para generar los datos.</div>';
   }
