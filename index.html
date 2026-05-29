@@ -86,37 +86,6 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 .lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
 @media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
 .hr select option{background:#1F3864;color:white}
-
-  .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
-  .panel-overlay.on{display:block;opacity:1}
-  .panel{position:fixed;top:0;right:0;bottom:0;width:680px;max-width:96vw;background:#ffffff;box-shadow:-4px 0 32px rgba(0,0,0,.25);z-index:501;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
-  .panel.on{transform:translateX(0)}
-  .panel-head{padding:1.25rem 1.5rem;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#ffffff}
-  .panel-head h3{font-size:15px;font-weight:500;color:var(--color-text-primary)}
-  .panel-head span{font-size:12px;color:var(--color-text-secondary)}
-  .panel-close{width:30px;height:30px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-tertiary);background:none;cursor:pointer;font-size:15px;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center}
-  .panel-body{overflow-y:auto;flex:1;padding:1.25rem 1.5rem;background:#ffffff}
-  .exec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
-  .exec-item:last-child{border-bottom:none}
-  .exec-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
-  .exec-title{font-weight:500;font-size:13px;margin-bottom:3px;color:var(--color-text-primary)}
-  .exec-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
-  .epill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500;font-family:monospace}
-  .ep-pos{background:#dcfce7;color:#166534}.ep-neg{background:#fee2e2;color:#991b1b}
-  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
-  .rank-item:last-child{border-bottom:none}
-  .rank-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
-  .rn-top{background:#FFF2CC;color:#7d4f00}.rn-mid{background:#f3f4f6;color:#444441}.rn-low{background:#fee2e2;color:#991b1b}
-  .rank-name{font-weight:500;font-size:13px;flex:0 0 80px;color:var(--color-text-primary)}
-  .rank-bars{display:flex;flex-direction:column;gap:3px;flex:1}
-  .brow{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
-  .blbl{width:60px;flex-shrink:0}
-  .bbg{flex:1;height:4px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
-  .bfill{height:100%;border-radius:2px}
-  .rscore{font-size:12px;font-weight:500;font-family:monospace;min-width:32px;text-align:right}
-  .rsec{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin:1rem 0 .5rem}
-  .btn-panel{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
-  .btn-panel:hover{background:rgba(255,255,255,.22)}
 </style>
 </head>
 <body>
@@ -131,7 +100,6 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
       <span class="cb" id="hCorte">—</span>
       <span class="ub" id="hUpd"></span>
       <span class="un" id="hUser"></span>
-      <button class="btn-panel" id="btnPanel" onclick="abrirPanel()" style="display:none">⭐ Resumen</button>
       <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
     </div>
   </div>
@@ -343,7 +311,6 @@ function logout(){
   document.getElementById('main').style.display='none';
   document.getElementById('hUser').textContent='';
   document.getElementById('hLogout').style.display='none';
-  document.getElementById('btnPanel').style.display='none';
   document.getElementById('lu').value='';
   document.getElementById('lp').value='';
 }
@@ -351,246 +318,11 @@ function mostrarApp(nombre){
   document.getElementById('login').classList.remove('on');
   document.getElementById('hUser').textContent=nombre;
   document.getElementById('hLogout').style.display='inline-block';
-  document.getElementById('btnPanel').style.display='flex';
-  document.getElementById('main').style.display='block';
-  if(DATA){
-    renderizar(DATA);
-    // Re-cargar tendencias si ya hay cortes cargados
-    fetch('cortes.json?v='+Date.now())
-      .then(r=>r.ok?r.json():Promise.reject())
-      .then(cortes=>{ if(cortes&&cortes.length>=2) cargarTendencias(cortes); })
-      .catch(()=>{});
-  } else {
-    cargarDatos();
-  }
+  if(DATA) renderizar(DATA);
+  else cargarDatos();
 }
 
 // ── Carga de datos ───────────────────────────────────────────
-
-
-// ── Panel resumen ejecutivo ──────────────────────────────────
-function abrirPanel(){
-  if(!DATA){ return; }
-  document.getElementById('panelOverlay').classList.add('on');
-  document.getElementById('panel').classList.add('on');
-  document.body.style.overflow='hidden';
-  renderizarPanel(DATA);
-}
-function cerrarPanel(){
-  document.getElementById('panelOverlay').classList.remove('on');
-  document.getElementById('panel').classList.remove('on');
-  document.body.style.overflow='';
-}
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarPanel(); });
-
-function renderizarPanel(d){
-  const m=d.meta, k=d.kpis, ss=d.sucursales, tc=k.total_act;
-  document.getElementById('panelSubtitle').textContent = m.fecha_anterior_corta+' vs '+m.fecha_actual_corta;
-
-  // Bullets ejecutivos
-  const deltaVerif = k.verif_kyc_act - k.verif_kyc_ant;
-  const deltaBloq  = k.bloq_kyc_act  - k.bloq_kyc_ant;
-  const deltaPend  = k.pend_kyc_act  - k.pend_kyc_ant;
-
-  // Sucursal con mayor crecimiento
-  const topCrecimiento = [...ss].sort((a,b)=>b.delta-a.delta)[0];
-  // Sucursal con más verificados KYC %
-  const topVerif = [...ss].sort((a,b)=>b.pct_verif_kyc-a.pct_verif_kyc)[0];
-
-  const bullets = [
-    {
-      icon:'📈', bg:'#dcfce7',
-      title: `Crecimiento de base <span class="epill ep-pos">+${F(k.delta_total)} clientes</span>`,
-      desc: `La base total creció a <strong>${F(tc)}</strong> clientes. ${topCrecimiento.nombre} lideró con +${F(topCrecimiento.delta)} altas.`
-    },
-    {
-      icon: deltaVerif >= 0 ? '✅' : '⚠️',
-      bg: deltaVerif >= 0 ? '#dcfce7' : '#fee2e2',
-      title: `Verificados KYC <span class="epill ${deltaVerif>=0?'ep-pos':'ep-neg'}">${deltaVerif>=0?'+':''}${F(deltaVerif)}</span>`,
-      desc: `Subieron de ${F(k.verif_kyc_ant)} a <strong>${F(k.verif_kyc_act)}</strong>. ${topVerif.nombre} lidera con ${topVerif.pct_verif_kyc}%.`
-    },
-    {
-      icon: deltaPend <= 0 ? '⬇️' : '⚠️',
-      bg: deltaPend <= 0 ? '#dcfce7' : '#fee2e2',
-      title: `Pendientes KYC <span class="epill ${deltaPend<=0?'ep-pos':'ep-neg'}">${deltaPend>=0?'+':''}${F(deltaPend)}</span>`,
-      desc: `Bajaron de ${F(k.pend_kyc_ant)} a <strong>${F(k.pend_kyc_act)}</strong>${deltaPend<=0?' — mejora en regularización':' — requiere atención'}.`
-    },
-    {
-      icon: deltaBloq > 0 ? '⚠️' : '✅',
-      bg: deltaBloq > 0 ? '#fee2e2' : '#dcfce7',
-      title: `Bloqueados KYC <span class="epill ${deltaBloq>0?'ep-neg':'ep-pos'}">${deltaBloq>=0?'+':''}${F(deltaBloq)}</span>`,
-      desc: `${deltaBloq > 0 ? 'Aumentaron' : 'Bajaron'} de ${F(k.bloq_kyc_ant)} a <strong>${F(k.bloq_kyc_act)}</strong>.`
-    },
-  ];
-
-  // Ranking de sucursales
-  const ranked = [...ss].map(s=>{
-    const score = Math.round(
-      (s.pct_verif_kyc * 3) +
-      (s.pct_aviso) +
-      ((100 - s.pct_id_venc) * 0.5)
-    );
-    return {...s, score};
-  }).sort((a,b)=>b.score-a.score);
-
-  const numCls = (i) => i<2?'rn-top':i<5?'rn-mid':'rn-low';
-  const scoreCls = (s) => s>=70?'style="color:#16a34a"':s>=40?'style="color:#d97706"':'style="color:#dc2626"';
-
-  const rankHtml = ranked.map((s,i)=>`
-    <div class="rank-item">
-      <div class="rank-num ${numCls(i)}">${i+1}</div>
-      <div class="rank-name">${s.nombre}</div>
-      <div class="rank-bars">
-        <div class="brow"><span class="blbl">Verif KYC</span><div class="bbg"><div class="bfill" style="width:${Math.min(s.pct_verif_kyc*5,100)}%;background:#375623"></div></div><span>${s.pct_verif_kyc}%</span></div>
-        <div class="brow"><span class="blbl">Con Aviso</span><div class="bbg"><div class="bfill" style="width:${s.pct_aviso}%;background:#2E75B6"></div></div><span>${s.pct_aviso}%</span></div>
-        <div class="brow"><span class="blbl">ID Vencida</span><div class="bbg"><div class="bfill" style="width:${s.pct_id_venc}%;background:#E26B0A"></div></div><span>${s.pct_id_venc}%</span></div>
-      </div>
-      <div class="rscore" ${scoreCls(s.score)}>${s.score}pts</div>
-    </div>`).join('');
-
-  // ── Reporte de comportamiento Registro Express ──
-  const tr = d.top_transiciones || [];
-  const reAct = k.re_act || 0;
-
-  // Clientes creados en 2026 (de reporte_operaciones)
-  const clientes2026 = d.reporte_operaciones
-    ? d.reporte_operaciones.sucursales.reduce((a,s)=>a+(s.total||0),0) : 0;
-
-  // Categorías de status
-  const catKYC = ["Pendente Validacion Kyc","Información actualizada Kyc","Verificado por Kyc","Bloqueado por KYC"];
-  const catOPS = ["Información actualizada operaciones","Registro completo","Verificado por operaciones","Bloqueado por operaciones"];
-
-  const catNombre = st => {
-    if(st==="Verificado por Kyc") return "Expediente OK";
-    if(st==="Bloqueado por KYC"||st==="Bloqueado por operaciones") return "Bloqueado";
-    return "Por validar KYC";
-  };
-
-  // Filtrar transiciones desde Registro Express
-  const desdeRE = tr.filter(t=>t._STATUS_ANT==="Registro express");
-  const totalRE = desdeRE.reduce((a,t)=>a+t.N,0);
-
-  // Filtrar transiciones de Operaciones a PLD
-  const OPS_STATUS = ["Información actualizada operaciones","Registro completo","Verificado por operaciones","Bloqueado por operaciones"];
-  const opsToPLD = tr.filter(t=>OPS_STATUS.includes(t._STATUS_ANT)&&catKYC.includes(t._STATUS_ACT));
-  const totalOPS = opsToPLD.reduce((a,t)=>a+t.N,0);
-
-  // Totales por categoría (ambos grupos)
-  const todos = [...desdeRE,...opsToPLD];
-  const totalPorRev = todos.filter(t=>catNombre(t._STATUS_ACT)==="Por validar KYC").reduce((a,t)=>a+t.N,0);
-  const totalOK     = todos.filter(t=>catNombre(t._STATUS_ACT)==="Expediente OK").reduce((a,t)=>a+t.N,0);
-  const totalBloq   = todos.filter(t=>catNombre(t._STATUS_ACT)==="Bloqueado").reduce((a,t)=>a+t.N,0);
-  const totalGeneral= totalPorRev+totalOK+totalBloq;
-
-  const tablaRE = desdeRE.length ? `
-    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
-      <thead><tr style="background:#f9fafb">
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">#</th>
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Anterior</th>
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Nuevo</th>
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Categoría</th>
-        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">Cant.</th>
-        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">%</th>
-      </tr></thead>
-      <tbody>
-      ${desdeRE.map((t,i)=>`<tr style="border-bottom:1px solid #f3f4f6">
-        <td style="padding:6px 8px;color:#9ca3af">${tr.indexOf(t)+1}</td>
-        <td style="padding:6px 8px;background:#fefce8">${t._STATUS_ANT}</td>
-        <td style="padding:6px 8px">${t._STATUS_ACT}</td>
-        <td style="padding:6px 8px;font-size:11px;color:${catNombre(t._STATUS_ACT)==='Expediente OK'?'#166534':catNombre(t._STATUS_ACT)==='Bloqueado'?'#991b1b':'#1e40af'}">${catNombre(t._STATUS_ACT)}</td>
-        <td style="padding:6px 8px;text-align:right;font-weight:500;font-family:monospace">${F(t.N)}</td>
-        <td style="padding:6px 8px;text-align:right;color:#6b7280;font-family:monospace">${totalRE?(t.N/totalRE*100).toFixed(2)+'%':'0%'}</td>
-      </tr>`).join('')}
-      <tr style="background:#f9fafb;font-weight:600">
-        <td colspan="4" style="padding:6px 8px">Total</td>
-        <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalRE)}</td>
-        <td style="padding:6px 8px"></td>
-      </tr>
-      </tbody>
-    </table>` : '<p style="font-size:12px;color:#9ca3af;margin-top:6px">Sin movimientos desde Registro Express</p>';
-
-  const tablaOPS = opsToPLD.length ? `
-    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
-      <thead><tr style="background:#f9fafb">
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">#</th>
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Anterior</th>
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Nuevo</th>
-        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Categoría</th>
-        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">Cant.</th>
-        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">%</th>
-      </tr></thead>
-      <tbody>
-      ${opsToPLD.map((t,i)=>`<tr style="border-bottom:1px solid #f3f4f6">
-        <td style="padding:6px 8px;color:#9ca3af">${tr.indexOf(t)+1}</td>
-        <td style="padding:6px 8px;background:#dbeafe">${t._STATUS_ANT}</td>
-        <td style="padding:6px 8px">${t._STATUS_ACT}</td>
-        <td style="padding:6px 8px;font-size:11px;color:${catNombre(t._STATUS_ACT)==='Expediente OK'?'#166534':catNombre(t._STATUS_ACT)==='Bloqueado'?'#991b1b':'#1e40af'}">${catNombre(t._STATUS_ACT)}</td>
-        <td style="padding:6px 8px;text-align:right;font-weight:500;font-family:monospace">${F(t.N)}</td>
-        <td style="padding:6px 8px;text-align:right;color:#6b7280;font-family:monospace">${totalOPS?(t.N/totalOPS*100).toFixed(2)+'%':'0%'}</td>
-      </tr>`).join('')}
-      <tr style="background:#f9fafb;font-weight:600">
-        <td colspan="4" style="padding:6px 8px">Total</td>
-        <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalOPS)}</td>
-        <td style="padding:6px 8px"></td>
-      </tr>
-      </tbody>
-    </table>` : '<p style="font-size:12px;color:#9ca3af;margin-top:6px">Sin movimientos de Operaciones a PLD</p>';
-
-  const tablaResumen = `
-    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
-      <tbody>
-        <tr style="border-bottom:1px solid #f3f4f6">
-          <td style="padding:6px 8px;color:#1e40af;font-weight:500">Por revisar</td>
-          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalPorRev)}</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f3f4f6">
-          <td style="padding:6px 8px;color:#166534;font-weight:500">Expediente OK</td>
-          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalOK)}</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f3f4f6">
-          <td style="padding:6px 8px;color:#991b1b;font-weight:500">Bloqueados</td>
-          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalBloq)}</td>
-        </tr>
-        <tr style="background:#f9fafb;font-weight:600">
-          <td style="padding:6px 8px">Total</td>
-          <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalGeneral)}</td>
-        </tr>
-      </tbody>
-    </table>`;
-
-  const reHtml = `
-    <div style="background:#f9fafb;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <div><span style="color:#6b7280">Clientes creados en 2026</span><br><strong>${F(clientes2026)}</strong></div>
-        <div><span style="color:#6b7280">Registro Express actual</span><br><strong>${F(reAct)}</strong></div>
-        <div><span style="color:#6b7280">Fecha inicial</span><br><strong>${m.fecha_anterior_larga}</strong></div>
-        <div><span style="color:#6b7280">Fecha final</span><br><strong>${m.fecha_actual_larga}</strong></div>
-      </div>
-    </div>
-    <div class="rsec">cambio de express a otros estatus</div>
-    ${tablaRE}
-    <div class="rsec" style="margin-top:1rem">cambio de operaciones a pld</div>
-    ${tablaOPS}
-    <div class="rsec" style="margin-top:1rem">resumen</div>
-    ${tablaResumen}
-  `;
-
-  document.getElementById('panelBody').innerHTML = `
-    <div class="rsec">hallazgos del corte</div>
-    ${bullets.map(b=>`
-    <div class="exec-item">
-      <div class="exec-icon" style="background:${b.bg}">${b.icon}</div>
-      <div>
-        <div class="exec-title">${b.title}</div>
-        <div class="exec-desc">${b.desc}</div>
-      </div>
-    </div>`).join('')}
-    <div class="rsec" style="margin-top:1.25rem">reporte registro express</div>
-    ${reHtml}
-    <div class="rsec" style="margin-top:1.25rem">ranking de sucursales · kyc</div>
-    ${rankHtml}
-  `;
-}
 
 // ── Tendencias históricas ────────────────────────────────────
 let chartTotalInst = null;
@@ -601,18 +333,19 @@ async function cargarTendencias(cortesData) {
 
   // Cargar todos los JSONs del historial
   const datos = [];
-  for (const c of [...cortesData].reverse()) {
+  for (const c of cortesData) {
     try {
       const r = await fetch(c.archivo + '?v=' + Date.now());
       if (r.ok) {
         const d = await r.json();
         datos.push({ etiqueta: c.etiqueta, d });
-      } else {
-        console.warn('No se pudo cargar:', c.archivo);
       }
-    } catch(e) { console.warn('Error cargando:', c.archivo, e); }
+    } catch(e) {}
   }
   if (datos.length < 2) return;
+
+  // Ordenar cronológicamente (el más antiguo primero)
+  datos.reverse();
 
   const labels   = datos.map(x => x.etiqueta);
   const totales  = datos.map(x => x.d.kpis.total_act);
@@ -684,31 +417,32 @@ async function cargarTendencias(cortesData) {
 async function cargarDatos(){
   document.getElementById('main').style.display='block';
   try{
+    // Intentar cortes.json primero
     let datos = null;
-    let cortesData = null;
     try{
       const rc=await fetch('cortes.json?v='+Date.now());
       if(rc.ok){
         const cortes=await rc.json();
-        if(cortes && cortes.length){
-          cortesData=cortes;
+        if(cortes.length){
           poblarSelector(cortes);
           const rd=await fetch(cortes[0].archivo+'?v='+Date.now());
           if(rd.ok) datos=await rd.json();
         }
       }
     }catch(e){}
+    // Fallback a datos.json
     if(!datos){
       const rd=await fetch('datos.json?v='+Date.now());
       if(!rd.ok) throw new Error('No encontrado');
       datos=await rd.json();
-      const el=document.getElementById('hCorte');
-      if(el&&el.tagName==='SPAN') el.textContent=datos.meta.fecha_anterior_corta+' vs '+datos.meta.fecha_actual_corta;
+      const sel=document.getElementById('hCorte');
+      if(sel) sel.textContent=datos.meta.fecha_anterior_corta+' vs '+datos.meta.fecha_actual_corta;
     }
     DATA=datos;
     DETALLE=datos.detalle_cambios||[];
     renderizar(datos);
-    if(cortesData&&cortesData.length>=2) cargarTendencias(cortesData);
+    // Cargar tendencias si hay historial
+    if(cortesData && cortesData.length >= 2) cargarTendencias(cortesData);
   }catch(e){
     document.getElementById('main').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">No se encontró datos.json. Corre el script para generar los datos.</div>';
   }
@@ -909,20 +643,5 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Si no hay sesión el login ya está visible
 });
 </script>
-
-<div class="panel-overlay" id="panelOverlay" onclick="cerrarPanel()"></div>
-<div class="panel" id="panel">
-  <div class="panel-head">
-    <div>
-      <h3>Resumen ejecutivo</h3>
-      <span id="panelSubtitle"></span>
-    </div>
-    <button class="panel-close" onclick="cerrarPanel()">✕</button>
-  </div>
-  <div class="panel-body" id="panelBody">
-    <p style="color:var(--color-text-secondary);font-size:13px">Cargando...</p>
-  </div>
-</div>
-
 </body>
 </html>
