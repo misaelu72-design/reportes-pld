@@ -1,5 +1,10 @@
 [
   {
+    "etiqueta": "24-May vs 30-May",
+    "archivo": "datos/24-May_vs_30-May.json",
+    "generado": "01/06/2026 15:54"
+  },
+  {
     "etiqueta": "24-May vs 30-Jun",
     "archivo": "datos/24-May_vs_30-Jun.json",
     "generado": "01/06/2026 15:14"

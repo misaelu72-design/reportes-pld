@@ -1,10 +1,10 @@
 {
   "meta": {
-    "generado": "01/06/2026 15:14",
+    "generado": "01/06/2026 15:54",
     "fecha_anterior_corta": "24-May",
-    "fecha_actual_corta": "30-Jun",
+    "fecha_actual_corta": "30-May",
     "fecha_anterior_larga": "24 de Mayo 2026",
-    "fecha_actual_larga": "30 de Junio 2026",
+    "fecha_actual_larga": "30 de Mayo 2026",
     "num_sucursales": 9
   },
   "kpis": {
@@ -21750,7 +21750,7 @@
   ],
   "reporte_operaciones": {
     "fecha_inicio": "01/01/2026",
-    "fecha_fin": "30/06/2026",
+    "fecha_fin": "30/05/2026",
     "sucursales": [
       {
         "nombre": "Ajijic",
