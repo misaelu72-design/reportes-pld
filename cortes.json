@@ -1,13 +1,13 @@
 [
   {
-    "etiqueta": "26-Abr vs 30-May",
-    "archivo": "datos/26-Abr_vs_30-May.json",
-    "generado": "01/06/2026 16:24"
-  },
-  {
     "etiqueta": "24-May vs 30-May",
     "archivo": "datos/24-May_vs_30-May.json",
     "generado": "01/06/2026 15:54"
+  },
+  {
+    "etiqueta": "26-Abr vs 30-May",
+    "archivo": "datos/26-Abr_vs_30-May.json",
+    "generado": "01/06/2026 16:24"
   },
   {
     "etiqueta": "26-Abr vs 24-May",
