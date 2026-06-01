@@ -760,18 +760,19 @@ function renderizar(d){
   const fa = m.fecha_anterior_corta, fc = m.fecha_actual_corta;
   const nomDetalle = `Detalle_Cambios_Estatus_${fa}_vs_${fc}.xlsx`;
   const nomReporte = `Reporte_PLD_TODAS_SUCURSALES_${fa}_vs_${fc}.xlsx`;
-  document.getElementById('dlDetalle').href = nomDetalle;
-  document.getElementById('dlDetalle').download = nomDetalle;
-  document.getElementById('dlDetalleNombre').textContent = nomDetalle.replace('.xlsx','');
-  document.getElementById('dlReporte').href = nomReporte;
-  document.getElementById('dlReporte').download = nomReporte;
-  document.getElementById('dlReporteNombre').textContent = nomReporte.replace('.xlsx','');
-  const nomBase = `Base_Unificada_${fc}.xlsx`;
-  document.getElementById('dlBase').href = nomBase;
-  document.getElementById('dlBase').download = nomBase;
-  document.getElementById('dlBaseNombre').textContent = nomBase.replace('.xlsx','');
-  document.getElementById('stDesc').style.display = 'block';
-  document.getElementById('descSection').style.display = 'block';
+  const nomBase    = `Base_Unificada_${fc}.xlsx`;
+  const _s = (id, prop, val) => { const el=document.getElementById(id); if(el) el[prop]=val; };
+  _s('dlDetalle','href', nomDetalle);    _s('dlDetalle','download', nomDetalle);
+  _s('dlDetalleNombre','textContent', nomDetalle.replace('.xlsx',''));
+  _s('dlReporte','href', nomReporte);    _s('dlReporte','download', nomReporte);
+  _s('dlReporteNombre','textContent', nomReporte.replace('.xlsx',''));
+  _s('dlBase','href', nomBase);          _s('dlBase','download', nomBase);
+  _s('dlBaseNombre','textContent', nomBase.replace('.xlsx',''));
+  _s('stDesc','style.display', 'block'); // no funciona así, usar directo
+  const stDesc = document.getElementById('stDesc');
+  const descSec = document.getElementById('descSection');
+  if(stDesc) stDesc.style.display='block';
+  if(descSec) descSec.style.display='block';
 
   // Títulos
   document.getElementById('stKpis').textContent='Resumen global · '+m.num_sucursales+' sucursales';
