@@ -766,6 +766,10 @@ function renderizar(d){
   document.getElementById('dlReporte').href = nomReporte;
   document.getElementById('dlReporte').download = nomReporte;
   document.getElementById('dlReporteNombre').textContent = nomReporte.replace('.xlsx','');
+  const nomBase = `Base_Unificada_${fc}.xlsx`;
+  document.getElementById('dlBase').href = nomBase;
+  document.getElementById('dlBase').download = nomBase;
+  document.getElementById('dlBaseNombre').textContent = nomBase.replace('.xlsx','');
   document.getElementById('stDesc').style.display = 'block';
   document.getElementById('descSection').style.display = 'block';
 
