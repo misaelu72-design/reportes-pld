@@ -2,12 +2,12 @@
   {
     "etiqueta": "26-Abr vs 07-Jun",
     "archivo": "datos/26-Abr_vs_07-Jun.json",
-    "generado": "08/06/2026 09:47"
+    "generado": "08/06/2026 15:50"
   },
   {
     "etiqueta": "30-May vs 07-Jun",
     "archivo": "datos/30-May_vs_07-Jun.json",
-    "generado": "08/06/2026 09:46"
+    "generado": "08/06/2026 15:47"
   },
   {
     "etiqueta": "26-Abr vs 30-May",
@@ -15,9 +15,19 @@
     "generado": "01/06/2026 16:25"
   },
   {
+    "etiqueta": "30-May vs 30-May",
+    "archivo": "datos/30-May_vs_30-May.json",
+    "generado": "01/06/2026 16:24"
+  },
+  {
     "etiqueta": "24-May vs 30-May",
     "archivo": "datos/24-May_vs_30-May.json",
     "generado": "01/06/2026 15:54"
+  },
+  {
+    "etiqueta": "24-May vs 30-Jun",
+    "archivo": "datos/24-May_vs_30-Jun.json",
+    "generado": "01/06/2026 15:14"
   },
   {
     "etiqueta": "26-Abr vs 24-May",
