@@ -288,21 +288,7 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
   </div>
 </div>
 
-<!-- Login -->
-      <div><div class="lt2">CECOM — PLD</div><div class="ls2">Portal de Reportes</div></div>
-    </div>
-    <div class="lerr" id="lerr">Usuario o contraseña incorrectos</div>
-    <div class="lf">
-      <label class="llab">Usuario</label>
-      <input class="lin" id="lu" type="text" onkeydown="if(event.key==='Enter')login()">
-    </div>
-    <div class="lf">
-      <label class="llab">Contraseña</label>
-      <input class="lin" id="lp" type="password" onkeydown="if(event.key==='Enter')login()">
-    </div>
-    <button class="lbtn" onclick="login()">Iniciar sesión</button>
-  </div>
-</div>
+
 
 <script>
 // ── Utilidades ──────────────────────────────────────────────
@@ -320,35 +306,7 @@ let USUARIOS = [];
 let TRANS_LIST = [];
 let opsChartInst = null;
 
-// ── Login ────────────────────────────────────────────────────
-async function sha256(m){
-  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));
-  return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
-}
-async function login(){
-  const u=document.getElementById('lu').value.trim().toLowerCase();
-  const p=document.getElementById('lp').value;
-  const err=document.getElementById('lerr');
-  if(!u||!p){err.style.display='block';return;}
-  // Intentar cargar usuarios desde archivo si no están cargados
-  if(!USUARIOS.length){
-    try{
-      const r=await fetch('usuarios.json?v='+Date.now());
-      if(r.ok) USUARIOS=await r.json();
-    }catch(e){}
-  }
-  const h=await sha256(p);
-  const found=USUARIOS.find(x=>x.u===u&&x.h===h);
-  if(found){
-    sessionStorage.setItem('pld',JSON.stringify({u:found.u,n:found.n}));
-    err.style.display='none';
-    mostrarApp(found.n);
-  }else{
-    err.style.display='block';
-    document.getElementById('lp').value='';
-    document.getElementById('lp').focus();
-  }
-}
+
 function logout(){
   sessionStorage.removeItem('pld');
   window.location.href='login.html';
