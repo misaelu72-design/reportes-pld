@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Generador XML JYS — CECOM</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
+header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+.hi{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px}
+.li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
+.back{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.layout{max-width:1300px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}
+.sidebar{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:sticky;top:84px}
+.sb-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+.sb-title{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.sb-item{padding:.75rem 1.25rem;cursor:pointer;border-left:3px solid transparent;transition:all .15s;display:flex;align-items:center;justify-content:space-between}
+.sb-item:hover{background:#f9fafb}
+.sb-item.active{border-left-color:var(--naranja);background:#fff5ec}
+.sb-name{font-size:13px;font-weight:500}
+.sb-prefix{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.sb-item.active .sb-name{color:var(--naranja)}
+.sb-item.active .sb-prefix{color:var(--naranja);opacity:.7}
+.sb-soon{padding:.75rem 1.25rem;display:flex;align-items:center;gap:8px;opacity:.4}
+.sb-soon .sb-name{font-size:13px}
+.sb-footer{padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+.main{}
+.main-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.main-title{font-size:20px;font-weight:600;color:var(--azul)}
+.main-sub{font-size:12px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+.steps{display:flex;align-items:center;gap:0;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.step{flex:1;padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-right:1px solid var(--border);position:relative}
+.step:last-child{border-right:none}
+.step-num{width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:var(--muted);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-label{font-size:12px;color:var(--muted)}
+.step.active .step-num{background:var(--naranja);color:#fff}
+.step.active .step-label{color:var(--texto);font-weight:500}
+.step.done .step-num{background:var(--verde);color:#fff}
+.step.done .step-label{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-size:14px;font-weight:600}
+.card-body{padding:1.25rem}
+.upload-zone{border:2px dashed var(--azul2);border-radius:10px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .15s;background:#f8fbff}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--naranja);background:#fff5ec}
+.upload-zone input[type=file]{display:none}
+.upload-icon{font-size:32px;margin-bottom:12px}
+.upload-title{font-size:14px;font-weight:500;color:var(--azul);margin-bottom:4px}
+.upload-sub{font-size:12px;color:var(--muted)}
+.upload-done{border-color:var(--verde);background:#f0fdf4}
+.upload-done .upload-icon{color:var(--verde)}
+.upload-done .upload-title{color:var(--verde)}
+.file-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.config-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.field input,.field select{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;background:#fff}
+.field input:focus,.field select:focus{border-color:var(--azul2)}
+.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-primary{background:var(--azul);color:#fff}
+.btn-orange{background:var(--naranja);color:#fff}
+.btn-outline{background:#fff;color:var(--azul);border:1.5px solid var(--azul2)}
+.btn-green{background:var(--verde);color:#fff}
+.btn-sm{padding:6px 14px;font-size:12px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;position:relative;overflow:hidden}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-label{font-size:11px;color:var(--muted);margin-bottom:6px}
+.kpi-val{font-size:24px;font-weight:600;letter-spacing:-1px;color:var(--texto)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:#f9fafb;padding:9px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+tbody tr{border-bottom:1px solid #f3f4f6}
+tbody tr:hover{background:#f9fafb}
+td{padding:9px 12px}
+td.mono{font-family:'DM Mono',monospace}
+td.right{text-align:right;font-family:'DM Mono',monospace}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+.b-dep{background:#dbeafe;color:#1e40af}
+.b-ret{background:#fce7f3;color:#9d174d}
+.b-men{background:#dcfce7;color:#15803d}
+.b-sem{background:#fef3c7;color:#92400e}
+.actions{display:flex;gap:10px;justify-content:flex-end}
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
+.alert-err{background:#fee2e2;color:var(--neg);border:1px solid #fca5a5}
+.alert-ok{background:var(--pos-bg);color:var(--pos);border:1px solid #86efac}
+.hidden{display:none}
+.section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:1.5rem 0 .75rem}
+.xml-list{display:flex;flex-direction:column;gap:8px}
+.xml-item{background:#f8fbff;border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.xml-name{font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--azul)}
+.xml-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:static}.config-grid{grid-template-columns:1fr 1fr}.kpi-row{grid-template-columns:1fr 1fr}.file-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="logo">
+      <div class="li">C</div>
+      <div>
+        <div class="lt">Generador XML JYS</div>
+        <div class="ls">CECOM — Prevención de Lavado de Dinero</div>
+      </div>
+    </div>
+    <a href="index.html" class="back">← Volver al dashboard</a>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR SUCURSALES -->
+  <div class="sidebar">
+    <div class="sb-head"><div class="sb-title">Sucursales</div></div>
+    <div class="sb-item active" onclick="selSuc('MITRAS','MTY','64320','A')" id="suc-MITRAS">
+      <div><div class="sb-name">Mitras</div><div class="sb-prefix">MTY · Monterrey</div></div>
+    </div>
+    <div class="sb-item" onclick="selSuc('GUADALUPE','GDL','45900','B')" id="suc-GUADALUPE">
+      <div><div class="sb-name">Guadalupe</div><div class="sb-prefix">GDL · Guadalupe</div></div>
+    </div>
+    <div class="sb-soon"><div><div class="sb-name">Ajijic</div><div class="sb-prefix">AJI · próximamente</div></div></div>
+    <div class="sb-soon"><div><div class="sb-name">Allende</div><div class="sb-prefix">ALL · próximamente</div></div></div>
+    <div class="sb-soon"><div><div class="sb-name">Irapuato</div><div class="sb-prefix">IRP · próximamente</div></div></div>
+    <div class="sb-soon"><div><div class="sb-name">Sendero</div><div class="sb-prefix">SND · próximamente</div></div></div>
+    <div class="sb-soon"><div><div class="sb-name">Satélite</div><div class="sb-prefix">SAT · próximamente</div></div></div>
+    <div class="sb-soon"><div><div class="sb-name">Neza</div><div class="sb-prefix">NEZ · próximamente</div></div></div>
+    <div class="sb-soon"><div><div class="sb-name">Esmeralda</div><div class="sb-prefix">ESM · próximamente</div></div></div>
+    <div class="sb-footer">9 sucursales · 2 activas</div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main">
+
+    <div class="main-head">
+      <div>
+        <div class="main-title" id="suc-title">Mitras — Monterrey</div>
+        <div class="main-sub" id="suc-meta">Prefijo MTY · CP 64320 · Formato A</div>
+      </div>
+    </div>
+
+    <!-- PASOS -->
+    <div class="steps">
+      <div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">Subir archivo</div></div>
+      <div class="step" id="step2"><div class="step-num">2</div><div class="step-label">Revisar resumen</div></div>
+      <div class="step" id="step3"><div class="step-num">3</div><div class="step-label">Descargar XML</div></div>
+    </div>
+
+    <!-- PASO 1: SUBIR ARCHIVO -->
+    <div id="panel-upload">
+      <div class="card">
+        <div class="card-head">
+          <h3 id="upload-title">Archivo de reporte — Mitras</h3>
+          <span id="upload-format-badge" style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace">Formato A · .xlsm</span>
+        </div>
+        <div class="card-body">
+          <div id="alert-upload" class="alert alert-err"></div>
+
+          <!-- FORMATO A: un solo archivo -->
+          <div id="upload-A">
+            <div class="upload-zone" id="zone-A" onclick="document.getElementById('file-A').click()" ondragover="dragOver(event,'zone-A')" ondragleave="dragLeave('zone-A')" ondrop="dropFile(event,'file-A','zone-A')">
+              <input type="file" id="file-A" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('A',this)">
+              <div class="upload-icon" id="icon-A">📂</div>
+              <div class="upload-title" id="title-A">Arrastra el archivo aquí o haz clic para seleccionar</div>
+              <div class="upload-sub" id="sub-A">MTY_-_PLD_Reporte_Final_MAYO_2026.xlsm</div>
+            </div>
+          </div>
+
+          <!-- FORMATO B: dos archivos -->
+          <div id="upload-B" class="hidden">
+            <div class="file-grid">
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--azul);margin-bottom:8px">Reporte mensual</div>
+                <div class="upload-zone" id="zone-B1" onclick="document.getElementById('file-B1').click()" ondragover="dragOver(event,'zone-B1')" ondragleave="dragLeave('zone-B1')" ondrop="dropFile(event,'file-B1','zone-B1')">
+                  <input type="file" id="file-B1" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('B1',this)">
+                  <div class="upload-icon" id="icon-B1">📂</div>
+                  <div class="upload-title" id="title-B1">Seleccionar archivo</div>
+                  <div class="upload-sub">PLD_Reporte_Mensual_...xlsx</div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--azul);margin-bottom:8px">Reporte acumulativo (semestral)</div>
+                <div class="upload-zone" id="zone-B2" onclick="document.getElementById('file-B2').click()" ondragover="dragOver(event,'zone-B2')" ondragleave="dragLeave('zone-B2')" ondrop="dropFile(event,'file-B2','zone-B2')">
+                  <input type="file" id="file-B2" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('B2',this)">
+                  <div class="upload-icon" id="icon-B2">📂</div>
+                  <div class="upload-title" id="title-B2">Seleccionar archivo</div>
+                  <div class="upload-sub">PLD_Reporte_Acumulativo_...xlsx</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem">
+            <div class="section-label">Configuración del reporte</div>
+            <div class="config-grid">
+              <div class="field">
+                <label>Mes reportado</label>
+                <input type="text" id="cfg-mes" value="202605" placeholder="YYYYMM" maxlength="6">
+              </div>
+              <div class="field">
+                <label>RFC del sujeto obligado</label>
+                <input type="text" id="cfg-rfc" value="CDM060904UF3" maxlength="13">
+              </div>
+              <div class="field">
+                <label>CP de la sucursal</label>
+                <input type="text" id="cfg-cp" value="64320" maxlength="5">
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" onclick="procesarArchivos()">
+                <span id="btn-procesar-text">Procesar y ver resumen</span>
+                <span id="btn-procesar-spin" class="hidden"><span class="spinner"></span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2: RESUMEN -->
+    <div id="panel-resumen" class="hidden">
+      <div id="alert-resumen" class="alert alert-err"></div>
+
+      <div class="kpi-row" id="kpi-row"></div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Vista previa de avisos</h3>
+          <span id="resumen-tipo" style="font-size:11px;color:var(--muted)"></span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Folio</th>
+                  <th>Nombre</th>
+                  <th>Apellido paterno</th>
+                  <th>Apellido materno</th>
+                  <th>CURP</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Fecha op.</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-resumen"></tbody>
+            </table>
+          </div>
+          <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)" id="tabla-footer"></div>
+        </div>
+      </div>
+
+      <div class="actions" style="margin-top:8px">
+        <button class="btn btn-outline" onclick="volverUpload()">← Cambiar archivo</button>
+        <button class="btn btn-orange" onclick="generarXML()">
+          <span id="btn-xml-text">Generar y descargar XML</span>
+          <span id="btn-xml-spin" class="hidden"><span class="spinner"></span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PASO 3: DESCARGA -->
+    <div id="panel-descarga" class="hidden">
+      <div class="card">
+        <div class="card-head"><h3>XMLs generados</h3></div>
+        <div class="card-body">
+          <div class="alert alert-ok" id="alert-ok" style="display:block">Los archivos se generaron correctamente y están listos para enviar a la UIF.</div>
+          <div class="xml-list" id="xml-list"></div>
+          <div class="actions" style="margin-top:1rem">
+            <button class="btn btn-outline" onclick="nuevoReporte()">Generar otro reporte</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const MAPA_PAIS = {MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
+const NS = 'http://www.uif.shcp.gob.mx/recepcion/jys';
+let STATE = {suc:'MITRAS',prefijo:'MTY',cp:'64320',tipo:'A',datos:[],archivos:{}};
+
+function selSuc(nombre, prefijo, cp, tipo){
+  STATE = {...STATE, suc:nombre, prefijo:prefijo, cp:cp, tipo:tipo, datos:[], archivos:{}};
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('suc-'+nombre).classList.add('active');
+  document.getElementById('suc-title').textContent = nombre.charAt(0)+nombre.slice(1).toLowerCase()+' — '+({MITRAS:'Monterrey',GUADALUPE:'Guadalupe'}[nombre]||nombre);
+  document.getElementById('suc-meta').textContent = `Prefijo ${prefijo} · CP ${cp} · Formato ${tipo}`;
+  document.getElementById('cfg-cp').value = cp;
+  document.getElementById('upload-title').textContent = `Archivo de reporte — ${nombre.charAt(0)+nombre.slice(1).toLowerCase()}`;
+  document.getElementById('upload-format-badge').textContent = tipo==='A'?'Formato A · .xlsm':'Formato B · .xlsx';
+  document.getElementById('upload-A').classList.toggle('hidden', tipo!=='A');
+  document.getElementById('upload-B').classList.toggle('hidden', tipo!=='B');
+  resetZonas();
+  volverUpload();
+}
+
+function resetZonas(){
+  ['A','B1','B2'].forEach(id=>{
+    const z=document.getElementById('zone-'+id); if(!z)return;
+    z.classList.remove('upload-done');
+    document.getElementById('icon-'+id).textContent='📂';
+    document.getElementById('title-'+id).textContent = id==='A'?'Arrastra el archivo aquí o haz clic para seleccionar':'Seleccionar archivo';
+  });
+  STATE.archivos={};
+}
+
+function dragOver(e,zoneId){e.preventDefault();document.getElementById(zoneId).classList.add('drag')}
+function dragLeave(zoneId){document.getElementById(zoneId).classList.remove('drag')}
+function dropFile(e,inputId,zoneId){
+  e.preventDefault();
+  dragLeave(zoneId);
+  const f=e.dataTransfer.files[0]; if(!f)return;
+  const inp=document.getElementById(inputId);
+  const dt=new DataTransfer(); dt.items.add(f); inp.files=dt.files;
+  const ev={target:inp}; fileSelected(inputId.replace('file-',''),{files:[f]});
+}
+
+function fileSelected(id, input){
+  const f=input.files[0]; if(!f)return;
+  STATE.archivos[id]=f;
+  const zId='zone-'+id, iconId='icon-'+id, titleId='title-'+id;
+  document.getElementById(zId).classList.add('upload-done');
+  document.getElementById(iconId).textContent='✅';
+  document.getElementById(titleId).textContent=f.name;
+}
+
+async function leerExcel(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=e=>{try{res(XLSX.read(e.target.result,{type:'binary',cellDates:true}));}catch(err){rej(err);}};
+    r.onerror=rej;
+    r.readAsBinaryString(file);
+  });
+}
+
+function sheetToArr(wb, sheetName, header=0){
+  if(!wb.SheetNames.includes(sheetName))return null;
+  return XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{header:header===0?1:undefined,defval:''});
+}
+
+function fmtFecha(v){
+  if(!v||v==='')return '';
+  if(v instanceof Date){const y=v.getFullYear(),m=String(v.getMonth()+1).padStart(2,'0'),d=String(v.getDate()).padStart(2,'0');return `${y}${m}${d}`;}
+  const s=String(v).trim();
+  if(/^\d{8}$/.test(s))return s;
+  const m1=s.match(/(\d{4})-(\d{2})-(\d{2})/); if(m1)return m1[1]+m1[2]+m1[3];
+  const m2=s.match(/(\d{2})\/(\d{2})\/(\d{4})/); if(m2)return m2[3]+m2[2]+m2[1];
+  return s.replace(/\D/g,'').substring(0,8);
+}
+
+function limpiarMonto(v){
+  if(v===''||v===null||v===undefined)return '0.00';
+  try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return '0.00';}
+}
+
+function limpiarTel(v){
+  if(!v)return '';
+  const s=String(v).replace(/\D/g,'');
+  return(s.length>=10&&s.length<=12)?s:'';
+}
+
+function normalizar(s){
+  if(!s)return '';
+  return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZÑ0-9 .,:/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+function paisIso2(v){
+  if(!v)return 'MX';
+  let s=String(v).toUpperCase().trim();
+  if(s.includes(','))s=s.split(',').pop().trim();
+  if(s.length===2)return s;
+  return MAPA_PAIS[s]||'MX';
+}
+
+function codOcup(v){
+  if(!v)return '1000000';
+  let s=String(v).trim();
+  if(s.includes('||'))s=s.split('||').pop().trim();
+  s=s.split('.')[0].trim();
+  return /^\d+$/.test(s)?s:'1000000';
+}
+
+async function procesarArchivos(){
+  const err=document.getElementById('alert-upload');
+  err.style.display='none';
+  const mes=document.getElementById('cfg-mes').value.trim();
+  const rfc=document.getElementById('cfg-rfc').value.trim();
+  const cp=document.getElementById('cfg-cp').value.trim();
+  if(!/^\d{6}$/.test(mes)){err.textContent='El mes debe ser 6 dígitos (YYYYMM).';err.style.display='block';return;}
+  if(rfc.length<12||rfc.length>13){err.textContent='El RFC debe tener 12 o 13 caracteres.';err.style.display='block';return;}
+  if(!/^\d{5}$/.test(cp)){err.textContent='El CP debe ser exactamente 5 dígitos.';err.style.display='block';return;}
+
+  let rows=[];
+  document.getElementById('btn-procesar-text').textContent='Procesando...';
+  document.getElementById('btn-procesar-spin').classList.remove('hidden');
+
+  try{
+    if(STATE.tipo==='A'){
+      if(!STATE.archivos['A']){err.textContent='Selecciona el archivo Excel.';err.style.display='block';return;}
+      const wb=await leerExcel(STATE.archivos['A']);
+      const dep=sheetToArr(wb,'REPORTE UIF DEPOSITOS');
+      const ret=sheetToArr(wb,'REPORTE UIF RETIROS');
+      let tels={};
+      ['Depositos Acumulado','Retiros Acumulado'].forEach(h=>{
+        const d=sheetToArr(wb,h);
+        if(d)d.forEach(r=>{if(r.CURP&&r.Telefono)tels[String(r.CURP).trim().toUpperCase()]=limpiarTel(r.Telefono);});
+      });
+      if(dep)dep.forEach(r=>{const curp=String(r.CURP||'').trim().toUpperCase();rows.push({...r,_tipo:'DEPOSITO',_tel:tels[curp]||''});});
+      if(ret)ret.forEach(r=>{const curp=String(r.CURP||'').trim().toUpperCase();rows.push({...r,_tipo:'RETIRO',_tel:tels[curp]||''});});
+    } else {
+      if(!STATE.archivos['B1']&&!STATE.archivos['B2']){err.textContent='Selecciona al menos un archivo.';err.style.display='block';return;}
+      for(const[key,tipo,descTipo] of [['B1','MENSUAL','DEPOSITO'],['B2','SEMESTRAL','DEPOSITO']]){
+        if(!STATE.archivos[key])continue;
+        const wb=await leerExcel(STATE.archivos[key]);
+        const hojas=wb.SheetNames;
+        const hDep=hojas.find(h=>h.toLowerCase().includes('deposito')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('deposito'));
+        const hRet=hojas.find(h=>h.toLowerCase().includes('retiro')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('retiro'));
+        [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([h,t])=>{
+          if(!h)return;
+          const d=XLSX.utils.sheet_to_json(wb.Sheets[h],{header:1});
+          const headerRow=d.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
+          if(headerRow<0)return;
+          const headers=d[headerRow];
+          d.slice(headerRow+1).forEach(r=>{
+            if(!r[headers.indexOf('Nombre')])return;
+            const obj={};
+            headers.forEach((h,i)=>obj[h]=r[i]||'');
+            rows.push({...obj,_tipo:t,_tipoReporte:tipo,'Monto Transaccion':obj['Monto Transaccion']||obj['TOTAL GENERAL']||0});
+          });
+        });
+      }
+      const curps=[...new Set(rows.map(r=>String(r.CURP||'').trim().toUpperCase()))];
+      const mapFolio={};
+      let ci=1;
+      rows.forEach(r=>{
+        const key=String(r.CURP||'').trim().toUpperCase()+'|'+r._tipo;
+        if(!mapFolio[key])mapFolio[key]=STATE.prefijo+String(ci++).padStart(4,'0');
+        r.CONSECUTIVO=mapFolio[key];
+        r['TOTAL GENERAL']=r['Monto Transaccion']||r['TOTAL GENERAL']||0;
+        r['PLD Ocupacion']=r['PLD Codigo Ocupacion']||r['PLD Ocupacion']||'';
+        r._tel=limpiarTel(r.Telefono||'');
+      });
+    }
+
+    if(!rows.length){err.textContent='No se encontraron registros en el archivo.';err.style.display='block';return;}
+
+    STATE.datos=rows;
+    STATE.cfg={mes,rfc,cp};
+    mostrarResumen(rows);
+  }catch(e){
+    err.textContent='Error al leer el archivo: '+e.message;err.style.display='block';
+    console.error(e);
+  } finally {
+    document.getElementById('btn-procesar-text').textContent='Procesar y ver resumen';
+    document.getElementById('btn-procesar-spin').classList.add('hidden');
+  }
+}
+
+function mostrarResumen(rows){
+  const consecutivos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
+  const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
+  const ret=rows.filter(r=>r._tipo==='RETIRO').length;
+  const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0)),0);
+
+  document.getElementById('kpi-row').innerHTML=`
+    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${consecutivos.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Depósitos / Retiros</div><div class="kpi-val">${dep} / ${ret}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:18px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+  `;
+
+  const MAX=200;
+  const muestra=rows.slice(0,MAX);
+  const tbody=document.getElementById('tabla-resumen');
+  tbody.innerHTML=muestra.map(r=>`
+    <tr>
+      <td class="mono">${r.CONSECUTIVO||''}</td>
+      <td>${normalizar(r.Nombre||r['Nombre']||'')}</td>
+      <td>${normalizar(r['Apellido Paterno']||'')}</td>
+      <td>${normalizar(r['Apellido Materno']||'')}</td>
+      <td class="mono" style="font-size:11px">${String(r.CURP||'').trim().toUpperCase()}</td>
+      <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
+      <td class="right">$${parseFloat(limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0)).toLocaleString('es-MX',{minimumFractionDigits:2})}</td>
+      <td class="mono">${fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('tabla-footer').textContent = rows.length>MAX
+    ? `Mostrando primeros ${MAX} de ${rows.length} registros. El XML incluirá todos.`
+    : `${rows.length} registros en total.`;
+
+  setStep(1,2);
+  document.getElementById('panel-upload').classList.add('hidden');
+  document.getElementById('panel-resumen').classList.remove('hidden');
+}
+
+function volverUpload(){
+  setStep(0,1);
+  document.getElementById('panel-upload').classList.remove('hidden');
+  document.getElementById('panel-resumen').classList.add('hidden');
+  document.getElementById('panel-descarga').classList.add('hidden');
+}
+
+function setStep(done, active){
+  [1,2,3].forEach(i=>{
+    const el=document.getElementById('step'+i);
+    el.classList.remove('active','done');
+    if(i<active)el.classList.add('done');
+    if(i===active)el.classList.add('active');
+  });
+}
+
+function generarXML(){
+  document.getElementById('btn-xml-text').textContent='Generando...';
+  document.getElementById('btn-xml-spin').classList.remove('hidden');
+  setTimeout(()=>{
+    try{
+      const xmls=buildXMLs();
+      const list=document.getElementById('xml-list');
+      list.innerHTML='';
+      xmls.forEach(({nombre,blob})=>{
+        const url=URL.createObjectURL(blob);
+        list.innerHTML+=`
+          <div class="xml-item">
+            <div>
+              <div class="xml-name">${nombre}</div>
+              <div class="xml-meta">${STATE.cfg.mes} · ${STATE.suc} · ${new Date().toLocaleString('es-MX')}</div>
+            </div>
+            <a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a>
+          </div>
+        `;
+      });
+      setStep(2,3);
+      document.getElementById('panel-resumen').classList.add('hidden');
+      document.getElementById('panel-descarga').classList.remove('hidden');
+    }catch(e){
+      const err=document.getElementById('alert-resumen');
+      err.textContent='Error al generar XML: '+e.message;
+      err.style.display='block';
+      console.error(e);
+    } finally {
+      document.getElementById('btn-xml-text').textContent='Generar y descargar XML';
+      document.getElementById('btn-xml-spin').classList.add('hidden');
+    }
+  },100);
+}
+
+function buildXMLs(){
+  const rows=STATE.datos;
+  const cfg=STATE.cfg;
+  const tiposReporte=[...new Set(rows.map(r=>r._tipoReporte||'MENSUAL'))];
+  const xmls=[];
+
+  tiposReporte.forEach(tipoRep=>{
+    const rowsFiltrados=rows.filter(r=>(r._tipoReporte||'MENSUAL')===tipoRep);
+    const xml=buildXML(rowsFiltrados,cfg,tipoRep);
+    const prefArchivo=tipoRep==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
+    xmls.push({nombre:`${prefArchivo}_${STATE.prefijo}_${cfg.mes}.xml`,blob:new Blob([xml],{type:'application/xml'})});
+  });
+  return xmls;
+}
+
+function buildXML(rows, cfg, tipoRep){
+  const grupos={};
+  rows.forEach(r=>{
+    const k=String(r.CONSECUTIVO||'');
+    if(!grupos[k])grupos[k]=[];
+    grupos[k].push(r);
+  });
+
+  let xml=`<?xml version="1.0" encoding="UTF-8"?>\n`;
+  xml+=`<archivo xmlns="${NS}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="${NS} jys.xsd">\n`;
+  xml+=`  <informe>\n`;
+  xml+=`    <mes_reportado>${cfg.mes}</mes_reportado>\n`;
+  xml+=`    <sujeto_obligado>\n`;
+  xml+=`      <clave_sujeto_obligado>${cfg.rfc}</clave_sujeto_obligado>\n`;
+  xml+=`      <clave_actividad>JYS</clave_actividad>\n`;
+  xml+=`    </sujeto_obligado>\n`;
+
+  Object.entries(grupos).forEach(([folio,grupo])=>{
+    const tipoMov=grupo[0]._tipo||'DEPOSITO';
+    const desc=tipoRep==='SEMESTRAL'
+      ?(tipoMov==='RETIRO'?'SUPERACION UMA SEMESTRAL RETIROS':'SUPERACION UMA SEMESTRAL')
+      :(tipoMov==='RETIRO'?'SUPERACION UMA MENSUAL RETIROS':'SUPERACION UMA MENSUAL');
+
+    xml+=`    <aviso>\n`;
+    xml+=`      <referencia_aviso>${escXml(folio)}</referencia_aviso>\n`;
+    xml+=`      <prioridad>1</prioridad>\n`;
+    xml+=`      <alerta>\n`;
+    xml+=`        <tipo_alerta>9999</tipo_alerta>\n`;
+    xml+=`        <descripcion_alerta>${desc}</descripcion_alerta>\n`;
+    xml+=`      </alerta>\n`;
+
+    grupo.forEach(r=>{
+      const nombre=normalizar(r.Nombre||'');
+      if(!nombre)return;
+      const apPat=normalizar(r['Apellido Paterno']||'');
+      const apMat=normalizar(r['Apellido Materno']||'');
+      const fecNac=fmtFecha(r['Fecha Nacimiento']||'');
+      const curp=String(r.CURP||'').trim().toUpperCase();
+      const pais=paisIso2(r['Clave Pais']||r['Clave Pais Nac.']||'MEX');
+      const ocup=codOcup(r['PLD Ocupacion']||r['PLD Codigo Ocupacion']||'');
+      const colonia=normalizar(r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
+      const calle=normalizar(r['Calle']||'').substring(0,100)||'XXXX';
+      const nExt=normalizar(String(r['No Exterior']||'SIN NUMERO').split('.')[0]).substring(0,56)||'SIN NUMERO';
+      const nInt=normalizar(String(r['No Interior']||'').split('.')[0]).substring(0,40);
+      const cpRow=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].padStart(5,'0').substring(0,5);
+      const tel=r._tel||limpiarTel(r.Telefono||'');
+
+      xml+=`      <persona_aviso>\n`;
+      xml+=`        <tipo_persona>\n`;
+      xml+=`          <persona_fisica>\n`;
+      xml+=`            <nombre>${escXml(nombre.substring(0,50)||'XXXX')}</nombre>\n`;
+      xml+=`            <apellido_paterno>${escXml(apPat.substring(0,50)||'XXXX')}</apellido_paterno>\n`;
+      xml+=`            <apellido_materno>${escXml(apMat.substring(0,50)||'XXXX')}</apellido_materno>\n`;
+      xml+=`            <fecha_nacimiento>${fecNac||'19000101'}</fecha_nacimiento>\n`;
+      if(curp.length===18)xml+=`            <curp>${curp}</curp>\n`;
+      xml+=`            <pais_nacionalidad>${pais}</pais_nacionalidad>\n`;
+      xml+=`            <actividad_economica>${ocup}</actividad_economica>\n`;
+      xml+=`          </persona_fisica>\n`;
+      xml+=`        </tipo_persona>\n`;
+      xml+=`        <tipo_domicilio>\n`;
+      xml+=`          <nacional>\n`;
+      xml+=`            <colonia>${escXml(colonia)}</colonia>\n`;
+      xml+=`            <calle>${escXml(calle)}</calle>\n`;
+      xml+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+      if(nInt)xml+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
+      xml+=`            <codigo_postal>${/^\d{5}$/.test(cpRow)?cpRow:'00000'}</codigo_postal>\n`;
+      xml+=`          </nacional>\n`;
+      xml+=`        </tipo_domicilio>\n`;
+      xml+=`        <telefono>\n`;
+      xml+=`          <clave_pais>${pais}</clave_pais>\n`;
+      if(tel)xml+=`          <numero_telefono>${tel}</numero_telefono>\n`;
+      xml+=`        </telefono>\n`;
+      xml+=`      </persona_aviso>\n`;
+    });
+
+    const fechas=grupo.map(r=>fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')).filter(Boolean);
+    const fecOp=fechas.length?fechas.sort().pop():cfg.mes+'31';
+
+    xml+=`      <detalle_operaciones>\n`;
+    xml+=`        <datos_operacion>\n`;
+    xml+=`          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
+    xml+=`          <tipo_sucursal>\n`;
+    xml+=`            <datos_sucursal_propia>\n`;
+    xml+=`              <codigo_postal>${cfg.cp}</codigo_postal>\n`;
+    xml+=`            </datos_sucursal_propia>\n`;
+    xml+=`          </tipo_sucursal>\n`;
+    xml+=`          <tipo_operacion>101</tipo_operacion>\n`;
+    xml+=`          <linea_negocio>9</linea_negocio>\n`;
+    xml+=`          <medio_operacion>1</medio_operacion>\n`;
+    grupo.forEach(r=>{
+      const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
+      const monto=limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0);
+      const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
+      const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
+      xml+=`          <datos_liquidacion>\n`;
+      xml+=`            <liquidacion_numerario>\n`;
+      xml+=`              <fecha_pago>${fPago}</fecha_pago>\n`;
+      xml+=`              <instrumento_monetario>${inst}</instrumento_monetario>\n`;
+      xml+=`              <moneda>${mon}</moneda>\n`;
+      xml+=`              <monto_operacion>${monto}</monto_operacion>\n`;
+      xml+=`            </liquidacion_numerario>\n`;
+      xml+=`          </datos_liquidacion>\n`;
+    });
+    xml+=`        </datos_operacion>\n`;
+    xml+=`      </detalle_operaciones>\n`;
+    xml+=`    </aviso>\n`;
+  });
+
+  xml+=`  </informe>\n</archivo>`;
+  return xml;
+}
+
+function escXml(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+}
+
+function nuevoReporte(){
+  STATE.datos=[];STATE.archivos={};
+  resetZonas();
+  setStep(0,1);
+  document.getElementById('panel-upload').classList.remove('hidden');
+  document.getElementById('panel-resumen').classList.add('hidden');
+  document.getElementById('panel-descarga').classList.add('hidden');
+}
+</script>
+</body>
+</html>

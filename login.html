@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CECOM — Iniciar sesión</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F3864;--azul2:#2E75B6;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--neg:#dc2626}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--azul);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+.wrap{width:100%;max-width:360px}
+.card{background:var(--card);border-radius:16px;padding:2.5rem 2rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
+.li{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0}
+.lt{font-size:18px;font-weight:600;color:var(--azul)}
+.ls{font-size:12px;color:var(--muted)}
+.field{margin-bottom:1rem}
+.field label{font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px}
+.field input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;color:var(--texto)}
+.field input:focus{border-color:var(--azul2)}
+.btn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem;transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn:active{opacity:.75}
+.err{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none;border:1px solid #fca5a5}
+.footer{text-align:center;margin-top:1.5rem;font-size:11px;color:rgba(255,255,255,.4)}
+.loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="card">
+    <div class="logo">
+      <div class="li">C</div>
+      <div>
+        <div class="lt">CECOM — PLD</div>
+        <div class="ls">Portal de Reportes</div>
+      </div>
+    </div>
+
+    <div class="err" id="err">Usuario o contraseña incorrectos</div>
+
+    <div class="field">
+      <label>Usuario</label>
+      <input type="text" id="lu" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="lp" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    </div>
+
+    <button class="btn" onclick="login()" id="btn-login">
+      <span class="loading" id="spin"></span>
+      <span id="btn-text">Iniciar sesión</span>
+    </button>
+  </div>
+  <div class="footer">CECOM · Prevención de Lavado de Dinero</div>
+</div>
+
+<script>
+let USUARIOS = [];
+
+async function sha256(m){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function login(){
+  const u = document.getElementById('lu').value.trim().toLowerCase();
+  const p = document.getElementById('lp').value;
+  const err = document.getElementById('err');
+  const spin = document.getElementById('spin');
+  const btnText = document.getElementById('btn-text');
+
+  if(!u || !p){ err.style.display='block'; return; }
+
+  spin.style.display='inline-block';
+  btnText.textContent='Verificando...';
+  err.style.display='none';
+
+  try{
+    if(!USUARIOS.length){
+      const r = await fetch('usuarios.json?v='+Date.now());
+      if(r.ok) USUARIOS = await r.json();
+    }
+    const h = await sha256(p);
+    const found = USUARIOS.find(x => x.u === u && x.h === h);
+    if(found){
+      sessionStorage.setItem('pld', JSON.stringify({u:found.u, n:found.n}));
+      window.location.href = 'home.html';
+    } else {
+      err.style.display='block';
+      document.getElementById('lp').value='';
+    }
+  } catch(e){
+    err.textContent='Error al conectar. Intenta de nuevo.';
+    err.style.display='block';
+  } finally {
+    spin.style.display='none';
+    btnText.textContent='Iniciar sesión';
+  }
+}
+
+// Si ya hay sesión activa, ir directo al home
+const s = sessionStorage.getItem('pld');
+if(s) window.location.href = 'home.html';
+
+// Enfocar el campo usuario al cargar
+window.onload = () => document.getElementById('lu').focus();
+</script>
+</body>
+</html>
