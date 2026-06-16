@@ -97,7 +97,32 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 .xml-item{background:#f8fbff;border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between}
 .xml-name{font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--azul)}
 .xml-meta{font-size:11px;color:var(--muted);margin-top:2px}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+.val-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.val-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.val-head h3{font-size:14px;font-weight:600}
+.val-body{padding:1.25rem}
+.val-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--border)}
+.val-row:last-child{border-bottom:none}
+.val-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.val-info{flex:1}
+.val-title{font-size:13px;font-weight:500;color:var(--texto)}
+.val-desc{font-size:12px;color:var(--muted);margin-top:2px}
+.val-count{font-size:12px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:20px;font-weight:500;flex-shrink:0}
+.vc-ok{background:var(--pos-bg);color:var(--pos)}
+.vc-warn{background:#fef3c7;color:#92400e}
+.vc-err{background:var(--neg-bg);color:var(--neg)}
+.val-summary{display:flex;gap:12px;margin-bottom:16px}
+.vs-item{flex:1;border-radius:8px;padding:10px 14px;text-align:center}
+.vs-ok{background:var(--pos-bg)}
+.vs-warn{background:#fef3c7}
+.vs-err{background:var(--neg-bg)}
+.vs-num{font-size:22px;font-weight:600;font-family:'DM Mono',monospace}
+.vs-ok .vs-num{color:var(--pos)}
+.vs-warn .vs-num{color:#92400e}
+.vs-err .vs-num{color:var(--neg)}
+.vs-label{font-size:11px;color:var(--muted);margin-top:2px}
+.val-blocked{background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--neg);margin-top:12px;display:none}
+.val-ok-msg{background:var(--pos-bg);border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--pos);margin-top:12px;display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:static}.config-grid{grid-template-columns:1fr 1fr}.kpi-row{grid-template-columns:1fr 1fr}.file-grid{grid-template-columns:1fr}}
 </style>
@@ -259,7 +284,25 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
         </div>
       </div>
 
-      <div class="actions" style="margin-top:8px">
+      <!-- VALIDACIÓN -->
+      <div class="val-panel" id="panel-validacion">
+        <div class="val-head">
+          <h3>Validación de datos</h3>
+          <span id="val-estado" style="font-size:12px;font-weight:500"></span>
+        </div>
+        <div class="val-body">
+          <div class="val-summary">
+            <div class="vs-item vs-err"><div class="vs-num" id="val-num-err">0</div><div class="vs-label">Errores críticos</div></div>
+            <div class="vs-item vs-warn"><div class="vs-num" id="val-num-warn">0</div><div class="vs-label">Advertencias</div></div>
+            <div class="vs-item vs-ok"><div class="vs-num" id="val-num-ok">0</div><div class="vs-label">Registros válidos</div></div>
+          </div>
+          <div id="val-lista"></div>
+          <div class="val-blocked" id="val-blocked">❌ No se puede generar el XML — corrige los errores críticos primero.</div>
+          <div class="val-ok-msg" id="val-ok-msg">✅ Todos los registros son válidos. Puedes generar el XML.</div>
+        </div>
+      </div>
+
+
         <button class="btn btn-outline" onclick="volverUpload()">← Cambiar archivo</button>
         <button class="btn btn-orange" onclick="generarXML()">
           <span id="btn-xml-text">Generar y descargar XML</span>
@@ -490,7 +533,111 @@ async function procesarArchivos(){
   }
 }
 
-function mostrarResumen(rows){
+function validarDatos(rows){
+  const errores = [];
+  const advertencias = [];
+  let validos = 0;
+
+  // Contadores por tipo de error
+  const conteo = {
+    sinNombre: 0, sinCURP: 0, curpInvalida: 0,
+    sinCP: 0, cpInvalido: 0, sinMonto: 0,
+    sinTel: 0, sinApMat: 0, fechaRara: 0
+  };
+
+  rows.forEach(r => {
+    let esValido = true;
+
+    // ── ERRORES CRÍTICOS ────────────────────────────────────
+    const nombre = String(r.Nombre || '').trim();
+    if(!nombre){ conteo.sinNombre++; esValido = false; }
+
+    const curp = String(r.CURP || '').trim().toUpperCase();
+    if(!curp){ conteo.sinCURP++; esValido = false; }
+    else if(curp.length !== 18){ conteo.curpInvalida++; esValido = false; }
+
+    const cp = String(r['PLD C.P.'] || r['C.P.'] || '').split('.')[0].trim();
+    if(!cp){ conteo.sinCP++; esValido = false; }
+    else if(!/^\d{5}$/.test(cp.padStart(5,'0'))){ conteo.cpInvalido++; esValido = false; }
+
+    const monto = parseFloat(String(r['TOTAL GENERAL'] || r['Monto Transaccion'] || '0').replace(/[$,]/g,''));
+    if(!monto || monto <= 0){ conteo.sinMonto++; esValido = false; }
+
+    if(esValido) validos++;
+
+    // ── ADVERTENCIAS ─────────────────────────────────────────
+    const tel = limpiarTel(r._tel || r.Telefono || '');
+    if(!tel) conteo.sinTel++;
+
+    const apMat = String(r['Apellido Materno'] || '').trim();
+    if(!apMat) conteo.sinApMat++;
+
+    const fec = fmtFecha(r['Fecha Nacimiento'] || '');
+    if(fec && fec.length !== 8) conteo.fechaRara++;
+  });
+
+  // Construir lista de errores
+  if(conteo.sinNombre)    errores.push({t:'Sin nombre',      d:`${conteo.sinNombre} registro(s) sin nombre completo`,          n:conteo.sinNombre});
+  if(conteo.sinCURP)      errores.push({t:'CURP faltante',   d:`${conteo.sinCURP} registro(s) sin CURP`,                       n:conteo.sinCURP});
+  if(conteo.curpInvalida) errores.push({t:'CURP inválida',   d:`${conteo.curpInvalida} registro(s) con CURP que no tiene 18 caracteres`, n:conteo.curpInvalida});
+  if(conteo.sinCP)        errores.push({t:'CP faltante',     d:`${conteo.sinCP} registro(s) sin código postal`,                n:conteo.sinCP});
+  if(conteo.cpInvalido)   errores.push({t:'CP inválido',     d:`${conteo.cpInvalido} registro(s) con CP que no tiene 5 dígitos`,n:conteo.cpInvalido});
+  if(conteo.sinMonto)     errores.push({t:'Monto en cero',   d:`${conteo.sinMonto} registro(s) con monto vacío o en $0.00`,   n:conteo.sinMonto});
+
+  if(conteo.sinTel)   advertencias.push({t:'Sin teléfono',          d:`${conteo.sinTel} registro(s) sin número de teléfono`,     n:conteo.sinTel});
+  if(conteo.sinApMat) advertencias.push({t:'Sin apellido materno',  d:`${conteo.sinApMat} registro(s) sin apellido materno`,     n:conteo.sinApMat});
+  if(conteo.fechaRara)advertencias.push({t:'Fecha de nacimiento',   d:`${conteo.fechaRara} registro(s) con fecha en formato raro`,n:conteo.fechaRara});
+
+  // Mostrar en el panel
+  document.getElementById('val-num-err').textContent  = errores.length ? errores.reduce((s,e)=>s+e.n,0) : '0';
+  document.getElementById('val-num-warn').textContent = advertencias.length ? advertencias.reduce((s,e)=>s+e.n,0) : '0';
+  document.getElementById('val-num-ok').textContent   = validos;
+
+  const lista = document.getElementById('val-lista');
+  lista.innerHTML = '';
+
+  errores.forEach(e => {
+    lista.innerHTML += `
+      <div class="val-row">
+        <div class="val-icon">❌</div>
+        <div class="val-info"><div class="val-title">${e.t}</div><div class="val-desc">${e.d}</div></div>
+        <div class="val-count vc-err">${e.n}</div>
+      </div>`;
+  });
+
+  advertencias.forEach(a => {
+    lista.innerHTML += `
+      <div class="val-row">
+        <div class="val-icon">⚠️</div>
+        <div class="val-info"><div class="val-title">${a.t}</div><div class="val-desc">${a.d}</div></div>
+        <div class="val-count vc-warn">${a.n}</div>
+      </div>`;
+  });
+
+  if(!errores.length && !advertencias.length){
+    lista.innerHTML = `
+      <div class="val-row">
+        <div class="val-icon">✅</div>
+        <div class="val-info"><div class="val-title">Todo correcto</div><div class="val-desc">Todos los registros tienen los campos requeridos completos.</div></div>
+      </div>`;
+  }
+
+  const blocked = errores.length > 0;
+  document.getElementById('val-blocked').style.display = blocked ? 'block' : 'none';
+  document.getElementById('val-ok-msg').style.display  = !blocked ? 'block' : 'none';
+  document.getElementById('val-estado').textContent    = blocked ? '❌ Con errores' : (advertencias.length ? '⚠️ Con advertencias' : '✅ Válido');
+  document.getElementById('val-estado').style.color    = blocked ? 'var(--neg)' : (advertencias.length ? '#92400e' : 'var(--pos)');
+
+  // Bloquear o habilitar el botón de generar
+  const btnXml = document.getElementById('btn-xml-text').parentElement;
+  btnXml.disabled = blocked;
+  btnXml.style.opacity = blocked ? '0.4' : '1';
+  btnXml.style.cursor  = blocked ? 'not-allowed' : 'pointer';
+
+  return !blocked;
+}
+
+
   const consecutivos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
@@ -522,6 +669,9 @@ function mostrarResumen(rows){
   document.getElementById('tabla-footer').textContent = rows.length>MAX
     ? `Mostrando primeros ${MAX} de ${rows.length} registros. El XML incluirá todos.`
     : `${rows.length} registros en total.`;
+
+  // Validar datos antes de mostrar el panel
+  validarDatos(rows);
 
   setStep(1,2);
   document.getElementById('panel-upload').classList.add('hidden');
