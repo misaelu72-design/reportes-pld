@@ -637,7 +637,7 @@ function validarDatos(rows){
   return !blocked;
 }
 
-
+function mostrarResumen(rows){
   const consecutivos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
