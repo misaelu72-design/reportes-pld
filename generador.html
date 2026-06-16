@@ -344,9 +344,28 @@ async function leerExcel(file){
   });
 }
 
-function sheetToArr(wb, sheetName, header=0){
+function sheetToArr(wb, sheetName){
   if(!wb.SheetNames.includes(sheetName))return null;
-  return XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{header:header===0?1:undefined,defval:''});
+  const ws = wb.Sheets[sheetName];
+  // Intentar con header automático primero
+  const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+  // Si la primera fila no tiene columnas esperadas, intentar saltando primera fila
+  if(rows.length && !rows[0]['Nombre'] && !rows[0]['CONSECUTIVO'] && !rows[0]['CURP']){
+    // El header puede estar en fila 2 — leer como array y usar fila 1 como header
+    const arr = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+    const headerIdx = arr.findIndex(r => r.some(c => ['Nombre','CONSECUTIVO','CURP','Id Jugador'].includes(String(c))));
+    if(headerIdx >= 0){
+      const headers = arr[headerIdx];
+      return arr.slice(headerIdx+1)
+        .filter(r => r.some(c => c !== ''))
+        .map(r => {
+          const obj = {};
+          headers.forEach((h,i) => obj[h] = r[i] !== undefined ? r[i] : '');
+          return obj;
+        });
+    }
+  }
+  return rows;
 }
 
 function fmtFecha(v){
@@ -414,7 +433,11 @@ async function procesarArchivos(){
       let tels={};
       ['Depositos Acumulado','Retiros Acumulado'].forEach(h=>{
         const d=sheetToArr(wb,h);
-        if(d)d.forEach(r=>{if(r.CURP&&r.Telefono)tels[String(r.CURP).trim().toUpperCase()]=limpiarTel(r.Telefono);});
+        if(d)d.forEach(r=>{
+          const curp = String(r.CURP||r['CURP']||'').trim().toUpperCase();
+          const tel = r.Telefono||r['Telefono']||'';
+          if(curp && tel) tels[curp]=limpiarTel(tel);
+        });
       });
       if(dep)dep.forEach(r=>{const curp=String(r.CURP||'').trim().toUpperCase();rows.push({...r,_tipo:'DEPOSITO',_tel:tels[curp]||''});});
       if(ret)ret.forEach(r=>{const curp=String(r.CURP||'').trim().toUpperCase();rows.push({...r,_tipo:'RETIRO',_tel:tels[curp]||''});});
