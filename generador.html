@@ -303,12 +303,14 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       </div>
 
       <div class="actions" style="margin-top:8px">
+        <button class="btn btn-outline" onclick="verDiagnostico()" style="font-size:11px;padding:6px 12px">🔍 Ver datos</button>
         <button class="btn btn-outline" onclick="volverUpload()">← Cambiar archivo</button>
         <button class="btn btn-orange" onclick="generarXML()">
           <span id="btn-xml-text">Generar y descargar XML</span>
           <span id="btn-xml-spin" class="hidden"><span class="spinner"></span></span>
         </button>
       </div>
+      <div id="diag-panel" class="hidden" style="margin-top:12px;background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:11px;font-family:'DM Mono',monospace;white-space:pre-wrap;max-height:300px;overflow:auto"></div>
     </div>
 
     <!-- PASO 3: DESCARGA -->
@@ -445,7 +447,9 @@ function paisIso2(v){
   return MAPA_PAIS[s]||'MX';
 }
 
-function codOcup(v){
+function getTotalGeneral(r){
+  return r['TOTAL GENERAL'] || r[' TOTAL GENERAL '] || r['TOTAL GENERAL '] || r[' TOTAL GENERAL'] || r['Monto Transaccion'] || 0;
+}
   if(!v)return '1000000';
   let s=String(v).trim();
   if(s.includes('||'))s=s.split('||').pop().trim();
@@ -482,8 +486,17 @@ async function procesarArchivos(){
           if(curp && tel) tels[curp]=limpiarTel(tel);
         });
       });
-      if(dep)dep.forEach(r=>{const curp=String(r.CURP||'').trim().toUpperCase();rows.push({...r,_tipo:'DEPOSITO',_tel:tels[curp]||''});});
-      if(ret)ret.forEach(r=>{const curp=String(r.CURP||'').trim().toUpperCase();rows.push({...r,_tipo:'RETIRO',_tel:tels[curp]||''});});
+      if(dep)dep.forEach(r=>{
+        const curp=String(r.CURP||'').trim().toUpperCase();
+        // Normalizar columna TOTAL GENERAL (puede tener espacios)
+        const monto = r['TOTAL GENERAL'] || r[' TOTAL GENERAL '] || r['TOTAL GENERAL '] || r[' TOTAL GENERAL'] || 0;
+        rows.push({...r, 'TOTAL GENERAL': monto, _tipo:'DEPOSITO', _tel:tels[curp]||''});
+      });
+      if(ret)ret.forEach(r=>{
+        const curp=String(r.CURP||'').trim().toUpperCase();
+        const monto = r['TOTAL GENERAL'] || r[' TOTAL GENERAL '] || r['TOTAL GENERAL '] || r[' TOTAL GENERAL'] || 0;
+        rows.push({...r, 'TOTAL GENERAL': monto, _tipo:'RETIRO', _tel:tels[curp]||''});
+      });
     } else {
       if(!STATE.archivos['B1']&&!STATE.archivos['B2']){err.textContent='Selecciona al menos un archivo.';err.style.display='block';return;}
       for(const[key,tipo,descTipo] of [['B1','MENSUAL','DEPOSITO'],['B2','SEMESTRAL','DEPOSITO']]){
@@ -560,7 +573,7 @@ function validarDatos(rows){
     if(!cp){ conteo.sinCP++; esValido = false; }
     else if(!/^\d{5}$/.test(cp.padStart(5,'0'))){ conteo.cpInvalido++; esValido = false; }
 
-    const monto = parseFloat(String(r['TOTAL GENERAL'] || r['Monto Transaccion'] || '0').replace(/[$,]/g,''));
+    const monto = parseFloat(String(getTotalGeneral(r)||'0').replace(/[$,]/g,''));
     if(!monto || monto <= 0) conteo.sinMonto++;
 
     if(esValido) validos++;
@@ -641,7 +654,7 @@ function mostrarResumen(rows){
   const consecutivos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
-  const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0)),0);
+  const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(getTotalGeneral(r))),0);
 
   document.getElementById('kpi-row').innerHTML=`
     <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${consecutivos.length}</div></div>
@@ -667,7 +680,7 @@ function mostrarResumen(rows){
       <td>${normalizar(r['Apellido Materno']||'')}</td>
       <td class="mono" style="font-size:11px">${String(r.CURP||'').trim().toUpperCase()}</td>
       <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
-      <td class="right">$${parseFloat(limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0)).toLocaleString('es-MX',{minimumFractionDigits:2})}</td>
+      <td class="right">$${parseFloat(limpiarMonto(getTotalGeneral(r))).toLocaleString('es-MX',{minimumFractionDigits:2})}</td>
       <td class="mono">${fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')}</td>
     </tr>
   `).join('');
@@ -845,7 +858,7 @@ function buildXML(rows, cfg, tipoRep){
     xml+=`          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
       const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
-      const monto=limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0);
+      const monto=limpiarMonto(getTotalGeneral(r));
       const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
       const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
       xml+=`          <datos_liquidacion>\n`;
@@ -868,6 +881,20 @@ function buildXML(rows, cfg, tipoRep){
 
 function escXml(s){
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+}
+
+function verDiagnostico(){
+  const panel = document.getElementById('diag-panel');
+  panel.classList.toggle('hidden');
+  if(!STATE.datos.length){ panel.textContent = 'Sin datos'; return; }
+  const r = STATE.datos[0];
+  const keys = Object.keys(r);
+  let txt = `Total registros: ${STATE.datos.length}\n`;
+  txt += `Columnas encontradas (${keys.length}):\n\n`;
+  keys.forEach(k => {
+    txt += `  "${k}": ${JSON.stringify(r[k])}\n`;
+  });
+  panel.textContent = txt;
 }
 
 function nuevoReporte(){
