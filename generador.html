@@ -651,7 +651,13 @@ function mostrarResumen(rows){
   `;
 
   const MAX=200;
-  const muestra=rows.slice(0,MAX);
+  // Mostrar solo registros con nombre y CURP válidos (los que irán en el XML)
+  const validos = rows.filter(r => {
+    const nombre = String(r.Nombre||'').trim();
+    const curp = String(r.CURP||'').trim().toUpperCase();
+    return nombre && curp.length === 18;
+  });
+  const muestra = validos.slice(0, MAX);
   const tbody=document.getElementById('tabla-resumen');
   tbody.innerHTML=muestra.map(r=>`
     <tr>
@@ -666,9 +672,9 @@ function mostrarResumen(rows){
     </tr>
   `).join('');
 
-  document.getElementById('tabla-footer').textContent = rows.length>MAX
-    ? `Mostrando primeros ${MAX} de ${rows.length} registros. El XML incluirá todos.`
-    : `${rows.length} registros en total.`;
+  document.getElementById('tabla-footer').textContent = validos.length > MAX
+    ? `Mostrando primeros ${MAX} de ${validos.length} registros válidos (${rows.length} total en el archivo).`
+    : `${validos.length} registros válidos que irán en el XML (${rows.length} total en el archivo).`;
 
   // Validar datos antes de mostrar el panel
   validarDatos(rows);
