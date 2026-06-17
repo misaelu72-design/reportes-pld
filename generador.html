@@ -30,19 +30,17 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .sb-soon{padding:.75rem 1.25rem;display:flex;align-items:center;gap:8px;opacity:.4}
 .sb-soon .sb-name{font-size:13px}
 .sb-footer{padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
-.main{}
 .main-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
 .main-title{font-size:20px;font-weight:600;color:var(--azul)}
 .main-sub{font-size:12px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
-.steps{display:flex;align-items:center;gap:0;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.step{flex:1;padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-right:1px solid var(--border);position:relative}
+.steps{display:flex;align-items:center;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.step{flex:1;padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-right:1px solid var(--border)}
 .step:last-child{border-right:none}
-.step-num{width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:var(--muted);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace}
+.step-num{width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:var(--muted);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-label{font-size:12px;color:var(--muted)}
 .step.active .step-num{background:var(--naranja);color:#fff}
 .step.active .step-label{color:var(--texto);font-weight:500}
 .step.done .step-num{background:var(--verde);color:#fff}
-.step.done .step-label{color:var(--muted)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
 .card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .card-head h3{font-size:14px;font-weight:600}
@@ -54,14 +52,12 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .upload-title{font-size:14px;font-weight:500;color:var(--azul);margin-bottom:4px}
 .upload-sub{font-size:12px;color:var(--muted)}
 .upload-done{border-color:var(--verde);background:#f0fdf4}
-.upload-done .upload-icon{color:var(--verde)}
-.upload-done .upload-title{color:var(--verde)}
 .file-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .config-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
 .field{display:flex;flex-direction:column;gap:4px}
 .field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
-.field input,.field select{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;background:#fff}
-.field input:focus,.field select:focus{border-color:var(--azul2)}
+.field input{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;background:#fff}
+.field input:focus{border-color:var(--azul2)}
 .btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;transition:opacity .15s}
 .btn:hover{opacity:.85}
 .btn-primary{background:var(--azul);color:#fff}
@@ -82,15 +78,12 @@ tbody tr:hover{background:#f9fafb}
 td{padding:9px 12px}
 td.mono{font-family:'DM Mono',monospace}
 td.right{text-align:right;font-family:'DM Mono',monospace}
-.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
 .b-dep{background:#dbeafe;color:#1e40af}
 .b-ret{background:#fce7f3;color:#9d174d}
-.b-men{background:#dcfce7;color:#15803d}
-.b-sem{background:#fef3c7;color:#92400e}
-.actions{display:flex;gap:10px;justify-content:flex-end}
+.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
 .alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
 .alert-err{background:#fee2e2;color:var(--neg);border:1px solid #fca5a5}
-.alert-ok{background:var(--pos-bg);color:var(--pos);border:1px solid #86efac}
 .hidden{display:none}
 .section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:1.5rem 0 .75rem}
 .xml-list{display:flex;flex-direction:column;gap:8px}
@@ -105,46 +98,36 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 .val-row:last-child{border-bottom:none}
 .val-icon{font-size:16px;flex-shrink:0;margin-top:1px}
 .val-info{flex:1}
-.val-title{font-size:13px;font-weight:500;color:var(--texto)}
+.val-title{font-size:13px;font-weight:500}
 .val-desc{font-size:12px;color:var(--muted);margin-top:2px}
 .val-count{font-size:12px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:20px;font-weight:500;flex-shrink:0}
-.vc-ok{background:var(--pos-bg);color:var(--pos)}
 .vc-warn{background:#fef3c7;color:#92400e}
 .vc-err{background:var(--neg-bg);color:var(--neg)}
 .val-summary{display:flex;gap:12px;margin-bottom:16px}
 .vs-item{flex:1;border-radius:8px;padding:10px 14px;text-align:center}
-.vs-ok{background:var(--pos-bg)}
-.vs-warn{background:#fef3c7}
-.vs-err{background:var(--neg-bg)}
+.vs-ok{background:var(--pos-bg)}.vs-warn{background:#fef3c7}.vs-err{background:var(--neg-bg)}
 .vs-num{font-size:22px;font-weight:600;font-family:'DM Mono',monospace}
-.vs-ok .vs-num{color:var(--pos)}
-.vs-warn .vs-num{color:#92400e}
-.vs-err .vs-num{color:var(--neg)}
+.vs-ok .vs-num{color:var(--pos)}.vs-warn .vs-num{color:#92400e}.vs-err .vs-num{color:var(--neg)}
 .vs-label{font-size:11px;color:var(--muted);margin-top:2px}
 .val-blocked{background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--neg);margin-top:12px;display:none}
 .val-ok-msg{background:var(--pos-bg);border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--pos);margin-top:12px;display:none}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:static}.config-grid{grid-template-columns:1fr 1fr}.kpi-row{grid-template-columns:1fr 1fr}.file-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="hi">
     <div class="logo">
       <div class="li">C</div>
-      <div>
-        <div class="lt">Generador XML JYS</div>
-        <div class="ls">CECOM — Prevención de Lavado de Dinero</div>
-      </div>
+      <div><div class="lt">Generador XML JYS</div><div class="ls">CECOM — Prevención de Lavado de Dinero</div></div>
     </div>
     <a href="index.html" class="back">← Volver al dashboard</a>
   </div>
 </header>
 
 <div class="layout">
-
-  <!-- SIDEBAR SUCURSALES -->
   <div class="sidebar">
     <div class="sb-head"><div class="sb-title">Sucursales</div></div>
     <div class="sb-item active" onclick="selSuc('MITRAS','MTY','64320','A')" id="suc-MITRAS">
@@ -163,9 +146,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
     <div class="sb-footer">9 sucursales · 2 activas</div>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <div class="main">
-
     <div class="main-head">
       <div>
         <div class="main-title" id="suc-title">Mitras — Monterrey</div>
@@ -173,14 +154,13 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       </div>
     </div>
 
-    <!-- PASOS -->
     <div class="steps">
       <div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">Subir archivo</div></div>
       <div class="step" id="step2"><div class="step-num">2</div><div class="step-label">Revisar resumen</div></div>
       <div class="step" id="step3"><div class="step-num">3</div><div class="step-label">Descargar XML</div></div>
     </div>
 
-    <!-- PASO 1: SUBIR ARCHIVO -->
+    <!-- PASO 1 -->
     <div id="panel-upload">
       <div class="card">
         <div class="card-head">
@@ -189,18 +169,14 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
         </div>
         <div class="card-body">
           <div id="alert-upload" class="alert alert-err"></div>
-
-          <!-- FORMATO A: un solo archivo -->
           <div id="upload-A">
             <div class="upload-zone" id="zone-A" onclick="document.getElementById('file-A').click()" ondragover="dragOver(event,'zone-A')" ondragleave="dragLeave('zone-A')" ondrop="dropFile(event,'file-A','zone-A')">
               <input type="file" id="file-A" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('A',this)">
               <div class="upload-icon" id="icon-A">📂</div>
               <div class="upload-title" id="title-A">Arrastra el archivo aquí o haz clic para seleccionar</div>
-              <div class="upload-sub" id="sub-A">MTY_-_PLD_Reporte_Final_MAYO_2026.xlsm</div>
+              <div class="upload-sub">MTY_-_PLD_Reporte_Final_MAYO_2026.xlsm</div>
             </div>
           </div>
-
-          <!-- FORMATO B: dos archivos -->
           <div id="upload-B" class="hidden">
             <div class="file-grid">
               <div>
@@ -223,22 +199,12 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
               </div>
             </div>
           </div>
-
           <div style="margin-top:1rem">
             <div class="section-label">Configuración del reporte</div>
             <div class="config-grid">
-              <div class="field">
-                <label>Mes reportado</label>
-                <input type="text" id="cfg-mes" value="202605" placeholder="YYYYMM" maxlength="6">
-              </div>
-              <div class="field">
-                <label>RFC del sujeto obligado</label>
-                <input type="text" id="cfg-rfc" value="CDM060904UF3" maxlength="13">
-              </div>
-              <div class="field">
-                <label>CP de la sucursal</label>
-                <input type="text" id="cfg-cp" value="64320" maxlength="5">
-              </div>
+              <div class="field"><label>Mes reportado</label><input type="text" id="cfg-mes" value="202605" maxlength="6"></div>
+              <div class="field"><label>RFC del sujeto obligado</label><input type="text" id="cfg-rfc" value="CDM060904UF3" maxlength="13"></div>
+              <div class="field"><label>CP de la sucursal</label><input type="text" id="cfg-cp" value="64320" maxlength="5"></div>
             </div>
             <div class="actions">
               <button class="btn btn-primary" onclick="procesarArchivos()">
@@ -251,30 +217,19 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       </div>
     </div>
 
-    <!-- PASO 2: RESUMEN -->
+    <!-- PASO 2 -->
     <div id="panel-resumen" class="hidden">
       <div id="alert-resumen" class="alert alert-err"></div>
-
       <div class="kpi-row" id="kpi-row"></div>
-
       <div class="card">
-        <div class="card-head">
-          <h3>Vista previa de avisos</h3>
-          <span id="resumen-tipo" style="font-size:11px;color:var(--muted)"></span>
-        </div>
+        <div class="card-head"><h3>Vista previa de avisos</h3></div>
         <div class="card-body" style="padding:0">
           <div class="tw">
             <table>
               <thead>
                 <tr>
-                  <th>Folio</th>
-                  <th>Nombre</th>
-                  <th>Apellido paterno</th>
-                  <th>Apellido materno</th>
-                  <th>CURP</th>
-                  <th>Tipo</th>
-                  <th>Monto</th>
-                  <th>Fecha op.</th>
+                  <th>Folio</th><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th>
+                  <th>CURP</th><th>Tipo</th><th>Monto</th><th>Fecha op.</th>
                 </tr>
               </thead>
               <tbody id="tabla-resumen"></tbody>
@@ -283,9 +238,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)" id="tabla-footer"></div>
         </div>
       </div>
-
-      <!-- VALIDACIÓN -->
-      <div class="val-panel" id="panel-validacion">
+      <div class="val-panel">
         <div class="val-head">
           <h3>Validación de datos</h3>
           <span id="val-estado" style="font-size:12px;font-weight:500"></span>
@@ -301,11 +254,10 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           <div class="val-ok-msg" id="val-ok-msg">✅ Todos los registros son válidos. Puedes generar el XML.</div>
         </div>
       </div>
-
-      <div class="actions" style="margin-top:8px">
-        <button class="btn btn-outline" onclick="verDiagnostico()" style="font-size:11px;padding:6px 12px">🔍 Ver datos</button>
+      <div class="actions">
+        <button class="btn btn-outline" style="font-size:11px;padding:6px 12px" onclick="verDiagnostico()">🔍 Ver datos</button>
         <button class="btn btn-outline" onclick="volverUpload()">← Cambiar archivo</button>
-        <button class="btn btn-orange" onclick="generarXML()">
+        <button class="btn btn-orange" id="btn-generar" onclick="generarXML()">
           <span id="btn-xml-text">Generar y descargar XML</span>
           <span id="btn-xml-spin" class="hidden"><span class="spinner"></span></span>
         </button>
@@ -313,71 +265,97 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       <div id="diag-panel" class="hidden" style="margin-top:12px;background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:11px;font-family:'DM Mono',monospace;white-space:pre-wrap;max-height:300px;overflow:auto"></div>
     </div>
 
-    <!-- PASO 3: DESCARGA -->
+    <!-- PASO 3 -->
     <div id="panel-descarga" class="hidden">
       <div class="card">
         <div class="card-head"><h3>XMLs generados</h3></div>
         <div class="card-body">
-          <div class="alert alert-ok" id="alert-ok" style="display:block">Los archivos se generaron correctamente y están listos para enviar a la UIF.</div>
+          <div style="background:var(--pos-bg);border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--pos);margin-bottom:12px">
+            ✅ Los archivos se generaron correctamente y están listos para enviar a la UIF.
+          </div>
           <div class="xml-list" id="xml-list"></div>
-          <div class="actions" style="margin-top:1rem">
+          <div class="actions">
             <button class="btn btn-outline" onclick="nuevoReporte()">Generar otro reporte</button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
-const MAPA_PAIS = {MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
-const NS = 'http://www.uif.shcp.gob.mx/recepcion/jys';
-let STATE = {suc:'MITRAS',prefijo:'MTY',cp:'64320',tipo:'A',datos:[],archivos:{}};
+const MAPA_PAIS={MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
+const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
+let STATE={suc:'MITRAS',prefijo:'MTY',cp:'64320',tipo:'A',datos:[],archivos:{},cfg:{}};
 
-function selSuc(nombre, prefijo, cp, tipo){
-  STATE = {...STATE, suc:nombre, prefijo:prefijo, cp:cp, tipo:tipo, datos:[], archivos:{}};
+// ── Utilidades ─────────────────────────────────────────────────────
+function getMonto(r){
+  // Buscar TOTAL GENERAL con o sin espacios
+  for(const k of Object.keys(r)){
+    if(k.trim()==='TOTAL GENERAL') return r[k];
+  }
+  return r['Monto Transaccion']||0;
+}
+function limpiarMonto(v){if(!v&&v!==0)return'0.00';try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return'0.00';}}
+function limpiarTel(v){if(!v)return'';const s=String(v).replace(/\D/g,'');return(s.length>=10&&s.length<=12)?s:'';}
+function normalizar(s){if(!s)return'';return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZN0-9 .,:\/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();}
+function paisIso2(v){if(!v)return'MX';let s=String(v).toUpperCase().trim();if(s.includes(','))s=s.split(',').pop().trim();if(s.length===2)return s;return MAPA_PAIS[s]||'MX';}
+function codOcup(v){if(!v)return'1000000';let s=String(v).trim();if(s.includes('||'))s=s.split('||').pop().trim();s=s.split('.')[0].trim();return/^\d+$/.test(s)?s:'1000000';}
+function escXml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
+function fmtFecha(v){
+  if(!v||v==='')return'';
+  if(v instanceof Date){return v.getFullYear()+String(v.getMonth()+1).padStart(2,'0')+String(v.getDate()).padStart(2,'0');}
+  const s=String(v).trim();
+  if(/^\d{8}$/.test(s))return s;
+  const m1=s.match(/(\d{4})-(\d{2})-(\d{2})/);if(m1)return m1[1]+m1[2]+m1[3];
+  const m2=s.match(/(\d{2})\/(\d{2})\/(\d{4})/);if(m2)return m2[3]+m2[2]+m2[1];
+  // Timestamp ISO
+  try{const d=new Date(v);if(!isNaN(d))return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');}catch{}
+  return'';
+}
+
+// ── Sidebar ────────────────────────────────────────────────────────
+function selSuc(nombre,prefijo,cp,tipo){
+  STATE={...STATE,suc:nombre,prefijo:prefijo,cp:cp,tipo:tipo,datos:[],archivos:{}};
   document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
   document.getElementById('suc-'+nombre).classList.add('active');
-  document.getElementById('suc-title').textContent = nombre.charAt(0)+nombre.slice(1).toLowerCase()+' — '+({MITRAS:'Monterrey',GUADALUPE:'Guadalupe'}[nombre]||nombre);
-  document.getElementById('suc-meta').textContent = `Prefijo ${prefijo} · CP ${cp} · Formato ${tipo}`;
-  document.getElementById('cfg-cp').value = cp;
-  document.getElementById('upload-title').textContent = `Archivo de reporte — ${nombre.charAt(0)+nombre.slice(1).toLowerCase()}`;
-  document.getElementById('upload-format-badge').textContent = tipo==='A'?'Formato A · .xlsm':'Formato B · .xlsx';
-  document.getElementById('upload-A').classList.toggle('hidden', tipo!=='A');
-  document.getElementById('upload-B').classList.toggle('hidden', tipo!=='B');
+  document.getElementById('suc-title').textContent=nombre.charAt(0)+nombre.slice(1).toLowerCase()+' — '+({MITRAS:'Monterrey',GUADALUPE:'Guadalupe'}[nombre]||nombre);
+  document.getElementById('suc-meta').textContent=`Prefijo ${prefijo} · CP ${cp} · Formato ${tipo}`;
+  document.getElementById('cfg-cp').value=cp;
+  document.getElementById('upload-title').textContent=`Archivo de reporte — ${nombre.charAt(0)+nombre.slice(1).toLowerCase()}`;
+  document.getElementById('upload-format-badge').textContent=tipo==='A'?'Formato A · .xlsm':'Formato B · .xlsx';
+  document.getElementById('upload-A').classList.toggle('hidden',tipo!=='A');
+  document.getElementById('upload-B').classList.toggle('hidden',tipo!=='B');
   resetZonas();
   volverUpload();
 }
 
 function resetZonas(){
   ['A','B1','B2'].forEach(id=>{
-    const z=document.getElementById('zone-'+id); if(!z)return;
+    const z=document.getElementById('zone-'+id);if(!z)return;
     z.classList.remove('upload-done');
     document.getElementById('icon-'+id).textContent='📂';
-    document.getElementById('title-'+id).textContent = id==='A'?'Arrastra el archivo aquí o haz clic para seleccionar':'Seleccionar archivo';
+    document.getElementById('title-'+id).textContent=id==='A'?'Arrastra el archivo aquí o haz clic para seleccionar':'Seleccionar archivo';
   });
   STATE.archivos={};
 }
 
-function dragOver(e,zoneId){e.preventDefault();document.getElementById(zoneId).classList.add('drag')}
-function dragLeave(zoneId){document.getElementById(zoneId).classList.remove('drag')}
-function dropFile(e,inputId,zoneId){
-  e.preventDefault();
-  dragLeave(zoneId);
-  const f=e.dataTransfer.files[0]; if(!f)return;
+// ── Upload ─────────────────────────────────────────────────────────
+function dragOver(e,zId){e.preventDefault();document.getElementById(zId).classList.add('drag');}
+function dragLeave(zId){document.getElementById(zId).classList.remove('drag');}
+function dropFile(e,inputId,zId){
+  e.preventDefault();dragLeave(zId);
+  const f=e.dataTransfer.files[0];if(!f)return;
   const inp=document.getElementById(inputId);
-  const dt=new DataTransfer(); dt.items.add(f); inp.files=dt.files;
-  const ev={target:inp}; fileSelected(inputId.replace('file-',''),{files:[f]});
+  const dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;
+  fileSelected(inputId.replace('file-',''),{files:[f]});
 }
-
-function fileSelected(id, input){
-  const f=input.files[0]; if(!f)return;
+function fileSelected(id,input){
+  const f=input.files[0];if(!f)return;
   STATE.archivos[id]=f;
-  const zId='zone-'+id, iconId='icon-'+id, titleId='title-'+id;
-  document.getElementById(zId).classList.add('upload-done');
-  document.getElementById(iconId).textContent='✅';
-  document.getElementById(titleId).textContent=f.name;
+  document.getElementById('zone-'+id).classList.add('upload-done');
+  document.getElementById('icon-'+id).textContent='✅';
+  document.getElementById('title-'+id).textContent=f.name;
 }
 
 async function leerExcel(file){
@@ -389,117 +367,66 @@ async function leerExcel(file){
   });
 }
 
-function sheetToArr(wb, sheetName){
+function sheetToArr(wb,sheetName){
   if(!wb.SheetNames.includes(sheetName))return null;
-  const ws = wb.Sheets[sheetName];
-  // Intentar con header automático primero
-  const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
-  // Si la primera fila no tiene columnas esperadas, intentar saltando primera fila
-  if(rows.length && !rows[0]['Nombre'] && !rows[0]['CONSECUTIVO'] && !rows[0]['CURP']){
-    // El header puede estar en fila 2 — leer como array y usar fila 1 como header
-    const arr = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
-    const headerIdx = arr.findIndex(r => r.some(c => ['Nombre','CONSECUTIVO','CURP','Id Jugador'].includes(String(c))));
-    if(headerIdx >= 0){
-      const headers = arr[headerIdx];
-      return arr.slice(headerIdx+1)
-        .filter(r => r.some(c => c !== ''))
-        .map(r => {
-          const obj = {};
-          headers.forEach((h,i) => obj[h] = r[i] !== undefined ? r[i] : '');
-          return obj;
-        });
+  const ws=wb.Sheets[sheetName];
+  let rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+  if(rows.length&&!rows[0]['Nombre']&&!rows[0]['CONSECUTIVO']&&!rows[0]['CURP']){
+    const arr=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    const hi=arr.findIndex(r=>r.some(c=>['Nombre','CONSECUTIVO','CURP'].includes(String(c))));
+    if(hi>=0){
+      const headers=arr[hi];
+      rows=arr.slice(hi+1).filter(r=>r.some(c=>c!=='')).map(r=>{
+        const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');return obj;
+      });
     }
   }
   return rows;
 }
 
-function fmtFecha(v){
-  if(!v||v==='')return '';
-  if(v instanceof Date){const y=v.getFullYear(),m=String(v.getMonth()+1).padStart(2,'0'),d=String(v.getDate()).padStart(2,'0');return `${y}${m}${d}`;}
-  const s=String(v).trim();
-  if(/^\d{8}$/.test(s))return s;
-  const m1=s.match(/(\d{4})-(\d{2})-(\d{2})/); if(m1)return m1[1]+m1[2]+m1[3];
-  const m2=s.match(/(\d{2})\/(\d{2})\/(\d{4})/); if(m2)return m2[3]+m2[2]+m2[1];
-  return s.replace(/\D/g,'').substring(0,8);
-}
-
-function limpiarMonto(v){
-  if(v===''||v===null||v===undefined)return '0.00';
-  try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return '0.00';}
-}
-
-function limpiarTel(v){
-  if(!v)return '';
-  const s=String(v).replace(/\D/g,'');
-  return(s.length>=10&&s.length<=12)?s:'';
-}
-
-function normalizar(s){
-  if(!s)return '';
-  return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZÑ0-9 .,:/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();
-}
-
-function paisIso2(v){
-  if(!v)return 'MX';
-  let s=String(v).toUpperCase().trim();
-  if(s.includes(','))s=s.split(',').pop().trim();
-  if(s.length===2)return s;
-  return MAPA_PAIS[s]||'MX';
-}
-
-function getTotalGeneral(r){
-  return r['TOTAL GENERAL'] || r[' TOTAL GENERAL '] || r['TOTAL GENERAL '] || r[' TOTAL GENERAL'] || r['Monto Transaccion'] || 0;
-}
-  if(!v)return '1000000';
-  let s=String(v).trim();
-  if(s.includes('||'))s=s.split('||').pop().trim();
-  s=s.split('.')[0].trim();
-  return /^\d+$/.test(s)?s:'1000000';
-}
-
+// ── Procesar ───────────────────────────────────────────────────────
 async function procesarArchivos(){
-  const err=document.getElementById('alert-upload');
-  err.style.display='none';
+  const errEl=document.getElementById('alert-upload');
+  errEl.style.display='none';
   const mes=document.getElementById('cfg-mes').value.trim();
   const rfc=document.getElementById('cfg-rfc').value.trim();
   const cp=document.getElementById('cfg-cp').value.trim();
-  if(!/^\d{6}$/.test(mes)){err.textContent='El mes debe ser 6 dígitos (YYYYMM).';err.style.display='block';return;}
-  if(rfc.length<12||rfc.length>13){err.textContent='El RFC debe tener 12 o 13 caracteres.';err.style.display='block';return;}
-  if(!/^\d{5}$/.test(cp)){err.textContent='El CP debe ser exactamente 5 dígitos.';err.style.display='block';return;}
+  if(!/^\d{6}$/.test(mes)){errEl.textContent='El mes debe ser 6 dígitos (YYYYMM).';errEl.style.display='block';return;}
+  if(rfc.length<12||rfc.length>13){errEl.textContent='El RFC debe tener 12 o 13 caracteres.';errEl.style.display='block';return;}
+  if(!/^\d{5}$/.test(cp)){errEl.textContent='El CP debe ser exactamente 5 dígitos.';errEl.style.display='block';return;}
 
-  let rows=[];
   document.getElementById('btn-procesar-text').textContent='Procesando...';
   document.getElementById('btn-procesar-spin').classList.remove('hidden');
+  let rows=[];
 
   try{
     if(STATE.tipo==='A'){
-      if(!STATE.archivos['A']){err.textContent='Selecciona el archivo Excel.';err.style.display='block';return;}
+      if(!STATE.archivos['A']){errEl.textContent='Selecciona el archivo Excel.';errEl.style.display='block';return;}
       const wb=await leerExcel(STATE.archivos['A']);
-      const dep=sheetToArr(wb,'REPORTE UIF DEPOSITOS');
-      const ret=sheetToArr(wb,'REPORTE UIF RETIROS');
+      const dep=sheetToArr(wb,'REPORTE UIF DEPOSITOS')||[];
+      const ret=sheetToArr(wb,'REPORTE UIF RETIROS')||[];
       let tels={};
       ['Depositos Acumulado','Retiros Acumulado'].forEach(h=>{
         const d=sheetToArr(wb,h);
         if(d)d.forEach(r=>{
-          const curp = String(r.CURP||r['CURP']||'').trim().toUpperCase();
-          const tel = r.Telefono||r['Telefono']||'';
-          if(curp && tel) tels[curp]=limpiarTel(tel);
+          const curp=String(r.CURP||'').trim().toUpperCase();
+          const tel=r.Telefono||'';
+          if(curp&&tel)tels[curp]=limpiarTel(tel);
         });
       });
-      if(dep)dep.forEach(r=>{
+      dep.forEach(r=>{
         const curp=String(r.CURP||'').trim().toUpperCase();
-        // Normalizar columna TOTAL GENERAL (puede tener espacios)
-        const monto = r['TOTAL GENERAL'] || r[' TOTAL GENERAL '] || r['TOTAL GENERAL '] || r[' TOTAL GENERAL'] || 0;
-        rows.push({...r, 'TOTAL GENERAL': monto, _tipo:'DEPOSITO', _tel:tels[curp]||''});
+        const monto=getMonto(r);
+        rows.push({...r,'TOTAL GENERAL':monto,_tipo:'DEPOSITO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
       });
-      if(ret)ret.forEach(r=>{
+      ret.forEach(r=>{
         const curp=String(r.CURP||'').trim().toUpperCase();
-        const monto = r['TOTAL GENERAL'] || r[' TOTAL GENERAL '] || r['TOTAL GENERAL '] || r[' TOTAL GENERAL'] || 0;
-        rows.push({...r, 'TOTAL GENERAL': monto, _tipo:'RETIRO', _tel:tels[curp]||''});
+        const monto=getMonto(r);
+        rows.push({...r,'TOTAL GENERAL':monto,_tipo:'RETIRO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
       });
     } else {
-      if(!STATE.archivos['B1']&&!STATE.archivos['B2']){err.textContent='Selecciona al menos un archivo.';err.style.display='block';return;}
-      for(const[key,tipo,descTipo] of [['B1','MENSUAL','DEPOSITO'],['B2','SEMESTRAL','DEPOSITO']]){
+      if(!STATE.archivos['B1']&&!STATE.archivos['B2']){errEl.textContent='Selecciona al menos un archivo.';errEl.style.display='block';return;}
+      for(const[key,tipoRep] of [['B1','MENSUAL'],['B2','SEMESTRAL']]){
         if(!STATE.archivos[key])continue;
         const wb=await leerExcel(STATE.archivos[key]);
         const hojas=wb.SheetNames;
@@ -507,212 +434,130 @@ async function procesarArchivos(){
         const hRet=hojas.find(h=>h.toLowerCase().includes('retiro')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('retiro'));
         [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([h,t])=>{
           if(!h)return;
-          const d=XLSX.utils.sheet_to_json(wb.Sheets[h],{header:1});
-          const headerRow=d.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
-          if(headerRow<0)return;
-          const headers=d[headerRow];
-          d.slice(headerRow+1).forEach(r=>{
+          const arr=XLSX.utils.sheet_to_json(wb.Sheets[h],{header:1});
+          const hi=arr.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
+          if(hi<0)return;
+          const headers=arr[hi];
+          arr.slice(hi+1).forEach(r=>{
             if(!r[headers.indexOf('Nombre')])return;
-            const obj={};
-            headers.forEach((h,i)=>obj[h]=r[i]||'');
-            rows.push({...obj,_tipo:t,_tipoReporte:tipo,'Monto Transaccion':obj['Monto Transaccion']||obj['TOTAL GENERAL']||0});
+            const obj={};headers.forEach((h,i)=>obj[h]=r[i]||'');
+            const monto=obj['Monto Transaccion']||obj['TOTAL GENERAL']||0;
+            rows.push({...obj,'TOTAL GENERAL':monto,_tipo:t,_tipoReporte:tipoRep,_tel:limpiarTel(obj.Telefono||'')});
           });
         });
       }
-      const curps=[...new Set(rows.map(r=>String(r.CURP||'').trim().toUpperCase()))];
-      const mapFolio={};
-      let ci=1;
+      let ci=1;const mapFolio={};
       rows.forEach(r=>{
         const key=String(r.CURP||'').trim().toUpperCase()+'|'+r._tipo;
         if(!mapFolio[key])mapFolio[key]=STATE.prefijo+String(ci++).padStart(4,'0');
         r.CONSECUTIVO=mapFolio[key];
-        r['TOTAL GENERAL']=r['Monto Transaccion']||r['TOTAL GENERAL']||0;
         r['PLD Ocupacion']=r['PLD Codigo Ocupacion']||r['PLD Ocupacion']||'';
-        r._tel=limpiarTel(r.Telefono||'');
       });
     }
 
-    if(!rows.length){err.textContent='No se encontraron registros en el archivo.';err.style.display='block';return;}
-
+    if(!rows.length){errEl.textContent='No se encontraron registros.';errEl.style.display='block';return;}
     STATE.datos=rows;
     STATE.cfg={mes,rfc,cp};
     mostrarResumen(rows);
   }catch(e){
-    err.textContent='Error al leer el archivo: '+e.message;err.style.display='block';
-    console.error(e);
-  } finally {
+    errEl.textContent='Error al leer el archivo: '+e.message;errEl.style.display='block';
+  }finally{
     document.getElementById('btn-procesar-text').textContent='Procesar y ver resumen';
     document.getElementById('btn-procesar-spin').classList.add('hidden');
   }
 }
 
-function validarDatos(rows){
-  const errores = [];
-  const advertencias = [];
-  let validos = 0;
-
-  // Contadores por tipo de error
-  const conteo = {
-    sinNombre: 0, sinCURP: 0, curpInvalida: 0,
-    sinCP: 0, cpInvalido: 0, sinMonto: 0,
-    sinTel: 0, sinApMat: 0, fechaRara: 0
-  };
-
-  rows.forEach(r => {
-    let esValido = true;
-
-    // ── ERRORES CRÍTICOS ────────────────────────────────────
-    const nombre = String(r.Nombre || '').trim();
-    if(!nombre){ conteo.sinNombre++; esValido = false; }
-
-    const curp = String(r.CURP || '').trim().toUpperCase();
-    if(!curp){ conteo.sinCURP++; esValido = false; }
-    else if(curp.length !== 18){ conteo.curpInvalida++; esValido = false; }
-
-    const cp = String(r['PLD C.P.'] || r['C.P.'] || '').split('.')[0].trim();
-    if(!cp){ conteo.sinCP++; esValido = false; }
-    else if(!/^\d{5}$/.test(cp.padStart(5,'0'))){ conteo.cpInvalido++; esValido = false; }
-
-    const monto = parseFloat(String(getTotalGeneral(r)||'0').replace(/[$,]/g,''));
-    if(!monto || monto <= 0) conteo.sinMonto++;
-
-    if(esValido) validos++;
-
-    // ── ADVERTENCIAS ─────────────────────────────────────────
-    const tel = limpiarTel(r._tel || r.Telefono || '');
-    if(!tel) conteo.sinTel++;
-
-    const apMat = String(r['Apellido Materno'] || '').trim();
-    if(!apMat) conteo.sinApMat++;
-
-    const fec = fmtFecha(r['Fecha Nacimiento'] || '');
-    if(fec && fec.length !== 8) conteo.fechaRara++;
-  });
-
-  // Construir lista de errores
-  if(conteo.sinNombre)    errores.push({t:'Sin nombre',      d:`${conteo.sinNombre} registro(s) sin nombre completo`,          n:conteo.sinNombre});
-  if(conteo.sinCURP)      errores.push({t:'CURP faltante',   d:`${conteo.sinCURP} registro(s) sin CURP`,                       n:conteo.sinCURP});
-  if(conteo.curpInvalida) errores.push({t:'CURP inválida',   d:`${conteo.curpInvalida} registro(s) con CURP que no tiene 18 caracteres`, n:conteo.curpInvalida});
-  if(conteo.sinCP)        errores.push({t:'CP faltante',     d:`${conteo.sinCP} registro(s) sin código postal`,                n:conteo.sinCP});
-  if(conteo.cpInvalido)   errores.push({t:'CP inválido',     d:`${conteo.cpInvalido} registro(s) con CP que no tiene 5 dígitos`,n:conteo.cpInvalido});
-
-  if(conteo.sinMonto)     advertencias.push({t:'Monto en cero',       d:`${conteo.sinMonto} registro(s) con monto vacío o en $0.00`,   n:conteo.sinMonto});
-  if(conteo.sinTel)       advertencias.push({t:'Sin teléfono',         d:`${conteo.sinTel} registro(s) sin número de teléfono`,         n:conteo.sinTel});
-  if(conteo.sinApMat)     advertencias.push({t:'Sin apellido materno', d:`${conteo.sinApMat} registro(s) sin apellido materno`,         n:conteo.sinApMat});
-  if(conteo.fechaRara)    advertencias.push({t:'Fecha de nacimiento',  d:`${conteo.fechaRara} registro(s) con fecha en formato raro`,   n:conteo.fechaRara});
-
-  // Mostrar en el panel
-  document.getElementById('val-num-err').textContent  = errores.length ? errores.reduce((s,e)=>s+e.n,0) : '0';
-  document.getElementById('val-num-warn').textContent = advertencias.length ? advertencias.reduce((s,e)=>s+e.n,0) : '0';
-  document.getElementById('val-num-ok').textContent   = validos;
-
-  const lista = document.getElementById('val-lista');
-  lista.innerHTML = '';
-
-  errores.forEach(e => {
-    lista.innerHTML += `
-      <div class="val-row">
-        <div class="val-icon">❌</div>
-        <div class="val-info"><div class="val-title">${e.t}</div><div class="val-desc">${e.d}</div></div>
-        <div class="val-count vc-err">${e.n}</div>
-      </div>`;
-  });
-
-  advertencias.forEach(a => {
-    lista.innerHTML += `
-      <div class="val-row">
-        <div class="val-icon">⚠️</div>
-        <div class="val-info"><div class="val-title">${a.t}</div><div class="val-desc">${a.d}</div></div>
-        <div class="val-count vc-warn">${a.n}</div>
-      </div>`;
-  });
-
-  if(!errores.length && !advertencias.length){
-    lista.innerHTML = `
-      <div class="val-row">
-        <div class="val-icon">✅</div>
-        <div class="val-info"><div class="val-title">Todo correcto</div><div class="val-desc">Todos los registros tienen los campos requeridos completos.</div></div>
-      </div>`;
-  }
-
-  const blocked = errores.length > 0;
-  document.getElementById('val-blocked').style.display = blocked ? 'block' : 'none';
-  document.getElementById('val-ok-msg').style.display  = !blocked ? 'block' : 'none';
-  document.getElementById('val-estado').textContent    = blocked ? '❌ Con errores' : (advertencias.length ? '⚠️ Con advertencias' : '✅ Válido');
-  document.getElementById('val-estado').style.color    = blocked ? 'var(--neg)' : (advertencias.length ? '#92400e' : 'var(--pos)');
-
-  // Bloquear o habilitar el botón de generar
-  const btnXml = document.getElementById('btn-xml-text').parentElement;
-  btnXml.disabled = blocked;
-  btnXml.style.opacity = blocked ? '0.4' : '1';
-  btnXml.style.cursor  = blocked ? 'not-allowed' : 'pointer';
-
-  return !blocked;
-}
-
+// ── Resumen ────────────────────────────────────────────────────────
 function mostrarResumen(rows){
-  const consecutivos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
+  const todos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
-  const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(getTotalGeneral(r))),0);
+  const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)),0);
 
   document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${consecutivos.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${todos.length}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Depósitos / Retiros</div><div class="kpi-val">${dep} / ${ret}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:18px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
   `;
 
+  // Solo mostrar registros con nombre y CURP válidos
+  const validos=rows.filter(r=>String(r.Nombre||'').trim()&&String(r.CURP||'').trim().toUpperCase().length===18);
   const MAX=200;
-  // Mostrar solo registros con nombre y CURP válidos (los que irán en el XML)
-  const validos = rows.filter(r => {
-    const nombre = String(r.Nombre||'').trim();
-    const curp = String(r.CURP||'').trim().toUpperCase();
-    return nombre && curp.length === 18;
-  });
-  const muestra = validos.slice(0, MAX);
-  const tbody=document.getElementById('tabla-resumen');
-  tbody.innerHTML=muestra.map(r=>`
+  const muestra=validos.slice(0,MAX);
+
+  document.getElementById('tabla-resumen').innerHTML=muestra.map(r=>`
     <tr>
       <td class="mono">${r.CONSECUTIVO||''}</td>
-      <td>${normalizar(r.Nombre||r['Nombre']||'')}</td>
+      <td>${normalizar(r.Nombre||'')}</td>
       <td>${normalizar(r['Apellido Paterno']||'')}</td>
       <td>${normalizar(r['Apellido Materno']||'')}</td>
       <td class="mono" style="font-size:11px">${String(r.CURP||'').trim().toUpperCase()}</td>
       <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
-      <td class="right">$${parseFloat(limpiarMonto(getTotalGeneral(r))).toLocaleString('es-MX',{minimumFractionDigits:2})}</td>
+      <td class="right">$${parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)).toLocaleString('es-MX',{minimumFractionDigits:2})}</td>
       <td class="mono">${fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')}</td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 
-  document.getElementById('tabla-footer').textContent = validos.length > MAX
-    ? `Mostrando primeros ${MAX} de ${validos.length} registros válidos (${rows.length} total en el archivo).`
-    : `${validos.length} registros válidos que irán en el XML (${rows.length} total en el archivo).`;
+  document.getElementById('tabla-footer').textContent=validos.length>MAX
+    ?`Mostrando primeros ${MAX} de ${validos.length} registros válidos.`
+    :`${validos.length} registros válidos que irán en el XML.`;
 
-  // Validar datos antes de mostrar el panel
   validarDatos(rows);
-
   setStep(1,2);
   document.getElementById('panel-upload').classList.add('hidden');
   document.getElementById('panel-resumen').classList.remove('hidden');
 }
 
-function volverUpload(){
-  setStep(0,1);
-  document.getElementById('panel-upload').classList.remove('hidden');
-  document.getElementById('panel-resumen').classList.add('hidden');
-  document.getElementById('panel-descarga').classList.add('hidden');
-}
+// ── Validación ─────────────────────────────────────────────────────
+function validarDatos(rows){
+  const errores=[],advertencias=[];
+  let validos=0;
+  const c={sinNombre:0,sinCURP:0,curpInvalida:0,sinCP:0,cpInvalido:0,sinMonto:0,sinTel:0,sinApMat:0};
 
-function setStep(done, active){
-  [1,2,3].forEach(i=>{
-    const el=document.getElementById('step'+i);
-    el.classList.remove('active','done');
-    if(i<active)el.classList.add('done');
-    if(i===active)el.classList.add('active');
+  rows.forEach(r=>{
+    let ok=true;
+    if(!String(r.Nombre||'').trim()){c.sinNombre++;ok=false;}
+    const curp=String(r.CURP||'').trim().toUpperCase();
+    if(!curp){c.sinCURP++;ok=false;}
+    else if(curp.length!==18){c.curpInvalida++;ok=false;}
+    const cp=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].trim();
+    if(!cp){c.sinCP++;ok=false;}
+    else if(!/^\d{5}$/.test(cp.padStart(5,'0'))){c.cpInvalido++;ok=false;}
+    if(ok)validos++;
+    if(!parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)))c.sinMonto++;
+    if(!limpiarTel(r._tel||r.Telefono||''))c.sinTel++;
+    if(!String(r['Apellido Materno']||'').trim())c.sinApMat++;
   });
+
+  if(c.sinNombre)    errores.push({t:'Sin nombre',     d:`${c.sinNombre} registro(s) sin nombre`,                        n:c.sinNombre});
+  if(c.sinCURP)      errores.push({t:'CURP faltante',  d:`${c.sinCURP} registro(s) sin CURP`,                            n:c.sinCURP});
+  if(c.curpInvalida) errores.push({t:'CURP inválida',  d:`${c.curpInvalida} registro(s) con CURP diferente a 18 chars`,  n:c.curpInvalida});
+  if(c.sinCP)        errores.push({t:'CP faltante',    d:`${c.sinCP} registro(s) sin código postal`,                     n:c.sinCP});
+  if(c.cpInvalido)   errores.push({t:'CP inválido',    d:`${c.cpInvalido} registro(s) con CP diferente a 5 dígitos`,     n:c.cpInvalido});
+  if(c.sinMonto)     advertencias.push({t:'Monto en cero',      d:`${c.sinMonto} registro(s) con monto $0.00`,           n:c.sinMonto});
+  if(c.sinTel)       advertencias.push({t:'Sin teléfono',       d:`${c.sinTel} registro(s) sin número de teléfono`,      n:c.sinTel});
+  if(c.sinApMat)     advertencias.push({t:'Sin apellido materno',d:`${c.sinApMat} registro(s) sin apellido materno`,     n:c.sinApMat});
+
+  document.getElementById('val-num-err').textContent=errores.reduce((s,e)=>s+e.n,0);
+  document.getElementById('val-num-warn').textContent=advertencias.reduce((s,e)=>s+e.n,0);
+  document.getElementById('val-num-ok').textContent=validos;
+
+  const lista=document.getElementById('val-lista');
+  lista.innerHTML='';
+  errores.forEach(e=>{lista.innerHTML+=`<div class="val-row"><div class="val-icon">❌</div><div class="val-info"><div class="val-title">${e.t}</div><div class="val-desc">${e.d}</div></div><div class="val-count vc-err">${e.n}</div></div>`;});
+  advertencias.forEach(a=>{lista.innerHTML+=`<div class="val-row"><div class="val-icon">⚠️</div><div class="val-info"><div class="val-title">${a.t}</div><div class="val-desc">${a.d}</div></div><div class="val-count vc-warn">${a.n}</div></div>`;});
+  if(!errores.length&&!advertencias.length){lista.innerHTML=`<div class="val-row"><div class="val-icon">✅</div><div class="val-info"><div class="val-title">Todo correcto</div></div></div>`;}
+
+  const blocked=errores.length>0;
+  document.getElementById('val-blocked').style.display=blocked?'block':'none';
+  document.getElementById('val-ok-msg').style.display=!blocked?'block':'none';
+  document.getElementById('val-estado').textContent=blocked?'❌ Con errores':(advertencias.length?'⚠️ Con advertencias':'✅ Válido');
+  document.getElementById('val-estado').style.color=blocked?'var(--neg)':(advertencias.length?'#92400e':'var(--pos)');
+  const btn=document.getElementById('btn-generar');
+  btn.disabled=blocked;btn.style.opacity=blocked?'0.4':'1';btn.style.cursor=blocked?'not-allowed':'pointer';
 }
 
+// ── Generar XML ────────────────────────────────────────────────────
 function generarXML(){
   document.getElementById('btn-xml-text').textContent='Generando...';
   document.getElementById('btn-xml-spin').classList.remove('hidden');
@@ -723,29 +568,15 @@ function generarXML(){
       list.innerHTML='';
       xmls.forEach(({nombre,blob})=>{
         const url=URL.createObjectURL(blob);
-        list.innerHTML+=`
-          <div class="xml-item">
-            <div>
-              <div class="xml-name">${nombre}</div>
-              <div class="xml-meta">${STATE.cfg.mes} · ${STATE.suc} · ${new Date().toLocaleString('es-MX')}</div>
-            </div>
-            <a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a>
-          </div>
-        `;
+        list.innerHTML+=`<div class="xml-item"><div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.suc} · ${new Date().toLocaleString('es-MX')}</div></div><a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a></div>`;
       });
       setStep(2,3);
       document.getElementById('panel-resumen').classList.add('hidden');
       document.getElementById('panel-descarga').classList.remove('hidden');
     }catch(e){
       const err=document.getElementById('alert-resumen');
-      err.textContent='Error al generar XML: '+e.message+' | '+e.stack?.split('\n')[1]||'';
-      err.style.display='block';
-      // Volver al paso 2 para mostrar el error
-      setStep(1,2);
-      document.getElementById('panel-resumen').classList.remove('hidden');
-      document.getElementById('panel-descarga').classList.add('hidden');
-      console.error('Error completo:', e);
-    } finally {
+      err.textContent='Error: '+e.message;err.style.display='block';
+    }finally{
       document.getElementById('btn-xml-text').textContent='Generar y descargar XML';
       document.getElementById('btn-xml-spin').classList.add('hidden');
     }
@@ -753,157 +584,115 @@ function generarXML(){
 }
 
 function buildXMLs(){
-  const rows=STATE.datos;
-  const cfg=STATE.cfg;
-  const tiposReporte=[...new Set(rows.map(r=>r._tipoReporte||'MENSUAL'))];
-  const xmls=[];
-
-  tiposReporte.forEach(tipoRep=>{
-    const rowsFiltrados=rows.filter(r=>(r._tipoReporte||'MENSUAL')===tipoRep);
-    const xml=buildXML(rowsFiltrados,cfg,tipoRep);
-    const prefArchivo=tipoRep==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
-    xmls.push({nombre:`${prefArchivo}_${STATE.prefijo}_${cfg.mes}.xml`,blob:new Blob([xml],{type:'application/xml'})});
+  const rows=STATE.datos,cfg=STATE.cfg;
+  const tipos=[...new Set(rows.map(r=>r._tipoReporte||'MENSUAL'))];
+  return tipos.map(tipo=>{
+    const xml=buildXML(rows.filter(r=>(r._tipoReporte||'MENSUAL')===tipo),cfg,tipo);
+    const pref=tipo==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
+    return{nombre:`${pref}_${STATE.prefijo}_${cfg.mes}.xml`,blob:new Blob([xml],{type:'application/xml'})};
   });
-  return xmls;
 }
 
-function buildXML(rows, cfg, tipoRep){
+function buildXML(rows,cfg,tipoRep){
   const grupos={};
-  rows.forEach(r=>{
-    const k=String(r.CONSECUTIVO||'');
-    if(!grupos[k])grupos[k]=[];
-    grupos[k].push(r);
-  });
+  rows.forEach(r=>{const k=String(r.CONSECUTIVO||'');if(!grupos[k])grupos[k]=[];grupos[k].push(r);});
 
-  let xml=`<?xml version="1.0" encoding="UTF-8"?>\n`;
-  xml+=`<archivo xmlns="${NS}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="${NS} jys.xsd">\n`;
-  xml+=`  <informe>\n`;
-  xml+=`    <mes_reportado>${cfg.mes}</mes_reportado>\n`;
-  xml+=`    <sujeto_obligado>\n`;
-  xml+=`      <clave_sujeto_obligado>${cfg.rfc}</clave_sujeto_obligado>\n`;
-  xml+=`      <clave_actividad>JYS</clave_actividad>\n`;
-  xml+=`    </sujeto_obligado>\n`;
+  let x=`<?xml version="1.0" encoding="UTF-8"?>\n`;
+  x+=`<archivo xmlns="${NS}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="${NS} jys.xsd">\n`;
+  x+=`  <informe>\n    <mes_reportado>${cfg.mes}</mes_reportado>\n`;
+  x+=`    <sujeto_obligado>\n      <clave_sujeto_obligado>${cfg.rfc}</clave_sujeto_obligado>\n      <clave_actividad>JYS</clave_actividad>\n    </sujeto_obligado>\n`;
 
   Object.entries(grupos).forEach(([folio,grupo])=>{
     const tipoMov=grupo[0]._tipo||'DEPOSITO';
-    const desc=tipoRep==='SEMESTRAL'
-      ?(tipoMov==='RETIRO'?'SUPERACION UMA SEMESTRAL RETIROS':'SUPERACION UMA SEMESTRAL')
-      :(tipoMov==='RETIRO'?'SUPERACION UMA MENSUAL RETIROS':'SUPERACION UMA MENSUAL');
-
-    xml+=`    <aviso>\n`;
-    xml+=`      <referencia_aviso>${escXml(folio)}</referencia_aviso>\n`;
-    xml+=`      <prioridad>1</prioridad>\n`;
-    xml+=`      <alerta>\n`;
-    xml+=`        <tipo_alerta>9999</tipo_alerta>\n`;
-    xml+=`        <descripcion_alerta>${desc}</descripcion_alerta>\n`;
-    xml+=`      </alerta>\n`;
+    const desc=tipoRep==='SEMESTRAL'?(tipoMov==='RETIRO'?'SUPERACION UMA SEMESTRAL RETIROS':'SUPERACION UMA SEMESTRAL'):(tipoMov==='RETIRO'?'SUPERACION UMA MENSUAL RETIROS':'SUPERACION UMA MENSUAL');
+    x+=`    <aviso>\n      <referencia_aviso>${escXml(folio)}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
+    x+=`      <alerta>\n        <tipo_alerta>9999</tipo_alerta>\n        <descripcion_alerta>${desc}</descripcion_alerta>\n      </alerta>\n`;
 
     grupo.forEach(r=>{
-      const nombre=normalizar(r.Nombre||'');
-      if(!nombre)return;
+      const nom=normalizar(r.Nombre||'');if(!nom)return;
       const apPat=normalizar(r['Apellido Paterno']||'');
       const apMat=normalizar(r['Apellido Materno']||'');
       const fecNac=fmtFecha(r['Fecha Nacimiento']||'');
       const curp=String(r.CURP||'').trim().toUpperCase();
       const pais=paisIso2(r['Clave Pais']||r['Clave Pais Nac.']||'MEX');
       const ocup=codOcup(r['PLD Ocupacion']||r['PLD Codigo Ocupacion']||'');
-      const colonia=normalizar(r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
-      const calle=normalizar(r['Calle']||'').substring(0,100)||'XXXX';
+      const col=normalizar(r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
+      const cal=normalizar(r['Calle']||'').substring(0,100)||'XXXX';
       const nExt=normalizar(String(r['No Exterior']||'SIN NUMERO').split('.')[0]).substring(0,56)||'SIN NUMERO';
       const nInt=normalizar(String(r['No Interior']||'').split('.')[0]).substring(0,40);
-      const cpRow=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].padStart(5,'0').substring(0,5);
+      const cpR=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].padStart(5,'0').substring(0,5);
       const tel=r._tel||limpiarTel(r.Telefono||'');
-
-      xml+=`      <persona_aviso>\n`;
-      xml+=`        <tipo_persona>\n`;
-      xml+=`          <persona_fisica>\n`;
-      xml+=`            <nombre>${escXml(nombre.substring(0,50)||'XXXX')}</nombre>\n`;
-      xml+=`            <apellido_paterno>${escXml(apPat.substring(0,50)||'XXXX')}</apellido_paterno>\n`;
-      xml+=`            <apellido_materno>${escXml(apMat.substring(0,50)||'XXXX')}</apellido_materno>\n`;
-      xml+=`            <fecha_nacimiento>${fecNac||'19000101'}</fecha_nacimiento>\n`;
-      if(curp.length===18)xml+=`            <curp>${curp}</curp>\n`;
-      xml+=`            <pais_nacionalidad>${pais}</pais_nacionalidad>\n`;
-      xml+=`            <actividad_economica>${ocup}</actividad_economica>\n`;
-      xml+=`          </persona_fisica>\n`;
-      xml+=`        </tipo_persona>\n`;
-      xml+=`        <tipo_domicilio>\n`;
-      xml+=`          <nacional>\n`;
-      xml+=`            <colonia>${escXml(colonia)}</colonia>\n`;
-      xml+=`            <calle>${escXml(calle)}</calle>\n`;
-      xml+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
-      if(nInt)xml+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
-      xml+=`            <codigo_postal>${/^\d{5}$/.test(cpRow)?cpRow:'00000'}</codigo_postal>\n`;
-      xml+=`          </nacional>\n`;
-      xml+=`        </tipo_domicilio>\n`;
-      xml+=`        <telefono>\n`;
-      xml+=`          <clave_pais>${pais}</clave_pais>\n`;
-      if(tel)xml+=`          <numero_telefono>${tel}</numero_telefono>\n`;
-      xml+=`        </telefono>\n`;
-      xml+=`      </persona_aviso>\n`;
+      x+=`      <persona_aviso>\n        <tipo_persona>\n          <persona_fisica>\n`;
+      x+=`            <nombre>${escXml((nom).substring(0,50)||'XXXX')}</nombre>\n`;
+      x+=`            <apellido_paterno>${escXml(apPat.substring(0,50)||'XXXX')}</apellido_paterno>\n`;
+      x+=`            <apellido_materno>${escXml(apMat.substring(0,50)||'XXXX')}</apellido_materno>\n`;
+      x+=`            <fecha_nacimiento>${fecNac||'19000101'}</fecha_nacimiento>\n`;
+      if(curp.length===18)x+=`            <curp>${curp}</curp>\n`;
+      x+=`            <pais_nacionalidad>${pais}</pais_nacionalidad>\n`;
+      x+=`            <actividad_economica>${ocup}</actividad_economica>\n`;
+      x+=`          </persona_fisica>\n        </tipo_persona>\n`;
+      x+=`        <tipo_domicilio>\n          <nacional>\n`;
+      x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
+      x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+      if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
+      x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
+      x+=`          </nacional>\n        </tipo_domicilio>\n`;
+      x+=`        <telefono>\n          <clave_pais>${pais}</clave_pais>\n`;
+      if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
+      x+=`        </telefono>\n      </persona_aviso>\n`;
     });
 
     const fechas=grupo.map(r=>fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')).filter(Boolean);
     const fecOp=fechas.length?fechas.sort().pop():cfg.mes+'31';
-
-    xml+=`      <detalle_operaciones>\n`;
-    xml+=`        <datos_operacion>\n`;
-    xml+=`          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
-    xml+=`          <tipo_sucursal>\n`;
-    xml+=`            <datos_sucursal_propia>\n`;
-    xml+=`              <codigo_postal>${cfg.cp}</codigo_postal>\n`;
-    xml+=`            </datos_sucursal_propia>\n`;
-    xml+=`          </tipo_sucursal>\n`;
-    xml+=`          <tipo_operacion>101</tipo_operacion>\n`;
-    xml+=`          <linea_negocio>9</linea_negocio>\n`;
-    xml+=`          <medio_operacion>1</medio_operacion>\n`;
+    x+=`      <detalle_operaciones>\n        <datos_operacion>\n          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
+    x+=`          <tipo_sucursal>\n            <datos_sucursal_propia>\n              <codigo_postal>${cfg.cp}</codigo_postal>\n            </datos_sucursal_propia>\n          </tipo_sucursal>\n`;
+    x+=`          <tipo_operacion>101</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
       const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
-      const monto=limpiarMonto(getTotalGeneral(r));
+      const monto=limpiarMonto(r['TOTAL GENERAL']||0);
       const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
       const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
-      xml+=`          <datos_liquidacion>\n`;
-      xml+=`            <liquidacion_numerario>\n`;
-      xml+=`              <fecha_pago>${fPago}</fecha_pago>\n`;
-      xml+=`              <instrumento_monetario>${inst}</instrumento_monetario>\n`;
-      xml+=`              <moneda>${mon}</moneda>\n`;
-      xml+=`              <monto_operacion>${monto}</monto_operacion>\n`;
-      xml+=`            </liquidacion_numerario>\n`;
-      xml+=`          </datos_liquidacion>\n`;
+      x+=`          <datos_liquidacion>\n            <liquidacion_numerario>\n`;
+      x+=`              <fecha_pago>${fPago}</fecha_pago>\n              <instrumento_monetario>${inst}</instrumento_monetario>\n`;
+      x+=`              <moneda>${mon}</moneda>\n              <monto_operacion>${monto}</monto_operacion>\n`;
+      x+=`            </liquidacion_numerario>\n          </datos_liquidacion>\n`;
     });
-    xml+=`        </datos_operacion>\n`;
-    xml+=`      </detalle_operaciones>\n`;
-    xml+=`    </aviso>\n`;
+    x+=`        </datos_operacion>\n      </detalle_operaciones>\n    </aviso>\n`;
   });
-
-  xml+=`  </informe>\n</archivo>`;
-  return xml;
+  x+=`  </informe>\n</archivo>`;
+  return x;
 }
 
-function escXml(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
-}
-
-function verDiagnostico(){
-  const panel = document.getElementById('diag-panel');
-  panel.classList.toggle('hidden');
-  if(!STATE.datos.length){ panel.textContent = 'Sin datos'; return; }
-  const r = STATE.datos[0];
-  const keys = Object.keys(r);
-  let txt = `Total registros: ${STATE.datos.length}\n`;
-  txt += `Columnas encontradas (${keys.length}):\n\n`;
-  keys.forEach(k => {
-    txt += `  "${k}": ${JSON.stringify(r[k])}\n`;
+// ── Helpers UI ─────────────────────────────────────────────────────
+function setStep(done,active){
+  [1,2,3].forEach(i=>{
+    const el=document.getElementById('step'+i);
+    el.classList.remove('active','done');
+    if(i<active)el.classList.add('done');
+    if(i===active)el.classList.add('active');
   });
-  panel.textContent = txt;
 }
-
-function nuevoReporte(){
-  STATE.datos=[];STATE.archivos={};
-  resetZonas();
+function volverUpload(){
   setStep(0,1);
   document.getElementById('panel-upload').classList.remove('hidden');
   document.getElementById('panel-resumen').classList.add('hidden');
   document.getElementById('panel-descarga').classList.add('hidden');
+}
+function nuevoReporte(){
+  STATE.datos=[];STATE.archivos={};resetZonas();
+  setStep(0,1);
+  document.getElementById('panel-upload').classList.remove('hidden');
+  document.getElementById('panel-resumen').classList.add('hidden');
+  document.getElementById('panel-descarga').classList.add('hidden');
+}
+function verDiagnostico(){
+  const panel=document.getElementById('diag-panel');
+  panel.classList.toggle('hidden');
+  if(!STATE.datos.length){panel.textContent='Sin datos';return;}
+  const r=STATE.datos[0];
+  let txt=`Total: ${STATE.datos.length}\nColumnas:\n`;
+  Object.keys(r).forEach(k=>txt+=`  "${k}": ${JSON.stringify(r[k])}\n`);
+  panel.textContent=txt;
 }
 </script>
 </body>
