@@ -719,9 +719,13 @@ function generarXML(){
       document.getElementById('panel-descarga').classList.remove('hidden');
     }catch(e){
       const err=document.getElementById('alert-resumen');
-      err.textContent='Error al generar XML: '+e.message;
+      err.textContent='Error al generar XML: '+e.message+' | '+e.stack?.split('\n')[1]||'';
       err.style.display='block';
-      console.error(e);
+      // Volver al paso 2 para mostrar el error
+      setStep(1,2);
+      document.getElementById('panel-resumen').classList.remove('hidden');
+      document.getElementById('panel-descarga').classList.add('hidden');
+      console.error('Error completo:', e);
     } finally {
       document.getElementById('btn-xml-text').textContent='Generar y descargar XML';
       document.getElementById('btn-xml-spin').classList.add('hidden');
