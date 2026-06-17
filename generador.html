@@ -561,7 +561,7 @@ function validarDatos(rows){
     else if(!/^\d{5}$/.test(cp.padStart(5,'0'))){ conteo.cpInvalido++; esValido = false; }
 
     const monto = parseFloat(String(r['TOTAL GENERAL'] || r['Monto Transaccion'] || '0').replace(/[$,]/g,''));
-    if(!monto || monto <= 0){ conteo.sinMonto++; esValido = false; }
+    if(!monto || monto <= 0) conteo.sinMonto++;
 
     if(esValido) validos++;
 
@@ -582,11 +582,11 @@ function validarDatos(rows){
   if(conteo.curpInvalida) errores.push({t:'CURP inválida',   d:`${conteo.curpInvalida} registro(s) con CURP que no tiene 18 caracteres`, n:conteo.curpInvalida});
   if(conteo.sinCP)        errores.push({t:'CP faltante',     d:`${conteo.sinCP} registro(s) sin código postal`,                n:conteo.sinCP});
   if(conteo.cpInvalido)   errores.push({t:'CP inválido',     d:`${conteo.cpInvalido} registro(s) con CP que no tiene 5 dígitos`,n:conteo.cpInvalido});
-  if(conteo.sinMonto)     errores.push({t:'Monto en cero',   d:`${conteo.sinMonto} registro(s) con monto vacío o en $0.00`,   n:conteo.sinMonto});
 
-  if(conteo.sinTel)   advertencias.push({t:'Sin teléfono',          d:`${conteo.sinTel} registro(s) sin número de teléfono`,     n:conteo.sinTel});
-  if(conteo.sinApMat) advertencias.push({t:'Sin apellido materno',  d:`${conteo.sinApMat} registro(s) sin apellido materno`,     n:conteo.sinApMat});
-  if(conteo.fechaRara)advertencias.push({t:'Fecha de nacimiento',   d:`${conteo.fechaRara} registro(s) con fecha en formato raro`,n:conteo.fechaRara});
+  if(conteo.sinMonto)     advertencias.push({t:'Monto en cero',       d:`${conteo.sinMonto} registro(s) con monto vacío o en $0.00`,   n:conteo.sinMonto});
+  if(conteo.sinTel)       advertencias.push({t:'Sin teléfono',         d:`${conteo.sinTel} registro(s) sin número de teléfono`,         n:conteo.sinTel});
+  if(conteo.sinApMat)     advertencias.push({t:'Sin apellido materno', d:`${conteo.sinApMat} registro(s) sin apellido materno`,         n:conteo.sinApMat});
+  if(conteo.fechaRara)    advertencias.push({t:'Fecha de nacimiento',  d:`${conteo.fechaRara} registro(s) con fecha en formato raro`,   n:conteo.fechaRara});
 
   // Mostrar en el panel
   document.getElementById('val-num-err').textContent  = errores.length ? errores.reduce((s,e)=>s+e.n,0) : '0';
