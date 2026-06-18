@@ -403,27 +403,61 @@ async function procesarArchivos(){
     if(STATE.tipo==='A'){
       if(!STATE.archivos['A']){errEl.textContent='Selecciona el archivo Excel.';errEl.style.display='block';return;}
       const wb=await leerExcel(STATE.archivos['A']);
-      const dep=sheetToArr(wb,'REPORTE UIF DEPOSITOS')||[];
-      const ret=sheetToArr(wb,'REPORTE UIF RETIROS')||[];
-      let tels={};
-      ['Depositos Acumulado','Retiros Acumulado'].forEach(h=>{
-        const d=sheetToArr(wb,h);
-        if(d)d.forEach(r=>{
-          const curp=String(r.CURP||'').trim().toUpperCase();
-          const tel=r.Telefono||'';
-          if(curp&&tel)tels[curp]=limpiarTel(tel);
+
+      // Detectar automáticamente si es Formato A o B
+      const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
+
+      if(esFormatoA){
+        // ── FORMATO A: hojas REPORTE UIF ──────────────────────────
+        const dep=sheetToArr(wb,'REPORTE UIF DEPOSITOS')||[];
+        const ret=sheetToArr(wb,'REPORTE UIF RETIROS')||[];
+        let tels={};
+        ['Depositos Acumulado','Retiros Acumulado'].forEach(h=>{
+          const d=sheetToArr(wb,h);
+          if(d)d.forEach(r=>{
+            const curp=String(r.CURP||'').trim().toUpperCase();
+            const tel=r.Telefono||'';
+            if(curp&&tel)tels[curp]=limpiarTel(tel);
+          });
         });
-      });
-      dep.forEach(r=>{
-        const curp=String(r.CURP||'').trim().toUpperCase();
-        const monto=getMonto(r);
-        rows.push({...r,'TOTAL GENERAL':monto,_tipo:'DEPOSITO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
-      });
-      ret.forEach(r=>{
-        const curp=String(r.CURP||'').trim().toUpperCase();
-        const monto=getMonto(r);
-        rows.push({...r,'TOTAL GENERAL':monto,_tipo:'RETIRO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
-      });
+        dep.forEach(r=>{
+          const curp=String(r.CURP||'').trim().toUpperCase();
+          const rn={};Object.keys(r).forEach(k=>rn[k.trim()]=r[k]);
+          const monto=rn['TOTAL GENERAL']||0;
+          rows.push({...rn,'TOTAL GENERAL':monto,_tipo:'DEPOSITO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
+        });
+        ret.forEach(r=>{
+          const curp=String(r.CURP||'').trim().toUpperCase();
+          const rn={};Object.keys(r).forEach(k=>rn[k.trim()]=r[k]);
+          const monto=rn['TOTAL GENERAL']||0;
+          rows.push({...rn,'TOTAL GENERAL':monto,_tipo:'RETIRO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
+        });
+      } else {
+        // ── FORMATO B: hojas Depositos / Retiros ──────────────────
+        const hojas=wb.SheetNames;
+        const hDep=hojas.find(h=>h.toLowerCase().includes('deposito')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('deposito'));
+        const hRet=hojas.find(h=>h.toLowerCase().includes('retiro')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('retiro'));
+        [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([h,t])=>{
+          if(!h)return;
+          const arr=XLSX.utils.sheet_to_json(wb.Sheets[h],{header:1});
+          const hi=arr.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
+          if(hi<0)return;
+          const headers=arr[hi];
+          arr.slice(hi+1).forEach(r=>{
+            if(!r[headers.indexOf('Nombre')])return;
+            const obj={};headers.forEach((h,i)=>obj[h]=r[i]||'');
+            const monto=obj['Monto Transaccion']||obj['TOTAL GENERAL']||0;
+            rows.push({...obj,'TOTAL GENERAL':monto,_tipo:t,_tipoReporte:'MENSUAL',_tel:limpiarTel(obj.Telefono||'')});
+          });
+        });
+        let ci=1;const mapFolio={};
+        rows.forEach(r=>{
+          const key=String(r.CURP||'').trim().toUpperCase()+'|'+r._tipo;
+          if(!mapFolio[key])mapFolio[key]=STATE.prefijo+String(ci++).padStart(4,'0');
+          r.CONSECUTIVO=mapFolio[key];
+          r['PLD Ocupacion']=r['PLD Codigo Ocupacion']||r['PLD Ocupacion']||'';
+        });
+      }
     } else {
       if(!STATE.archivos['B1']&&!STATE.archivos['B2']){errEl.textContent='Selecciona al menos un archivo.';errEl.style.display='block';return;}
       for(const[key,tipoRep] of [['B1','MENSUAL'],['B2','SEMESTRAL']]){
@@ -649,7 +683,7 @@ function buildXML(rows,cfg,tipoRep){
     x+=`          <tipo_operacion>101</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
       const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
-      const monto=limpiarMonto(r['TOTAL GENERAL']||0);
+      const monto=limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0);
       const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
       const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
       x+=`          <datos_liquidacion>\n            <liquidacion_numerario>\n`;
