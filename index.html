@@ -651,17 +651,17 @@ async function cargarTendencias(cortesData) {
   }
   datosFiltrados.sort((a, b) => fechaNum(a.etiqueta) - fechaNum(b.etiqueta));
 
-  // Quitar duplicados por fecha actual
+  // Quitar duplicados por etiqueta completa
   const vistos = new Set();
   const datosSinDup = datosFiltrados.filter(x => {
-    const fc = (x.etiqueta.split(' vs ')[1] || x.etiqueta).trim();
-    if (vistos.has(fc)) return false;
-    vistos.add(fc);
+    if (vistos.has(x.etiqueta)) return false;
+    vistos.add(x.etiqueta);
     return true;
   });
   if (datosSinDup.length < 2) return;
 
-  const labels   = datosSinDup.map(x => x.etiqueta.split(' vs ')[1] || x.etiqueta);
+  // Labels: mostrar solo la fecha anterior de cada corte (ej. "30-May vs 07-Jun" → "30-May")
+  const labels = datosSinDup.map(x => x.etiqueta.split(' vs ')[0] || x.etiqueta);
   const totales  = datosSinDup.map(x => x.d.kpis.total_act);
   const verif    = datosSinDup.map(x => x.d.kpis.verif_kyc_act);
   const bloq     = datosSinDup.map(x => x.d.kpis.bloq_kyc_act);
