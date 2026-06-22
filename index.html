@@ -3,112 +3,971 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CECOM — Iniciar sesión</title>
+<title>Reportes PLD — CECOM</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--azul:#1F3864;--azul2:#2E75B6;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--neg:#dc2626}
+:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--azul);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
-.wrap{width:100%;max-width:360px}
-.card{background:var(--card);border-radius:16px;padding:2.5rem 2rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
-.li{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0}
-.lt{font-size:18px;font-weight:600;color:var(--azul)}
-.ls{font-size:12px;color:var(--muted)}
-.field{margin-bottom:1rem}
-.field label{font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px}
-.field input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;color:var(--texto)}
-.field input:focus{border-color:var(--azul2)}
-.btn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem;transition:opacity .15s}
-.btn:hover{opacity:.88}
-.btn:active{opacity:.75}
-.err{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none;border:1px solid #fca5a5}
-.footer{text-align:center;margin-top:1.5rem;font-size:11px;color:rgba(255,255,255,.4)}
-.loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px;display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto)}
+header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px}
+.li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
+.hr{display:flex;align-items:center;gap:10px}
+.cb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace}
+.ub{font-size:11px;opacity:.55}.un{font-size:12px;opacity:.8}
+.lo{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+main{max-width:1200px;margin:0 auto;padding:2rem}
+.st{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1rem}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.kp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden}
+.ka{position:absolute;top:0;left:0;right:0;height:3px}
+.kl{font-size:12px;color:var(--muted);margin-bottom:6px}
+.kv{font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
+.kd{display:inline-flex;align-items:center;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
+.dp{background:var(--pos-bg);color:var(--pos)}.dn{background:var(--neg-bg);color:var(--neg)}.dz{background:#f3f4f6;color:var(--muted)}
+.cd{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ch{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.ch h3{font-size:14px;font-weight:600}.cs{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#f9fafb;padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+thead th[colspan]{text-align:center!important}
+thead th:not(:first-child):not([colspan]){text-align:right}
+tbody tr{border-bottom:1px solid #f3f4f6}
+tbody tr:hover{background:#f9fafb}
+td{padding:11px 14px}
+td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+.sn{font-weight:500;display:flex;align-items:center;gap:8px}
+.sd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nb{font-weight:600}.muted{color:var(--muted)}
+.bo{background:#f0f5fb}.bk{background:#f0f9f0}.br{background:#fff5f5}.by{background:#fffbea}
+.tr2{background:#f9fafb!important;font-weight:600}
+.pl{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+.pp{background:var(--pos-bg);color:var(--pos)}.pn{background:var(--neg-bg);color:var(--neg)}.pz{background:#f3f4f6;color:var(--muted)}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.dc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.dl{font-size:12px;color:var(--muted);margin-bottom:4px}.dv{font-size:26px;font-weight:600;margin-bottom:2px}
+.dc2{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+.pg{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
+.pb{height:100%;border-radius:3px}
+.ds{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center;padding:1.5rem}
+.dw{position:relative;width:200px;height:200px}
+.dc3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.dv2{font-size:20px;font-weight:600;letter-spacing:-1px}.dl2{font-size:11px;color:var(--muted)}
+.dle{display:flex;flex-direction:column;gap:6px}
+.di{display:flex;align-items:center;gap:8px;font-size:12px}
+.dd{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.da{flex:1}.dq{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:60px;text-align:right}
+.dp2{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:40px;text-align:right}
+.xr{cursor:pointer}.xr:hover{background:#f0f5ff!important}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
+.mo.on{display:flex}
+.mb{background:var(--card);border-radius:16px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.mh{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+.mt{font-size:14px;font-weight:600;margin-bottom:3px}.ms{font-size:12px;color:var(--muted)}
+.mc{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:15px;color:var(--muted)}
+.mx{overflow-y:auto;flex:1}.mx table{font-size:13px}
+.mx thead th{position:sticky;top:0;z-index:1}
+.mf{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
+.lo2{position:fixed;inset:0;background:var(--azul);display:none;align-items:center;justify-content:center;z-index:9999}
+.lo2.on{display:flex}
+.lb{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:340px}
+.ll{display:flex;align-items:center;gap:12px;margin-bottom:2rem;justify-content:center}
+.li2{width:44px;height:44px;background:var(--naranja);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
+.lt2{font-size:18px;font-weight:600;color:var(--azul)}.ls2{font-size:12px;color:var(--muted)}
+.lf{margin-bottom:1rem}
+.llab{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.8px}
+.lin{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-sizing:border-box}
+.lin:focus{border-color:var(--azul2)}
+.lbtn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
+.lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+@media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
+.hr select option{background:#1F3864;color:white}
+
+  .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
+  .panel-overlay.on{display:block;opacity:1}
+  .panel{position:fixed;top:0;right:0;bottom:0;width:680px;max-width:96vw;background:#ffffff;box-shadow:-4px 0 32px rgba(0,0,0,.25);z-index:501;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+  .panel.on{transform:translateX(0)}
+  .panel-head{padding:1.25rem 1.5rem;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#ffffff}
+  .panel-head h3{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+  .panel-head span{font-size:12px;color:var(--color-text-secondary)}
+  .panel-close{width:30px;height:30px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-tertiary);background:none;cursor:pointer;font-size:15px;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center}
+  .panel-body{overflow-y:auto;flex:1;padding:1.25rem 1.5rem;background:#ffffff}
+  .exec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+  .exec-item:last-child{border-bottom:none}
+  .exec-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+  .exec-title{font-weight:500;font-size:13px;margin-bottom:3px;color:var(--color-text-primary)}
+  .exec-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+  .epill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500;font-family:monospace}
+  .ep-pos{background:#dcfce7;color:#166534}.ep-neg{background:#fee2e2;color:#991b1b}
+  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+  .rank-item:last-child{border-bottom:none}
+  .rank-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+  .rn-top{background:#FFF2CC;color:#7d4f00}.rn-mid{background:#f3f4f6;color:#444441}.rn-low{background:#fee2e2;color:#991b1b}
+  .rank-name{font-weight:500;font-size:13px;flex:0 0 80px;color:var(--color-text-primary)}
+  .rank-bars{display:flex;flex-direction:column;gap:3px;flex:1}
+  .brow{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+  .blbl{width:60px;flex-shrink:0}
+  .bbg{flex:1;height:4px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
+  .bfill{height:100%;border-radius:2px}
+  .rscore{font-size:12px;font-weight:500;font-family:monospace;min-width:32px;text-align:right}
+  .rsec{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin:1rem 0 .5rem}
+  .btn-panel{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+  .btn-panel:hover{background:rgba(255,255,255,.22)}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="card">
+<header>
+  <div class="hi">
     <div class="logo">
       <div class="li">C</div>
-      <div>
-        <div class="lt">CECOM — PLD</div>
-        <div class="ls">Portal de Reportes</div>
+      <div><div class="lt">CECOM — Reportes PLD</div><div class="ls">Prevención de Lavado de Dinero</div></div>
+    </div>
+    <div class="hr">
+      <span class="cb" id="hCorte">—</span>
+      <span class="ub" id="hUpd"></span>
+      <span class="un" id="hUser"></span>
+      <button class="btn-panel" id="btnPanel" onclick="abrirPanel()" style="display:none">⭐ Resumen</button>
+      <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" style="display:none">
+  <!-- KPIs -->
+  <div class="st" id="stKpis"></div>
+  <div class="kg" id="kpis"></div>
+
+  <!-- Donut -->
+  <div class="st" id="stDonut"></div>
+  <div class="cd">
+    <div class="ds">
+      <div class="dw" id="donutWrap">
+        <div class="dc3"><div class="dv2" id="donutVal"></div><div class="dl2">clientes totales</div></div>
+      </div>
+      <div class="dle" id="donutLegend"></div>
+    </div>
+  </div>
+
+  <!-- Tabla sucursales -->
+  <div class="st" id="stTabla"></div>
+  <div class="cd">
+    <div class="ch"><h3 id="tablaH3"></h3><span class="cs" id="tablaCs"></span></div>
+    <div class="tw"><table>
+      <thead>
+        <tr>
+          <th rowspan="2" style="vertical-align:middle">Sucursal</th>
+          <th rowspan="2" style="vertical-align:middle;text-align:right">Total</th>
+          <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864">OPERACIONES</th>
+          <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623">KYC-PLD</th>
+          <th rowspan="2" style="vertical-align:middle;text-align:right">Reg. Express</th>
+          <th rowspan="2" style="vertical-align:middle;text-align:right">Variación</th>
+        </tr>
+        <tr>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Bloqueado</th>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Info Act</th>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Reg Completo</th>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Verificado</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Bloqueado</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Info Act</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Pend Valid</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Verificado</th>
+        </tr>
+      </thead>
+      <tbody id="tbSuc"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Documentación -->
+  <div class="st" id="stDoc"></div>
+  <div class="dg" id="docGrid"></div>
+
+  <!-- Transiciones -->
+  <div class="st" id="stTrans"></div>
+  <div class="cd">
+    <div class="ch"><h3>Todos los movimientos</h3><span class="cs" id="transCs"></span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th style="width:40px">#</th>
+        <th id="thAnt"></th><th id="thAct"></th>
+        <th style="text-align:right">Cantidad</th>
+        <th style="text-align:right">% del Total</th>
+      </tr></thead>
+      <tbody id="tbTrans"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Gráfica ops -->
+  <div class="st" id="stOps"></div>
+  <div class="cd" style="padding:1.5rem;margin-bottom:14px">
+    <canvas id="opsChart" style="max-height:300px"></canvas>
+  </div>
+
+  <!-- Tabla ops -->
+  <div class="cd" style="margin-bottom:14px">
+    <div class="ch"><h3>Clientes nuevos — Operaciones</h3><span class="cs" id="opsPer"></span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th>Sucursal</th><th style="text-align:right">Total</th>
+        <th style="text-align:right;background:#f0f5fb">Reg. Completo</th>
+        <th style="text-align:right;background:#f0f5fb">Verif. Ops</th>
+        <th style="text-align:right;background:#fff5f5">Bloq. Ops</th>
+        <th style="text-align:right;background:#f0f5fb">Info Act. Ops</th>
+        <th style="text-align:right;background:#fffbea">Reg. Express</th>
+      </tr></thead>
+      <tbody id="tbOps"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Tabla KYC ops -->
+  <div class="cd">
+    <div class="ch"><h3>Clientes nuevos — KYC-PLD</h3><span class="cs" id="kycPer"></span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th>Sucursal</th><th style="text-align:right">Total</th>
+        <th style="text-align:right;background:#fff5f5">Bloq. KYC</th>
+        <th style="text-align:right;background:#f0f9f0">Info Act. KYC</th>
+        <th style="text-align:right;background:#f0f5fb">Pend. Valid. KYC</th>
+        <th style="text-align:right;background:#f0f9f0">Verif. KYC</th>
+      </tr></thead>
+      <tbody id="tbKyc"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Descargas -->
+  <div class="st" id="stDesc" style="display:none">Descargas · archivos del corte</div>
+  <div id="descSection" style="display:none;margin-bottom:1.5rem">
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <a id="dlDetalle" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">📥</span>
+        <div><div style="font-weight:500" id="dlDetalleNombre">Detalle Cambios Estatus</div><div style="font-size:11px;color:var(--muted)">Excel · cambios por cliente</div></div>
+      </a>
+      <a id="dlReporte" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">📊</span>
+        <div><div style="font-weight:500" id="dlReporteNombre">Reporte PLD Todas Sucursales</div><div style="font-size:11px;color:var(--muted)">Excel · reporte consolidado</div></div>
+      </a>
+      <a id="dlBase" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">👥</span>
+        <div><div style="font-weight:500" id="dlBaseNombre">Base Unificada</div><div style="font-size:11px;color:var(--muted)">Excel · todos los clientes</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Tendencias históricas -->
+  <div class="st" id="stTend" style="display:none">Tendencias históricas · todos los cortes</div>
+  <div id="tendenciasSection" style="display:none">
+    <div class="cd" style="padding:1.5rem;margin-bottom:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary)" id="tendLegend1"></div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="chartTotal" role="img" aria-label="Evolución del total de clientes por corte"></canvas>
       </div>
     </div>
-
-    <div class="err" id="err">Usuario o contraseña incorrectos</div>
-
-    <div class="field">
-      <label>Usuario</label>
-      <input type="text" id="lu" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
+    <div class="cd" style="padding:1.5rem">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary)" id="tendLegend2"></div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="chartKyc" role="img" aria-label="Evolución de KPIs KYC por corte"></canvas>
+      </div>
     </div>
-    <div class="field">
-      <label>Contraseña</label>
-      <input type="password" id="lp" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
-    </div>
-
-    <button class="btn" onclick="login()" id="btn-login">
-      <span class="loading" id="spin"></span>
-      <span id="btn-text">Iniciar sesión</span>
-    </button>
   </div>
-  <div class="footer">CECOM · Prevención de Lavado de Dinero</div>
+
+</main>
+
+<!-- Modal -->
+<div class="mo" id="modal" onclick="if(event.target===this)cerrar()">
+  <div class="mb">
+    <div class="mh">
+      <div><div class="mt" id="mTit"></div><div class="ms" id="mSub"></div></div>
+      <button class="mc" onclick="cerrar()">✕</button>
+    </div>
+    <div class="mx">
+      <table><thead><tr><th>Sucursal</th><th>Player ID</th></tr></thead>
+      <tbody id="mBody"></tbody></table>
+    </div>
+    <div class="mf" id="mFoot"></div>
+  </div>
+</div>
+
+<!-- Login -->
+<div class="lo2 on" id="login">
+  <div class="lb">
+    <div class="ll">
+      <div class="li2">C</div>
+      <div><div class="lt2">CECOM — PLD</div><div class="ls2">Portal de Reportes</div></div>
+    </div>
+    <div class="lerr" id="lerr">Usuario o contraseña incorrectos</div>
+    <div class="lf">
+      <label class="llab">Usuario</label>
+      <input class="lin" id="lu" type="text" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div class="lf">
+      <label class="llab">Contraseña</label>
+      <input class="lin" id="lp" type="password" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button class="lbtn" onclick="login()">Iniciar sesión</button>
+  </div>
 </div>
 
 <script>
+// ── Utilidades ──────────────────────────────────────────────
+const F = n => Number(n).toLocaleString('es-MX');
+const P = (n,t) => t ? (n/t*100).toFixed(1)+'%' : '0.0%';
+const D = n => n>0?`<span class="pl pp">+${F(n)}</span>`:n<0?`<span class="pl pn">${F(n)}</span>`:`<span class="pl pz">0</span>`;
+const COLS=['#1F3864','#2E75B6','#375623','#E26B0A','#7B3F00','#5B2D8E','#B5451B','#0D6E8C','#2D6A4F'];
+const CSTS={'Bloqueado PLD':'#fee2e2','Bloqueado operaciones':'#fef3c7','Info actualizada PLD':'#dcfce7','Info actualizada operaciones':'#dbeafe','Por validar PLD':'#ede9fe','Registro completo':'#f0fdf4','Registro express':'#fefce8','Verificado PLD':'#dcfce7','Verificado operaciones':'#dbeafe'};
+const ORDEN=['Allende','Ajijic','Satelite','Neza','Esmeralda','Sendero','Irapuato','Mitras','Guadalupe'];
+
+// ── Datos globales ───────────────────────────────────────────
+let DATA = null;
+let DETALLE = [];
 let USUARIOS = [];
+let TRANS_LIST = [];
+let opsChartInst = null;
 
+// ── Login ────────────────────────────────────────────────────
 async function sha256(m){
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(m));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
 }
-
 async function login(){
-  const u = document.getElementById('lu').value.trim().toLowerCase();
-  const p = document.getElementById('lp').value;
-  const err = document.getElementById('err');
-  const spin = document.getElementById('spin');
-  const btnText = document.getElementById('btn-text');
-
-  if(!u || !p){ err.style.display='block'; return; }
-
-  spin.style.display='inline-block';
-  btnText.textContent='Verificando...';
-  err.style.display='none';
-
-  try{
-    if(!USUARIOS.length){
-      const r = await fetch('usuarios.json?v='+Date.now());
-      if(r.ok) USUARIOS = await r.json();
-    }
-    const h = await sha256(p);
-    const found = USUARIOS.find(x => x.u === u && x.h === h);
-    if(found){
-      sessionStorage.setItem('pld', JSON.stringify({u:found.u, n:found.n}));
-      window.location.href = 'home.html';
-    } else {
-      err.style.display='block';
-      document.getElementById('lp').value='';
-    }
-  } catch(e){
-    err.textContent='Error al conectar. Intenta de nuevo.';
+  const u=document.getElementById('lu').value.trim().toLowerCase();
+  const p=document.getElementById('lp').value;
+  const err=document.getElementById('lerr');
+  if(!u||!p){err.style.display='block';return;}
+  // Intentar cargar usuarios desde archivo si no están cargados
+  if(!USUARIOS.length){
+    try{
+      const r=await fetch('usuarios.json?v='+Date.now());
+      if(r.ok) USUARIOS=await r.json();
+    }catch(e){}
+  }
+  const h=await sha256(p);
+  const found=USUARIOS.find(x=>x.u===u&&x.h===h);
+  if(found){
+    sessionStorage.setItem('pld',JSON.stringify({u:found.u,n:found.n}));
+    err.style.display='none';
+    mostrarApp(found.n);
+  }else{
     err.style.display='block';
-  } finally {
-    spin.style.display='none';
-    btnText.textContent='Iniciar sesión';
+    document.getElementById('lp').value='';
+    document.getElementById('lp').focus();
+  }
+}
+function logout(){
+  sessionStorage.removeItem('pld');
+  document.getElementById('login').classList.add('on');
+  document.getElementById('main').style.display='none';
+  document.getElementById('hUser').textContent='';
+  document.getElementById('hLogout').style.display='none';
+  document.getElementById('btnPanel').style.display='none';
+  document.getElementById('lu').value='';
+  document.getElementById('lp').value='';
+}
+function mostrarApp(nombre){
+  document.getElementById('login').classList.remove('on');
+  document.getElementById('hUser').textContent=nombre;
+  document.getElementById('hLogout').style.display='inline-block';
+  document.getElementById('btnPanel').style.display='flex';
+  document.getElementById('main').style.display='block';
+  if(DATA){
+    renderizar(DATA);
+    // Re-cargar tendencias si ya hay cortes cargados
+    fetch('cortes.json?v='+Date.now())
+      .then(r=>r.ok?r.json():Promise.reject())
+      .then(cortes=>{ if(cortes&&cortes.length>=2) cargarTendencias(cortes); })
+      .catch(()=>{});
+  } else {
+    cargarDatos();
   }
 }
 
-// Si ya hay sesión activa, ir directo al home
-const s = sessionStorage.getItem('pld');
-if(s) window.location.href = 'home.html';
+// ── Carga de datos ───────────────────────────────────────────
 
-// Enfocar el campo usuario al cargar
-window.onload = () => document.getElementById('lu').focus();
+
+// ── Panel resumen ejecutivo ──────────────────────────────────
+function abrirPanel(){
+  if(!DATA){ return; }
+  document.getElementById('panelOverlay').classList.add('on');
+  document.getElementById('panel').classList.add('on');
+  document.body.style.overflow='hidden';
+  renderizarPanel(DATA);
+}
+function cerrarPanel(){
+  document.getElementById('panelOverlay').classList.remove('on');
+  document.getElementById('panel').classList.remove('on');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarPanel(); });
+
+function renderizarPanel(d){
+  const m=d.meta, k=d.kpis, ss=d.sucursales, tc=k.total_act;
+  document.getElementById('panelSubtitle').textContent = m.fecha_anterior_corta+' vs '+m.fecha_actual_corta;
+
+  // Bullets ejecutivos
+  const deltaVerif = k.verif_kyc_act - k.verif_kyc_ant;
+  const deltaBloq  = k.bloq_kyc_act  - k.bloq_kyc_ant;
+  const deltaPend  = k.pend_kyc_act  - k.pend_kyc_ant;
+
+  // Sucursal con mayor crecimiento
+  const topCrecimiento = [...ss].sort((a,b)=>b.delta-a.delta)[0];
+  // Sucursal con más verificados KYC %
+  const topVerif = [...ss].sort((a,b)=>b.pct_verif_kyc-a.pct_verif_kyc)[0];
+
+  const bullets = [
+    {
+      icon:'📈', bg:'#dcfce7',
+      title: `Crecimiento de base <span class="epill ep-pos">+${F(k.delta_total)} clientes</span>`,
+      desc: `La base total creció a <strong>${F(tc)}</strong> clientes. ${topCrecimiento.nombre} lideró con +${F(topCrecimiento.delta)} altas.`
+    },
+    {
+      icon: deltaVerif >= 0 ? '✅' : '⚠️',
+      bg: deltaVerif >= 0 ? '#dcfce7' : '#fee2e2',
+      title: `Verificados PLD <span class="epill ${deltaVerif>=0?'ep-pos':'ep-neg'}">${deltaVerif>=0?'+':''}${F(deltaVerif)}</span>`,
+      desc: `Subieron de ${F(k.verif_kyc_ant)} a <strong>${F(k.verif_kyc_act)}</strong>. ${topVerif.nombre} lidera con ${topVerif.pct_verif_kyc}%.`
+    },
+    {
+      icon: deltaPend <= 0 ? '⬇️' : '⚠️',
+      bg: deltaPend <= 0 ? '#dcfce7' : '#fee2e2',
+      title: `Por validar PLD <span class="epill ${deltaPend<=0?'ep-pos':'ep-neg'}">${deltaPend>=0?'+':''}${F(deltaPend)}</span>`,
+      desc: `Bajaron de ${F(k.pend_kyc_ant)} a <strong>${F(k.pend_kyc_act)}</strong>${deltaPend<=0?' — mejora en regularización':' — requiere atención'}.`
+    },
+    {
+      icon: deltaBloq > 0 ? '⚠️' : '✅',
+      bg: deltaBloq > 0 ? '#fee2e2' : '#dcfce7',
+      title: `Bloqueados PLD <span class="epill ${deltaBloq>0?'ep-neg':'ep-pos'}">${deltaBloq>=0?'+':''}${F(deltaBloq)}</span>`,
+      desc: `${deltaBloq > 0 ? 'Aumentaron' : 'Bajaron'} de ${F(k.bloq_kyc_ant)} a <strong>${F(k.bloq_kyc_act)}</strong>.`
+    },
+  ];
+
+  // Ranking de sucursales
+  const ranked = [...ss].map(s=>{
+    const score = Math.round(
+      (s.pct_verif_kyc * 3) +
+      (s.pct_aviso) +
+      ((100 - s.pct_id_venc) * 0.5)
+    );
+    return {...s, score};
+  }).sort((a,b)=>b.score-a.score);
+
+  const numCls = (i) => i<2?'rn-top':i<5?'rn-mid':'rn-low';
+  const scoreCls = (s) => s>=70?'style="color:#16a34a"':s>=40?'style="color:#d97706"':'style="color:#dc2626"';
+
+  const rankHtml = ranked.map((s,i)=>`
+    <div class="rank-item">
+      <div class="rank-num ${numCls(i)}">${i+1}</div>
+      <div class="rank-name">${s.nombre}</div>
+      <div class="rank-bars">
+        <div class="brow"><span class="blbl">Verif KYC</span><div class="bbg"><div class="bfill" style="width:${Math.min(s.pct_verif_kyc*5,100)}%;background:#375623"></div></div><span>${s.pct_verif_kyc}%</span></div>
+        <div class="brow"><span class="blbl">Con Aviso</span><div class="bbg"><div class="bfill" style="width:${s.pct_aviso}%;background:#2E75B6"></div></div><span>${s.pct_aviso}%</span></div>
+        <div class="brow"><span class="blbl">ID Vencida</span><div class="bbg"><div class="bfill" style="width:${s.pct_id_venc}%;background:#E26B0A"></div></div><span>${s.pct_id_venc}%</span></div>
+      </div>
+      <div class="rscore" ${scoreCls(s.score)}>${s.score}pts</div>
+    </div>`).join('');
+
+  // ── Reporte de comportamiento Registro Express ──
+  const tr = d.top_transiciones || [];
+  const reAct = k.re_act || 0;
+
+  // Clientes creados en 2026 (de reporte_operaciones)
+  const clientes2026 = d.reporte_operaciones
+    ? d.reporte_operaciones.sucursales.reduce((a,s)=>a+(s.total||0),0) : 0;
+
+  // Categorías de status
+  const catKYC = ["Por validar PLD","Info actualizada PLD","Verificado PLD","Bloqueado PLD"];
+  const catOPS = ["Info actualizada operaciones","Registro completo","Verificado operaciones","Bloqueado operaciones"];
+
+  const catNombre = st => {
+    if(st==="Verificado por Kyc") return "Expediente OK";
+    if(st==="Bloqueado por KYC"||st==="Bloqueado por operaciones") return "Bloqueado";
+    return "Por validar KYC";
+  };
+
+  // Filtrar transiciones desde Registro Express
+  const desdeRE = tr.filter(t=>t._STATUS_ANT==="Registro express");
+  const totalRE = desdeRE.reduce((a,t)=>a+t.N,0);
+
+  // Filtrar transiciones de Operaciones a PLD
+  const OPS_STATUS = ["Info actualizada operaciones","Registro completo","Verificado operaciones","Bloqueado operaciones"];
+  const opsToPLD = tr.filter(t=>OPS_STATUS.includes(t._STATUS_ANT)&&catKYC.includes(t._STATUS_ACT));
+  const totalOPS = opsToPLD.reduce((a,t)=>a+t.N,0);
+
+  // Totales por categoría (ambos grupos)
+  const todos = [...desdeRE,...opsToPLD];
+  const totalPorRev = todos.filter(t=>catNombre(t._STATUS_ACT)==="Por validar KYC").reduce((a,t)=>a+t.N,0);
+  const totalOK     = todos.filter(t=>catNombre(t._STATUS_ACT)==="Expediente OK").reduce((a,t)=>a+t.N,0);
+  const totalBloq   = todos.filter(t=>catNombre(t._STATUS_ACT)==="Bloqueado").reduce((a,t)=>a+t.N,0);
+  const totalGeneral= totalPorRev+totalOK+totalBloq;
+
+  const tablaRE = desdeRE.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
+      <thead><tr style="background:#f9fafb">
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">#</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Anterior</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Nuevo</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Categoría</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">Cant.</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">%</th>
+      </tr></thead>
+      <tbody>
+      ${desdeRE.map((t,i)=>`<tr style="border-bottom:1px solid #f3f4f6">
+        <td style="padding:6px 8px;color:#9ca3af">${tr.indexOf(t)+1}</td>
+        <td style="padding:6px 8px;background:#fefce8">${t._STATUS_ANT}</td>
+        <td style="padding:6px 8px">${t._STATUS_ACT}</td>
+        <td style="padding:6px 8px;font-size:11px;color:${catNombre(t._STATUS_ACT)==='Expediente OK'?'#166534':catNombre(t._STATUS_ACT)==='Bloqueado'?'#991b1b':'#1e40af'}">${catNombre(t._STATUS_ACT)}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:500;font-family:monospace">${F(t.N)}</td>
+        <td style="padding:6px 8px;text-align:right;color:#6b7280;font-family:monospace">${totalRE?(t.N/totalRE*100).toFixed(2)+'%':'0%'}</td>
+      </tr>`).join('')}
+      <tr style="background:#f9fafb;font-weight:600">
+        <td colspan="4" style="padding:6px 8px">Total</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalRE)}</td>
+        <td style="padding:6px 8px"></td>
+      </tr>
+      </tbody>
+    </table>` : '<p style="font-size:12px;color:#9ca3af;margin-top:6px">Sin movimientos desde Registro Express</p>';
+
+  const tablaOPS = opsToPLD.length ? `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
+      <thead><tr style="background:#f9fafb">
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">#</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Anterior</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Status Nuevo</th>
+        <th style="padding:6px 8px;text-align:left;color:#6b7280;font-size:11px">Categoría</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">Cant.</th>
+        <th style="padding:6px 8px;text-align:right;color:#6b7280;font-size:11px">%</th>
+      </tr></thead>
+      <tbody>
+      ${opsToPLD.map((t,i)=>`<tr style="border-bottom:1px solid #f3f4f6">
+        <td style="padding:6px 8px;color:#9ca3af">${tr.indexOf(t)+1}</td>
+        <td style="padding:6px 8px;background:#dbeafe">${t._STATUS_ANT}</td>
+        <td style="padding:6px 8px">${t._STATUS_ACT}</td>
+        <td style="padding:6px 8px;font-size:11px;color:${catNombre(t._STATUS_ACT)==='Expediente OK'?'#166534':catNombre(t._STATUS_ACT)==='Bloqueado'?'#991b1b':'#1e40af'}">${catNombre(t._STATUS_ACT)}</td>
+        <td style="padding:6px 8px;text-align:right;font-weight:500;font-family:monospace">${F(t.N)}</td>
+        <td style="padding:6px 8px;text-align:right;color:#6b7280;font-family:monospace">${totalOPS?(t.N/totalOPS*100).toFixed(2)+'%':'0%'}</td>
+      </tr>`).join('')}
+      <tr style="background:#f9fafb;font-weight:600">
+        <td colspan="4" style="padding:6px 8px">Total</td>
+        <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalOPS)}</td>
+        <td style="padding:6px 8px"></td>
+      </tr>
+      </tbody>
+    </table>` : '<p style="font-size:12px;color:#9ca3af;margin-top:6px">Sin movimientos de Operaciones a PLD</p>';
+
+  const tablaResumen = `
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px">
+      <tbody>
+        <tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:6px 8px;color:#1e40af;font-weight:500">Por revisar</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalPorRev)}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:6px 8px;color:#166534;font-weight:500">Expediente OK</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalOK)}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:6px 8px;color:#991b1b;font-weight:500">Bloqueados</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace;font-weight:600">${F(totalBloq)}</td>
+        </tr>
+        <tr style="background:#f9fafb;font-weight:600">
+          <td style="padding:6px 8px">Total</td>
+          <td style="padding:6px 8px;text-align:right;font-family:monospace">${F(totalGeneral)}</td>
+        </tr>
+      </tbody>
+    </table>`;
+
+  const reHtml = `
+    <div style="background:#f9fafb;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div><span style="color:#6b7280">Clientes creados en 2026</span><br><strong>${F(clientes2026)}</strong></div>
+        <div><span style="color:#6b7280">Registro Express actual</span><br><strong>${F(reAct)}</strong></div>
+        <div><span style="color:#6b7280">Fecha inicial</span><br><strong>${m.fecha_anterior_larga}</strong></div>
+        <div><span style="color:#6b7280">Fecha final</span><br><strong>${m.fecha_actual_larga}</strong></div>
+      </div>
+    </div>
+    <div class="rsec">cambio de express a otros estatus</div>
+    ${tablaRE}
+    <div class="rsec" style="margin-top:1rem">cambio de operaciones a pld</div>
+    ${tablaOPS}
+    <div class="rsec" style="margin-top:1rem">resumen</div>
+    ${tablaResumen}
+  `;
+
+  document.getElementById('panelBody').innerHTML = `
+    <div class="rsec">hallazgos del corte</div>
+    ${bullets.map(b=>`
+    <div class="exec-item">
+      <div class="exec-icon" style="background:${b.bg}">${b.icon}</div>
+      <div>
+        <div class="exec-title">${b.title}</div>
+        <div class="exec-desc">${b.desc}</div>
+      </div>
+    </div>`).join('')}
+    <div class="rsec" style="margin-top:1.25rem">reporte registro express</div>
+    ${reHtml}
+    <div class="rsec" style="margin-top:1.25rem">ranking de sucursales · kyc</div>
+    ${rankHtml}
+  `;
+}
+
+// ── Tendencias históricas ────────────────────────────────────
+let chartTotalInst = null;
+let chartKycInst   = null;
+
+async function cargarTendencias(cortesData) {
+  if (!cortesData || cortesData.length < 2) return;
+
+  // Cargar todos los JSONs del historial
+  const datos = [];
+  for (const c of [...cortesData].reverse()) {
+    try {
+      const r = await fetch(c.archivo + '?v=' + Date.now());
+      if (r.ok) {
+        const d = await r.json();
+        datos.push({ etiqueta: c.etiqueta, d });
+      } else {
+        console.warn('No se pudo cargar:', c.archivo);
+      }
+    } catch(e) { console.warn('Error cargando:', c.archivo, e); }
+  }
+  if (datos.length < 2) return;
+
+  // Filtrar cortes del 26-Abr — solo mostrar comparativas semanales
+  const datosFiltrados = datos.filter(x =>
+    !x.etiqueta.startsWith('26-Abr') &&
+    !x.etiqueta.startsWith('26 de')
+  );
+  if (datosFiltrados.length < 2) return;
+
+  const labels   = datosFiltrados.map(x => x.etiqueta.split(' vs ')[1] || x.etiqueta);
+  const totales  = datosFiltrados.map(x => x.d.kpis.total_act);
+  const verif    = datosFiltrados.map(x => x.d.kpis.verif_kyc_act);
+  const bloq     = datosFiltrados.map(x => x.d.kpis.bloq_kyc_act);
+  const pend     = datosFiltrados.map(x => x.d.kpis.pend_kyc_act);
+
+  const gridColor = 'rgba(0,0,0,0.06)';
+  const tickColor = '#888780';
+  const commonOpts = {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('es-MX')}` }}
+    },
+    scales: { x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11 } } } }
+  };
+
+  // Leyenda 1
+  document.getElementById('tendLegend1').innerHTML =
+    `<span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:3px;background:#1F3864;border-radius:2px;display:inline-block"></span>Total clientes</span>`;
+
+  // Leyenda 2
+  document.getElementById('tendLegend2').innerHTML = [
+    ['#375623','Verificados PLD',''],
+    ['#dc2626','Bloqueados PLD','▲'],
+    ['#ED7D31','Por validar PLD','- -'],
+  ].map(([c,l,s]) => `<span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:3px;background:${c};border-radius:2px;display:inline-block"></span>${l}</span>`).join('');
+
+  // Gráfica total
+  if (chartTotalInst) { chartTotalInst.destroy(); chartTotalInst = null; }
+  chartTotalInst = new Chart(document.getElementById('chartTotal'), {
+    type: 'line',
+    data: { labels, datasets: [{
+      label: 'Total clientes', data: totales,
+      borderColor: '#1F3864', backgroundColor: 'rgba(31,56,100,0.08)',
+      borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#1F3864',
+      tension: 0.3, fill: true,
+    }]},
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { grid:{color:gridColor}, ticks:{ color:tickColor, font:{size:11},
+        callback: v => (v/1000).toFixed(0)+'k' },
+        min: Math.min(...totales) - 2000, max: Math.max(...totales) + 2000
+      }
+    }}
+  });
+
+  // Gráfica KYC
+  if (chartKycInst) { chartKycInst.destroy(); chartKycInst = null; }
+  chartKycInst = new Chart(document.getElementById('chartKyc'), {
+    type: 'line',
+    data: { labels, datasets: [
+      { label:'Verificados PLD', data:verif, borderColor:'#375623', borderWidth:2.5, pointRadius:5, pointBackgroundColor:'#375623', tension:0.3, fill:false },
+      { label:'Bloqueados PLD',  data:bloq,  borderColor:'#dc2626', borderWidth:2,   pointRadius:5, pointBackgroundColor:'#dc2626', pointStyle:'triangle', tension:0.3, fill:false },
+      { label:'Por validar PLD',data:pend,  borderColor:'#ED7D31', borderDash:[6,3],borderWidth:2, pointRadius:5, pointBackgroundColor:'#ED7D31', pointStyle:'rect', tension:0.3, fill:false },
+    ]},
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { grid:{color:gridColor}, ticks:{ color:tickColor, font:{size:11}, callback: v => v.toLocaleString('es-MX') }}
+    }}
+  });
+
+  // Mostrar sección
+  document.getElementById('stTend').style.display = 'block';
+  document.getElementById('tendenciasSection').style.display = 'block';
+}
+
+
+async function cargarDatos(){
+  document.getElementById('main').style.display='block';
+  try{
+    let datos = null;
+    let cortesData = null;
+    try{
+      const rc=await fetch('cortes.json?v='+Date.now());
+      if(rc.ok){
+        const cortes=await rc.json();
+        if(cortes && cortes.length){
+          cortesData=cortes;
+          poblarSelector(cortes);
+          const rd=await fetch(cortes[0].archivo+'?v='+Date.now());
+          if(rd.ok) datos=await rd.json();
+        }
+      }
+    }catch(e){}
+    if(!datos){
+      const rd=await fetch('datos.json?v='+Date.now());
+      if(!rd.ok) throw new Error('No encontrado');
+      datos=await rd.json();
+      const el=document.getElementById('hCorte');
+      if(el&&el.tagName==='SPAN') el.textContent=datos.meta.fecha_anterior_corta+' vs '+datos.meta.fecha_actual_corta;
+    }
+    DATA=datos;
+    DETALLE=datos.detalle_cambios||[];
+    renderizar(datos);
+    if(cortesData&&cortesData.length>=2) cargarTendencias(cortesData);
+  }catch(e){
+    document.getElementById('main').innerHTML='<div style="padding:2rem;text-align:center;color:var(--muted)">No se encontró datos.json. Corre el script para generar los datos.</div>';
+  }
+}
+
+function poblarSelector(cortes){
+  const el=document.getElementById('hCorte');
+  // Convertir badge a selector si hay más de 1 corte
+  if(cortes.length>1){
+    const sel=document.createElement('select');
+    sel.style.cssText='background:#1F3864;border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;font-size:12px;font-family:"DM Mono",monospace;color:white;outline:none;cursor:pointer';
+    cortes.forEach((c,i)=>{
+      const opt=document.createElement('option');
+      opt.value=c.archivo; opt.textContent=c.etiqueta;
+      sel.appendChild(opt);
+    });
+    sel.onchange=async function(){
+      const r=await fetch(this.value+'?v='+Date.now());
+      if(r.ok){DATA=await r.json();DETALLE=DATA.detalle_cambios||[];renderizar(DATA);}
+    };
+    el.replaceWith(sel);
+  }else{
+    el.textContent=cortes[0].etiqueta;
+  }
+}
+
+// ── Render principal ─────────────────────────────────────────
+function renderizar(d){
+  const m=d.meta, k=d.kpis, ss=d.sucursales, tc=k.total_act;
+  document.getElementById('hUpd').textContent='Actualizado: '+m.generado;
+
+
+  // Descargas
+  const fa = m.fecha_anterior_corta, fc = m.fecha_actual_corta;
+  const nomDetalle = `Detalle_Cambios_Estatus_${fa}_vs_${fc}.xlsx`;
+  const nomReporte = `Reporte_PLD_TODAS_SUCURSALES_${fa}_vs_${fc}.xlsx`;
+  const nomBase    = `Base_Unificada_${fc}.xlsx`;
+  const _s = (id, prop, val) => { const el=document.getElementById(id); if(el) el[prop]=val; };
+  _s('dlDetalle','href', nomDetalle);    _s('dlDetalle','download', nomDetalle);
+  _s('dlDetalleNombre','textContent', nomDetalle.replace('.xlsx',''));
+  _s('dlReporte','href', nomReporte);    _s('dlReporte','download', nomReporte);
+  _s('dlReporteNombre','textContent', nomReporte.replace('.xlsx',''));
+  _s('dlBase','href', nomBase);          _s('dlBase','download', nomBase);
+  _s('dlBaseNombre','textContent', nomBase.replace('.xlsx',''));
+  _s('stDesc','style.display', 'block'); // no funciona así, usar directo
+  const stDesc = document.getElementById('stDesc');
+  const descSec = document.getElementById('descSection');
+  if(stDesc) stDesc.style.display='block';
+  if(descSec) descSec.style.display='block';
+
+  // Títulos
+  document.getElementById('stKpis').textContent='Resumen global · '+m.num_sucursales+' sucursales';
+  document.getElementById('stDonut').textContent='Distribución de estatus · '+m.fecha_actual_larga;
+  document.getElementById('stTabla').textContent='Desglose por sucursal · '+m.fecha_actual_larga;
+  document.getElementById('stDoc').textContent='Indicadores de documentación · '+m.fecha_actual_larga;
+  document.getElementById('stTrans').textContent='Cambio de estatus · '+m.fecha_anterior_corta+' vs '+m.fecha_actual_corta;
+  document.getElementById('stOps').textContent='Reporte de operaciones · '+(d.reporte_operaciones?.fecha_inicio||'')+ ' al '+(d.reporte_operaciones?.fecha_fin||'');
+  document.getElementById('tablaH3').textContent='Totales al '+m.fecha_actual_larga;
+  document.getElementById('tablaCs').textContent='vs '+m.fecha_anterior_larga;
+  document.getElementById('thAnt').textContent='Status Anterior ('+m.fecha_anterior_corta+')';
+  document.getElementById('thAct').textContent='Status Nuevo ('+m.fecha_actual_corta+')';
+
+  // KPIs
+  const kpisData=[
+    {ac:'#1F3864',lb:'Total clientes en base',vl:F(tc),dl:'▲ +'+F(k.delta_total)+' vs anterior',dc:'dp'},
+    {ac:'#E26B0A',lb:'Clientes nuevos',vl:F(k.clientes_nuevos),dl:'▲ +'+F(k.clientes_nuevos),dc:'dp'},
+    {ac:'#7c3aed',lb:'Cambios de estatus',vl:F(k.cambios_status),dl:(k.cambios_status/tc*100).toFixed(1)+'% de la base',dc:'dz'},
+    {ac:'#375623',lb:'Verificados PLD',vl:F(k.verif_kyc_act),dl:'▲ +'+F(k.verif_kyc_act-k.verif_kyc_ant)+' vs anterior',dc:'dp'},
+    {ac:'#dc2626',lb:'Bloqueados PLD',vl:F(k.bloq_kyc_act),dl:(k.bloq_kyc_act>k.bloq_kyc_ant?'▲ +':'▼ -')+F(Math.abs(k.bloq_kyc_act-k.bloq_kyc_ant))+' vs anterior',dc:k.bloq_kyc_act>k.bloq_kyc_ant?'dn':'dp'},
+    {ac:'#0891b2',lb:'Por validar PLD',vl:F(k.pend_kyc_act),dl:'▼ '+F(Math.abs(k.pend_kyc_act-k.pend_kyc_ant))+' (mejora)',dc:'dn'},
+  ];
+  document.getElementById('kpis').innerHTML=kpisData.map(x=>`
+    <div class="kp"><div class="ka" style="background:${x.ac}"></div>
+      <div class="kl">${x.lb}</div>
+      <div class="kv">${x.vl}</div>
+      <div class="kd ${x.dc}">${x.dl}</div>
+    </div>`).join('');
+
+  // Donut
+  const DDATA=[
+    {lbl:'Registro Express',val:k.re_act,col:'#FFC000'},
+    {lbl:'Bloq. Operaciones',val:k.bloq_ops_act,col:'#1F3864'},
+    {lbl:'Info Act. Ops',val:k.info_act_ops_act||0,col:'#2E75B6'},
+    {lbl:'Reg. Completo',val:k.reg_completo_act||0,col:'#70AD47'},
+    {lbl:'Verif. Ops',val:k.verif_ops_act||0,col:'#4472C4'},
+    {lbl:'Bloq. PLD',val:k.bloq_kyc_act,col:'#C00000'},
+    {lbl:'Info Act. PLD',val:k.info_act_kyc_act||0,col:'#FF7C80'},
+    {lbl:'Por validar PLD',val:k.pend_kyc_act,col:'#ED7D31'},
+    {lbl:'Verificado PLD',val:k.verif_kyc_act,col:'#375623'},
+  ];
+  const circ=2*Math.PI*90; let off=0;
+  const paths=DDATA.map(x=>{const da=x.val/tc*circ;const el=`<circle cx="110" cy="110" r="90" fill="none" stroke="${x.col}" stroke-width="28" stroke-dasharray="${da} ${circ-da}" stroke-dashoffset="${-off}"/>`;off+=da;return el;}).join('');
+  document.getElementById('donutWrap').innerHTML=`<svg viewBox="0 0 220 220" width="200" height="200" style="transform:rotate(-90deg)">${paths}</svg><div class="dc3"><div class="dv2">${F(tc)}</div><div class="dl2">clientes totales</div></div>`;
+  document.getElementById('donutLegend').innerHTML=DDATA.map(x=>`<div class="di"><div class="dd" style="background:${x.col}"></div><span class="da">${x.lbl}</span><span class="dq">${F(x.val)}</span><span class="dp2" style="color:${x.col}">${(x.val/tc*100).toFixed(1)}%</span></div>`).join('');
+
+  // Tabla sucursales
+  document.getElementById('tbSuc').innerHTML=ss.map((s,i)=>`
+    <tr>
+      <td><div class="sn"><span class="sd" style="background:${COLS[i%COLS.length]}"></span>${s.nombre}</div></td>
+      <td class="nb">${F(s.total_act)}</td>
+      <td class="bo">${F(s.bloq_ops)}</td>
+      <td class="bo">${F(s.info_act_ops||0)}</td>
+      <td class="bo">${F(s.reg_completo||0)}</td>
+      <td class="bo">${F(s.verif_ops||0)}</td>
+      <td class="bk">${F(s.bloq_kyc)}</td>
+      <td class="bk">${F(s.info_act_kyc||0)}</td>
+      <td class="bk">${F(s.pend_kyc)}</td>
+      <td class="bk">${F(s.verif_kyc)}</td>
+      <td>${F(s.re_act)}</td>
+      <td>${D(s.delta)}</td>
+    </tr>`).join('')+`
+    <tr class="tr2">
+      <td>Total</td><td class="nb">${F(tc)}</td>
+      <td class="bo">${F(k.bloq_ops_act)}</td><td class="bo">${F(k.info_act_ops_act||0)}</td>
+      <td class="bo">${F(k.reg_completo_act||0)}</td><td class="bo">${F(k.verif_ops_act||0)}</td>
+      <td class="bk">${F(k.bloq_kyc_act)}</td><td class="bk">${F(k.info_act_kyc_act||0)}</td>
+      <td class="bk">${F(k.pend_kyc_act)}</td><td class="bk">${F(k.verif_kyc_act)}</td>
+      <td>${F(k.re_act)}</td><td>${D(k.delta_total)}</td>
+    </tr>`;
+
+  // Documentación
+  const docData=[
+    {lb:'Con Aviso de Privacidad',vl:(k.aviso_act/tc*100).toFixed(1),n:k.aviso_act,col:'#2E75B6',neg:false},
+    {lb:'Sin Aviso de Privacidad',vl:((tc-k.aviso_act)/tc*100).toFixed(1),n:tc-k.aviso_act,col:'#f97316',neg:true},
+    {lb:'Con Huella Digital',vl:(k.huella_act/tc*100).toFixed(1),n:k.huella_act,col:'#375623',neg:false},
+    {lb:'Sin Huella Digital',vl:((tc-k.huella_act)/tc*100).toFixed(1),n:tc-k.huella_act,col:'#7c3aed',neg:true},
+    {lb:'ID Vencida (≤ 31/12/2025)',vl:(k.id_venc_act/tc*100).toFixed(1),n:k.id_venc_act,col:'#dc2626',neg:true},
+  ];
+  document.getElementById('docGrid').innerHTML=docData.map(x=>`
+    <div class="dc">
+      <div class="dl">${x.lb}</div>
+      <div class="dv"${x.neg?' style="color:var(--neg)"':''}>${x.vl}%</div>
+      <div class="dc2">${F(x.n)} de ${F(tc)}</div>
+      <div class="pg"><div class="pb" style="width:${x.vl}%;background:${x.col}"></div></div>
+    </div>`).join('');
+
+  // Transiciones
+  const tr=d.top_transiciones||[];
+  const tc2=k.cambios_status;
+  document.getElementById('transCs').textContent=F(tc2)+' cambios · ordenado mayor a menor';
+  TRANS_LIST=tr;
+  document.getElementById('tbTrans').innerHTML=tr.map((t,i)=>`
+    <tr class="xr" data-i="${i}" onclick="abrirModal(${i})">
+      <td style="text-align:center;color:var(--muted);font-size:12px">${i+1}</td>
+      <td style="background:${CSTS[t._STATUS_ANT]||'#fff'}">${t._STATUS_ANT}</td>
+      <td>${t._STATUS_ACT}</td>
+      <td style="font-weight:600;text-align:right">${F(t.N)}</td>
+      <td style="text-align:right;color:var(--muted)">${(t.N/tc2*100).toFixed(1)}%</td>
+    </tr>`).join('')+`
+    <tr class="tr2"><td></td><td colspan="2">TOTAL CAMBIOS</td><td style="text-align:right">${F(tc2)}</td><td style="text-align:right">100.0%</td></tr>`;
+
+  // Reporte operaciones
+  const ro=d.reporte_operaciones;
+  if(ro){
+    const per=ro.fecha_inicio+' – '+ro.fecha_fin;
+    document.getElementById('opsPer').textContent=per;
+    document.getElementById('kycPer').textContent=per;
+    const sorted=[...ro.sucursales].sort((a,b)=>{const ia=ORDEN.indexOf(a.nombre),ib=ORDEN.indexOf(b.nombre);return(ia<0?99:ia)-(ib<0?99:ib);});
+    const tot={t:0,rc:0,vo:0,bo:0,ia:0,re:0,kb:0,ik:0,pk:0,vk:0,kt:0};
+    document.getElementById('tbOps').innerHTML=sorted.map(s=>{
+      const t=s.total||0,rc=s.reg_completo||0,vo=s.verif_ops||0,bo=s.bloq_ops||0,ia=s.info_act_ops||0,re=s.re||0;
+      tot.t+=t;tot.rc+=rc;tot.vo+=vo;tot.bo+=bo;tot.ia+=ia;tot.re+=re;
+      return `<tr><td>${s.nombre}</td><td class="nb">${F(t)}</td><td class="bo">${F(rc)}</td><td class="bo">${F(vo)}</td><td class="br">${F(bo)}</td><td class="bo">${F(ia)}</td><td class="by">${F(re)}</td></tr>`;
+    }).join('')+`<tr class="tr2"><td>Total</td><td class="nb">${F(tot.t)}</td><td class="bo">${F(tot.rc)}</td><td class="bo">${F(tot.vo)}</td><td class="br">${F(tot.bo)}</td><td class="bo">${F(tot.ia)}</td><td class="by">${F(tot.re)}</td></tr>`;
+    document.getElementById('tbKyc').innerHTML=sorted.map(s=>{
+      const kb=s.kyc_bloq||0,ik=s.kyc_info_act||0,pk=s.kyc_pend||0,vk=s.kyc_verif||0,kt=kb+ik+pk+vk;
+      tot.kb+=kb;tot.ik+=ik;tot.pk+=pk;tot.vk+=vk;tot.kt+=kt;
+      return `<tr><td>${s.nombre}</td><td class="nb">${F(kt)}</td><td class="br">${F(kb)}</td><td class="bk">${F(ik)}</td><td class="bo">${F(pk)}</td><td class="bk">${F(vk)}</td></tr>`;
+    }).join('')+`<tr class="tr2"><td>Total</td><td class="nb">${F(tot.kt)}</td><td class="br">${F(tot.kb)}</td><td class="bk">${F(tot.ik)}</td><td class="bo">${F(tot.pk)}</td><td class="bk">${F(tot.vk)}</td></tr>`;
+
+    // Gráfica barras
+    const labChart=[...ro.sucursales].sort((a,b)=>(b.total||0)-(a.total||0));
+    if(opsChartInst){opsChartInst.destroy();opsChartInst=null;}
+    opsChartInst=new Chart(document.getElementById('opsChart'),{
+      type:'bar',
+      data:{labels:labChart.map(s=>s.nombre),datasets:[
+        {label:'Reg. Completo',data:labChart.map(s=>s.reg_completo||0),backgroundColor:'#1F3864'},
+        {label:'Verif. Ops',data:labChart.map(s=>s.verif_ops||0),backgroundColor:'#2E75B6'},
+        {label:'Bloq. Ops',data:labChart.map(s=>s.bloq_ops||0),backgroundColor:'#C00000'},
+        {label:'Info Act.',data:labChart.map(s=>s.info_act_ops||0),backgroundColor:'#70AD47'},
+        {label:'Reg. Express',data:labChart.map(s=>s.re||0),backgroundColor:'#FFC000'},
+      ]},
+      options:{indexAxis:'y',responsive:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{footer:i=>'Total: '+F(labChart[i[0].dataIndex].total||0),label:i=>' '+i.dataset.label+': '+F(i.raw)}}},
+        scales:{x:{stacked:true,ticks:{callback:v=>v>=1000?(v/1000).toFixed(1)+'k':v,color:'#888780',font:{size:11}}},y:{stacked:true,grid:{display:false},ticks:{color:'#444441',font:{size:12}}}}}
+    });
+  }
+}
+
+// ── Modal ────────────────────────────────────────────────────
+function abrirModal(idx){
+  const t=TRANS_LIST[idx];
+  if(!t) return;
+  const filtrados=DETALLE.filter(c=>c.ant===t._STATUS_ANT&&c.act===t._STATUS_ACT);
+  document.getElementById('mTit').textContent=t._STATUS_ANT+' → '+t._STATUS_ACT;
+  document.getElementById('mSub').textContent=F(filtrados.length)+' cliente(s)';
+  document.getElementById('mFoot').textContent=F(filtrados.length)+' registros';
+  document.getElementById('mBody').innerHTML=filtrados.length
+    ? filtrados.map(c=>`<tr><td>${c.sucursal}</td><td style="font-family:'DM Mono',monospace;font-size:12px">${c.id}</td></tr>`).join('')
+    : '<tr><td colspan="2" style="text-align:center;color:var(--muted)">Vuelve a correr el script para ver el detalle</td></tr>';
+  document.getElementById('modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function cerrar(){document.getElementById('modal').classList.remove('on');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrar();});
+
+// ── Inicio ───────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  // Cargar usuarios
+  fetch('usuarios.json?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(u=>{USUARIOS=u;}).catch(()=>{});
+  // Verificar sesión
+  const s=sessionStorage.getItem('pld');
+  if(s){
+    const u=JSON.parse(s);
+    mostrarApp(u.n);
+  }
+  // Si no hay sesión el login ya está visible
+});
 </script>
+
+<div class="panel-overlay" id="panelOverlay" onclick="cerrarPanel()"></div>
+<div class="panel" id="panel">
+  <div class="panel-head">
+    <div>
+      <h3>Resumen ejecutivo</h3>
+      <span id="panelSubtitle"></span>
+    </div>
+    <button class="panel-close" onclick="cerrarPanel()">✕</button>
+  </div>
+  <div class="panel-body" id="panelBody">
+    <p style="color:var(--color-text-secondary);font-size:13px">Cargando...</p>
+  </div>
+</div>
+
 </body>
 </html>
