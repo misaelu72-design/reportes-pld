@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Inicio — CECOM PLD</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--azul);color:#fff;padding:0 2rem;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px}
+.li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
+.hr{display:flex;align-items:center;gap:12px}
+.un{font-size:12px;opacity:.8}
+.lo{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:4px 14px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.lo:hover{background:rgba(255,255,255,.2)}
+
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem}
+
+.welcome{text-align:center;margin-bottom:3rem}
+.welcome-sub{font-size:13px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+.welcome-title{font-size:28px;font-weight:600;color:var(--azul);letter-spacing:-.5px}
+.welcome-name{color:var(--naranja)}
+
+.modules{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:780px}
+
+.module{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.module:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(31,56,100,.12);border-color:var(--azul2)}
+.module-accent{position:absolute;top:0;left:0;right:0;height:4px}
+.module-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:1.25rem}
+.module-title{font-size:18px;font-weight:600;margin-bottom:6px;color:var(--texto)}
+.module-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1.25rem}
+.module-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.module-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--azul2)}
+.module-cta span{font-size:16px;transition:transform .2s}
+.module:hover .module-cta span{transform:translateX(4px)}
+
+.mod-pld .module-accent{background:var(--azul)}
+.mod-pld .module-icon{background:#EEF3FB;color:var(--azul)}
+.mod-pld .tag{background:#EEF3FB;color:#185FA5}
+
+.mod-xml .module-accent{background:var(--naranja)}
+.mod-xml .module-icon{background:#FFF3E8;color:var(--naranja)}
+.mod-xml .tag{background:#FFF3E8;color:#E26B0A}
+
+footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--muted)}
+
+@media(max-width:600px){.modules{grid-template-columns:1fr}.welcome-title{font-size:22px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="logo">
+      <div class="li">C</div>
+      <div>
+        <div class="lt">CECOM — Sistema PLD</div>
+        <div class="ls">Prevención de Lavado de Dinero</div>
+      </div>
+    </div>
+    <div class="hr">
+      <span class="un" id="nombre-usuario"></span>
+      <button class="lo" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="welcome">
+    <div class="welcome-sub">Bienvenido de vuelta</div>
+    <div class="welcome-title">Hola, <span class="welcome-name" id="saludo-nombre">—</span></div>
+  </div>
+
+  <div class="modules">
+
+    <a href="dashboard.html" class="module mod-pld">
+      <div class="module-accent"></div>
+      <div class="module-icon">📊</div>
+      <div class="module-title">Reportes PLD</div>
+      <div class="module-desc">Consulta el estatus de clientes, distribución por sucursal, verificaciones y bloqueos en las 9 sucursales de CECOM.</div>
+      <div class="module-tags">
+        <span class="tag">9 sucursales</span>
+        <span class="tag">KPIs globales</span>
+        <span class="tag">Comparativo por corte</span>
+      </div>
+      <div class="module-cta">Ir a reportes <span>→</span></div>
+    </a>
+
+    <a href="generador.html" class="module mod-xml">
+      <div class="module-accent"></div>
+      <div class="module-icon">📄</div>
+      <div class="module-title">Generador XML JYS</div>
+      <div class="module-desc">Genera los archivos XML para reportar avisos mensuales y semestrales a la UIF/SHCP a partir de los reportes PLD de cada sucursal.</div>
+      <div class="module-tags">
+        <span class="tag">Mensual</span>
+        <span class="tag">Semestral</span>
+        <span class="tag">Formato UIF</span>
+      </div>
+      <div class="module-cta">Ir al generador <span>→</span></div>
+    </a>
+
+  </div>
+</main>
+
+<footer>CECOM · Sistema PLD · <span id="fecha-footer"></span></footer>
+
+<script>
+const s = sessionStorage.getItem('pld');
+if(!s){
+  window.location.href = 'index.html';
+} else {
+  const user = JSON.parse(s);
+  const nombre = user.n || user.u || '';
+  const firstName = nombre.split(' ')[0];
+  document.getElementById('saludo-nombre').textContent = firstName;
+  document.getElementById('nombre-usuario').textContent = nombre;
+  document.getElementById('fecha-footer').textContent = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+}
+
+function cerrarSesion(){
+  sessionStorage.removeItem('pld');
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
