@@ -1,5 +1,15 @@
 [
   {
+    "etiqueta": "26-Abr vs 21-Jun",
+    "archivo": "datos/26-Abr_vs_21-Jun.json",
+    "generado": "22/06/2026 10:04"
+  },
+  {
+    "etiqueta": "14-Jun vs 21-Jun",
+    "archivo": "datos/14-Jun_vs_21-Jun.json",
+    "generado": "22/06/2026 10:01"
+  },
+  {
     "etiqueta": "26-Abr vs 14-Jun",
     "archivo": "datos/26-Abr_vs_14-Jun.json",
     "generado": "15/06/2026 09:34"
