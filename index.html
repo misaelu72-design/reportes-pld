@@ -640,11 +640,32 @@ async function cargarTendencias(cortesData) {
   );
   if (datosFiltrados.length < 2) return;
 
-  const labels   = datosFiltrados.map(x => x.etiqueta.split(' vs ')[1] || x.etiqueta);
-  const totales  = datosFiltrados.map(x => x.d.kpis.total_act);
-  const verif    = datosFiltrados.map(x => x.d.kpis.verif_kyc_act);
-  const bloq     = datosFiltrados.map(x => x.d.kpis.bloq_kyc_act);
-  const pend     = datosFiltrados.map(x => x.d.kpis.pend_kyc_act);
+  // Ordenar cronológicamente por fecha actual del corte
+  const mesesOrd = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12,
+                    Abr:4,Ene:1,Dic:12};
+  function fechaNum(etiq) {
+    const fc = etiq.split(' vs ')[1] || etiq;
+    const m = fc.match(/(\d{1,2})-([A-Za-z]{2,3})/);
+    if (!m) return 0;
+    return (mesesOrd[m[2]] || 0) * 100 + parseInt(m[1]);
+  }
+  datosFiltrados.sort((a, b) => fechaNum(a.etiqueta) - fechaNum(b.etiqueta));
+
+  // Quitar duplicados por fecha actual
+  const vistos = new Set();
+  const datosSinDup = datosFiltrados.filter(x => {
+    const fc = (x.etiqueta.split(' vs ')[1] || x.etiqueta).trim();
+    if (vistos.has(fc)) return false;
+    vistos.add(fc);
+    return true;
+  });
+  if (datosSinDup.length < 2) return;
+
+  const labels   = datosSinDup.map(x => x.etiqueta.split(' vs ')[1] || x.etiqueta);
+  const totales  = datosSinDup.map(x => x.d.kpis.total_act);
+  const verif    = datosSinDup.map(x => x.d.kpis.verif_kyc_act);
+  const bloq     = datosSinDup.map(x => x.d.kpis.bloq_kyc_act);
+  const pend     = datosSinDup.map(x => x.d.kpis.pend_kyc_act);
 
   const gridColor = 'rgba(0,0,0,0.06)';
   const tickColor = '#888780';
