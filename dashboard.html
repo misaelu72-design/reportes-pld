@@ -131,7 +131,6 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
       <span class="cb" id="hCorte">—</span>
       <span class="ub" id="hUpd"></span>
       <span class="un" id="hUser"></span>
-      <a href="home.html" class="lo" style="text-decoration:none">← Inicio</a>
       <button class="btn-panel" id="btnPanel" onclick="abrirPanel()" style="display:none">⭐ Resumen</button>
       <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
     </div>
@@ -251,6 +250,10 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
         <span style="font-size:16px">📊</span>
         <div><div style="font-weight:500" id="dlReporteNombre">Reporte PLD Todas Sucursales</div><div style="font-size:11px;color:var(--muted)">Excel · reporte consolidado</div></div>
       </a>
+      <a id="dlBase" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">👥</span>
+        <div><div style="font-weight:500" id="dlBaseNombre">Base Unificada</div><div style="font-size:11px;color:var(--muted)">Excel · todos los clientes</div></div>
+      </a>
     </div>
   </div>
 
@@ -288,7 +291,25 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
   </div>
 </div>
 
-
+<!-- Login -->
+<div class="lo2 on" id="login">
+  <div class="lb">
+    <div class="ll">
+      <div class="li2">C</div>
+      <div><div class="lt2">CECOM — PLD</div><div class="ls2">Portal de Reportes</div></div>
+    </div>
+    <div class="lerr" id="lerr">Usuario o contraseña incorrectos</div>
+    <div class="lf">
+      <label class="llab">Usuario</label>
+      <input class="lin" id="lu" type="text" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div class="lf">
+      <label class="llab">Contraseña</label>
+      <input class="lin" id="lp" type="password" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button class="lbtn" onclick="login()">Iniciar sesión</button>
+  </div>
+</div>
 
 <script>
 // ── Utilidades ──────────────────────────────────────────────
@@ -306,12 +327,47 @@ let USUARIOS = [];
 let TRANS_LIST = [];
 let opsChartInst = null;
 
-
+// ── Login ────────────────────────────────────────────────────
+async function sha256(m){
+  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function login(){
+  const u=document.getElementById('lu').value.trim().toLowerCase();
+  const p=document.getElementById('lp').value;
+  const err=document.getElementById('lerr');
+  if(!u||!p){err.style.display='block';return;}
+  // Intentar cargar usuarios desde archivo si no están cargados
+  if(!USUARIOS.length){
+    try{
+      const r=await fetch('usuarios.json?v='+Date.now());
+      if(r.ok) USUARIOS=await r.json();
+    }catch(e){}
+  }
+  const h=await sha256(p);
+  const found=USUARIOS.find(x=>x.u===u&&x.h===h);
+  if(found){
+    sessionStorage.setItem('pld',JSON.stringify({u:found.u,n:found.n}));
+    err.style.display='none';
+    window.location.href='home.html';
+  }else{
+    err.style.display='block';
+    document.getElementById('lp').value='';
+    document.getElementById('lp').focus();
+  }
+}
 function logout(){
   sessionStorage.removeItem('pld');
-  window.location.href='login.html';
+  document.getElementById('login').classList.add('on');
+  document.getElementById('main').style.display='none';
+  document.getElementById('hUser').textContent='';
+  document.getElementById('hLogout').style.display='none';
+  document.getElementById('btnPanel').style.display='none';
+  document.getElementById('lu').value='';
+  document.getElementById('lp').value='';
 }
 function mostrarApp(nombre){
+  document.getElementById('login').classList.remove('on');
   document.getElementById('hUser').textContent=nombre;
   document.getElementById('hLogout').style.display='inline-block';
   document.getElementById('btnPanel').style.display='flex';
@@ -577,11 +633,39 @@ async function cargarTendencias(cortesData) {
   }
   if (datos.length < 2) return;
 
-  const labels   = datos.map(x => x.etiqueta);
-  const totales  = datos.map(x => x.d.kpis.total_act);
-  const verif    = datos.map(x => x.d.kpis.verif_kyc_act);
-  const bloq     = datos.map(x => x.d.kpis.bloq_kyc_act);
-  const pend     = datos.map(x => x.d.kpis.pend_kyc_act);
+  // Filtrar cortes del 26-Abr — solo mostrar comparativas semanales
+  const datosFiltrados = datos.filter(x =>
+    !x.etiqueta.startsWith('26-Abr') &&
+    !x.etiqueta.startsWith('26 de')
+  );
+  if (datosFiltrados.length < 2) return;
+
+  // Ordenar cronológicamente por fecha actual del corte
+  const mesesOrd = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12,
+                    Abr:4,Ene:1,Dic:12};
+  function fechaNum(etiq) {
+    const fc = etiq.split(' vs ')[1] || etiq;
+    const m = fc.match(/(\d{1,2})-([A-Za-z]{2,3})/);
+    if (!m) return 0;
+    return (mesesOrd[m[2]] || 0) * 100 + parseInt(m[1]);
+  }
+  datosFiltrados.sort((a, b) => fechaNum(a.etiqueta) - fechaNum(b.etiqueta));
+
+  // Quitar duplicados por etiqueta completa
+  const vistos = new Set();
+  const datosSinDup = datosFiltrados.filter(x => {
+    if (vistos.has(x.etiqueta)) return false;
+    vistos.add(x.etiqueta);
+    return true;
+  });
+  if (datosSinDup.length < 2) return;
+
+  // Labels: mostrar solo la fecha anterior de cada corte (ej. "30-May vs 07-Jun" → "30-May")
+  const labels = datosSinDup.map(x => x.etiqueta.split(' vs ')[0] || x.etiqueta);
+  const totales  = datosSinDup.map(x => x.d.kpis.total_act);
+  const verif    = datosSinDup.map(x => x.d.kpis.verif_kyc_act);
+  const bloq     = datosSinDup.map(x => x.d.kpis.bloq_kyc_act);
+  const pend     = datosSinDup.map(x => x.d.kpis.pend_kyc_act);
 
   const gridColor = 'rgba(0,0,0,0.06)';
   const tickColor = '#888780';
@@ -880,13 +964,16 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrar();});
 
 // ── Inicio ───────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded',()=>{
+  // Cargar usuarios
+  fetch('usuarios.json?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(u=>{USUARIOS=u;}).catch(()=>{});
+  // Verificar sesión
   const s=sessionStorage.getItem('pld');
-  if(!s){
-    window.location.href='login.html';
-    return;
+  if(!s){ window.location.href='index.html'; }
+  if(s){
+    const u=JSON.parse(s);
+    mostrarApp(u.n);
   }
-  const u=JSON.parse(s);
-  mostrarApp(u.n);
+  // Si no hay sesión el login ya está visible
 });
 </script>
 
