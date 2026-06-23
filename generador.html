@@ -445,9 +445,9 @@ async function procesarArchivo(){
           rows.push({...rn,'TOTAL GENERAL':rn['TOTAL GENERAL']||0,_tipo:'RETIRO',_tipoReporte:tipoRep,_tel:tels[curp]||''});
         });
       } else if(tieneAcum){
-        // Semestral acumulativo — solo Depositos Acumulado (retiros excluidos per REQ)
-        ['Depositos Acumulado'].forEach(hoja=>{
-          const t = 'DEPOSITO';
+        // Semestral acumulativo — Depositos y Retiros Acumulado
+        ['Depositos Acumulado','Retiros Acumulado'].forEach(hoja=>{
+          const t = hoja.toLowerCase().includes('retiro') ? 'RETIRO' : 'DEPOSITO';
           const d = sheetToArr(wb, hoja);
           if(!d) return;
           d.forEach(r=>{
@@ -490,9 +490,9 @@ async function procesarArchivo(){
       }
 
     } else if(esFormatoAcum){
-      // ── FORMATO ACUMULATIVO: solo Depositos Acumulado (retiros excluidos)
-      ['Depositos Acumulado'].forEach(hoja=>{
-        const t = 'DEPOSITO';
+      // ── FORMATO ACUMULATIVO: Depositos y Retiros Acumulado
+      ['Depositos Acumulado','Retiros Acumulado'].forEach(hoja=>{
+        const t = hoja.toLowerCase().includes('retiro') ? 'RETIRO' : 'DEPOSITO';
         if(!wb.SheetNames.includes(hoja)) return;
         const ws = wb.Sheets[hoja];
         // Header está en fila 3 (index 2) — leer como array y buscar header
