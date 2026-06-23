@@ -364,6 +364,7 @@ async function procesarArchivo(){
     // Formato C es el estándar para todas las sucursales
     // Formato A solo para el archivo especial que prepara Nydia (Mitras)
     const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
+    const esFormatoAcum = wb.SheetNames.some(h=>h.toLowerCase().includes('depositos acumulado')||h.toLowerCase().includes('depósitos acumulado'));
     const esFormatoC = wb.SheetNames.some(h=>h.toLowerCase().includes('reporte de umas'));
 
     if(esFormatoC){
@@ -487,6 +488,47 @@ async function procesarArchivo(){
           r.CONSECUTIVO=mapFolio[key];
         });
       }
+
+    } else if(esFormatoAcum){
+      // ── FORMATO ACUMULATIVO (Nydia): hojas Depositos/Retiros Acumulado ─
+      ['Depositos Acumulado','Retiros Acumulado'].forEach(hoja=>{
+        const t = hoja.toLowerCase().includes('retiro') ? 'RETIRO' : 'DEPOSITO';
+        const d = sheetToArr(wb, hoja);
+        if(!d) return;
+        d.forEach(r=>{
+          const monto = parseFloat(String(r['Acumulado 6 meses']||r['Total General']||0).replace(/[$,]/g,''))||0;
+          const tel = limpiarTel(r['Telefono']||'');
+          const curp = String(r['CURP']||'').trim().toUpperCase();
+          rows.push({
+            'Nombre':           String(r['Nombre']||''),
+            'Apellido Paterno': String(r['Apellido Paterno']||''),
+            'Apellido Materno': String(r['Apellido Materno']||''),
+            'Fecha Nacimiento': r['Fecha Nacimiento']||'',
+            'CURP':             curp,
+            'Clave Pais':       String(r['Clave Pais']||r['Clave Pais Nac.']||'MEX'),
+            'PLD Ocupacion':    String(r['PLD Ocupacion']||''),
+            'PLD Codigo Ocupacion': String(r['PLD Codigo Ocupacion']||'1000000'),
+            'PLD C.P.':         String(r['PLD C.P.']||r['C.P.']||''),
+            'PLD Colonia':      String(r['PLD Colonia']||r['Colonia']||''),
+            'Calle':            String(r['Calle']||''),
+            'No Exterior':      String(r['No Exterior']||''),
+            'No Interior':      String(r['No Interior']||''),
+            'Fecha Hora Ultima Trans': r['Fecha Hora Ultima Trans']||'',
+            'TOTAL GENERAL':    monto,
+            'EFECTIVO':         '1',
+            'MONEDA':           '1',
+            _tipo:              t,
+            _tipoReporte:       tipoRep,
+            _tel:               tel,
+          });
+        });
+      });
+      let ci2=1; const mapFolio2={};
+      rows.forEach(r=>{
+        const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
+        if(!mapFolio2[key])mapFolio2[key]=STATE.prefijo+String(ci2++).padStart(4,'0');
+        r.CONSECUTIVO=mapFolio2[key];
+      });
 
     } else {
       errEl.textContent='⚠️ Formato de archivo no reconocido. Usa el archivo "UmasAlcanzadas[Sucursal]_YYYY-MM-DD_YYYY-MM-DD.xlsx"';
