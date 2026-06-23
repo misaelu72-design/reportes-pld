@@ -11,29 +11,13 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
 header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
-.hi{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.hi{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
 .logo{display:flex;align-items:center;gap:12px}
 .li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
 .lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
-.back{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.layout{max-width:1300px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}
-.sidebar{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:sticky;top:84px}
-.sb-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
-.sb-title{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.sb-item{padding:.75rem 1.25rem;cursor:pointer;border-left:3px solid transparent;transition:all .15s;display:flex;align-items:center;justify-content:space-between}
-.sb-item:hover{background:#f9fafb}
-.sb-item.active{border-left-color:var(--naranja);background:#fff5ec}
-.sb-name{font-size:13px;font-weight:500}
-.sb-prefix{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
-.sb-item.active .sb-name{color:var(--naranja)}
-.sb-item.active .sb-prefix{color:var(--naranja);opacity:.7}
-.sb-soon{padding:.75rem 1.25rem;display:flex;align-items:center;gap:8px;opacity:.4}
-.sb-soon .sb-name{font-size:13px}
-.sb-footer{padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
-.main-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.main-title{font-size:20px;font-weight:600;color:var(--azul)}
-.main-sub{font-size:12px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
-.steps{display:flex;align-items:center;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.back{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.layout{max-width:900px;margin:0 auto;padding:2rem}
+.steps{display:flex;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .step{flex:1;padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-right:1px solid var(--border)}
 .step:last-child{border-right:none}
 .step-num{width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:var(--muted);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -45,6 +29,19 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .card-head h3{font-size:14px;font-weight:600}
 .card-body{padding:1.25rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.field select,.field input{padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;background:#fff;color:var(--texto)}
+.field select:focus,.field input:focus{border-color:var(--azul2)}
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tipo-card{border:2px solid var(--border);border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .15s}
+.tipo-card:hover{border-color:var(--azul2)}
+.tipo-card.selected{border-color:var(--naranja);background:#fff5ec}
+.tipo-card .tipo-title{font-size:14px;font-weight:500;margin-bottom:4px}
+.tipo-card.selected .tipo-title{color:var(--naranja)}
+.tipo-card .tipo-desc{font-size:12px;color:var(--muted)}
 .upload-zone{border:2px dashed var(--azul2);border-radius:10px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .15s;background:#f8fbff}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--naranja);background:#fff5ec}
 .upload-zone input[type=file]{display:none}
@@ -52,12 +49,6 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .upload-title{font-size:14px;font-weight:500;color:var(--azul);margin-bottom:4px}
 .upload-sub{font-size:12px;color:var(--muted)}
 .upload-done{border-color:var(--verde);background:#f0fdf4}
-.file-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.config-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
-.field{display:flex;flex-direction:column;gap:4px}
-.field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
-.field input{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;background:#fff}
-.field input:focus{border-color:var(--azul2)}
 .btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;transition:opacity .15s}
 .btn:hover{opacity:.85}
 .btn-primary{background:var(--azul);color:#fff}
@@ -65,11 +56,15 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .btn-outline{background:#fff;color:var(--azul);border:1.5px solid var(--azul2)}
 .btn-green{background:var(--verde);color:#fff}
 .btn-sm{padding:6px 14px;font-size:12px}
+.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
+.alert-err{background:#fee2e2;color:var(--neg);border:1px solid #fca5a5}
+.hidden{display:none}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;position:relative;overflow:hidden}
 .kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
 .kpi-label{font-size:11px;color:var(--muted);margin-bottom:6px}
-.kpi-val{font-size:24px;font-weight:600;letter-spacing:-1px;color:var(--texto)}
+.kpi-val{font-size:22px;font-weight:600;letter-spacing:-1px}
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
 thead th{background:#f9fafb;padding:9px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
@@ -81,15 +76,6 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
 .b-dep{background:#dbeafe;color:#1e40af}
 .b-ret{background:#fce7f3;color:#9d174d}
-.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
-.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
-.alert-err{background:#fee2e2;color:var(--neg);border:1px solid #fca5a5}
-.hidden{display:none}
-.section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:1.5rem 0 .75rem}
-.xml-list{display:flex;flex-direction:column;gap:8px}
-.xml-item{background:#f8fbff;border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between}
-.xml-name{font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--azul)}
-.xml-meta{font-size:11px;color:var(--muted);margin-top:2px}
 .val-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
 .val-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .val-head h3{font-size:14px;font-weight:600}
@@ -111,9 +97,14 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 .vs-label{font-size:11px;color:var(--muted);margin-top:2px}
 .val-blocked{background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--neg);margin-top:12px;display:none}
 .val-ok-msg{background:var(--pos-bg);border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--pos);margin-top:12px;display:none}
+.xml-list{display:flex;flex-direction:column;gap:8px}
+.xml-item{background:#f8fbff;border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.xml-name{font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:var(--azul)}
+.xml-meta{font-size:11px;color:var(--muted);margin-top:2px}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:static}.config-grid{grid-template-columns:1fr 1fr}.kpi-row{grid-template-columns:1fr 1fr}.file-grid{grid-template-columns:1fr}}
+.section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:1rem 0 .75rem}
+@media(max-width:700px){.form-grid,.form-grid-3,.tipo-grid,.kpi-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -123,161 +114,137 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       <div class="li">C</div>
       <div><div class="lt">Generador XML JYS</div><div class="ls">CECOM — Prevención de Lavado de Dinero</div></div>
     </div>
-    <a href="index.html" class="back">← Volver al dashboard</a>
+    <a href="index.html" class="back">← Volver al inicio</a>
   </div>
 </header>
 
 <div class="layout">
-  <div class="sidebar">
-    <div class="sb-head"><div class="sb-title">Sucursales</div></div>
-    <div class="sb-item active" onclick="selSuc('MITRAS','MTY','64320','A')" id="suc-MITRAS">
-      <div><div class="sb-name">Mitras</div><div class="sb-prefix">MTY · Monterrey</div></div>
-    </div>
-    <div class="sb-item" onclick="selSuc('GUADALUPE','GDL','45900','B')" id="suc-GUADALUPE">
-      <div><div class="sb-name">Guadalupe</div><div class="sb-prefix">GDL · Guadalupe</div></div>
-    </div>
-    <div class="sb-soon"><div><div class="sb-name">Ajijic</div><div class="sb-prefix">AJI · próximamente</div></div></div>
-    <div class="sb-soon"><div><div class="sb-name">Allende</div><div class="sb-prefix">ALL · próximamente</div></div></div>
-    <div class="sb-soon"><div><div class="sb-name">Irapuato</div><div class="sb-prefix">IRP · próximamente</div></div></div>
-    <div class="sb-soon"><div><div class="sb-name">Sendero</div><div class="sb-prefix">SND · próximamente</div></div></div>
-    <div class="sb-soon"><div><div class="sb-name">Satélite</div><div class="sb-prefix">SAT · próximamente</div></div></div>
-    <div class="sb-soon"><div><div class="sb-name">Neza</div><div class="sb-prefix">NEZ · próximamente</div></div></div>
-    <div class="sb-soon"><div><div class="sb-name">Esmeralda</div><div class="sb-prefix">ESM · próximamente</div></div></div>
-    <div class="sb-footer">9 sucursales · 2 activas</div>
+  <div class="steps">
+    <div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">Configurar</div></div>
+    <div class="step" id="step2"><div class="step-num">2</div><div class="step-label">Revisar resumen</div></div>
+    <div class="step" id="step3"><div class="step-num">3</div><div class="step-label">Descargar XML</div></div>
   </div>
 
-  <div class="main">
-    <div class="main-head">
-      <div>
-        <div class="main-title" id="suc-title">Mitras — Monterrey</div>
-        <div class="main-sub" id="suc-meta">Prefijo MTY · CP 64320 · Formato A</div>
-      </div>
-    </div>
+  <!-- PASO 1 -->
+  <div id="panel-config">
+    <div class="card">
+      <div class="card-head"><h3>Configuración del reporte</h3></div>
+      <div class="card-body">
+        <div id="alert-config" class="alert alert-err"></div>
 
-    <div class="steps">
-      <div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">Subir archivo</div></div>
-      <div class="step" id="step2"><div class="step-num">2</div><div class="step-label">Revisar resumen</div></div>
-      <div class="step" id="step3"><div class="step-num">3</div><div class="step-label">Descargar XML</div></div>
-    </div>
-
-    <!-- PASO 1 -->
-    <div id="panel-upload">
-      <div class="card">
-        <div class="card-head">
-          <h3 id="upload-title">Archivo de reporte — Mitras</h3>
-          <span id="upload-format-badge" style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace">Formato A · .xlsm</span>
+        <div class="form-grid">
+          <div class="field">
+            <label>Sucursal</label>
+            <select id="cfg-sucursal" onchange="onSucursalChange()">
+              <option value="">— Selecciona una sucursal —</option>
+              <option value="MTY|64320|MTY">Mitras — Monterrey (MTY)</option>
+              <option value="GDL|45900|GDL">Guadalupe (GDL)</option>
+              <option value="AJI|00000|AJI">Ajijic (AJI)</option>
+              <option value="ALL|00000|ALL">Allende (ALL)</option>
+              <option value="IRP|00000|IRP">Irapuato (IRP)</option>
+              <option value="SND|00000|SND">Sendero (SND)</option>
+              <option value="SAT|00000|SAT">Satélite (SAT)</option>
+              <option value="NEZ|00000|NEZ">Neza (NEZ)</option>
+              <option value="ESM|00000|ESM">Esmeralda (ESM)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Mes reportado</label>
+            <input type="text" id="cfg-mes" value="202605" placeholder="YYYYMM" maxlength="6">
+          </div>
         </div>
-        <div class="card-body">
-          <div id="alert-upload" class="alert alert-err"></div>
-          <div id="upload-A">
-            <div class="upload-zone" id="zone-A" onclick="document.getElementById('file-A').click()" ondragover="dragOver(event,'zone-A')" ondragleave="dragLeave('zone-A')" ondrop="dropFile(event,'file-A','zone-A')">
-              <input type="file" id="file-A" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('A',this)">
-              <div class="upload-icon" id="icon-A">📂</div>
-              <div class="upload-title" id="title-A">Arrastra el archivo aquí o haz clic para seleccionar</div>
-              <div class="upload-sub">MTY_-_PLD_Reporte_Final_MAYO_2026.xlsm</div>
-            </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>RFC del sujeto obligado</label>
+            <input type="text" id="cfg-rfc" value="CDM060904UF3" maxlength="13">
           </div>
-          <div id="upload-B" class="hidden">
-            <div class="file-grid">
-              <div>
-                <div style="font-size:12px;font-weight:500;color:var(--azul);margin-bottom:8px">Reporte mensual</div>
-                <div class="upload-zone" id="zone-B1" onclick="document.getElementById('file-B1').click()" ondragover="dragOver(event,'zone-B1')" ondragleave="dragLeave('zone-B1')" ondrop="dropFile(event,'file-B1','zone-B1')">
-                  <input type="file" id="file-B1" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('B1',this)">
-                  <div class="upload-icon" id="icon-B1">📂</div>
-                  <div class="upload-title" id="title-B1">Seleccionar archivo</div>
-                  <div class="upload-sub">PLD_Reporte_Mensual_...xlsx</div>
-                </div>
-              </div>
-              <div>
-                <div style="font-size:12px;font-weight:500;color:var(--azul);margin-bottom:8px">Reporte acumulativo (semestral)</div>
-                <div class="upload-zone" id="zone-B2" onclick="document.getElementById('file-B2').click()" ondragover="dragOver(event,'zone-B2')" ondragleave="dragLeave('zone-B2')" ondrop="dropFile(event,'file-B2','zone-B2')">
-                  <input type="file" id="file-B2" accept=".xlsx,.xlsm,.xls" onchange="fileSelected('B2',this)">
-                  <div class="upload-icon" id="icon-B2">📂</div>
-                  <div class="upload-title" id="title-B2">Seleccionar archivo</div>
-                  <div class="upload-sub">PLD_Reporte_Acumulativo_...xlsx</div>
-                </div>
-              </div>
-            </div>
+          <div class="field">
+            <label>CP de la sucursal</label>
+            <input type="text" id="cfg-cp" value="" placeholder="5 dígitos" maxlength="5">
           </div>
-          <div style="margin-top:1rem">
-            <div class="section-label">Configuración del reporte</div>
-            <div class="config-grid">
-              <div class="field"><label>Mes reportado</label><input type="text" id="cfg-mes" value="202605" maxlength="6"></div>
-              <div class="field"><label>RFC del sujeto obligado</label><input type="text" id="cfg-rfc" value="CDM060904UF3" maxlength="13"></div>
-              <div class="field"><label>CP de la sucursal</label><input type="text" id="cfg-cp" value="64320" maxlength="5"></div>
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" onclick="procesarArchivos()">
-                <span id="btn-procesar-text">Procesar y ver resumen</span>
-                <span id="btn-procesar-spin" class="hidden"><span class="spinner"></span></span>
-              </button>
-            </div>
+        </div>
+
+        <div class="section-label">Tipo de reporte</div>
+        <div class="tipo-grid">
+          <div class="tipo-card selected" id="tipo-mensual" onclick="selTipo('MENSUAL')">
+            <div class="tipo-title">📅 Mensual</div>
+            <div class="tipo-desc">Clientes que superaron el umbral en el mes actual</div>
           </div>
+          <div class="tipo-card" id="tipo-semestral" onclick="selTipo('SEMESTRAL')">
+            <div class="tipo-title">📆 Semestral</div>
+            <div class="tipo-desc">Clientes que superaron el umbral acumulando 6 meses</div>
+          </div>
+        </div>
+
+        <div class="section-label">Archivo Excel</div>
+        <div class="upload-zone" id="zone-main" onclick="document.getElementById('file-main').click()" ondragover="dragOver(event)" ondragleave="dragLeave()" ondrop="dropFile(event)">
+          <input type="file" id="file-main" accept=".xlsx,.xlsm,.xls" onchange="fileSelected(this)">
+          <div class="upload-icon" id="upload-icon">📂</div>
+          <div class="upload-title" id="upload-title">Arrastra el archivo aquí o haz clic para seleccionar</div>
+          <div class="upload-sub" id="upload-sub">Acepta .xlsx y .xlsm</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" onclick="procesarArchivo()">
+            <span id="btn-procesar-text">Procesar y ver resumen</span>
+            <span id="btn-procesar-spin" class="hidden"><span class="spinner"></span></span>
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- PASO 2 -->
-    <div id="panel-resumen" class="hidden">
-      <div id="alert-resumen" class="alert alert-err"></div>
-      <div class="kpi-row" id="kpi-row"></div>
-      <div class="card">
-        <div class="card-head"><h3>Vista previa de avisos</h3></div>
-        <div class="card-body" style="padding:0">
-          <div class="tw">
-            <table>
-              <thead>
-                <tr>
-                  <th>Folio</th><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th>
-                  <th>CURP</th><th>Tipo</th><th>Monto</th><th>Fecha op.</th>
-                </tr>
-              </thead>
-              <tbody id="tabla-resumen"></tbody>
-            </table>
-          </div>
-          <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)" id="tabla-footer"></div>
+  <!-- PASO 2 -->
+  <div id="panel-resumen" class="hidden">
+    <div id="alert-resumen" class="alert alert-err"></div>
+    <div class="kpi-row" id="kpi-row"></div>
+    <div class="card">
+      <div class="card-head"><h3>Vista previa de avisos</h3><span id="resumen-badge" style="font-size:11px;color:var(--muted)"></span></div>
+      <div class="card-body" style="padding:0">
+        <div class="tw">
+          <table>
+            <thead>
+              <tr><th>Folio</th><th>Nombre</th><th>Apellido paterno</th><th>Apellido materno</th><th>CURP</th><th>Tipo</th><th>Monto</th><th>Fecha op.</th></tr>
+            </thead>
+            <tbody id="tabla-resumen"></tbody>
+          </table>
         </div>
+        <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)" id="tabla-footer"></div>
       </div>
-      <div class="val-panel">
-        <div class="val-head">
-          <h3>Validación de datos</h3>
-          <span id="val-estado" style="font-size:12px;font-weight:500"></span>
-        </div>
-        <div class="val-body">
-          <div class="val-summary">
-            <div class="vs-item vs-err"><div class="vs-num" id="val-num-err">0</div><div class="vs-label">Errores críticos</div></div>
-            <div class="vs-item vs-warn"><div class="vs-num" id="val-num-warn">0</div><div class="vs-label">Advertencias</div></div>
-            <div class="vs-item vs-ok"><div class="vs-num" id="val-num-ok">0</div><div class="vs-label">Registros válidos</div></div>
-          </div>
-          <div id="val-lista"></div>
-          <div class="val-blocked" id="val-blocked">❌ No se puede generar el XML — corrige los errores críticos primero.</div>
-          <div class="val-ok-msg" id="val-ok-msg">✅ Todos los registros son válidos. Puedes generar el XML.</div>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-outline" style="font-size:11px;padding:6px 12px" onclick="verDiagnostico()">🔍 Ver datos</button>
-        <button class="btn btn-outline" onclick="volverUpload()">← Cambiar archivo</button>
-        <button class="btn btn-orange" id="btn-generar" onclick="generarXML()">
-          <span id="btn-xml-text">Generar y descargar XML</span>
-          <span id="btn-xml-spin" class="hidden"><span class="spinner"></span></span>
-        </button>
-      </div>
-      <div id="diag-panel" class="hidden" style="margin-top:12px;background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:11px;font-family:'DM Mono',monospace;white-space:pre-wrap;max-height:300px;overflow:auto"></div>
     </div>
-
-    <!-- PASO 3 -->
-    <div id="panel-descarga" class="hidden">
-      <div class="card">
-        <div class="card-head"><h3>XMLs generados</h3></div>
-        <div class="card-body">
-          <div style="background:var(--pos-bg);border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--pos);margin-bottom:12px">
-            ✅ Los archivos se generaron correctamente y están listos para enviar a la UIF.
-          </div>
-          <div class="xml-list" id="xml-list"></div>
-          <div class="actions">
-            <button class="btn btn-outline" onclick="nuevoReporte()">Generar otro reporte</button>
-          </div>
+    <div class="val-panel">
+      <div class="val-head"><h3>Validación de datos</h3><span id="val-estado" style="font-size:12px;font-weight:500"></span></div>
+      <div class="val-body">
+        <div class="val-summary">
+          <div class="vs-item vs-err"><div class="vs-num" id="val-num-err">0</div><div class="vs-label">Errores críticos</div></div>
+          <div class="vs-item vs-warn"><div class="vs-num" id="val-num-warn">0</div><div class="vs-label">Advertencias</div></div>
+          <div class="vs-item vs-ok"><div class="vs-num" id="val-num-ok">0</div><div class="vs-label">Registros válidos</div></div>
         </div>
+        <div id="val-lista"></div>
+        <div class="val-blocked" id="val-blocked">❌ No se puede generar el XML — corrige los errores críticos primero.</div>
+        <div class="val-ok-msg" id="val-ok-msg">✅ Todos los registros son válidos. Puedes generar el XML.</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-outline" onclick="volverConfig()">← Cambiar archivo</button>
+      <button class="btn btn-orange" id="btn-generar" onclick="generarXML()">
+        <span id="btn-xml-text">Generar y descargar XML</span>
+        <span id="btn-xml-spin" class="hidden"><span class="spinner"></span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PASO 3 -->
+  <div id="panel-descarga" class="hidden">
+    <div class="card">
+      <div class="card-head"><h3>XML generado</h3></div>
+      <div class="card-body">
+        <div style="background:var(--pos-bg);border:1px solid #86efac;border-radius:8px;padding:12px 16px;font-size:13px;color:var(--pos);margin-bottom:12px">
+          ✅ El archivo se generó correctamente y está listo para enviar a la UIF.
+        </div>
+        <div class="xml-list" id="xml-list"></div>
+        <div class="actions"><button class="btn btn-outline" onclick="nuevoReporte()">Generar otro reporte</button></div>
       </div>
     </div>
   </div>
@@ -286,16 +253,45 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 <script>
 const MAPA_PAIS={MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
 const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
-let STATE={suc:'MITRAS',prefijo:'MTY',cp:'64320',tipo:'A',datos:[],archivos:{},cfg:{}};
+let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{}};
+
+// ── Sucursal ───────────────────────────────────────────────────────
+function onSucursalChange(){
+  const val=document.getElementById('cfg-sucursal').value;
+  if(!val)return;
+  const[,cp,prefijo]=val.split('|');
+  document.getElementById('cfg-cp').value=cp!=='00000'?cp:'';
+  STATE.prefijo=prefijo;
+  STATE.cp=cp!=='00000'?cp:'';
+}
+
+// ── Tipo de reporte ────────────────────────────────────────────────
+function selTipo(tipo){
+  STATE.tipo=tipo;
+  document.getElementById('tipo-mensual').classList.toggle('selected',tipo==='MENSUAL');
+  document.getElementById('tipo-semestral').classList.toggle('selected',tipo==='SEMESTRAL');
+}
+
+// ── Upload ─────────────────────────────────────────────────────────
+function dragOver(e){e.preventDefault();document.getElementById('zone-main').classList.add('drag');}
+function dragLeave(){document.getElementById('zone-main').classList.remove('drag');}
+function dropFile(e){
+  e.preventDefault();dragLeave();
+  const f=e.dataTransfer.files[0];if(!f)return;
+  const inp=document.getElementById('file-main');
+  const dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;
+  fileSelected({files:[f]});
+}
+function fileSelected(input){
+  const f=input.files[0];if(!f)return;
+  STATE.archivo=f;
+  document.getElementById('zone-main').classList.add('upload-done');
+  document.getElementById('upload-icon').textContent='✅';
+  document.getElementById('upload-title').textContent=f.name;
+  document.getElementById('upload-sub').textContent=(f.size/1024).toFixed(0)+' KB';
+}
 
 // ── Utilidades ─────────────────────────────────────────────────────
-function getMonto(r){
-  // Buscar TOTAL GENERAL con o sin espacios
-  for(const k of Object.keys(r)){
-    if(k.trim()==='TOTAL GENERAL') return r[k];
-  }
-  return r['Monto Transaccion']||0;
-}
 function limpiarMonto(v){if(!v&&v!==0)return'0.00';try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return'0.00';}}
 function limpiarTel(v){if(!v)return'';const s=String(v).replace(/\D/g,'');return(s.length>=10&&s.length<=12)?s:'';}
 function normalizar(s){if(!s)return'';return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZN0-9 .,:\/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();}
@@ -304,66 +300,19 @@ function codOcup(v){if(!v)return'1000000';let s=String(v).trim();if(s.includes('
 function escXml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
 function fmtFecha(v){
   if(!v||v==='')return'';
-  if(v instanceof Date){return v.getFullYear()+String(v.getMonth()+1).padStart(2,'0')+String(v.getDate()).padStart(2,'0');}
+  if(v instanceof Date||v instanceof Object){try{const d=new Date(v);if(!isNaN(d))return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');}catch{}}
   const s=String(v).trim();
   if(/^\d{8}$/.test(s))return s;
   const m1=s.match(/(\d{4})-(\d{2})-(\d{2})/);if(m1)return m1[1]+m1[2]+m1[3];
   const m2=s.match(/(\d{2})\/(\d{2})\/(\d{4})/);if(m2)return m2[3]+m2[2]+m2[1];
-  // Timestamp ISO
-  try{const d=new Date(v);if(!isNaN(d))return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');}catch{}
   return'';
-}
-
-// ── Sidebar ────────────────────────────────────────────────────────
-function selSuc(nombre,prefijo,cp,tipo){
-  STATE={...STATE,suc:nombre,prefijo:prefijo,cp:cp,tipo:tipo,datos:[],archivos:{}};
-  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
-  document.getElementById('suc-'+nombre).classList.add('active');
-  document.getElementById('suc-title').textContent=nombre.charAt(0)+nombre.slice(1).toLowerCase()+' — '+({MITRAS:'Monterrey',GUADALUPE:'Guadalupe'}[nombre]||nombre);
-  document.getElementById('suc-meta').textContent=`Prefijo ${prefijo} · CP ${cp} · Formato ${tipo}`;
-  document.getElementById('cfg-cp').value=cp;
-  document.getElementById('upload-title').textContent=`Archivo de reporte — ${nombre.charAt(0)+nombre.slice(1).toLowerCase()}`;
-  document.getElementById('upload-format-badge').textContent=tipo==='A'?'Formato A · .xlsm':'Formato B · .xlsx';
-  document.getElementById('upload-A').classList.toggle('hidden',tipo!=='A');
-  document.getElementById('upload-B').classList.toggle('hidden',tipo!=='B');
-  resetZonas();
-  volverUpload();
-}
-
-function resetZonas(){
-  ['A','B1','B2'].forEach(id=>{
-    const z=document.getElementById('zone-'+id);if(!z)return;
-    z.classList.remove('upload-done');
-    document.getElementById('icon-'+id).textContent='📂';
-    document.getElementById('title-'+id).textContent=id==='A'?'Arrastra el archivo aquí o haz clic para seleccionar':'Seleccionar archivo';
-  });
-  STATE.archivos={};
-}
-
-// ── Upload ─────────────────────────────────────────────────────────
-function dragOver(e,zId){e.preventDefault();document.getElementById(zId).classList.add('drag');}
-function dragLeave(zId){document.getElementById(zId).classList.remove('drag');}
-function dropFile(e,inputId,zId){
-  e.preventDefault();dragLeave(zId);
-  const f=e.dataTransfer.files[0];if(!f)return;
-  const inp=document.getElementById(inputId);
-  const dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;
-  fileSelected(inputId.replace('file-',''),{files:[f]});
-}
-function fileSelected(id,input){
-  const f=input.files[0];if(!f)return;
-  STATE.archivos[id]=f;
-  document.getElementById('zone-'+id).classList.add('upload-done');
-  document.getElementById('icon-'+id).textContent='✅';
-  document.getElementById('title-'+id).textContent=f.name;
 }
 
 async function leerExcel(file){
   return new Promise((res,rej)=>{
     const r=new FileReader();
     r.onload=e=>{try{res(XLSX.read(e.target.result,{type:'binary',cellDates:true}));}catch(err){rej(err);}};
-    r.onerror=rej;
-    r.readAsBinaryString(file);
+    r.onerror=rej;r.readAsBinaryString(file);
   });
 }
 
@@ -385,30 +334,94 @@ function sheetToArr(wb,sheetName){
 }
 
 // ── Procesar ───────────────────────────────────────────────────────
-async function procesarArchivos(){
-  const errEl=document.getElementById('alert-upload');
+async function procesarArchivo(){
+  const errEl=document.getElementById('alert-config');
   errEl.style.display='none';
+
+  const sucVal=document.getElementById('cfg-sucursal').value;
   const mes=document.getElementById('cfg-mes').value.trim();
   const rfc=document.getElementById('cfg-rfc').value.trim();
   const cp=document.getElementById('cfg-cp').value.trim();
+
+  if(!sucVal){errEl.textContent='Selecciona una sucursal.';errEl.style.display='block';return;}
   if(!/^\d{6}$/.test(mes)){errEl.textContent='El mes debe ser 6 dígitos (YYYYMM).';errEl.style.display='block';return;}
   if(rfc.length<12||rfc.length>13){errEl.textContent='El RFC debe tener 12 o 13 caracteres.';errEl.style.display='block';return;}
   if(!/^\d{5}$/.test(cp)){errEl.textContent='El CP debe ser exactamente 5 dígitos.';errEl.style.display='block';return;}
+  if(!STATE.archivo){errEl.textContent='Selecciona un archivo Excel.';errEl.style.display='block';return;}
+
+  const[,, prefijo]=sucVal.split('|');
+  STATE.prefijo=prefijo;
+  STATE.cfg={mes,rfc,cp};
 
   document.getElementById('btn-procesar-text').textContent='Procesando...';
   document.getElementById('btn-procesar-spin').classList.remove('hidden');
+
   let rows=[];
-
   try{
-    if(STATE.tipo==='A'){
-      if(!STATE.archivos['A']){errEl.textContent='Selecciona el archivo Excel.';errEl.style.display='block';return;}
-      const wb=await leerExcel(STATE.archivos['A']);
+    const wb=await leerExcel(STATE.archivo);
+    const tipoRep=STATE.tipo;
 
-      // Detectar automáticamente si es Formato A o B
-      const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
+    // Formato C es el estándar para todas las sucursales
+    // Formato A solo para el archivo especial que prepara Nydia (Mitras)
+    const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
+    const esFormatoC = wb.SheetNames.some(h=>h.toLowerCase().includes('reporte de umas'));
 
-      if(esFormatoA){
-        // ── FORMATO A: hojas REPORTE UIF ──────────────────────────
+    if(esFormatoC){
+      // ── FORMATO C (estándar): hoja Reporte de UMAS ────────────
+      const hojaUmas = wb.SheetNames.find(h=>h.toLowerCase().includes('reporte de umas'));
+      const raw = sheetToArr(wb, hojaUmas)||[];
+
+      raw.forEach(r=>{
+        const nombreCompleto = String(r['Cliente']||'').trim();
+        const partes = nombreCompleto.split(' ').filter(Boolean);
+        let nombre='', apPat='', apMat='';
+        if(partes.length===1){ nombre=partes[0]; apPat='XXXX'; apMat='XXXX'; }
+        else if(partes.length===2){ nombre=partes[0]; apPat=partes[1]; apMat='XXXX'; }
+        else if(partes.length===3){ nombre=partes[0]; apPat=partes[1]; apMat=partes[2]; }
+        else{ nombre=partes.slice(0,-2).join(' '); apPat=partes[partes.length-2]; apMat=partes[partes.length-1]; }
+
+        const monto = String(r['Monto']||'0').replace(/[$,]/g,'');
+        const tipo  = String(r['Tipo Mov']||'DEPOSITO').trim().toUpperCase();
+
+        rows.push({
+          'Nombre':                nombre,
+          'Apellido Paterno':      apPat,
+          'Apellido Materno':      apMat,
+          'Fecha Nacimiento':      r['Fecha Nacimiento']||'',
+          'CURP':                  String(r['CURP']||'').trim().toUpperCase(),
+          'Clave Pais':            String(r['Nacionalidad']||'MEX'),
+          'PLD Ocupacion':         String(r['Codigo Ocupacion']||'1000000'),
+          'PLD C.P.':              String(r['PLD C.P.']||''),
+          'PLD Colonia':           String(r['PLD Colonia']||''),
+          'Calle':                 String(r['Calle']||''),
+          'No Exterior':           String(r['No Exterior']||''),
+          'No Interior':           String(r['No Interior']||''),
+          'Fecha Hora Ultima Trans': r['Fecha Hora Ultima Trans']||'',
+          'TOTAL GENERAL':         parseFloat(monto)||0,
+          'EFECTIVO':              '1',
+          'MONEDA':                '1',
+          _tipo:                   tipo.includes('RETIRO')?'RETIRO':'DEPOSITO',
+          _tipoReporte:            tipoRep,
+          _tel:                    '',
+        });
+      });
+
+      // Generar CONSECUTIVO por CURP + tipo
+      let ci=1; const mapFolio={};
+      rows.forEach(r=>{
+        const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
+        if(!mapFolio[key])mapFolio[key]=STATE.prefijo+String(ci++).padStart(4,'0');
+        r.CONSECUTIVO=mapFolio[key];
+      });
+
+    } else if(esFormatoA){
+      // ── FORMATO A (Nydia): hojas REPORTE UIF o Depositos Acumulado ─
+      const hojas = wb.SheetNames;
+      const tieneUIF = hojas.includes('REPORTE UIF DEPOSITOS');
+      const tieneAcum = hojas.some(h=>h.toLowerCase().includes('acumul'));
+
+      if(tieneUIF){
+        // Mensual con hojas REPORTE UIF
         const dep=sheetToArr(wb,'REPORTE UIF DEPOSITOS')||[];
         const ret=sheetToArr(wb,'REPORTE UIF RETIROS')||[];
         let tels={};
@@ -423,75 +436,66 @@ async function procesarArchivos(){
         dep.forEach(r=>{
           const curp=String(r.CURP||'').trim().toUpperCase();
           const rn={};Object.keys(r).forEach(k=>rn[k.trim()]=r[k]);
-          const monto=rn['TOTAL GENERAL']||0;
-          rows.push({...rn,'TOTAL GENERAL':monto,_tipo:'DEPOSITO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
+          rows.push({...rn,'TOTAL GENERAL':rn['TOTAL GENERAL']||0,_tipo:'DEPOSITO',_tipoReporte:tipoRep,_tel:tels[curp]||''});
         });
         ret.forEach(r=>{
           const curp=String(r.CURP||'').trim().toUpperCase();
           const rn={};Object.keys(r).forEach(k=>rn[k.trim()]=r[k]);
-          const monto=rn['TOTAL GENERAL']||0;
-          rows.push({...rn,'TOTAL GENERAL':monto,_tipo:'RETIRO',_tipoReporte:'MENSUAL',_tel:tels[curp]||''});
+          rows.push({...rn,'TOTAL GENERAL':rn['TOTAL GENERAL']||0,_tipo:'RETIRO',_tipoReporte:tipoRep,_tel:tels[curp]||''});
         });
-      } else {
-        // ── FORMATO B: hojas Depositos / Retiros ──────────────────
-        const hojas=wb.SheetNames;
-        const hDep=hojas.find(h=>h.toLowerCase().includes('deposito')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('deposito'));
-        const hRet=hojas.find(h=>h.toLowerCase().includes('retiro')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('retiro'));
-        [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([h,t])=>{
-          if(!h)return;
-          const arr=XLSX.utils.sheet_to_json(wb.Sheets[h],{header:1});
-          const hi=arr.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
-          if(hi<0)return;
-          const headers=arr[hi];
-          arr.slice(hi+1).forEach(r=>{
-            if(!r[headers.indexOf('Nombre')])return;
-            const obj={};headers.forEach((h,i)=>obj[h]=r[i]||'');
-            const monto=obj['Monto Transaccion']||obj['TOTAL GENERAL']||0;
-            rows.push({...obj,'TOTAL GENERAL':monto,_tipo:t,_tipoReporte:'MENSUAL',_tel:limpiarTel(obj.Telefono||'')});
+      } else if(tieneAcum){
+        // Semestral acumulativo — hojas Depositos Acumulado / Retiros Acumulado
+        ['Depositos Acumulado','Retiros Acumulado'].forEach(hoja=>{
+          const t = hoja.toLowerCase().includes('retiro') ? 'RETIRO' : 'DEPOSITO';
+          const d = sheetToArr(wb, hoja);
+          if(!d) return;
+          d.forEach(r=>{
+            // Usar Acumulado 6 meses como monto
+            const monto = parseFloat(String(r['Acumulado 6 meses']||r['Total General']||0).replace(/[$,]/g,''))||0;
+            const tel = limpiarTel(r['Telefono']||'');
+            let ci=1; const mapFolio={};
+            const curp = String(r['CURP']||'').trim().toUpperCase();
+            rows.push({
+              'Nombre':           String(r['Nombre']||''),
+              'Apellido Paterno': String(r['Apellido Paterno']||''),
+              'Apellido Materno': String(r['Apellido Materno']||''),
+              'Fecha Nacimiento': r['Fecha Nacimiento']||'',
+              'CURP':             curp,
+              'Clave Pais':       String(r['Clave Pais']||r['Clave Pais Nac.']||'MEX'),
+              'PLD Ocupacion':    String(r['PLD Ocupacion']||''),
+              'PLD Codigo Ocupacion': String(r['PLD Codigo Ocupacion']||'1000000'),
+              'PLD C.P.':         String(r['PLD C.P.']||r['C.P.']||''),
+              'PLD Colonia':      String(r['PLD Colonia']||r['Colonia']||''),
+              'Calle':            String(r['Calle']||''),
+              'No Exterior':      String(r['No Exterior']||''),
+              'No Interior':      String(r['No Interior']||''),
+              'Fecha Hora Ultima Trans': r['Fecha Hora Ultima Trans']||'',
+              'TOTAL GENERAL':    monto,
+              'EFECTIVO':         '1',
+              'MONEDA':           '1',
+              _tipo:              t,
+              _tipoReporte:       tipoRep,
+              _tel:               tel,
+            });
           });
         });
-        let ci=1;const mapFolio={};
+        // Generar CONSECUTIVO
+        let ci=1; const mapFolio={};
         rows.forEach(r=>{
-          const key=String(r.CURP||'').trim().toUpperCase()+'|'+r._tipo;
+          const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
           if(!mapFolio[key])mapFolio[key]=STATE.prefijo+String(ci++).padStart(4,'0');
           r.CONSECUTIVO=mapFolio[key];
-          r['PLD Ocupacion']=r['PLD Codigo Ocupacion']||r['PLD Ocupacion']||'';
         });
       }
+
     } else {
-      if(!STATE.archivos['B1']&&!STATE.archivos['B2']){errEl.textContent='Selecciona al menos un archivo.';errEl.style.display='block';return;}
-      for(const[key,tipoRep] of [['B1','MENSUAL'],['B2','SEMESTRAL']]){
-        if(!STATE.archivos[key])continue;
-        const wb=await leerExcel(STATE.archivos[key]);
-        const hojas=wb.SheetNames;
-        const hDep=hojas.find(h=>h.toLowerCase().includes('deposito')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('deposito'));
-        const hRet=hojas.find(h=>h.toLowerCase().includes('retiro')&&!h.toLowerCase().includes('acumul'))||hojas.find(h=>h.toLowerCase().includes('retiro'));
-        [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([h,t])=>{
-          if(!h)return;
-          const arr=XLSX.utils.sheet_to_json(wb.Sheets[h],{header:1});
-          const hi=arr.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
-          if(hi<0)return;
-          const headers=arr[hi];
-          arr.slice(hi+1).forEach(r=>{
-            if(!r[headers.indexOf('Nombre')])return;
-            const obj={};headers.forEach((h,i)=>obj[h]=r[i]||'');
-            const monto=obj['Monto Transaccion']||obj['TOTAL GENERAL']||0;
-            rows.push({...obj,'TOTAL GENERAL':monto,_tipo:t,_tipoReporte:tipoRep,_tel:limpiarTel(obj.Telefono||'')});
-          });
-        });
-      }
-      let ci=1;const mapFolio={};
-      rows.forEach(r=>{
-        const key=String(r.CURP||'').trim().toUpperCase()+'|'+r._tipo;
-        if(!mapFolio[key])mapFolio[key]=STATE.prefijo+String(ci++).padStart(4,'0');
-        r.CONSECUTIVO=mapFolio[key];
-        r['PLD Ocupacion']=r['PLD Codigo Ocupacion']||r['PLD Ocupacion']||'';
-      });
+      errEl.textContent='⚠️ Formato de archivo no reconocido. Usa el archivo "UmasAlcanzadas[Sucursal]_YYYY-MM-DD_YYYY-MM-DD.xlsx"';
+      errEl.style.display='block';
+      return;
     }
 
-    if(!rows.length){errEl.textContent='No se encontraron registros.';errEl.style.display='block';return;}
+    if(!rows.length){errEl.textContent='No se encontraron registros en el archivo.';errEl.style.display='block';return;}
     STATE.datos=rows;
-    STATE.cfg={mes,rfc,cp};
     mostrarResumen(rows);
   }catch(e){
     errEl.textContent='Error al leer el archivo: '+e.message;errEl.style.display='block';
@@ -503,24 +507,22 @@ async function procesarArchivos(){
 
 // ── Resumen ────────────────────────────────────────────────────────
 function mostrarResumen(rows){
-  const todos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
+  const avisos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
   const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)),0);
 
+  document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo;
   document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${todos.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${avisos.length}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Depósitos / Retiros</div><div class="kpi-val">${dep} / ${ret}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:18px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Dep. / Ret.</div><div class="kpi-val">${dep} / ${ret}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:16px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
   `;
 
-  // Solo mostrar registros con nombre y CURP válidos
   const validos=rows.filter(r=>String(r.Nombre||'').trim()&&String(r.CURP||'').trim().toUpperCase().length===18);
   const MAX=200;
-  const muestra=validos.slice(0,MAX);
-
-  document.getElementById('tabla-resumen').innerHTML=muestra.map(r=>`
+  document.getElementById('tabla-resumen').innerHTML=validos.slice(0,MAX).map(r=>`
     <tr>
       <td class="mono">${r.CONSECUTIVO||''}</td>
       <td>${normalizar(r.Nombre||'')}</td>
@@ -538,7 +540,7 @@ function mostrarResumen(rows){
 
   validarDatos(rows);
   setStep(1,2);
-  document.getElementById('panel-upload').classList.add('hidden');
+  document.getElementById('panel-config').classList.add('hidden');
   document.getElementById('panel-resumen').classList.remove('hidden');
 }
 
@@ -547,7 +549,6 @@ function validarDatos(rows){
   const errores=[],advertencias=[];
   let validos=0;
   const c={sinNombre:0,sinCURP:0,curpInvalida:0,sinCP:0,cpInvalido:0,sinMonto:0,sinTel:0,sinApMat:0};
-
   rows.forEach(r=>{
     let ok=true;
     if(!String(r.Nombre||'').trim()){c.sinNombre++;ok=false;}
@@ -562,15 +563,14 @@ function validarDatos(rows){
     if(!limpiarTel(r._tel||r.Telefono||''))c.sinTel++;
     if(!String(r['Apellido Materno']||'').trim())c.sinApMat++;
   });
-
-  if(c.sinNombre)    errores.push({t:'Sin nombre',     d:`${c.sinNombre} registro(s) sin nombre`,                        n:c.sinNombre});
-  if(c.sinCURP)      errores.push({t:'CURP faltante',  d:`${c.sinCURP} registro(s) sin CURP`,                            n:c.sinCURP});
-  if(c.curpInvalida) errores.push({t:'CURP inválida',  d:`${c.curpInvalida} registro(s) con CURP diferente a 18 chars`,  n:c.curpInvalida});
-  if(c.sinCP)        errores.push({t:'CP faltante',    d:`${c.sinCP} registro(s) sin código postal`,                     n:c.sinCP});
-  if(c.cpInvalido)   errores.push({t:'CP inválido',    d:`${c.cpInvalido} registro(s) con CP diferente a 5 dígitos`,     n:c.cpInvalido});
-  if(c.sinMonto)     advertencias.push({t:'Monto en cero',      d:`${c.sinMonto} registro(s) con monto $0.00`,           n:c.sinMonto});
-  if(c.sinTel)       advertencias.push({t:'Sin teléfono',       d:`${c.sinTel} registro(s) sin número de teléfono`,      n:c.sinTel});
-  if(c.sinApMat)     advertencias.push({t:'Sin apellido materno',d:`${c.sinApMat} registro(s) sin apellido materno`,     n:c.sinApMat});
+  if(c.sinNombre)    errores.push({t:'Sin nombre',     d:`${c.sinNombre} registro(s) sin nombre`,              n:c.sinNombre});
+  if(c.sinCURP)      errores.push({t:'CURP faltante',  d:`${c.sinCURP} registro(s) sin CURP`,                  n:c.sinCURP});
+  if(c.curpInvalida) errores.push({t:'CURP inválida',  d:`${c.curpInvalida} registro(s) con CURP ≠ 18 chars`,  n:c.curpInvalida});
+  if(c.sinCP)        errores.push({t:'CP faltante',    d:`${c.sinCP} registro(s) sin código postal`,           n:c.sinCP});
+  if(c.cpInvalido)   errores.push({t:'CP inválido',    d:`${c.cpInvalido} registro(s) con CP ≠ 5 dígitos`,     n:c.cpInvalido});
+  if(c.sinMonto)     advertencias.push({t:'Monto en cero',       d:`${c.sinMonto} registro(s) con monto $0.00`,   n:c.sinMonto});
+  if(c.sinTel)       advertencias.push({t:'Sin teléfono',        d:`${c.sinTel} registro(s) sin teléfono`,        n:c.sinTel});
+  if(c.sinApMat)     advertencias.push({t:'Sin apellido materno',d:`${c.sinApMat} registro(s) sin ap. materno`,   n:c.sinApMat});
 
   document.getElementById('val-num-err').textContent=errores.reduce((s,e)=>s+e.n,0);
   document.getElementById('val-num-warn').textContent=advertencias.reduce((s,e)=>s+e.n,0);
@@ -597,13 +597,16 @@ function generarXML(){
   document.getElementById('btn-xml-spin').classList.remove('hidden');
   setTimeout(()=>{
     try{
-      const xmls=buildXMLs();
-      const list=document.getElementById('xml-list');
-      list.innerHTML='';
-      xmls.forEach(({nombre,blob})=>{
-        const url=URL.createObjectURL(blob);
-        list.innerHTML+=`<div class="xml-item"><div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.suc} · ${new Date().toLocaleString('es-MX')}</div></div><a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a></div>`;
-      });
+      const xml=buildXML(STATE.datos,STATE.cfg,STATE.tipo);
+      const pref=STATE.tipo==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
+      const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}.xml`;
+      const blob=new Blob([xml],{type:'application/xml'});
+      const url=URL.createObjectURL(blob);
+      document.getElementById('xml-list').innerHTML=`
+        <div class="xml-item">
+          <div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.prefijo} · ${STATE.tipo} · ${new Date().toLocaleString('es-MX')}</div></div>
+          <a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a>
+        </div>`;
       setStep(2,3);
       document.getElementById('panel-resumen').classList.add('hidden');
       document.getElementById('panel-descarga').classList.remove('hidden');
@@ -615,16 +618,6 @@ function generarXML(){
       document.getElementById('btn-xml-spin').classList.add('hidden');
     }
   },100);
-}
-
-function buildXMLs(){
-  const rows=STATE.datos,cfg=STATE.cfg;
-  const tipos=[...new Set(rows.map(r=>r._tipoReporte||'MENSUAL'))];
-  return tipos.map(tipo=>{
-    const xml=buildXML(rows.filter(r=>(r._tipoReporte||'MENSUAL')===tipo),cfg,tipo);
-    const pref=tipo==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
-    return{nombre:`${pref}_${STATE.prefijo}_${cfg.mes}.xml`,blob:new Blob([xml],{type:'application/xml'})};
-  });
 }
 
 function buildXML(rows,cfg,tipoRep){
@@ -641,7 +634,6 @@ function buildXML(rows,cfg,tipoRep){
     const desc=tipoRep==='SEMESTRAL'?(tipoMov==='RETIRO'?'SUPERACION UMA SEMESTRAL RETIROS':'SUPERACION UMA SEMESTRAL'):(tipoMov==='RETIRO'?'SUPERACION UMA MENSUAL RETIROS':'SUPERACION UMA MENSUAL');
     x+=`    <aviso>\n      <referencia_aviso>${escXml(folio)}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
     x+=`      <alerta>\n        <tipo_alerta>9999</tipo_alerta>\n        <descripcion_alerta>${desc}</descripcion_alerta>\n      </alerta>\n`;
-
     grupo.forEach(r=>{
       const nom=normalizar(r.Nombre||'');if(!nom)return;
       const apPat=normalizar(r['Apellido Paterno']||'');
@@ -657,7 +649,7 @@ function buildXML(rows,cfg,tipoRep){
       const cpR=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].padStart(5,'0').substring(0,5);
       const tel=r._tel||limpiarTel(r.Telefono||'');
       x+=`      <persona_aviso>\n        <tipo_persona>\n          <persona_fisica>\n`;
-      x+=`            <nombre>${escXml((nom).substring(0,50)||'XXXX')}</nombre>\n`;
+      x+=`            <nombre>${escXml(nom.substring(0,50)||'XXXX')}</nombre>\n`;
       x+=`            <apellido_paterno>${escXml(apPat.substring(0,50)||'XXXX')}</apellido_paterno>\n`;
       x+=`            <apellido_materno>${escXml(apMat.substring(0,50)||'XXXX')}</apellido_materno>\n`;
       x+=`            <fecha_nacimiento>${fecNac||'19000101'}</fecha_nacimiento>\n`;
@@ -675,7 +667,6 @@ function buildXML(rows,cfg,tipoRep){
       if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
       x+=`        </telefono>\n      </persona_aviso>\n`;
     });
-
     const fechas=grupo.map(r=>fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')).filter(Boolean);
     const fecOp=fechas.length?fechas.sort().pop():cfg.mes+'31';
     x+=`      <detalle_operaciones>\n        <datos_operacion>\n          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
@@ -683,7 +674,7 @@ function buildXML(rows,cfg,tipoRep){
     x+=`          <tipo_operacion>101</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
       const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
-      const monto=limpiarMonto(r['TOTAL GENERAL']||r['Monto Transaccion']||0);
+      const monto=limpiarMonto(r['TOTAL GENERAL']||0);
       const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
       const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
       x+=`          <datos_liquidacion>\n            <liquidacion_numerario>\n`;
@@ -697,7 +688,7 @@ function buildXML(rows,cfg,tipoRep){
   return x;
 }
 
-// ── Helpers UI ─────────────────────────────────────────────────────
+// ── UI helpers ─────────────────────────────────────────────────────
 function setStep(done,active){
   [1,2,3].forEach(i=>{
     const el=document.getElementById('step'+i);
@@ -706,27 +697,22 @@ function setStep(done,active){
     if(i===active)el.classList.add('active');
   });
 }
-function volverUpload(){
+function volverConfig(){
   setStep(0,1);
-  document.getElementById('panel-upload').classList.remove('hidden');
+  document.getElementById('panel-config').classList.remove('hidden');
   document.getElementById('panel-resumen').classList.add('hidden');
   document.getElementById('panel-descarga').classList.add('hidden');
 }
 function nuevoReporte(){
-  STATE.datos=[];STATE.archivos={};resetZonas();
+  STATE.datos=[];STATE.archivo=null;
+  document.getElementById('zone-main').classList.remove('upload-done');
+  document.getElementById('upload-icon').textContent='📂';
+  document.getElementById('upload-title').textContent='Arrastra el archivo aquí o haz clic para seleccionar';
+  document.getElementById('upload-sub').textContent='Acepta .xlsx y .xlsm';
   setStep(0,1);
-  document.getElementById('panel-upload').classList.remove('hidden');
+  document.getElementById('panel-config').classList.remove('hidden');
   document.getElementById('panel-resumen').classList.add('hidden');
   document.getElementById('panel-descarga').classList.add('hidden');
-}
-function verDiagnostico(){
-  const panel=document.getElementById('diag-panel');
-  panel.classList.toggle('hidden');
-  if(!STATE.datos.length){panel.textContent='Sin datos';return;}
-  const r=STATE.datos[0];
-  let txt=`Total: ${STATE.datos.length}\nColumnas:\n`;
-  Object.keys(r).forEach(k=>txt+=`  "${k}": ${JSON.stringify(r[k])}\n`);
-  panel.textContent=txt;
 }
 </script>
 </body>
