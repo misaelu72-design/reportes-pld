@@ -446,8 +446,8 @@ async function procesarArchivo(){
         });
       } else if(tieneAcum){
         // Semestral acumulativo — hojas Depositos Acumulado / Retiros Acumulado
-        ['Depositos Acumulado','Retiros Acumulado'].forEach(hoja=>{
-          const t = hoja.toLowerCase().includes('retiro') ? 'RETIRO' : 'DEPOSITO';
+        ['Depositos Acumulado'].forEach(hoja=>{
+          
           const d = sheetToArr(wb, hoja);
           if(!d) return;
           d.forEach(r=>{
@@ -491,29 +491,42 @@ async function procesarArchivo(){
 
     } else if(esFormatoAcum){
       // ── FORMATO ACUMULATIVO (Nydia): hojas Depositos/Retiros Acumulado ─
-      ['Depositos Acumulado','Retiros Acumulado'].forEach(hoja=>{
-        const t = hoja.toLowerCase().includes('retiro') ? 'RETIRO' : 'DEPOSITO';
-        const d = sheetToArr(wb, hoja);
-        if(!d) return;
-        d.forEach(r=>{
-          const monto = parseFloat(String(r['Acumulado 6 meses']||r['Total General']||0).replace(/[$,]/g,''))||0;
-          const tel = limpiarTel(r['Telefono']||'');
-          const curp = String(r['CURP']||'').trim().toUpperCase();
+      ['Depositos Acumulado'].forEach(hoja=>{
+        
+        if(!wb.SheetNames.includes(hoja)) return;
+        const ws = wb.Sheets[hoja];
+        // Header está en fila 3 (index 2) — leer como array y buscar header
+        const arr = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+        const hi = arr.findIndex(r=>r.some(c=>String(c||'').includes('Nombre')));
+        if(hi < 0) return;
+        const headers = arr[hi];
+        const dataRows = arr.slice(hi+1).filter(r=>r.some(c=>c!==''));
+        dataRows.forEach(r=>{
+          const obj={};
+          headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
+          // Buscar monto por nombre parcial
+          const keys=Object.keys(obj);
+          const keyAcum=keys.find(k=>String(k).toLowerCase().includes('acumulado'));
+          const keyTotal=keys.find(k=>String(k).toLowerCase().includes('total general'));
+          const montoRaw=obj[keyAcum]||obj[keyTotal]||0;
+          const monto=parseFloat(String(montoRaw).replace(/[$,]/g,''))||0;
+          const tel=limpiarTel(obj['Telefono']||'');
+          const curp=String(obj['CURP']||'').trim().toUpperCase();
           rows.push({
-            'Nombre':           String(r['Nombre']||''),
-            'Apellido Paterno': String(r['Apellido Paterno']||''),
-            'Apellido Materno': String(r['Apellido Materno']||''),
-            'Fecha Nacimiento': r['Fecha Nacimiento']||'',
+            'Nombre':           String(obj['Nombre']||''),
+            'Apellido Paterno': String(obj['Apellido Paterno']||''),
+            'Apellido Materno': String(obj['Apellido Materno']||''),
+            'Fecha Nacimiento': obj['Fecha Nacimiento']||'',
             'CURP':             curp,
-            'Clave Pais':       String(r['Clave Pais']||r['Clave Pais Nac.']||'MEX'),
-            'PLD Ocupacion':    String(r['PLD Ocupacion']||''),
-            'PLD Codigo Ocupacion': String(r['PLD Codigo Ocupacion']||'1000000'),
-            'PLD C.P.':         String(r['PLD C.P.']||r['C.P.']||''),
-            'PLD Colonia':      String(r['PLD Colonia']||r['Colonia']||''),
-            'Calle':            String(r['Calle']||''),
-            'No Exterior':      String(r['No Exterior']||''),
-            'No Interior':      String(r['No Interior']||''),
-            'Fecha Hora Ultima Trans': r['Fecha Hora Ultima Trans']||'',
+            'Clave Pais':       String(obj['Clave Pais']||obj['Clave Pais Nac.']||'MEX'),
+            'PLD Ocupacion':    String(obj['PLD Ocupacion']||''),
+            'PLD Codigo Ocupacion': String(obj['PLD Codigo Ocupacion']||'1000000'),
+            'PLD C.P.':         String(obj['PLD C.P.']||obj['C.P.']||''),
+            'PLD Colonia':      String(obj['PLD Colonia']||obj['Colonia']||''),
+            'Calle':            String(obj['Calle']||''),
+            'No Exterior':      String(obj['No Exterior']||''),
+            'No Interior':      String(obj['No Interior']||''),
+            'Fecha Hora Ultima Trans': obj['Fecha Hora Ultima Trans']||'',
             'TOTAL GENERAL':    monto,
             'EFECTIVO':         '1',
             'MONEDA':           '1',
