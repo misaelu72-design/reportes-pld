@@ -581,7 +581,7 @@ async function procesarArchivo(){
             'CURP':             curp,
             'Clave Pais':       String(obj['Nacionalidad']||'MEX'),
             'PLD Ocupacion':    String(obj['Código Ocupación']||'1000000'),
-            'PLD C.P.':         String(obj['C.P.']||''),
+            'PLD C.P.':         String(obj['C.P.']||obj['PLD C.P.']||'').split('.')[0],
             'PLD Colonia':      String(obj['Colonia']||''),
             'Calle':            String(obj['Calle']||''),
             'No Exterior':      String(obj['No. Ext']||''),
@@ -716,13 +716,13 @@ function validarDatos(rows){
     const curp=String(r.CURP||'').trim().toUpperCase();
     if(!curp){c.sinCURP++;ok=false;}
     else if(curp.length!==18){c.curpInvalida++;ok=false;}
-    const cp=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].trim();
-    if(!cp){c.sinCP++;ok=false;}
-    else if(!/^\d{5}$/.test(cp.padStart(5,'0'))){c.cpInvalido++;ok=false;}
     if(ok)validos++;
     if(!parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)))c.sinMonto++;
     if(!limpiarTel(r._tel||r.Telefono||''))c.sinTel++;
     if(!String(r['Apellido Materno']||'').trim())c.sinApMat++;
+    const cp=String(r['PLD C.P.']||r['C.P.']||'').split('.')[0].trim();
+    if(!cp) c.sinCP++;
+    else if(!/^\d{5}$/.test(cp.padStart(5,'0'))) c.cpInvalido++;
   });
   if(c.sinNombre)    errores.push({t:'Sin nombre',     d:`${c.sinNombre} registro(s) sin nombre`,              n:c.sinNombre});
   if(c.sinCURP)      errores.push({t:'CURP faltante',  d:`${c.sinCURP} registro(s) sin CURP`,                  n:c.sinCURP});
@@ -732,6 +732,8 @@ function validarDatos(rows){
   if(c.sinMonto)     advertencias.push({t:'Monto en cero',       d:`${c.sinMonto} registro(s) con monto $0.00`,   n:c.sinMonto});
   if(c.sinTel)       advertencias.push({t:'Sin teléfono',        d:`${c.sinTel} registro(s) sin teléfono`,        n:c.sinTel});
   if(c.sinApMat)     advertencias.push({t:'Sin apellido materno',d:`${c.sinApMat} registro(s) sin ap. materno`,   n:c.sinApMat});
+  if(c.sinCP)        advertencias.push({t:'CP faltante',         d:`${c.sinCP} registro(s) sin código postal — se usará 00000`,  n:c.sinCP});
+  if(c.cpInvalido)   advertencias.push({t:'CP inválido',         d:`${c.cpInvalido} registro(s) con CP ≠ 5 dígitos`,            n:c.cpInvalido});
 
   document.getElementById('val-num-err').textContent=errores.reduce((s,e)=>s+e.n,0);
   document.getElementById('val-num-warn').textContent=advertencias.reduce((s,e)=>s+e.n,0);
