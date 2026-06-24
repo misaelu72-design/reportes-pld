@@ -366,6 +366,10 @@ async function procesarArchivo(){
     const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
     const esFormatoAcum = wb.SheetNames.some(h=>h.toLowerCase().includes('depositos acumulado')||h.toLowerCase().includes('depósitos acumulado'));
     const esFormatoC = wb.SheetNames.some(h=>h.toLowerCase().includes('reporte de umas'));
+    // Formato semestral generado por el script Python — tiene columna Monto Acumulado
+    const primeraHoja = wb.SheetNames[0];
+    const primeraFila = XLSX.utils.sheet_to_json(wb.Sheets[primeraHoja],{header:1,defval:''})[1]||[];
+    const esFormatoSemestral = primeraFila.some(c=>String(c).includes('Monto Acumulado'));
 
     if(esFormatoC){
       // ── FORMATO C (estándar): hoja Reporte de UMAS ────────────
@@ -542,6 +546,51 @@ async function procesarArchivo(){
         if(!mapFolio2[key])mapFolio2[key]=STATE.prefijo+String(ci2++).padStart(4,'0');
         r.CONSECUTIVO=mapFolio2[key];
       });
+
+    } else if(esFormatoSemestral){
+      // ── FORMATO SEMESTRAL (generado por script Python) ─────────
+      // Hoja con columnas: Folio, Cliente, CURP, Monto Acumulado...
+      const ws = wb.Sheets[primeraHoja];
+      const arr = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+      const hi = arr.findIndex(r=>r.some(c=>String(c).includes('Folio')||String(c).includes('Cliente')));
+      if(hi >= 0){
+        const headers = arr[hi];
+        arr.slice(hi+1).forEach(r=>{
+          const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
+          if(!obj['Cliente']&&!obj['CURP']) return;
+          // Separar nombre completo
+          const nombreCompleto = String(obj['Cliente']||'').trim();
+          const partes = nombreCompleto.split(' ').filter(Boolean);
+          let nombre='', apPat='', apMat='';
+          if(partes.length===1){ nombre=partes[0]; apPat='XXXX'; apMat='XXXX'; }
+          else if(partes.length===2){ nombre=partes[0]; apPat=partes[1]; apMat='XXXX'; }
+          else if(partes.length===3){ nombre=partes[0]; apPat=partes[1]; apMat=partes[2]; }
+          else{ nombre=partes.slice(0,-2).join(' '); apPat=partes[partes.length-2]; apMat=partes[partes.length-1]; }
+          const monto = parseFloat(String(obj['Monto Acumulado']||'0').replace(/[$,]/g,''))||0;
+          rows.push({
+            'CONSECUTIVO':      String(obj['Folio']||''),
+            'Nombre':           nombre,
+            'Apellido Paterno': apPat,
+            'Apellido Materno': apMat,
+            'Fecha Nacimiento': obj['Fecha Nacimiento']||'',
+            'CURP':             String(obj['CURP']||'').trim().toUpperCase(),
+            'Clave Pais':       String(obj['Nacionalidad']||'MEX'),
+            'PLD Ocupacion':    String(obj['Codigo Ocupacion']||'1000000'),
+            'PLD C.P.':         String(obj['PLD C.P.']||''),
+            'PLD Colonia':      String(obj['PLD Colonia']||''),
+            'Calle':            String(obj['Calle']||''),
+            'No Exterior':      String(obj['No Exterior']||''),
+            'No Interior':      String(obj['No Interior']||''),
+            'Fecha Hora Ultima Trans': obj['Fecha Hora Ultima Trans']||'',
+            'TOTAL GENERAL':    monto,
+            'EFECTIVO':         '1',
+            'MONEDA':           '1',
+            _tipo:              'DEPOSITO',
+            _tipoReporte:       tipoRep,
+            _tel:               '',
+          });
+        });
+      }
 
     } else {
       errEl.textContent='⚠️ Formato de archivo no reconocido. Usa el archivo "UmasAlcanzadas[Sucursal]_YYYY-MM-DD_YYYY-MM-DD.xlsx"';
