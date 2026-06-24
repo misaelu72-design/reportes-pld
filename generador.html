@@ -727,8 +727,6 @@ function validarDatos(rows){
   if(c.sinNombre)    errores.push({t:'Sin nombre',     d:`${c.sinNombre} registro(s) sin nombre`,              n:c.sinNombre});
   if(c.sinCURP)      errores.push({t:'CURP faltante',  d:`${c.sinCURP} registro(s) sin CURP`,                  n:c.sinCURP});
   if(c.curpInvalida) errores.push({t:'CURP inválida',  d:`${c.curpInvalida} registro(s) con CURP ≠ 18 chars`,  n:c.curpInvalida});
-  if(c.sinCP)        errores.push({t:'CP faltante',    d:`${c.sinCP} registro(s) sin código postal`,           n:c.sinCP});
-  if(c.cpInvalido)   errores.push({t:'CP inválido',    d:`${c.cpInvalido} registro(s) con CP ≠ 5 dígitos`,     n:c.cpInvalido});
   if(c.sinMonto)     advertencias.push({t:'Monto en cero',       d:`${c.sinMonto} registro(s) con monto $0.00`,   n:c.sinMonto});
   if(c.sinTel)       advertencias.push({t:'Sin teléfono',        d:`${c.sinTel} registro(s) sin teléfono`,        n:c.sinTel});
   if(c.sinApMat)     advertencias.push({t:'Sin apellido materno',d:`${c.sinApMat} registro(s) sin ap. materno`,   n:c.sinApMat});
