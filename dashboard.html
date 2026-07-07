@@ -7,116 +7,71 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#f8fafc;--card:#fff;--texto:#111827;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
+:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);display:flex;min-height:100vh}
-
-/* ── Sidebar ── */
-.sidebar{width:56px;background:#fff;border-right:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100}
-.s-logo{background:var(--azul);width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;margin-bottom:12px;text-decoration:none}
-.s-item{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:18px;cursor:pointer;position:relative;text-decoration:none}
-.s-item:hover{background:#f1f5f9;color:#374151}
-.s-item.active{background:#EEF3FB;color:var(--azul)}
-.s-item .tt{position:absolute;left:46px;background:#1e293b;color:#fff;font-size:10px;padding:4px 8px;border-radius:5px;white-space:nowrap;opacity:0;pointer-events:none;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.s-item:hover .tt{opacity:1}
-.s-divider{width:28px;height:0.5px;background:var(--border);margin:4px 0}
-.s-bottom{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:4px}
-.s-avatar{width:28px;height:28px;border-radius:50%;background:#EEF3FB;display:flex;align-items:center;justify-content:center;color:var(--azul);font-size:10px;font-weight:500;cursor:pointer}
-
-/* ── Layout principal ── */
-.layout{margin-left:56px;display:flex;flex-direction:column;min-height:100vh;flex:1}
-
-/* ── Topbar ── */
-.topbar{background:#fff;border-bottom:0.5px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:90;gap:12px}
-.tb-info{}
-.tb-breadcrumb{font-size:10px;color:var(--muted)}
-.tb-title{font-size:14px;font-weight:500;color:var(--texto)}
-.tb-right{display:flex;align-items:center;gap:8px}
-.tb-corte{background:rgba(31,56,100,.06);border:0.5px solid rgba(31,56,100,.15);border-radius:20px;padding:4px 12px;font-size:11px;font-family:'DM Mono',monospace;color:var(--azul)}
-.tb-upd{font-size:11px;color:var(--muted)}
-.tb-user{font-size:12px;color:var(--texto);font-weight:500}
-.tb-btn{font-size:11px;padding:5px 12px;border:0.5px solid var(--border);border-radius:20px;background:#fff;color:var(--texto);cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;text-decoration:none}
-.tb-btn:hover{background:#f9fafb}
-.btn-panel{font-size:11px;padding:5px 12px;border:0.5px solid var(--border);border-radius:20px;background:#fff;color:var(--texto);cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px}
-.btn-panel:hover{background:#f9fafb}
-.tb-logout{font-size:11px;padding:5px 12px;border:0.5px solid var(--border);border-radius:20px;background:#fff;color:var(--texto);cursor:pointer;font-family:'DM Sans',sans-serif}
-.tb-logout:hover{background:#f9fafb}
-.hr-sel{background:#fff;border:0.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:'DM Mono',monospace;color:var(--texto);cursor:pointer}
-.hr-sel option{background:#fff;color:var(--texto)}
-
-/* ── Contenido ── */
-main{padding:20px 24px;max-width:1300px;width:100%}
-.st{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:2rem 0 .75rem}
-.st:first-child{margin-top:0}
-
-/* ── KPIs ── */
-.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
-.kp{background:#fff;border:0.5px solid var(--border);border-radius:10px;padding:1rem 1.1rem;position:relative;overflow:hidden}
-.ka{position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0}
-.kl{font-size:11px;color:var(--muted);margin-bottom:5px}
-.kv{font-size:24px;font-weight:500;letter-spacing:-1px;line-height:1;color:var(--texto)}
-.kd{display:inline-flex;align-items:center;font-size:11px;font-weight:500;font-family:'DM Mono',monospace;margin-top:6px;padding:2px 7px;border-radius:20px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto)}
+header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px}
+.li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
+.hr{display:flex;align-items:center;gap:10px}
+.cb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'DM Mono',monospace}
+.ub{font-size:11px;opacity:.55}.un{font-size:12px;opacity:.8}
+.lo{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+main{max-width:1200px;margin:0 auto;padding:2rem}
+.st{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1rem}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.kp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden}
+.ka{position:absolute;top:0;left:0;right:0;height:3px}
+.kl{font-size:12px;color:var(--muted);margin-bottom:6px}
+.kv{font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
+.kd{display:inline-flex;align-items:center;font-size:12px;font-weight:500;font-family:'DM Mono',monospace;margin-top:8px;padding:2px 8px;border-radius:20px}
 .dp{background:var(--pos-bg);color:var(--pos)}.dn{background:var(--neg-bg);color:var(--neg)}.dz{background:#f3f4f6;color:var(--muted)}
-
-/* ── Cards ── */
-.cd{background:#fff;border:0.5px solid var(--border);border-radius:10px;overflow:hidden}
-.ch{padding:.875rem 1.1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border)}
-.ch h3{font-size:13px;font-weight:500;color:var(--texto)}.cs{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
-
-/* ── Tablas ── */
+.cd{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ch{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.ch h3{font-size:14px;font-weight:600}.cs{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
 .tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-thead th{background:#f9fafb;padding:8px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:0.5px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#f9fafb;padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
 thead th[colspan]{text-align:center!important}
 thead th:not(:first-child):not([colspan]){text-align:right}
-tbody tr{border-bottom:0.5px solid #f3f4f6}
+tbody tr{border-bottom:1px solid #f3f4f6}
 tbody tr:hover{background:#f9fafb}
-td{padding:9px 12px}
+td{padding:11px 14px}
 td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 .sn{font-weight:500;display:flex;align-items:center;gap:8px}
-.sd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .nb{font-weight:600}.muted{color:var(--muted)}
 .bo{background:#f0f5fb}.bk{background:#f0f9f0}.br{background:#fff5f5}.by{background:#fffbea}
 .tr2{background:#f9fafb!important;font-weight:600}
-.pl{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:500;font-family:'DM Mono',monospace}
+.pl{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
 .pp{background:var(--pos-bg);color:var(--pos)}.pn{background:var(--neg-bg);color:var(--neg)}.pz{background:#f3f4f6;color:var(--muted)}
-
-/* ── Donut ── */
-.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-.dc{background:#fff;border:0.5px solid var(--border);border-radius:10px;padding:1rem 1.1rem}
-.dl{font-size:11px;color:var(--muted);margin-bottom:4px}.dv{font-size:24px;font-weight:500;margin-bottom:2px}
-.dc2{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
-.pg{width:100%;height:5px;background:#f1f5f9;border-radius:3px;margin-top:8px;overflow:hidden}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.dc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.dl{font-size:12px;color:var(--muted);margin-bottom:4px}.dv{font-size:26px;font-weight:600;margin-bottom:2px}
+.dc2{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+.pg{width:100%;height:6px;background:#e5e7eb;border-radius:3px;margin-top:10px;overflow:hidden}
 .pb{height:100%;border-radius:3px}
-.ds{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center;padding:1.25rem}
+.ds{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center;padding:1.5rem}
 .dw{position:relative;width:200px;height:200px}
 .dc3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-.dv2{font-size:19px;font-weight:500;letter-spacing:-1px}.dl2{font-size:11px;color:var(--muted)}
+.dv2{font-size:20px;font-weight:600;letter-spacing:-1px}.dl2{font-size:11px;color:var(--muted)}
 .dle{display:flex;flex-direction:column;gap:6px}
 .di{display:flex;align-items:center;gap:8px;font-size:12px}
-.dd{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.dd{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .da{flex:1}.dq{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:60px;text-align:right}
 .dp2{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:40px;text-align:right}
 .xr{cursor:pointer}.xr:hover{background:#f0f5ff!important}
-
-/* ── Descargas ── */
-.desc-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;border:0.5px solid var(--border);border-radius:8px;padding:9px 14px;font-size:12px;color:var(--texto);text-decoration:none;transition:background .15s}
-.desc-btn:hover{background:#f9fafb}
-.desc-btn-label{font-weight:500}
-.desc-btn-sub{font-size:10px;color:var(--muted)}
-
-/* ── Modal ── */
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
 .mo.on{display:flex}
-.mb{background:#fff;border-radius:12px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.mh{padding:1.1rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
-.mt{font-size:13px;font-weight:500;margin-bottom:3px}.ms{font-size:11px;color:var(--muted)}
-.mc{width:28px;height:28px;border-radius:7px;border:0.5px solid var(--border);background:none;cursor:pointer;font-size:14px;color:var(--muted)}
-.mx{overflow-y:auto;flex:1}.mx table{font-size:12px}
+.mb{background:var(--card);border-radius:16px;width:100%;max-width:700px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.mh{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+.mt{font-size:14px;font-weight:600;margin-bottom:3px}.ms{font-size:12px;color:var(--muted)}
+.mc{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:15px;color:var(--muted)}
+.mx{overflow-y:auto;flex:1}.mx table{font-size:13px}
 .mx thead th{position:sticky;top:0;z-index:1}
-.mf{padding:.65rem 1.25rem;border-top:0.5px solid var(--border);font-size:11px;color:var(--muted);flex-shrink:0}
-
-/* ── Login ── */
+.mf{padding:.75rem 1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted);flex-shrink:0}
 .lo2{position:fixed;inset:0;background:var(--azul);display:none;align-items:center;justify-content:center;z-index:9999}
 .lo2.on{display:flex}
 .lb{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:340px}
@@ -129,216 +84,198 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 .lin:focus{border-color:var(--azul2)}
 .lbtn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
 .lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+@media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
+.hr select option{background:#1F3864;color:white}
 
-/* ── Panel ── */
-.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
-.panel-overlay.on{display:block;opacity:1}
-.panel{position:fixed;top:0;right:0;bottom:0;width:680px;max-width:96vw;background:#fff;box-shadow:-4px 0 32px rgba(0,0,0,.15);z-index:501;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
-.panel.on{transform:translateX(0)}
-.panel-head{padding:1.1rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.panel-head h3{font-size:14px;font-weight:500;color:var(--texto)}
-.panel-head span{font-size:11px;color:var(--muted)}
-.panel-close{width:28px;height:28px;border-radius:7px;border:0.5px solid var(--border);background:none;cursor:pointer;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center}
-.panel-body{overflow-y:auto;flex:1;padding:1.1rem 1.25rem}
-.exec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--border)}
-.exec-item:last-child{border-bottom:none}
-.exec-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
-.exec-title{font-weight:500;font-size:13px;margin-bottom:3px}
-.exec-desc{font-size:12px;color:var(--muted);line-height:1.5}
-.epill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500;font-family:monospace}
-.ep-pos{background:#dcfce7;color:#166534}.ep-neg{background:#fee2e2;color:#991b1b}
-.rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border)}
-.rank-item:last-child{border-bottom:none}
-.rank-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
-.rn-top{background:#FFF2CC;color:#7d4f00}.rn-mid{background:#f3f4f6;color:#444441}.rn-low{background:#fee2e2;color:#991b1b}
-.rank-name{font-weight:500;font-size:13px;flex:0 0 80px}
-.rank-bars{display:flex;flex-direction:column;gap:3px;flex:1}
-.brow{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
-.blbl{width:60px;flex-shrink:0}
-.bbg{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
-.bfill{height:100%;border-radius:2px}
-.rscore{font-size:12px;font-weight:500;font-family:monospace;min-width:32px;text-align:right}
-.rsec{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:1rem 0 .5rem}
-
-@media(max-width:640px){main{padding:12px}.ds{grid-template-columns:1fr}}
+  .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
+  .panel-overlay.on{display:block;opacity:1}
+  .panel{position:fixed;top:0;right:0;bottom:0;width:680px;max-width:96vw;background:#ffffff;box-shadow:-4px 0 32px rgba(0,0,0,.25);z-index:501;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+  .panel.on{transform:translateX(0)}
+  .panel-head{padding:1.25rem 1.5rem;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#ffffff}
+  .panel-head h3{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+  .panel-head span{font-size:12px;color:var(--color-text-secondary)}
+  .panel-close{width:30px;height:30px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-tertiary);background:none;cursor:pointer;font-size:15px;color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center}
+  .panel-body{overflow-y:auto;flex:1;padding:1.25rem 1.5rem;background:#ffffff}
+  .exec-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+  .exec-item:last-child{border-bottom:none}
+  .exec-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+  .exec-title{font-weight:500;font-size:13px;margin-bottom:3px;color:var(--color-text-primary)}
+  .exec-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+  .epill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500;font-family:monospace}
+  .ep-pos{background:#dcfce7;color:#166534}.ep-neg{background:#fee2e2;color:#991b1b}
+  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+  .rank-item:last-child{border-bottom:none}
+  .rank-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+  .rn-top{background:#FFF2CC;color:#7d4f00}.rn-mid{background:#f3f4f6;color:#444441}.rn-low{background:#fee2e2;color:#991b1b}
+  .rank-name{font-weight:500;font-size:13px;flex:0 0 80px;color:var(--color-text-primary)}
+  .rank-bars{display:flex;flex-direction:column;gap:3px;flex:1}
+  .brow{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+  .blbl{width:60px;flex-shrink:0}
+  .bbg{flex:1;height:4px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
+  .bfill{height:100%;border-radius:2px}
+  .rscore{font-size:12px;font-weight:500;font-family:monospace;min-width:32px;text-align:right}
+  .rsec{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin:1rem 0 .5rem}
+  .btn-panel{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+  .btn-panel:hover{background:rgba(255,255,255,.22)}
 </style>
 </head>
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-  <a href="home.html" class="s-logo">C</a>
-  <a class="s-item active" onclick="scrollTo(0,0)"><i class="ti ti-chart-bar" aria-hidden="true"></i><span class="tt">Resumen</span></a>
-  <a class="s-item" onclick="document.getElementById('stTabla').scrollIntoView({behavior:'smooth'})"><i class="ti ti-building-store" aria-hidden="true"></i><span class="tt">Sucursales</span></a>
-  <a class="s-item" onclick="document.getElementById('stTrans').scrollIntoView({behavior:'smooth'})"><i class="ti ti-arrow-left-right" aria-hidden="true"></i><span class="tt">Cambios</span></a>
-  <a class="s-item" onclick="document.getElementById('stTend').scrollIntoView({behavior:'smooth'})"><i class="ti ti-trending-up" aria-hidden="true"></i><span class="tt">Tendencias</span></a>
-  <div class="s-divider"></div>
-  <a href="generador.html" class="s-item"><i class="ti ti-file-description" aria-hidden="true"></i><span class="tt">Generador XML</span></a>
-  <a class="s-item" onclick="document.getElementById('stDesc').scrollIntoView({behavior:'smooth'})"><i class="ti ti-download" aria-hidden="true"></i><span class="tt">Descargas</span></a>
-  <div class="s-bottom">
-    <div class="s-item" id="hLogout" onclick="logout()" style="display:none"><i class="ti ti-logout" aria-hidden="true"></i><span class="tt">Cerrar sesión</span></div>
-    <div class="s-avatar" id="sAvatar"></div>
-  </div>
-</div>
-
-<!-- Layout principal -->
-<div class="layout">
-
-  <!-- Topbar -->
-  <div class="topbar">
-    <div class="tb-info">
-      <div class="tb-breadcrumb">CECOM · Prevención de Lavado de Dinero</div>
-      <div class="tb-title">Reportes PLD</div>
+<header>
+  <div class="hi">
+    <div class="logo">
+      <div class="li">C</div>
+      <div><div class="lt">CECOM — Reportes PLD</div><div class="ls">Prevención de Lavado de Dinero</div></div>
     </div>
-    <div class="tb-right">
-      <span class="tb-corte" id="hCorte">—</span>
-      <span class="tb-upd" id="hUpd"></span>
-      <span class="tb-user" id="hUser"></span>
-      <select class="hr-sel" id="selectorCorte" style="display:none" onchange="cambiarCorte(this.value)"></select>
+    <div class="hr">
+      <span class="cb" id="hCorte">—</span>
+      <span class="ub" id="hUpd"></span>
+      <span class="un" id="hUser"></span>
+      <a href="home.html" class="lo" style="text-decoration:none">← Inicio</a>
       <button class="btn-panel" id="btnPanel" onclick="abrirPanel()" style="display:none">⭐ Resumen</button>
+      <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" style="display:none">
+  <!-- KPIs -->
+  <div class="st" id="stKpis"></div>
+  <div class="kg" id="kpis"></div>
+
+  <!-- Donut -->
+  <div class="st" id="stDonut"></div>
+  <div class="cd">
+    <div class="ds">
+      <div class="dw" id="donutWrap">
+        <div class="dc3"><div class="dv2" id="donutVal"></div><div class="dl2">clientes totales</div></div>
+      </div>
+      <div class="dle" id="donutLegend"></div>
     </div>
   </div>
 
-  <!-- Contenido -->
-  <main id="main" style="display:none">
-    <!-- KPIs -->
-    <div class="st" id="stKpis"></div>
-    <div class="kg" id="kpis"></div>
+  <!-- Tabla sucursales -->
+  <div class="st" id="stTabla"></div>
+  <div class="cd">
+    <div class="ch"><h3 id="tablaH3"></h3><span class="cs" id="tablaCs"></span></div>
+    <div class="tw"><table>
+      <thead>
+        <tr>
+          <th rowspan="2" style="vertical-align:middle">Sucursal</th>
+          <th rowspan="2" style="vertical-align:middle;text-align:right">Total</th>
+          <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864">OPERACIONES</th>
+          <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623">KYC-PLD</th>
+          <th rowspan="2" style="vertical-align:middle;text-align:right">Reg. Express</th>
+          <th rowspan="2" style="vertical-align:middle;text-align:right">Variación</th>
+        </tr>
+        <tr>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Bloqueado</th>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Info Act</th>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Reg Completo</th>
+          <th style="background:#dce6f3;color:#1F3864;text-align:right">Verificado</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Bloqueado</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Info Act</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Pend Valid</th>
+          <th style="background:#d6e8d0;color:#375623;text-align:right">Verificado</th>
+        </tr>
+      </thead>
+      <tbody id="tbSuc"></tbody>
+    </table></div>
+  </div>
 
-    <!-- Donut -->
-    <div class="st" id="stDonut"></div>
-    <div class="cd">
-      <div class="ds">
-        <div class="dw" id="donutWrap">
-          <div class="dc3"><div class="dv2" id="donutVal"></div><div class="dl2">clientes totales</div></div>
-        </div>
-        <div class="dle" id="donutLegend"></div>
+  <!-- Documentación -->
+  <div class="st" id="stDoc"></div>
+  <div class="dg" id="docGrid"></div>
+
+  <!-- Transiciones -->
+  <div class="st" id="stTrans"></div>
+  <div class="cd">
+    <div class="ch"><h3>Todos los movimientos</h3><span class="cs" id="transCs"></span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th style="width:40px">#</th>
+        <th id="thAnt"></th><th id="thAct"></th>
+        <th style="text-align:right">Cantidad</th>
+        <th style="text-align:right">% del Total</th>
+      </tr></thead>
+      <tbody id="tbTrans"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Gráfica ops -->
+  <div class="st" id="stOps"></div>
+  <div class="cd" style="padding:1.5rem;margin-bottom:14px">
+    <canvas id="opsChart" style="max-height:300px"></canvas>
+  </div>
+
+  <!-- Tabla ops -->
+  <div class="cd" style="margin-bottom:14px">
+    <div class="ch"><h3>Clientes nuevos — Operaciones</h3><span class="cs" id="opsPer"></span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th>Sucursal</th><th style="text-align:right">Total</th>
+        <th style="text-align:right;background:#f0f5fb">Reg. Completo</th>
+        <th style="text-align:right;background:#f0f5fb">Verif. Ops</th>
+        <th style="text-align:right;background:#fff5f5">Bloq. Ops</th>
+        <th style="text-align:right;background:#f0f5fb">Info Act. Ops</th>
+        <th style="text-align:right;background:#fffbea">Reg. Express</th>
+      </tr></thead>
+      <tbody id="tbOps"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Tabla KYC ops -->
+  <div class="cd">
+    <div class="ch"><h3>Clientes nuevos — KYC-PLD</h3><span class="cs" id="kycPer"></span></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th>Sucursal</th><th style="text-align:right">Total</th>
+        <th style="text-align:right;background:#fff5f5">Bloq. KYC</th>
+        <th style="text-align:right;background:#f0f9f0">Info Act. KYC</th>
+        <th style="text-align:right;background:#f0f5fb">Pend. Valid. KYC</th>
+        <th style="text-align:right;background:#f0f9f0">Verif. KYC</th>
+      </tr></thead>
+      <tbody id="tbKyc"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Descargas -->
+  <div class="st" id="stDesc" style="display:none">Descargas · archivos del corte</div>
+  <div id="descSection" style="display:none;margin-bottom:1.5rem">
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <a id="dlDetalle" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">📥</span>
+        <div><div style="font-weight:500" id="dlDetalleNombre">Detalle Cambios Estatus</div><div style="font-size:11px;color:var(--muted)">Excel · cambios por cliente</div></div>
+      </a>
+      <a id="dlReporte" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">📊</span>
+        <div><div style="font-weight:500" id="dlReporteNombre">Reporte PLD Todas Sucursales</div><div style="font-size:11px;color:var(--muted)">Excel · reporte consolidado</div></div>
+      </a>
+      <a id="dlBase" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">👥</span>
+        <div><div style="font-weight:500" id="dlBaseNombre">Base Unificada</div><div style="font-size:11px;color:var(--muted)">Excel · todos los clientes</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Tendencias históricas -->
+  <div class="st" id="stTend" style="display:none">Tendencias históricas · todos los cortes</div>
+  <div id="tendenciasSection" style="display:none">
+    <div class="cd" style="padding:1.5rem;margin-bottom:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary)" id="tendLegend1"></div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="chartTotal" role="img" aria-label="Evolución del total de clientes por corte"></canvas>
       </div>
     </div>
-
-    <!-- Tabla sucursales -->
-    <div class="st" id="stTabla"></div>
-    <div class="cd">
-      <div class="ch"><h3 id="tablaH3"></h3><span class="cs" id="tablaCs"></span></div>
-      <div class="tw"><table>
-        <thead>
-          <tr>
-            <th rowspan="2" style="vertical-align:middle">Sucursal</th>
-            <th rowspan="2" style="vertical-align:middle;text-align:right">Total</th>
-            <th colspan="4" style="text-align:center;background:#dce6f3;color:#1F3864">OPERACIONES</th>
-            <th colspan="4" style="text-align:center;background:#d6e8d0;color:#375623">KYC-PLD</th>
-            <th rowspan="2" style="vertical-align:middle;text-align:right">Reg. Express</th>
-            <th rowspan="2" style="vertical-align:middle;text-align:right">Variación</th>
-          </tr>
-          <tr>
-            <th style="background:#dce6f3;color:#1F3864;text-align:right">Bloqueado</th>
-            <th style="background:#dce6f3;color:#1F3864;text-align:right">Info Act</th>
-            <th style="background:#dce6f3;color:#1F3864;text-align:right">Reg Completo</th>
-            <th style="background:#dce6f3;color:#1F3864;text-align:right">Verificado</th>
-            <th style="background:#d6e8d0;color:#375623;text-align:right">Bloqueado</th>
-            <th style="background:#d6e8d0;color:#375623;text-align:right">Info Act</th>
-            <th style="background:#d6e8d0;color:#375623;text-align:right">Pend Valid</th>
-            <th style="background:#d6e8d0;color:#375623;text-align:right">Verificado</th>
-          </tr>
-        </thead>
-        <tbody id="tbSuc"></tbody>
-      </table></div>
-    </div>
-
-    <!-- Documentación -->
-    <div class="st" id="stDoc"></div>
-    <div class="dg" id="docGrid"></div>
-
-    <!-- Transiciones -->
-    <div class="st" id="stTrans"></div>
-    <div class="cd">
-      <div class="ch"><h3>Todos los movimientos</h3><span class="cs" id="transCs"></span></div>
-      <div class="tw"><table>
-        <thead><tr>
-          <th style="width:40px">#</th>
-          <th id="thAnt"></th><th id="thAct"></th>
-          <th style="text-align:right">Cantidad</th>
-          <th style="text-align:right">% del Total</th>
-        </tr></thead>
-        <tbody id="tbTrans"></tbody>
-      </table></div>
-    </div>
-
-    <!-- Gráfica ops -->
-    <div class="st" id="stOps"></div>
-    <div class="cd" style="padding:1.25rem;margin-bottom:10px">
-      <canvas id="opsChart" style="max-height:300px"></canvas>
-    </div>
-
-    <!-- Tabla ops -->
-    <div class="cd" style="margin-bottom:10px">
-      <div class="ch"><h3>Clientes nuevos — Operaciones</h3><span class="cs" id="opsPer"></span></div>
-      <div class="tw"><table>
-        <thead><tr>
-          <th>Sucursal</th><th style="text-align:right">Total</th>
-          <th style="text-align:right;background:#f0f5fb">Reg. Completo</th>
-          <th style="text-align:right;background:#f0f5fb">Verif. Ops</th>
-          <th style="text-align:right;background:#fff5f5">Bloq. Ops</th>
-          <th style="text-align:right;background:#f0f5fb">Info Act. Ops</th>
-          <th style="text-align:right;background:#fffbea">Reg. Express</th>
-        </tr></thead>
-        <tbody id="tbOps"></tbody>
-      </table></div>
-    </div>
-
-    <!-- Tabla KYC -->
-    <div class="cd">
-      <div class="ch"><h3>Clientes nuevos — KYC-PLD</h3><span class="cs" id="kycPer"></span></div>
-      <div class="tw"><table>
-        <thead><tr>
-          <th>Sucursal</th><th style="text-align:right">Total</th>
-          <th style="text-align:right;background:#fff5f5">Bloq. KYC</th>
-          <th style="text-align:right;background:#f0f9f0">Info Act. KYC</th>
-          <th style="text-align:right;background:#f0f5fb">Pend. Valid. KYC</th>
-          <th style="text-align:right;background:#f0f9f0">Verif. KYC</th>
-        </tr></thead>
-        <tbody id="tbKyc"></tbody>
-      </table></div>
-    </div>
-
-    <!-- Descargas -->
-    <div class="st" id="stDesc" style="display:none">Descargas · archivos del corte</div>
-    <div id="descSection" style="display:none;margin-bottom:1.5rem">
-      <div style="display:flex;flex-wrap:wrap;gap:8px">
-        <a id="dlDetalle" href="#" download class="desc-btn">
-          <span style="font-size:16px">📥</span>
-          <div><div class="desc-btn-label" id="dlDetalleNombre">Detalle Cambios Estatus</div><div class="desc-btn-sub">Excel · cambios por cliente</div></div>
-        </a>
-        <a id="dlReporte" href="#" download class="desc-btn">
-          <span style="font-size:16px">📊</span>
-          <div><div class="desc-btn-label" id="dlReporteNombre">Reporte PLD Todas Sucursales</div><div class="desc-btn-sub">Excel · reporte consolidado</div></div>
-        </a>
-        <a id="dlBase" href="#" download class="desc-btn">
-          <span style="font-size:16px">👥</span>
-          <div><div class="desc-btn-label" id="dlBaseNombre">Base Unificada</div><div class="desc-btn-sub">Excel · todos los clientes</div></div>
-        </a>
+    <div class="cd" style="padding:1.5rem">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary)" id="tendLegend2"></div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="chartKyc" role="img" aria-label="Evolución de KPIs KYC por corte"></canvas>
       </div>
     </div>
+  </div>
 
-    <!-- Tendencias -->
-    <div class="st" id="stTend" style="display:none">Tendencias históricas · todos los cortes</div>
-    <div id="tendenciasSection" style="display:none">
-      <div class="cd" style="padding:1.25rem;margin-bottom:10px">
-        <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--muted)" id="tendLegend1"></div>
-        <div style="position:relative;width:100%;height:220px">
-          <canvas id="chartTotal" role="img" aria-label="Evolución del total de clientes por corte"></canvas>
-        </div>
-      </div>
-      <div class="cd" style="padding:1.25rem">
-        <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--muted)" id="tendLegend2"></div>
-        <div style="position:relative;width:100%;height:220px">
-          <canvas id="chartKyc" role="img" aria-label="Evolución de KPIs KYC por corte"></canvas>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
+</main>
 
 <!-- Modal -->
 <div class="mo" id="modal" onclick="if(event.target===this)cerrar()">
@@ -433,8 +370,7 @@ function logout(){
 function mostrarApp(nombre){
   document.getElementById('login').classList.remove('on');
   document.getElementById('hUser').textContent=nombre;
-  document.getElementById('hLogout').style.display='flex';
-  const av=document.getElementById('sAvatar'); if(av) av.textContent=nombre.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase();
+  document.getElementById('hLogout').style.display='inline-block';
   document.getElementById('btnPanel').style.display='flex';
   document.getElementById('main').style.display='block';
   if(DATA){
@@ -1042,7 +978,6 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
-
 <div class="panel-overlay" id="panelOverlay" onclick="cerrarPanel()"></div>
 <div class="panel" id="panel">
   <div class="panel-head">
@@ -1053,7 +988,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     <button class="panel-close" onclick="cerrarPanel()">✕</button>
   </div>
   <div class="panel-body" id="panelBody">
-    <p style="color:var(--muted);font-size:13px">Cargando...</p>
+    <p style="color:var(--color-text-secondary);font-size:13px">Cargando...</p>
   </div>
 </div>
 
