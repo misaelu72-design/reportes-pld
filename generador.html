@@ -440,11 +440,13 @@ async function procesarArchivo(){
     const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
     const esFormatoAcum = wb.SheetNames.some(h=>h.toLowerCase().includes('depositos acumulado')||h.toLowerCase().includes('depósitos acumulado'));
     const esFormatoC = wb.SheetNames.some(h=>h.toLowerCase().includes('reporte de umas'));
-    const esFormatoTransac = wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO');
+    // Formato PLD Nydia con hojas JUNIO - DEPOSITO / JUNIO - RETIRO
+    const esFormatoPLD = wb.SheetNames.some(h=>h.includes('JUNIO - DEPOSITO')||h.includes('JUNIO - RETIRO'));
+    const esFormatoTransac = !esFormatoPLD && wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO');
     // Formato semestral generado por el script Python — tiene columna Monto Acumulado
     const primeraHoja = wb.SheetNames[0];
     const primeraFila = XLSX.utils.sheet_to_json(wb.Sheets[primeraHoja],{header:1,defval:''})[1]||[];
-    const esFormatoSemestral = !esFormatoTransac && primeraFila.some(c=>String(c).includes('Monto Acumulado'));
+    const esFormatoSemestral = !esFormatoTransac && !esFormatoPLD && primeraFila.some(c=>String(c).includes('Monto Acumulado'));
 
     if(esFormatoC){
       // ── FORMATO C (estándar): hoja Reporte de UMAS ────────────
@@ -620,6 +622,64 @@ async function procesarArchivo(){
         const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
         if(!mapFolio2[key])mapFolio2[key]=STATE.prefijo+String(ci2++).padStart(4,'0');
         r.CONSECUTIVO=mapFolio2[key];
+      });
+
+    } else if(esFormatoPLD){
+      // ── FORMATO PLD NYDIA: hojas con JUNIO ─────────────────────
+      // Mensual → hojas "JUNIO - DEPOSITO" / "JUNIO - RETIRO" → monto del último mes
+      // Semestral → hojas "DEPOSITO" / "RETIRO" → TOTAL ACUMULADO
+      const esSemestral = tipoRep === 'SEMESTRAL';
+      const hDep = esSemestral ? 'DEPOSITO' : wb.SheetNames.find(h=>h.includes('JUNIO - DEPOSITO'))||'DEPOSITO';
+      const hRet = esSemestral ? 'RETIRO'   : wb.SheetNames.find(h=>h.includes('JUNIO - RETIRO'))||'RETIRO';
+
+      [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([hoja,t])=>{
+        if(!wb.SheetNames.includes(hoja)) return;
+        const arr=XLSX.utils.sheet_to_json(wb.Sheets[hoja],{header:1,defval:''});
+        const hi=arr.findIndex(r=>r.some(c=>String(c).trim()==='CURP'));
+        if(hi<0) return;
+        const headers=arr[hi].map(h=>String(h).replace(/\n/g,' ').trim());
+        arr.slice(hi+1).forEach(r=>{
+          const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
+          const curp=String(obj['CURP']||'').trim().toUpperCase();
+          if(curp.length!==18) return;
+          const nombreCompleto=String(obj['Nombre del Cliente']||'').trim();
+          const partes=nombreCompleto.split(' ').filter(Boolean);
+          let nombre='',apPat='',apMat='';
+          if(partes.length===1){nombre=partes[0];apPat='XXXX';apMat='XXXX';}
+          else if(partes.length===2){nombre=partes[0];apPat=partes[1];apMat='XXXX';}
+          else if(partes.length===3){nombre=partes[0];apPat=partes[1];apMat=partes[2];}
+          else{nombre=partes.slice(0,-2).join(' ');apPat=partes[partes.length-2];apMat=partes[partes.length-1];}
+          let monto=0;
+          if(esSemestral){
+            monto=parseFloat(String(obj['TOTAL ACUMULADO']||'0').replace(/[$,—\-]/g,''))||0;
+          } else {
+            const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
+            for(let i=meses.length-1;i>=0;i--){
+              const v=parseFloat(String(obj[meses[i]]||'0').replace(/[$,—\-]/g,''));
+              if(v>0){monto=v;break;}
+            }
+          }
+          const cpRaw=String(obj['C.P.']||obj['PLD C.P.']||'').split('.')[0].trim();
+          rows.push({
+            'Nombre':nombre,'Apellido Paterno':apPat,'Apellido Materno':apMat,
+            'Fecha Nacimiento':obj['Fecha Nacimiento']||'',
+            'CURP':curp,'Clave Pais':String(obj['Nacionalidad']||'MEX'),
+            'PLD Ocupacion':String(obj['PLD Ocupación']||''),
+            'PLD Codigo Ocupacion':String(obj['Código Ocupación']||'1000000').split('.')[0],
+            'PLD C.P.':cpRaw,'PLD Colonia':String(obj['Colonia']||''),
+            'Calle':String(obj['Calle']||''),'No Exterior':String(obj['No. Ext']||''),
+            'No Interior':String(obj['No. Int']||''),
+            'Fecha Hora Ultima Trans':obj['Fecha Última Transac.']||obj['Fecha Última Transacción']||'',
+            'TOTAL GENERAL':monto,'EFECTIVO':'1','MONEDA':'1',
+            _tipo:t,_tipoReporte:tipoRep,_tel:'',
+          });
+        });
+      });
+      let ciP=1;const mapFolioP={};
+      rows.forEach(r=>{
+        const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
+        if(!mapFolioP[key])mapFolioP[key]=STATE.prefijo+String(ciP++).padStart(4,'0');
+        r.CONSECUTIVO=mapFolioP[key];
       });
 
     } else if(esFormatoTransac){
