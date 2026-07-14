@@ -185,6 +185,14 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           <div class="upload-sub" id="upload-sub">Acepta .xlsx y .xlsm</div>
         </div>
 
+        <div class="section-label">Historial de avisos (opcional)</div>
+        <div class="upload-zone" id="zone-historial" onclick="document.getElementById('file-historial').click()" style="padding:1.5rem">
+          <input type="file" id="file-historial" accept=".json" onchange="historialSelected(this)">
+          <div class="upload-icon" id="hist-icon" style="font-size:24px;margin-bottom:6px">🔒</div>
+          <div class="upload-title" id="hist-title" style="font-size:13px">Sube <span style="font-family:'DM Mono',monospace">historial_avisos_cecom.json</span> para evitar duplicados</div>
+          <div class="upload-sub" id="hist-sub">Opcional — si no lo subes, no se filtra nada ya reportado</div>
+        </div>
+
         <div class="actions">
           <button class="btn btn-primary" onclick="procesarArchivo()">
             <span id="btn-procesar-text">Procesar y ver resumen</span>
@@ -211,6 +219,17 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           </table>
         </div>
         <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)" id="tabla-footer"></div>
+      </div>
+    </div>
+    <div class="card hidden" id="panel-bloqueados" style="border-color:#fca5a5">
+      <div class="card-head"><h3>🔒 Ya reportados (excluidos automáticamente)</h3><span id="bloqueados-count" style="font-size:11px;color:var(--muted)"></span></div>
+      <div class="card-body" style="padding:0">
+        <div class="tw">
+          <table>
+            <thead><tr><th>Cliente</th><th>CURP</th><th>Tipo</th><th>Motivo</th></tr></thead>
+            <tbody id="tabla-bloqueados"></tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="val-panel">
@@ -253,7 +272,62 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 <script>
 const MAPA_PAIS={MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
 const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
-let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{}};
+let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{},historial:null,bloqueados:[]};
+
+// ── Historial de avisos (candado JSON) ──────────────────────────────
+function historialSelected(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      STATE.historial=JSON.parse(e.target.result);
+      const nClientes=Object.keys(STATE.historial).length;
+      document.getElementById('zone-historial').classList.add('upload-done');
+      document.getElementById('hist-icon').textContent='✅';
+      document.getElementById('hist-title').textContent=f.name;
+      document.getElementById('hist-sub').textContent=`${nClientes} clientes con avisos previos cargados`;
+    }catch(err){
+      STATE.historial=null;
+      document.getElementById('hist-title').textContent='Error al leer el JSON: '+err.message;
+    }
+  };
+  r.readAsText(f);
+}
+
+// Genera la lista de meses 'YYYY-MM' entre inicio y fin, inclusive
+function mesesEnRango(inicio,fin){
+  if(!inicio||!fin)return[];
+  const[ay,am]=inicio.split('-').map(Number);
+  const[by,bm]=fin.split('-').map(Number);
+  if(!ay||!am||!by||!bm)return[];
+  let y=ay,m=am;const out=[];
+  while(y<by||(y===by&&m<=bm)){
+    out.push(`${y}-${String(m).padStart(2,'0')}`);
+    m++;if(m>12){m=1;y++;}
+  }
+  return out;
+}
+
+// Filtra las filas cuyo CURP+mes(es)+tipo de operación ya estén
+// cerrados en el historial. Devuelve {activos, bloqueados}.
+function aplicarHistorial(rows,mesCfgIso){
+  if(!STATE.historial)return{activos:rows,bloqueados:[]};
+  const activos=[],bloqueados=[];
+  rows.forEach(r=>{
+    const curp=String(r.CURP||'').trim().toUpperCase();
+    const op=r._tipo||'DEPOSITO';
+    const regOp=(STATE.historial[curp]||{})[op];
+    const mesesFila=(r._mesInicio&&r._mesFin)?mesesEnRango(r._mesInicio,r._mesFin):[mesCfgIso];
+    const cerrados=mesesFila.filter(m=>regOp&&regOp.meses_cerrados&&regOp.meses_cerrados[m]);
+    if(regOp&&cerrados.length){
+      r._motivoBloqueo=`Ya reportado (${cerrados.join(', ')})`;
+      bloqueados.push(r);
+    }else{
+      activos.push(r);
+    }
+  });
+  return{activos,bloqueados};
+}
 
 // ── Sucursal ───────────────────────────────────────────────────────
 function onSucursalChange(){
@@ -646,6 +720,8 @@ async function procesarArchivo(){
             _tipo:              'DEPOSITO',
             _tipoReporte:       tipoRep,
             _tel:               '',
+            _mesInicio:         String(obj['Mes Inicio']||'')||null,
+            _mesFin:            String(obj['Mes Fin']||'')||null,
           });
         });
       }
@@ -657,8 +733,20 @@ async function procesarArchivo(){
     }
 
     if(!rows.length){errEl.textContent='No se encontraron registros en el archivo.';errEl.style.display='block';return;}
-    STATE.datos=rows;
-    mostrarResumen(rows);
+
+    // ── Filtrar lo que ya está reportado según el historial JSON ────
+    const mesCfgIso=mes.slice(0,4)+'-'+mes.slice(4,6);
+    const{activos,bloqueados}=aplicarHistorial(rows,mesCfgIso);
+    STATE.datos=activos;
+    STATE.bloqueados=bloqueados;
+
+    if(!activos.length){
+      errEl.textContent=`✅ Los ${bloqueados.length} registro(s) de este archivo ya estaban reportados según el historial — no hay nada nuevo que generar.`;
+      errEl.style.display='block';
+      return;
+    }
+
+    mostrarResumen(activos,bloqueados);
   }catch(e){
     errEl.textContent='Error al leer el archivo: '+e.message;errEl.style.display='block';
   }finally{
@@ -668,19 +756,35 @@ async function procesarArchivo(){
 }
 
 // ── Resumen ────────────────────────────────────────────────────────
-function mostrarResumen(rows){
+function mostrarResumen(rows,bloqueados){
+  bloqueados=bloqueados||[];
   const avisos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
   const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)),0);
 
-  document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo;
+  document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo
+    +(bloqueados.length?` · 🔒 ${bloqueados.length} ya reportado(s) excluido(s)`:'');
   document.getElementById('kpi-row').innerHTML=`
     <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${avisos.length}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Dep. / Ret.</div><div class="kpi-val">${dep} / ${ret}</div></div>
     <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:16px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
   `;
+
+  if(bloqueados.length){
+    document.getElementById('panel-bloqueados').classList.remove('hidden');
+    document.getElementById('bloqueados-count').textContent=bloqueados.length;
+    document.getElementById('tabla-bloqueados').innerHTML=bloqueados.slice(0,50).map(r=>`
+      <tr>
+        <td>${normalizar(r.Nombre||'')} ${normalizar(r['Apellido Paterno']||'')}</td>
+        <td class="mono" style="font-size:11px">${String(r.CURP||'').trim().toUpperCase()}</td>
+        <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
+        <td style="font-size:11px;color:var(--muted)">${r._motivoBloqueo||''}</td>
+      </tr>`).join('');
+  }else{
+    document.getElementById('panel-bloqueados').classList.add('hidden');
+  }
 
   const validos=rows.filter(r=>String(r.Nombre||'').trim()&&String(r.CURP||'').trim().toUpperCase().length===18);
   const MAX=200;
@@ -866,11 +970,12 @@ function volverConfig(){
   document.getElementById('panel-descarga').classList.add('hidden');
 }
 function nuevoReporte(){
-  STATE.datos=[];STATE.archivo=null;
+  STATE.datos=[];STATE.archivo=null;STATE.bloqueados=[];
   document.getElementById('zone-main').classList.remove('upload-done');
   document.getElementById('upload-icon').textContent='📂';
   document.getElementById('upload-title').textContent='Arrastra el archivo aquí o haz clic para seleccionar';
   document.getElementById('upload-sub').textContent='Acepta .xlsx y .xlsm';
+  document.getElementById('panel-bloqueados').classList.add('hidden');
   setStep(0,1);
   document.getElementById('panel-config').classList.remove('hidden');
   document.getElementById('panel-resumen').classList.add('hidden');
