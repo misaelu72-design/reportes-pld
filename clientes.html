@@ -195,14 +195,12 @@ function procesarHistorial(){
     const mesesRet = Object.keys(ret.meses_cerrados||{}).sort();
 
     const sucursales = [...new Set(todosAvisos.map(a=>a.sucursal).filter(Boolean))];
-    const ultimoAviso = todosAvisos[todosAvisos.length-1];
-    const nombre = ultimoAviso?.player_id || curp;
-
-    const tieneNombre = todosAvisos.find(a=>a.nombre_cliente);
+    // Nombre: desde campo raíz del JSON o desde el primer aviso
+    const nombre = reg.nombre || todosAvisos.find(a=>a.nombre_cliente)?.nombre_cliente || '';
 
     return {
       curp,
-      nombre: tieneNombre?.nombre_cliente || curp.substring(0,4)+'...',
+      nombre,
       sucursales,
       mesesDep,
       mesesRet,
@@ -267,8 +265,8 @@ function filtrar(){
     return `<div class="client-row${isActive?' active':''}" onclick="verExpediente('${c.curp}')">
       <div class="avatar ${avType}">${iniciales(c.curp)}</div>
       <div style="flex:1;min-width:0">
-        <div class="client-name">${c.curp}</div>
-        <div class="client-sub">${suc || '—'} · último: ${c.ultimoMes||'—'}</div>
+        <div class="client-name">${c.nombre || c.curp}</div>
+        <div class="client-sub">${c.nombre ? c.curp+' · ' : ''}${suc || '—'} · último: ${c.ultimoMes||'—'}</div>
         <div class="client-badges">${badges}</div>
       </div>
       <div class="count-pill">${c.todosAvisos.length}</div>
@@ -292,13 +290,10 @@ function verExpediente(curp){
 
   document.getElementById('exp-panel').innerHTML = `
     <div class="exp-head">
-      <div class="exp-avatar">${iniciales(c.curp)}</div>
+      <div class="exp-avatar">${c.nombre ? c.nombre.substring(0,2).toUpperCase() : iniciales(c.curp)}</div>
       <div>
-        <div class="exp-nombre">${c.curp}</div>
-        <div class="exp-curp">
-          ${c.sucursales.length ? c.sucursales.join(' · ') : 'Sin sucursal'}
-          · último aviso: ${c.ultimoMes||'—'}
-        </div>
+        <div class="exp-nombre">${c.nombre || c.curp}</div>
+        <div class="exp-curp">${c.nombre ? c.curp+' · ' : ''}${c.sucursales.length ? c.sucursales.join(' · ') : 'Sin sucursal'} · último aviso: ${c.ultimoMes||'—'}</div>
       </div>
     </div>
     <div class="exp-body">
