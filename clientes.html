@@ -603,6 +603,7 @@ function verExpediente(curp){
           if(tipo==='Semestral') return 'S';
           return 'M';
         }
+        function prioridad(tipo){ return tipo==='Restricción'?3:tipo==='Semestral'?2:1; }
 
         let filas = '';
         for(let y=anioMin;y<=anioMax;y++){
@@ -612,7 +613,14 @@ function verExpediente(curp){
             const tipoDep = mapaDepTipo[key];
             const tipoRet = mapaRetTipo[key];
             if(tipoDep && tipoRet){
-              celdas += `<div class="heat-cell hc-both" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">D+R</div>`;
+              // Mostrar el tipo más grave de los dos
+              if(prioridad(tipoDep) >= prioridad(tipoRet)){
+                const cls = clasePorTipo(tipoDep,'DEP');
+                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">${labelPorTipo(tipoDep)}+R</div>`;
+              } else {
+                const cls = clasePorTipo(tipoRet,'RET');
+                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">D+${labelPorTipo(tipoRet)}</div>`;
+              }
             } else if(tipoDep){
               const cls = clasePorTipo(tipoDep,'DEP');
               celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoDep}">${labelPorTipo(tipoDep)}</div>`;
@@ -648,8 +656,8 @@ function verExpediente(curp){
                 <div class="heat-leg"><div class="heat-leg-dot hc-ret"></div>Mensual ret.</div>
                 <div class="heat-leg"><div class="heat-leg-dot hc-sem-ret"></div>Semestral ret.</div>
                 <div class="heat-leg"><div class="heat-leg-dot hc-res"></div>Restricción</div>
-                <div class="heat-leg"><div class="heat-leg-dot hc-both"></div>Dep + Ret</div>
                 <div class="heat-leg"><div class="heat-leg-dot hc-vac"></div>Sin aviso</div>
+                <div style="font-size:10px;color:var(--muted);width:100%;margin-top:4px">Cuando hay depósito y retiro en el mismo mes se muestra el tipo más grave</div>
               </div>
             </div>
           </div>
