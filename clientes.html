@@ -90,6 +90,10 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .hc-sem{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
 .hc-men{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
 .hc-ret{background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4}
+.hc-sem-dep{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
+.hc-sem-ret{background:#fde8ff;color:#7e22ce;border:1px solid #d8b4fe}
+.hc-res{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.hc-both{background:#dcfce7;color:#166534;border:1px solid #86efac}
 .hc-vac{background:#f3f4f6;color:#d1d5db}
 .heat-leg-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 .heat-leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
@@ -549,25 +553,75 @@ function verExpediente(curp){
       })()}
 
       ${(()=>{
-        // Mapa de calor
+        // Mapa de calor — usa el tipo real del aviso por mes
         const MESES_LABEL = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
         const todosMeses = [...c.mesesDep,...c.mesesRet];
         if(!todosMeses.length) return '';
         const anioMin = Math.min(...todosMeses.map(m=>parseInt(m)));
         const anioMax = Math.max(...todosMeses.map(m=>parseInt(m)));
-        const mapaDep = new Set(c.mesesDep);
-        const mapaRet = new Set(c.mesesRet);
+
+        // Construir mapa de tipo por mes desde los avisos reales
+        // Un mes puede tener DEP y RET con tipos distintos
+        const mapaDepTipo = {}; // mes → tipo (Mensual/Semestral/Restricción)
+        const mapaRetTipo = {};
+        c.avisosDep.forEach(a=>{
+          const meses = [];
+          if(a.mes_inicio === a.mes_fin) meses.push(a.mes_inicio);
+          else {
+            // rango: agregar todos los meses del periodo
+            let [y,m] = a.mes_inicio.split('-').map(Number);
+            const [ye,me] = a.mes_fin.split('-').map(Number);
+            while(y < ye || (y===ye && m<=me)){
+              meses.push(`${y}-${String(m).padStart(2,'0')}`);
+              m++; if(m>12){m=1;y++;}
+            }
+          }
+          meses.forEach(mes=>{ mapaDepTipo[mes]=a.tipo||'Mensual'; });
+        });
+        c.avisosRet.forEach(a=>{
+          const meses = [];
+          if(a.mes_inicio === a.mes_fin) meses.push(a.mes_inicio);
+          else {
+            let [y,m] = a.mes_inicio.split('-').map(Number);
+            const [ye,me] = a.mes_fin.split('-').map(Number);
+            while(y < ye || (y===ye && m<=me)){
+              meses.push(`${y}-${String(m).padStart(2,'0')}`);
+              m++; if(m>12){m=1;y++;}
+            }
+          }
+          meses.forEach(mes=>{ mapaRetTipo[mes]=a.tipo||'Mensual'; });
+        });
+
+        // Función para obtener clase CSS según tipo
+        function clasePorTipo(tipo, operacion){
+          if(tipo==='Restricción') return 'hc-res';
+          if(tipo==='Semestral') return operacion==='DEP'?'hc-sem-dep':'hc-sem-ret';
+          return operacion==='DEP'?'hc-men':'hc-ret';
+        }
+        function labelPorTipo(tipo){
+          if(tipo==='Restricción') return 'RES';
+          if(tipo==='Semestral') return 'S';
+          return 'M';
+        }
+
         let filas = '';
         for(let y=anioMin;y<=anioMax;y++){
           let celdas = '';
           for(let m=1;m<=12;m++){
             const key = `${y}-${String(m).padStart(2,'0')}`;
-            const esDep = mapaDep.has(key);
-            const esRet = mapaRet.has(key);
-            if(esDep && esRet) celdas += `<div class="heat-cell hc-sem" title="${key}">D+R</div>`;
-            else if(esDep)     celdas += `<div class="heat-cell hc-men" title="${key}">M</div>`;
-            else if(esRet)     celdas += `<div class="heat-cell hc-ret" title="${key}">R</div>`;
-            else               celdas += `<div class="heat-cell hc-vac" title="${key}">—</div>`;
+            const tipoDep = mapaDepTipo[key];
+            const tipoRet = mapaRetTipo[key];
+            if(tipoDep && tipoRet){
+              celdas += `<div class="heat-cell hc-both" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">D+R</div>`;
+            } else if(tipoDep){
+              const cls = clasePorTipo(tipoDep,'DEP');
+              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoDep}">${labelPorTipo(tipoDep)}</div>`;
+            } else if(tipoRet){
+              const cls = clasePorTipo(tipoRet,'RET');
+              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoRet}">${labelPorTipo(tipoRet)}</div>`;
+            } else {
+              celdas += `<div class="heat-cell hc-vac" title="${key}">—</div>`;
+            }
           }
           filas += `<div class="heat-header-row" style="margin-bottom:3px">
             <div class="heat-year-lbl">${y}</div>
@@ -589,9 +643,12 @@ function verExpediente(curp){
               </div>
               ${filas}
               <div class="heat-leg-wrap">
-                <div class="heat-leg"><div class="heat-leg-dot hc-men"></div>Depósito</div>
-                <div class="heat-leg"><div class="heat-leg-dot hc-ret"></div>Retiro</div>
-                <div class="heat-leg"><div class="heat-leg-dot hc-sem"></div>Dep + Ret</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-men"></div>Mensual dep.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-sem-dep"></div>Semestral dep.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-ret"></div>Mensual ret.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-sem-ret"></div>Semestral ret.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-res"></div>Restricción</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-both"></div>Dep + Ret</div>
                 <div class="heat-leg"><div class="heat-leg-dot hc-vac"></div>Sin aviso</div>
               </div>
             </div>
