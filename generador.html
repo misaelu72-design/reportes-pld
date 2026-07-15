@@ -224,6 +224,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
     </div>
     <div class="card hidden" id="panel-bloqueados" style="border-color:#fca5a5">
       <div class="card-head"><h3>🔒 Ya reportados (excluidos automáticamente)</h3><span id="bloqueados-count" style="font-size:11px;color:var(--muted)"></span></div>
+      <div id="barra-proporcion" style="padding:.75rem 1.25rem;border-bottom:1px solid var(--border)"></div>
       <div class="card-body" style="padding:0">
         <div class="tw">
           <table>
@@ -823,19 +824,38 @@ function mostrarResumen(rows,bloqueados){
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
   const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)),0);
+  const totalEnExcel = rows.length + bloqueados.length;
+  const pctNuevos = totalEnExcel ? Math.round(rows.length/totalEnExcel*100) : 100;
+  const pctDup = 100 - pctNuevos;
 
   document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo
     +(bloqueados.length?` · 🔒 ${bloqueados.length} ya reportado(s) excluido(s)`:'');
+
+  // ── KPIs mejorados ────────────────────────────────────────────────
   document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${avisos.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Dep. / Ret.</div><div class="kpi-val">${dep} / ${ret}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:16px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total en Excel</div><div class="kpi-val">${totalEnExcel}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Nuevos — irán al XML</div><div class="kpi-val" style="color:var(--verde)">${rows.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--neg)"></div><div class="kpi-label">Ya reportados</div><div class="kpi-val" style="color:var(--neg);font-size:${bloqueados.length>0?'22':'22'}px">${bloqueados.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto XML</div><div class="kpi-val" style="font-size:15px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
   `;
 
+  // ── Barra visual nuevos vs duplicados ─────────────────────────────
   if(bloqueados.length){
     document.getElementById('panel-bloqueados').classList.remove('hidden');
     document.getElementById('bloqueados-count').textContent=bloqueados.length;
+
+    // Barra de proporción
+    document.getElementById('barra-proporcion').innerHTML=`
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:11px;color:var(--muted)">${rows.length} nuevos <span style="color:var(--verde);font-weight:500">(${pctNuevos}%)</span></span>
+        <span style="font-size:11px;color:var(--muted)">${bloqueados.length} ya reportados <span style="color:var(--neg);font-weight:500">(${pctDup}%)</span></span>
+      </div>
+      <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:${pctNuevos}%;background:var(--verde);border-radius:4px 0 0 4px"></div>
+        <div style="width:${pctDup}%;background:var(--neg);border-radius:0 4px 4px 0"></div>
+      </div>`;
+
+    // Tabla bloqueados
     document.getElementById('tabla-bloqueados').innerHTML=bloqueados.slice(0,50).map(r=>`
       <tr>
         <td>${normalizar(r.Nombre||'')} ${normalizar(r['Apellido Paterno']||'')}</td>
@@ -843,10 +863,18 @@ function mostrarResumen(rows,bloqueados){
         <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
         <td style="font-size:11px;color:var(--muted)">${r._motivoBloqueo||''}</td>
       </tr>`).join('');
+
+    if(bloqueados.length>50){
+      document.getElementById('tabla-bloqueados').innerHTML+=`
+        <tr><td colspan="4" style="text-align:center;color:var(--muted);font-size:11px;padding:.5rem">
+          + ${bloqueados.length-50} más excluidos
+        </td></tr>`;
+    }
   }else{
     document.getElementById('panel-bloqueados').classList.add('hidden');
   }
 
+  // ── Vista previa tabla ─────────────────────────────────────────────
   const validos=rows.filter(r=>String(r.Nombre||'').trim()&&String(r.CURP||'').trim().toUpperCase().length===18);
   const MAX=200;
   document.getElementById('tabla-resumen').innerHTML=validos.slice(0,MAX).map(r=>`
