@@ -177,24 +177,58 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
     </div>
   </div>
 
-  <!-- PANEL DERECHO — TOP 10 / EXPEDIENTE -->
+  <!-- PANEL DERECHO — ESTADÍSTICAS + TOP 10 / EXPEDIENTE -->
   <div>
     <div id="top10-panel" class="top-panel">
-      <div style="padding:1rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-        <span style="font-size:14px;font-weight:500">Top 10 clientes</span>
-        <span style="font-size:11px;color:var(--muted)" id="top10-hint">Carga el historial para ver</span>
-      </div>
-      <div class="top-tabs">
-        <div class="top-tab active" onclick="setTopCriteria('monto',this)">Mayor monto</div>
-        <div class="top-tab" onclick="setTopCriteria('avisos',this)">Más avisos</div>
-        <div class="top-tab" onclick="setTopCriteria('reciente',this)">Más recientes</div>
-      </div>
-      <div id="top10-list">
-        <div class="empty-exp" style="height:300px">
-          <div class="empty-icon">📋</div>
-          <div style="font-size:12px">Carga el historial JSON para ver el top 10</div>
+
+      <!-- Estadísticas globales -->
+      <div id="stats-global" style="border-bottom:0.5px solid var(--border)">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px 14px 0">
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:500;color:var(--azul)" id="sg-clientes">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Clientes</div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:500;color:var(--verde)" id="sg-meses">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Meses cerrados</div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:500;color:var(--naranja)" id="sg-avisos">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Avisos</div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:12px;font-weight:500;color:var(--muted);line-height:1.4" id="sg-cobertura">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Cobertura</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px">
+          <div style="padding-right:12px;border-right:0.5px solid var(--border)">
+            <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Por sucursal</div>
+            <div id="sg-barras-suc"></div>
+          </div>
+          <div style="padding-left:12px">
+            <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Por tipo</div>
+            <div id="sg-barras-tipo"></div>
+          </div>
         </div>
       </div>
+
+      <!-- Top 10 -->
+      <div style="padding:.75rem 1.25rem .5rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:13px;font-weight:500">Top 10 clientes</span>
+        <div style="display:flex;gap:0;border:0.5px solid var(--border);border-radius:20px;overflow:hidden">
+          <div class="top-tab-pill active" onclick="setTopCriteria('monto',this)" style="padding:3px 12px;font-size:11px;font-weight:500;background:var(--azul);color:#fff;cursor:pointer">Mayor monto</div>
+          <div class="top-tab-pill" onclick="setTopCriteria('avisos',this)" style="padding:3px 12px;font-size:11px;color:var(--muted);cursor:pointer;border-left:0.5px solid var(--border);background:#fff">Más avisos</div>
+          <div class="top-tab-pill" onclick="setTopCriteria('reciente',this)" style="padding:3px 12px;font-size:11px;color:var(--muted);cursor:pointer;border-left:0.5px solid var(--border);background:#fff">Recientes</div>
+        </div>
+      </div>
+      <div id="top10-list">
+        <div class="empty-exp" style="height:200px">
+          <div class="empty-icon">📋</div>
+          <div style="font-size:12px">Carga el historial JSON para comenzar</div>
+        </div>
+      </div>
+      <div style="padding:8px 14px;text-align:center;font-size:11px;color:var(--muted);border-top:0.5px solid var(--border)" id="top10-hint">Haz clic en cualquier cliente para ver su expediente</div>
     </div>
     <div id="exp-panel" style="display:none"></div>
   </div>
@@ -214,9 +248,73 @@ let topCriteria = 'monto';
 
 function setTopCriteria(c, el){
   topCriteria = c;
-  document.querySelectorAll('.top-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.top-tab-pill').forEach(t=>{
+    t.classList.remove('active');
+    t.style.background='#fff';
+    t.style.color='var(--muted)';
+  });
   el.classList.add('active');
+  el.style.background='var(--azul)';
+  el.style.color='#fff';
   renderTop10();
+}
+
+function renderStatsGlobales(){
+  if(!CLIENTES.length) return;
+
+  // KPIs
+  const totalMeses = CLIENTES.reduce((s,c)=>{
+    return s + [...new Set([...c.mesesDep,...c.mesesRet])].length;
+  }, 0);
+  const totalAvisos = CLIENTES.reduce((s,c)=>s+c.todosAvisos.length, 0);
+  const todosMesesAll = CLIENTES.flatMap(c=>[...c.mesesDep,...c.mesesRet]).sort();
+  const mesMin = todosMesesAll[0]||'—';
+  const mesMax = todosMesesAll[todosMesesAll.length-1]||'—';
+
+  document.getElementById('sg-clientes').textContent = CLIENTES.length.toLocaleString('es-MX');
+  document.getElementById('sg-meses').textContent = totalMeses.toLocaleString('es-MX');
+  document.getElementById('sg-avisos').textContent = totalAvisos.toLocaleString('es-MX');
+  document.getElementById('sg-cobertura').innerHTML = `${mesMin}<br>→ ${mesMax}`;
+
+  // Por sucursal
+  const porSuc = {};
+  CLIENTES.forEach(c=>c.sucursales.forEach(s=>{ porSuc[s]=(porSuc[s]||0)+c.todosAvisos.length; }));
+  const topSuc = Object.entries(porSuc).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxSuc = topSuc[0]?.[1]||1;
+  document.getElementById('sg-barras-suc').innerHTML = topSuc.map(([s,v])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:11px;min-width:80px;color:var(--muted)">${s}</div>
+      <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+        <div style="height:100%;border-radius:3px;background:#2E75B6;width:${Math.round(v/maxSuc*100)}%"></div>
+      </div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);min-width:36px;text-align:right">${v.toLocaleString('es-MX')}</div>
+    </div>`).join('');
+
+  // Por tipo
+  const porTipo = {mensualDep:0,semestralDep:0,mensualRet:0,semestralRet:0,restriccion:0};
+  CLIENTES.forEach(c=>c.todosAvisos.forEach(a=>{
+    if(a.tipo==='Restricción') porTipo.restriccion++;
+    else if(a.tipo==='Semestral'&&a.op==='RETIRO') porTipo.semestralRet++;
+    else if(a.tipo==='Semestral') porTipo.semestralDep++;
+    else if(a.op==='RETIRO') porTipo.mensualRet++;
+    else porTipo.mensualDep++;
+  }));
+  const tiposArr = [
+    ['Mensual dep.','#1e40af',porTipo.mensualDep],
+    ['Semestral dep.','#92400e',porTipo.semestralDep],
+    ['Mensual ret.','#9d174d',porTipo.mensualRet],
+    ['Semestral ret.','#9d174d',porTipo.semestralRet],
+    ['Restricción','#dc2626',porTipo.restriccion],
+  ];
+  const maxTipo = Math.max(...tiposArr.map(t=>t[2]))||1;
+  document.getElementById('sg-barras-tipo').innerHTML = tiposArr.map(([l,c,v])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:11px;min-width:90px;color:var(--muted)">${l}</div>
+      <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+        <div style="height:100%;border-radius:3px;background:${c};width:${Math.round(v/maxTipo*100)}%"></div>
+      </div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);min-width:36px;text-align:right">${v.toLocaleString('es-MX')}</div>
+    </div>`).join('');
 }
 
 function renderTop10(){
@@ -304,6 +402,7 @@ function procesarHistorial(){
 
   const total = CLIENTES.length;
   document.getElementById('total-badge').textContent = `${total.toLocaleString()} clientes`;
+  renderStatsGlobales();
   renderTop10();
   filtrar();
 }
