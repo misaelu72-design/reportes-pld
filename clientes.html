@@ -69,6 +69,31 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .td-mono{font-family:'DM Mono',monospace}
 .empty-exp{display:flex;flex-direction:column;align-items:center;justify-content:center;height:400px;color:var(--muted);text-align:center;gap:12px}
 .empty-icon{font-size:40px;opacity:.3}
+/* Barras de actividad por año */
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.bar-year{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);min-width:32px}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);min-width:16px;text-align:right}
+/* Mapa de calor */
+.heat-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:8px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--border);margin-bottom:8px;user-select:none;transition:border-color .15s}
+.heat-toggle:hover{border-color:var(--azul2)}
+.heat-toggle-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.heat-arrow{font-size:13px;color:var(--muted);transition:transform .25s}
+.heat-arrow.open{transform:rotate(180deg)}
+.heat-wrap{overflow:hidden;transition:max-height .3s ease;max-height:0}
+.heat-wrap.open{max-height:320px}
+.heat-header-row{display:flex;gap:6px;margin-bottom:4px;align-items:center}
+.heat-year-lbl{font-size:9px;font-family:'DM Mono',monospace;color:var(--muted);min-width:30px}
+.heat-months-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1}
+.heat-cell{height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500}
+.hc-sem{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
+.hc-men{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.hc-ret{background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4}
+.hc-vac{background:#f3f4f6;color:#d1d5db}
+.heat-leg-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.heat-leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
+.heat-leg-dot{width:12px;height:12px;border-radius:2px}
 .upload-json{padding:1rem 1.25rem;background:var(--bg);border-bottom:0.5px solid var(--border)}
 .upload-zone{border:2px dashed var(--azul2);border-radius:8px;padding:1rem;text-align:center;cursor:pointer;transition:all .15s;background:#f8fbff}
 .upload-zone:hover{border-color:var(--naranja);background:#fff5ec}
@@ -332,6 +357,76 @@ function verExpediente(curp){
           ${c.mesesRet.map(m=>`<span class="mes-pill m-ret">${m}</span>`).join('')}
         </div>
       </div>` : ''}
+
+      ${(()=>{
+        // Actividad por año
+        const todosMeses = [...c.mesesDep,...c.mesesRet];
+        const porAnio = {};
+        todosMeses.forEach(m=>{ const y=m.substring(0,4); porAnio[y]=(porAnio[y]||0)+1; });
+        const anios = Object.keys(porAnio).sort();
+        if(!anios.length) return '';
+        const max = Math.max(...Object.values(porAnio));
+        return `<div class="section">
+          <div class="section-title">Actividad por año</div>
+          ${anios.map(y=>`
+            <div class="bar-row">
+              <div class="bar-year">${y}</div>
+              <div class="bar-track"><div class="bar-fill" style="width:${Math.round((porAnio[y]/max)*100)}%;background:${y===anios[anios.length-1]?'var(--naranja)':'var(--azul2)'}"></div></div>
+              <div class="bar-count">${porAnio[y]}</div>
+            </div>`).join('')}
+        </div>`;
+      })()}
+
+      ${(()=>{
+        // Mapa de calor
+        const MESES_LABEL = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+        const todosMeses = [...c.mesesDep,...c.mesesRet];
+        if(!todosMeses.length) return '';
+        const anioMin = Math.min(...todosMeses.map(m=>parseInt(m)));
+        const anioMax = Math.max(...todosMeses.map(m=>parseInt(m)));
+        const mapaDep = new Set(c.mesesDep);
+        const mapaRet = new Set(c.mesesRet);
+        let filas = '';
+        for(let y=anioMin;y<=anioMax;y++){
+          let celdas = '';
+          for(let m=1;m<=12;m++){
+            const key = `${y}-${String(m).padStart(2,'0')}`;
+            const esDep = mapaDep.has(key);
+            const esRet = mapaRet.has(key);
+            if(esDep && esRet) celdas += `<div class="heat-cell hc-sem" title="${key}">D+R</div>`;
+            else if(esDep)     celdas += `<div class="heat-cell hc-men" title="${key}">M</div>`;
+            else if(esRet)     celdas += `<div class="heat-cell hc-ret" title="${key}">R</div>`;
+            else               celdas += `<div class="heat-cell hc-vac" title="${key}">—</div>`;
+          }
+          filas += `<div class="heat-header-row" style="margin-bottom:3px">
+            <div class="heat-year-lbl">${y}</div>
+            <div class="heat-months-grid">${celdas}</div>
+          </div>`;
+        }
+        return `<div class="section">
+          <div class="heat-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.heat-arrow').classList.toggle('open')">
+            <span class="heat-toggle-title">🗓 Mapa de calor por mes</span>
+            <span class="heat-arrow">▾</span>
+          </div>
+          <div class="heat-wrap">
+            <div style="padding:4px 2px 8px">
+              <div class="heat-header-row" style="margin-bottom:6px">
+                <div class="heat-year-lbl"></div>
+                <div class="heat-months-grid" style="text-align:center">
+                  ${MESES_LABEL.map(l=>`<span style="font-size:9px;color:var(--muted)">${l}</span>`).join('')}
+                </div>
+              </div>
+              ${filas}
+              <div class="heat-leg-wrap">
+                <div class="heat-leg"><div class="heat-leg-dot hc-men"></div>Depósito</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-ret"></div>Retiro</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-sem"></div>Dep + Ret</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-vac"></div>Sin aviso</div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      })()}
 
       <div class="section">
         <div class="section-title">Historial de avisos (${c.todosAvisos.length})</div>
