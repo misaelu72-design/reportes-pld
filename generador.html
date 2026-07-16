@@ -359,52 +359,65 @@ function aplicarHistorial(rows,mesCfgIso){
 
 // ── Línea de tiempo por cliente (modal) ─────────────────────────────
 function abrirTimeline(curp,op){
-  const regOp=(STATE.historial[curp]||{})[op];
   const modal=document.getElementById('modal-timeline');
-  if(!regOp||!regOp.avisos||!regOp.avisos.length){
-    document.getElementById('tl-titulo').textContent=curp;
-    document.getElementById('tl-sub').textContent='No hay avisos previos registrados en el historial para esta operación.';
-    document.getElementById('tl-track').innerHTML='';
-    document.getElementById('tl-labels').innerHTML='';
-    document.getElementById('tl-avisos').innerHTML='';
-    modal.classList.remove('hidden');
-    return;
+  modal.classList.remove('hidden'); // se abre primero, pase lo que pase abajo
+  document.getElementById('tl-track').innerHTML='';
+  document.getElementById('tl-labels').innerHTML='';
+  document.getElementById('tl-avisos').innerHTML='';
+  try{
+    const regOp=(STATE.historial&&STATE.historial[curp])?STATE.historial[curp][op]:null;
+    if(!regOp||!regOp.avisos||!regOp.avisos.length){
+      document.getElementById('tl-titulo').textContent=curp+' · '+op;
+      document.getElementById('tl-sub').textContent='No hay avisos previos registrados en el historial para esta operación.';
+      return;
+    }
+    const avisos=[...regOp.avisos].filter(av=>av&&av.mes_inicio&&av.mes_fin)
+      .sort((a,b)=>String(a.mes_inicio).localeCompare(String(b.mes_inicio)));
+    if(!avisos.length){
+      document.getElementById('tl-titulo').textContent=curp+' · '+op;
+      document.getElementById('tl-sub').textContent='El historial tiene registros para este cliente, pero sin periodo (mes_inicio/mes_fin) legible.';
+      return;
+    }
+    const inicio=avisos[0].mes_inicio;
+    const fin=avisos[avisos.length-1].mes_fin;
+    const meses=mesesEnRango(inicio,fin);
+
+    const porMes={};
+    avisos.forEach(av=>{
+      mesesEnRango(av.mes_inicio,av.mes_fin).forEach(m=>{porMes[m]=av;});
+    });
+
+    document.getElementById('tl-titulo').textContent=curp+' · '+op;
+    document.getElementById('tl-sub').textContent=`${avisos.length} aviso(s) registrado(s) entre ${inicio} y ${fin}`;
+
+    document.getElementById('tl-track').innerHTML=meses.map(m=>{
+      const av=porMes[m];
+      if(!av)return `<div class="tl-cell" style="background:#e5e7eb;color:#9ca3af">·</div>`;
+      const esFin=(m===av.mes_fin);
+      const color=esFin?'#D4537E':'#FAC775';
+      const texto=esFin?(av.tipo||''):'';
+      const monto=isNaN(Number(av.monto))?'':(' · $'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
+      return `<div class="tl-cell" style="background:${color}" title="${m} · ${av.tipo||''}${monto}">${texto}</div>`;
+    }).join('');
+
+    document.getElementById('tl-labels').innerHTML=meses.map(m=>`<div class="tl-label">${m.slice(2)}</div>`).join('');
+
+    document.getElementById('tl-avisos').innerHTML=avisos.map(av=>{
+      const monto=isNaN(Number(av.monto))?'—':('$'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
+      const periodo=av.mes_inicio===av.mes_fin?av.mes_inicio:av.mes_inicio+' → '+av.mes_fin;
+      return `<div class="tl-aviso-row">
+        <span><span class="badge" style="background:${av.tipo==='Restricción'?'#fee2e2':'#fde68a'};color:${av.tipo==='Restricción'?'#991b1b':'#92400e'}">${av.tipo||'—'}</span>
+        &nbsp; ${periodo} · ${av.sucursal||''}</span>
+        <span style="font-weight:500">${monto}</span>
+      </div>`;
+    }).join('');
+  }catch(e){
+    document.getElementById('tl-titulo').textContent=curp+' · '+op;
+    document.getElementById('tl-sub').textContent='No se pudo construir la línea de tiempo: '+e.message;
   }
-  const avisos=[...regOp.avisos].sort((a,b)=>a.mes_inicio.localeCompare(b.mes_inicio));
-  const inicio=avisos[0].mes_inicio;
-  const fin=avisos[avisos.length-1].mes_fin;
-  const meses=mesesEnRango(inicio,fin);
-
-  // Mapa mes -> aviso que lo cubre
-  const porMes={};
-  avisos.forEach(av=>{
-    mesesEnRango(av.mes_inicio,av.mes_fin).forEach(m=>{porMes[m]=av;});
-  });
-
-  document.getElementById('tl-titulo').textContent=curp+' · '+op;
-  document.getElementById('tl-sub').textContent=`${avisos.length} aviso(s) registrado(s) entre ${inicio} y ${fin}`;
-
-  document.getElementById('tl-track').innerHTML=meses.map(m=>{
-    const av=porMes[m];
-    if(!av)return `<div class="tl-cell" style="background:#e5e7eb;color:#9ca3af">·</div>`;
-    const esFin=(m===av.mes_fin);
-    const color=esFin?'#D4537E':'#FAC775';
-    const texto=esFin?av.tipo:'';
-    return `<div class="tl-cell" style="background:${color}" title="${m} · ${av.tipo} · $${Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2})}">${texto}</div>`;
-  }).join('');
-
-  document.getElementById('tl-labels').innerHTML=meses.map(m=>`<div class="tl-label">${m.slice(2)}</div>`).join('');
-
-  document.getElementById('tl-avisos').innerHTML=avisos.map(av=>`
-    <div class="tl-aviso-row">
-      <span><span class="badge ${av.tipo==='Mensual'?'b-dep':(av.tipo==='Semestral'?'':'')}" style="background:${av.tipo==='Restricción'?'#fee2e2':'#fde68a'};color:${av.tipo==='Restricción'?'#991b1b':'#92400e'}">${av.tipo}</span>
-      &nbsp; ${av.mes_inicio===av.mes_fin?av.mes_inicio:av.mes_inicio+' → '+av.mes_fin} · ${av.sucursal||''}</span>
-      <span style="font-weight:500">$${Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2})}</span>
-    </div>`).join('');
-
-  modal.classList.remove('hidden');
 }
 function cerrarTimeline(){document.getElementById('modal-timeline').classList.add('hidden');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarTimeline();});
 
 // ── Sucursal ───────────────────────────────────────────────────────
 function onSucursalChange(){
