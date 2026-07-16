@@ -255,7 +255,9 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
         <div class="tl-track" id="tl-labels" style="margin-top:2px"></div>
         <div class="tl-legend">
           <span><span class="tl-dot" style="background:#FAC775"></span>Dentro del periodo del aviso</span>
-          <span><span class="tl-dot" style="background:#D4537E"></span>Mes en que se generó el aviso</span>
+          <span><span class="tl-dot" style="background:#378ADD"></span>Cierre Mensual</span>
+          <span><span class="tl-dot" style="background:#D4537E"></span>Cierre Semestral</span>
+          <span><span class="tl-dot" style="background:#E24B4A"></span>Cierre Restricción</span>
           <span><span class="tl-dot" style="background:#e5e7eb"></span>Sin cierre registrado</span>
         </div>
         <div id="tl-avisos" style="margin-top:1rem"></div>
@@ -391,11 +393,18 @@ function abrirTimeline(curp,op){
     document.getElementById('tl-titulo').textContent=curp+' · '+op;
     document.getElementById('tl-sub').textContent=`${avisos.length} aviso(s) registrado(s) entre ${inicio} y ${fin}`;
 
+    const coloresTipo={
+      'Mensual':{cerrado:'#378ADD',fg:'#fff'},
+      'Semestral':{cerrado:'#D4537E',fg:'#fff'},
+      'Restricción':{cerrado:'#E24B4A',fg:'#fff'}
+    };
+
     document.getElementById('tl-track').innerHTML=meses.map(m=>{
       const av=porMes[m];
       if(!av)return `<div class="tl-cell" style="background:#e5e7eb;color:#9ca3af">·</div>`;
       const esFin=(m===av.mes_fin);
-      const color=esFin?'#D4537E':'#FAC775';
+      const c=coloresTipo[av.tipo]||{cerrado:'#888780',fg:'#fff'};
+      const color=esFin?c.cerrado:'#FAC775';
       const texto=esFin?(av.tipo||''):'';
       const monto=isNaN(Number(av.monto))?'':(' · $'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
       return `<div class="tl-cell" style="background:${color}" title="${m} · ${av.tipo||''}${monto}">${texto}</div>`;
@@ -406,8 +415,14 @@ function abrirTimeline(curp,op){
     document.getElementById('tl-avisos').innerHTML=avisos.map(av=>{
       const monto=isNaN(Number(av.monto))?'—':('$'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
       const periodo=av.mes_inicio===av.mes_fin?av.mes_inicio:av.mes_inicio+' → '+av.mes_fin;
+      const coloresTipo={
+        'Mensual':{bg:'#dbeafe',fg:'#1e40af'},
+        'Semestral':{bg:'#fde68a',fg:'#92400e'},
+        'Restricción':{bg:'#fee2e2',fg:'#991b1b'}
+      };
+      const c=coloresTipo[av.tipo]||{bg:'#e5e7eb',fg:'#374151'};
       return `<div class="tl-aviso-row">
-        <span><span class="badge" style="background:${av.tipo==='Restricción'?'#fee2e2':'#fde68a'};color:${av.tipo==='Restricción'?'#991b1b':'#92400e'}">${av.tipo||'—'}</span>
+        <span><span class="badge" style="background:${c.bg};color:${c.fg}">${av.tipo||'—'}</span>
         &nbsp; ${periodo} · ${av.sucursal||''}</span>
         <span style="font-weight:500">${monto}</span>
       </div>`;
