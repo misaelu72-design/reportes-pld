@@ -1173,7 +1173,7 @@ function buildXML(rows,cfg,tipoRep){
     x+=`          <tipo_sucursal>\n            <datos_sucursal_propia>\n              <codigo_postal>${cfg.cp}</codigo_postal>\n            </datos_sucursal_propia>\n          </tipo_sucursal>\n`;
     x+=`          <tipo_operacion>${tipoMov==='RETIRO'?103:101}</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
-      const fPago=fecOp;
+      const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
       const monto=limpiarMonto(r['TOTAL GENERAL']||0);
       const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
       const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
