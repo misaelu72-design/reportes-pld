@@ -1138,8 +1138,7 @@ function buildXML(rows,cfg,tipoRep){
       if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
       x+=`        </telefono>\n      </persona_aviso>\n`;
     });
-    const fechas=grupo.map(r=>fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')).filter(Boolean);
-    const fecOp=fechas.length?fechas.sort().pop():ultimoDiaMes(cfg.mes);
+    const fecOp=ultimoDiaMes(cfg.mes);
     x+=`      <detalle_operaciones>\n        <datos_operacion>\n          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
     x+=`          <tipo_sucursal>\n            <datos_sucursal_propia>\n              <codigo_postal>${cfg.cp}</codigo_postal>\n            </datos_sucursal_propia>\n          </tipo_sucursal>\n`;
     x+=`          <tipo_operacion>${tipoMov==='RETIRO'?103:101}</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
