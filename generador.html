@@ -504,6 +504,20 @@ function fileSelected(input){
 function limpiarMonto(v){if(!v&&v!==0)return'0.00';try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return'0.00';}}
 function limpiarTel(v){if(!v)return'';const s=String(v).replace(/\D/g,'');return(s.length>=10&&s.length<=12)?s:'';}
 function normalizar(s){if(!s)return'';return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZN0-9 .,:\/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();}
+
+// Mapa de prefijo de sucursal -> nombre tal como aparece en la columna "Sucursal"
+// de los reportes de Nydia (usado para filtrar cuando el Excel trae varias sucursales juntas)
+const PREFIJO_A_SUCURSAL={
+  MTY:'MITRAS', GPE:'GUADALUPE', AJI:'AJIJIC', ALL:'ALLENDE',
+  IRP:'IRAPUATO', SND:'SENDERO', SAT:'SATELITE', NEZ:'NEZA', ESM:'ESMERALDA'
+};
+function filaEsDeLaSucursalSeleccionada(obj){
+  const nombreEsperado=PREFIJO_A_SUCURSAL[STATE.prefijo];
+  if(!nombreEsperado) return true; // si no reconocemos el prefijo, no filtramos (evita bloquear por error)
+  const sucFila=normalizar(obj['Sucursal']||'');
+  if(!sucFila) return true; // si la fila no trae sucursal, no la descartamos (formatos de una sola sucursal)
+  return sucFila===nombreEsperado;
+}
 function paisIso2(v){if(!v)return'MX';let s=String(v).toUpperCase().trim();if(s.includes(','))s=s.split(',').pop().trim();if(s.length===2)return s;return MAPA_PAIS[s]||'MX';}
 function codOcup(v){if(!v)return'1000000';let s=String(v).trim();if(s.includes('||'))s=s.split('||').pop().trim();s=s.split('.')[0].trim();return/^\d+$/.test(s)?s:'1000000';}
 function escXml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
@@ -772,6 +786,11 @@ async function procesarArchivo(){
           const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
           const curp=String(obj['CURP']||'').trim().toUpperCase();
           if(curp.length!==18) return;
+          if(!filaEsDeLaSucursalSeleccionada(obj)) return;
+          if(!esSemestral){
+            const tipoRepFila=String(obj['Tipo de Reporte']||'').trim();
+            if(tipoRepFila && tipoRepFila!=='Mensual') return; // Semestral/Restricción van en su propio reporte
+          }
           const nombreCompleto=String(obj['Nombre del Cliente']||'').trim();
           const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
           let monto=0;
@@ -823,6 +842,7 @@ async function procesarArchivo(){
           // Solo filas con CURP válido de 18 chars
           const curp = String(obj['CURP']||'').trim().toUpperCase();
           if(curp.length !== 18) return;
+          if(!filaEsDeLaSucursalSeleccionada(obj)) return;
           // Separar nombre completo
           const nombreCompleto = String(obj['Nombre del Cliente']||'').trim();
           const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
