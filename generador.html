@@ -1088,16 +1088,26 @@ function generarXML(){
   document.getElementById('btn-xml-spin').classList.remove('hidden');
   setTimeout(()=>{
     try{
-      const xml=buildXML(STATE.datos,STATE.cfg,STATE.tipo);
       const pref=STATE.tipo==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
-      const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}.xml`;
-      const blob=new Blob([xml],{type:'application/xml'});
-      const url=URL.createObjectURL(blob);
-      document.getElementById('xml-list').innerHTML=`
+      const grupos=[
+        {tipo:'DEPOSITO', datos: STATE.datos.filter(r=>r._tipo==='DEPOSITO')},
+        {tipo:'RETIRO',   datos: STATE.datos.filter(r=>r._tipo==='RETIRO')},
+      ].filter(g=>g.datos.length>0);
+
+      if(!grupos.length) throw new Error('No hay avisos para generar.');
+
+      const items=grupos.map(g=>{
+        const xml=buildXML(g.datos,STATE.cfg,STATE.tipo);
+        const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}_${g.tipo}.xml`;
+        const blob=new Blob([xml],{type:'application/xml'});
+        const url=URL.createObjectURL(blob);
+        return `
         <div class="xml-item">
-          <div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.prefijo} · ${STATE.tipo} · ${new Date().toLocaleString('es-MX')}</div></div>
+          <div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.prefijo} · ${STATE.tipo} · ${g.tipo} · ${g.datos.length} aviso(s) · ${new Date().toLocaleString('es-MX')}</div></div>
           <a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a>
         </div>`;
+      }).join('');
+      document.getElementById('xml-list').innerHTML=items;
       setStep(2,3);
       document.getElementById('panel-resumen').classList.add('hidden');
       document.getElementById('panel-descarga').classList.remove('hidden');
@@ -1122,8 +1132,8 @@ function buildXML(rows,cfg,tipoRep){
 
   Object.entries(grupos).forEach(([folio,grupo])=>{
     const tipoMov=grupo[0]._tipo||'DEPOSITO';
-    const desc=tipoRep==='SEMESTRAL'?(tipoMov==='RETIRO'?'SUPERACION UMA SEMESTRAL RETIROS':'SUPERACION UMA SEMESTRAL'):(tipoMov==='RETIRO'?'SUPERACION UMA MENSUAL RETIROS':'SUPERACION UMA MENSUAL');
-    x+=`    <aviso>\n      <referencia_aviso>${escXml(folio)}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
+    const desc=tipoRep==='SEMESTRAL'?'SUPERACION UMA SEMESTRAL':'SUPERACION UMA MENSUAL';
+    x+=`    <aviso>\n      <referencia_aviso>${escXml(STATE.prefijo+'0001')}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
     x+=`      <alerta>\n        <tipo_alerta>100</tipo_alerta>\n        <descripcion_alerta>${desc}</descripcion_alerta>\n      </alerta>\n`;
     grupo.forEach(r=>{
       const nom=normalizar(r.Nombre||'');if(!nom)return;
@@ -1163,7 +1173,7 @@ function buildXML(rows,cfg,tipoRep){
     x+=`          <tipo_sucursal>\n            <datos_sucursal_propia>\n              <codigo_postal>${cfg.cp}</codigo_postal>\n            </datos_sucursal_propia>\n          </tipo_sucursal>\n`;
     x+=`          <tipo_operacion>${tipoMov==='RETIRO'?103:101}</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
-      const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
+      const fPago=fecOp;
       const monto=limpiarMonto(r['TOTAL GENERAL']||0);
       const inst=String(r['EFECTIVO']||'1').split(',')[0].trim()||'1';
       const mon=String(r['MONEDA']||'1').split(',')[0].trim()||'1';
