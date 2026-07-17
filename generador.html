@@ -74,18 +74,6 @@ td{padding:9px 12px}
 td.mono{font-family:'DM Mono',monospace}
 td.right{text-align:right;font-family:'DM Mono',monospace}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
-.btn-tl{background:none;border:1px solid var(--border);color:var(--azul2);font-size:11px;padding:3px 9px;border-radius:14px;cursor:pointer}
-.btn-tl:hover{border-color:var(--azul2);background:#f8fbff}
-.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:1.5rem}
-.modal-overlay.hidden{display:none!important}
-.modal-box{background:#fff;border-radius:12px;max-width:720px;width:100%;max-height:85vh;overflow-y:auto;padding:1.5rem}
-.modal-close{float:right;border:none;background:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1}
-.tl-track{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px}
-.tl-cell{min-width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0;text-align:center;line-height:1.1}
-.tl-label{min-width:40px;text-align:center;font-size:10px;color:var(--muted);flex-shrink:0}
-.tl-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:.75rem;font-size:11px;color:var(--muted)}
-.tl-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:-1px}
-.tl-aviso-row{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--border);font-size:12px}
 .b-dep{background:#dbeafe;color:#1e40af}
 .b-ret{background:#fce7f3;color:#9d174d}
 .val-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
@@ -127,7 +115,6 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       <div><div class="lt">Generador XML JYS</div><div class="ls">CECOM — Prevención de Lavado de Dinero</div></div>
     </div>
     <a href="index.html" class="back">← Volver al inicio</a>
-    <a href="clientes.html" class="back" style="background:rgba(55,86,35,.4);border-color:rgba(55,86,35,.6)">🗂 Expediente de clientes</a>
   </div>
 </header>
 
@@ -236,31 +223,13 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
     </div>
     <div class="card hidden" id="panel-bloqueados" style="border-color:#fca5a5">
       <div class="card-head"><h3>🔒 Ya reportados (excluidos automáticamente)</h3><span id="bloqueados-count" style="font-size:11px;color:var(--muted)"></span></div>
-      <div id="barra-proporcion" style="padding:.75rem 1.25rem;border-bottom:1px solid var(--border)"></div>
       <div class="card-body" style="padding:0">
         <div class="tw">
           <table>
-            <thead><tr><th>Cliente</th><th>CURP</th><th>Tipo</th><th>Motivo</th><th></th></tr></thead>
+            <thead><tr><th>Cliente</th><th>CURP</th><th>Tipo</th><th>Motivo</th></tr></thead>
             <tbody id="tabla-bloqueados"></tbody>
           </table>
         </div>
-      </div>
-    </div>
-    <div class="modal-overlay hidden" id="modal-timeline" onclick="if(event.target===this)cerrarTimeline()">
-      <div class="modal-box">
-        <button class="modal-close" onclick="cerrarTimeline()">&times;</button>
-        <h3 id="tl-titulo" style="font-size:15px;margin-bottom:2px"></h3>
-        <p id="tl-sub" style="font-size:12px;color:var(--muted);margin-bottom:1rem"></p>
-        <div class="tl-track" id="tl-track"></div>
-        <div class="tl-track" id="tl-labels" style="margin-top:2px"></div>
-        <div class="tl-legend">
-          <span><span class="tl-dot" style="background:#FAC775"></span>Dentro del periodo del aviso</span>
-          <span><span class="tl-dot" style="background:#378ADD"></span>Cierre Mensual</span>
-          <span><span class="tl-dot" style="background:#D4537E"></span>Cierre Semestral</span>
-          <span><span class="tl-dot" style="background:#E24B4A"></span>Cierre Restricción</span>
-          <span><span class="tl-dot" style="background:#e5e7eb"></span>Sin cierre registrado</span>
-        </div>
-        <div id="tl-avisos" style="margin-top:1rem"></div>
       </div>
     </div>
     <div class="val-panel">
@@ -359,81 +328,6 @@ function aplicarHistorial(rows,mesCfgIso){
   });
   return{activos,bloqueados};
 }
-
-// ── Línea de tiempo por cliente (modal) ─────────────────────────────
-function abrirTimeline(curp,op){
-  const modal=document.getElementById('modal-timeline');
-  modal.classList.remove('hidden'); // se abre primero, pase lo que pase abajo
-  document.getElementById('tl-track').innerHTML='';
-  document.getElementById('tl-labels').innerHTML='';
-  document.getElementById('tl-avisos').innerHTML='';
-  try{
-    const regOp=(STATE.historial&&STATE.historial[curp])?STATE.historial[curp][op]:null;
-    if(!regOp||!regOp.avisos||!regOp.avisos.length){
-      document.getElementById('tl-titulo').textContent=curp+' · '+op;
-      document.getElementById('tl-sub').textContent='No hay avisos previos registrados en el historial para esta operación.';
-      return;
-    }
-    const avisos=[...regOp.avisos].filter(av=>av&&av.mes_inicio&&av.mes_fin)
-      .sort((a,b)=>String(a.mes_inicio).localeCompare(String(b.mes_inicio)));
-    if(!avisos.length){
-      document.getElementById('tl-titulo').textContent=curp+' · '+op;
-      document.getElementById('tl-sub').textContent='El historial tiene registros para este cliente, pero sin periodo (mes_inicio/mes_fin) legible.';
-      return;
-    }
-    const inicio=avisos[0].mes_inicio;
-    const fin=avisos[avisos.length-1].mes_fin;
-    const meses=mesesEnRango(inicio,fin);
-
-    const porMes={};
-    avisos.forEach(av=>{
-      mesesEnRango(av.mes_inicio,av.mes_fin).forEach(m=>{porMes[m]=av;});
-    });
-
-    document.getElementById('tl-titulo').textContent=curp+' · '+op;
-    document.getElementById('tl-sub').textContent=`${avisos.length} aviso(s) registrado(s) entre ${inicio} y ${fin}`;
-
-    const coloresTipo={
-      'Mensual':{cerrado:'#378ADD',fg:'#fff'},
-      'Semestral':{cerrado:'#D4537E',fg:'#fff'},
-      'Restricción':{cerrado:'#E24B4A',fg:'#fff'}
-    };
-
-    document.getElementById('tl-track').innerHTML=meses.map(m=>{
-      const av=porMes[m];
-      if(!av)return `<div class="tl-cell" style="background:#e5e7eb;color:#9ca3af">·</div>`;
-      const esFin=(m===av.mes_fin);
-      const c=coloresTipo[av.tipo]||{cerrado:'#888780',fg:'#fff'};
-      const color=esFin?c.cerrado:'#FAC775';
-      const texto=esFin?(av.tipo||''):'';
-      const monto=isNaN(Number(av.monto))?'':(' · $'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
-      return `<div class="tl-cell" style="background:${color}" title="${m} · ${av.tipo||''}${monto}">${texto}</div>`;
-    }).join('');
-
-    document.getElementById('tl-labels').innerHTML=meses.map(m=>`<div class="tl-label">${m.slice(2)}</div>`).join('');
-
-    document.getElementById('tl-avisos').innerHTML=avisos.map(av=>{
-      const monto=isNaN(Number(av.monto))?'—':('$'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
-      const periodo=av.mes_inicio===av.mes_fin?av.mes_inicio:av.mes_inicio+' → '+av.mes_fin;
-      const coloresTipo={
-        'Mensual':{bg:'#dbeafe',fg:'#1e40af'},
-        'Semestral':{bg:'#fde68a',fg:'#92400e'},
-        'Restricción':{bg:'#fee2e2',fg:'#991b1b'}
-      };
-      const c=coloresTipo[av.tipo]||{bg:'#e5e7eb',fg:'#374151'};
-      return `<div class="tl-aviso-row">
-        <span><span class="badge" style="background:${c.bg};color:${c.fg}">${av.tipo||'—'}</span>
-        &nbsp; ${periodo} · ${av.sucursal||''}</span>
-        <span style="font-weight:500">${monto}</span>
-      </div>`;
-    }).join('');
-  }catch(e){
-    document.getElementById('tl-titulo').textContent=curp+' · '+op;
-    document.getElementById('tl-sub').textContent='No se pudo construir la línea de tiempo: '+e.message;
-  }
-}
-function cerrarTimeline(){document.getElementById('modal-timeline').classList.add('hidden');}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarTimeline();});
 
 // ── Sucursal ───────────────────────────────────────────────────────
 function onSucursalChange(){
@@ -928,60 +822,30 @@ function mostrarResumen(rows,bloqueados){
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
   const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)),0);
-  const totalEnExcel = rows.length + bloqueados.length;
-  const pctNuevos = totalEnExcel ? Math.round(rows.length/totalEnExcel*100) : 100;
-  const pctDup = 100 - pctNuevos;
 
   document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo
     +(bloqueados.length?` · 🔒 ${bloqueados.length} ya reportado(s) excluido(s)`:'');
-
-  // ── KPIs mejorados ────────────────────────────────────────────────
   document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total en Excel</div><div class="kpi-val">${totalEnExcel}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Nuevos — irán al XML</div><div class="kpi-val" style="color:var(--verde)">${rows.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:var(--neg)"></div><div class="kpi-label">Ya reportados</div><div class="kpi-val" style="color:var(--neg);font-size:${bloqueados.length>0?'22':'22'}px">${bloqueados.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto XML</div><div class="kpi-val" style="font-size:15px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${avisos.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Dep. / Ret.</div><div class="kpi-val">${dep} / ${ret}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:16px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
   `;
 
-  // ── Barra visual nuevos vs duplicados ─────────────────────────────
   if(bloqueados.length){
     document.getElementById('panel-bloqueados').classList.remove('hidden');
     document.getElementById('bloqueados-count').textContent=bloqueados.length;
-
-    // Barra de proporción
-    document.getElementById('barra-proporcion').innerHTML=`
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-        <span style="font-size:11px;color:var(--muted)">${rows.length} nuevos <span style="color:var(--verde);font-weight:500">(${pctNuevos}%)</span></span>
-        <span style="font-size:11px;color:var(--muted)">${bloqueados.length} ya reportados <span style="color:var(--neg);font-weight:500">(${pctDup}%)</span></span>
-      </div>
-      <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;display:flex">
-        <div style="width:${pctNuevos}%;background:var(--verde);border-radius:4px 0 0 4px"></div>
-        <div style="width:${pctDup}%;background:var(--neg);border-radius:0 4px 4px 0"></div>
-      </div>`;
-
-    // Tabla bloqueados
-    document.getElementById('tabla-bloqueados').innerHTML=bloqueados.slice(0,50).map(r=>{
-      const curp=String(r.CURP||'').trim().toUpperCase();
-      return `
+    document.getElementById('tabla-bloqueados').innerHTML=bloqueados.slice(0,50).map(r=>`
       <tr>
         <td>${normalizar(r.Nombre||'')} ${normalizar(r['Apellido Paterno']||'')}</td>
-        <td class="mono" style="font-size:11px">${curp}</td>
+        <td class="mono" style="font-size:11px">${String(r.CURP||'').trim().toUpperCase()}</td>
         <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
         <td style="font-size:11px;color:var(--muted)">${r._motivoBloqueo||''}</td>
-        <td><button class="btn-tl" onclick="abrirTimeline('${curp}','${r._tipo}')">Ver línea de tiempo</button></td>
-      </tr>`;}).join('');
-
-    if(bloqueados.length>50){
-      document.getElementById('tabla-bloqueados').innerHTML+=`
-        <tr><td colspan="5" style="text-align:center;color:var(--muted);font-size:11px;padding:.5rem">
-          + ${bloqueados.length-50} más excluidos
-        </td></tr>`;
-    }
+      </tr>`).join('');
   }else{
     document.getElementById('panel-bloqueados').classList.add('hidden');
   }
 
-  // ── Vista previa tabla ─────────────────────────────────────────────
   const validos=rows.filter(r=>String(r.Nombre||'').trim()&&String(r.CURP||'').trim().toUpperCase().length===18);
   const MAX=200;
   document.getElementById('tabla-resumen').innerHTML=validos.slice(0,MAX).map(r=>`
