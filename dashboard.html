@@ -255,6 +255,10 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
         <span style="font-size:16px">👥</span>
         <div><div style="font-weight:500" id="dlBaseNombre">Base Unificada</div><div style="font-size:11px;color:var(--muted)">Excel · todos los clientes</div></div>
       </a>
+      <a id="dlVerificados" href="#" download style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--texto);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+        <span style="font-size:16px">✅</span>
+        <div><div style="font-weight:500" id="dlVerificadosNombre">Verificados Semana</div><div style="font-size:11px;color:var(--muted)">Excel · verificados del corte</div></div>
+      </a>
     </div>
   </div>
 
@@ -801,6 +805,9 @@ function renderizar(d){
   _s('dlReporteNombre','textContent', nomReporte.replace('.xlsx',''));
   _s('dlBase','href', nomBase);          _s('dlBase','download', nomBase);
   _s('dlBaseNombre','textContent', nomBase.replace('.xlsx',''));
+  const nomVerif = `Verificados_Semana_${fc}.xlsx`;
+  _s('dlVerificados','href', nomVerif);  _s('dlVerificados','download', nomVerif);
+  _s('dlVerificadosNombre','textContent', nomVerif.replace('.xlsx',''));
   _s('stDesc','style.display', 'block'); // no funciona así, usar directo
   const stDesc = document.getElementById('stDesc');
   const descSec = document.getElementById('descSection');
