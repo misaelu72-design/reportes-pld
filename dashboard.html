@@ -116,11 +116,6 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
   .rscore{font-size:12px;font-weight:500;font-family:monospace;min-width:32px;text-align:right}
   .rsec{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin:1rem 0 .5rem}
   .btn-panel{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
-  #calSelSem{font-weight:500;color:#1F3864;font-family:monospace;font-size:11px;background:#EEF3FB;padding:3px 10px;border-radius:20px;cursor:pointer;border:none;text-align:right}
-  #calSelSem:hover{background:#dce6f3}
-  #calSelRef{font-weight:500;color:#E26B0A;font-family:monospace;font-size:11px;background:#FFF3E8;padding:3px 10px;border-radius:20px;cursor:pointer;border:none;text-align:right}
-  #calSelRef:hover{background:#fde8cc}
-  #calSelSem.inactivo,#calSelRef.inactivo{opacity:.4;cursor:default;pointer-events:none}
   .btn-panel:hover{background:rgba(255,255,255,.22)}
 </style>
 </head>
@@ -133,40 +128,18 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
       <div><div class="lt">CECOM — Reportes PLD</div><div class="ls">Prevención de Lavado de Dinero</div></div>
     </div>
     <div class="hr">
-      <div style="position:relative">
-        <button id="hCorte" class="cb" onclick="toggleCal()" style="cursor:pointer;display:flex;align-items:center;gap:6px;background:none;border:none;font-family:inherit">
-          <i class="ti ti-calendar" style="font-size:14px" aria-hidden="true"></i>
-          <span id="hCorteText">—</span>
-          <i class="ti ti-chevron-down" style="font-size:11px;opacity:.7" aria-hidden="true"></i>
-        </button>
-        <div id="calDropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;z-index:500;background:#fff;border:0.5px solid #e5e7eb;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);width:320px;overflow:hidden">
-          <div style="padding:10px 14px;border-bottom:0.5px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between">
-            <span id="calTitle" style="font-size:13px;font-weight:500;color:#111827"></span>
-            <div style="display:flex;gap:4px">
-              <button onclick="navMes(-1)" style="width:26px;height:26px;border:0.5px solid #e5e7eb;border-radius:6px;background:none;cursor:pointer;font-size:12px;color:#6b7280">‹</button>
-              <button onclick="navMes(1)"  style="width:26px;height:26px;border:0.5px solid #e5e7eb;border-radius:6px;background:none;cursor:pointer;font-size:12px;color:#6b7280">›</button>
-            </div>
-          </div>
-          <div style="padding:10px 12px">
-            <div id="calDows" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px"></div>
-            <div id="calCells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
-          </div>
-          <div style="display:flex;gap:12px;padding:4px 12px 8px;font-size:10px;color:#6b7280">
-            <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#1F3864"></div>Semanal</div>
-            <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#E26B0A"></div>Referencia 26-Abr</div>
-          </div>
-          <div style="border-top:0.5px solid #e5e7eb;padding:8px 12px;display:flex;flex-direction:column;gap:5px">
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px">
-              <span style="color:#6b7280;display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#1F3864;display:inline-block"></span>Semanal</span>
-              <button id="calSelSem" onclick="cargarCorte('sem')">—</button>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px">
-              <span style="color:#6b7280;display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#E26B0A;display:inline-block"></span>26-Abr base</span>
-              <button id="calSelRef" onclick="cargarCorte('ref')">—</button>
-            </div>
-          </div>
+      <div id="dosSelectores" style="display:none;align-items:center;gap:6px">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em">Anterior</span>
+          <select id="selAnterior" onchange="cambiarCorte()" style="background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.25);border-radius:6px;padding:4px 8px;font-size:11px;font-family:'DM Mono',monospace;color:#fff;outline:none;cursor:pointer"></select>
+        </div>
+        <span style="color:rgba(255,255,255,.5);font-size:14px;margin-top:12px">→</span>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em">Actual</span>
+          <select id="selActual" onchange="cambiarCorte()" style="background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.25);border-radius:6px;padding:4px 8px;font-size:11px;font-family:'DM Mono',monospace;color:#fff;outline:none;cursor:pointer"></select>
         </div>
       </div>
+      <span class="cb" id="hCorte" style="display:none">—</span>
       <span class="ub" id="hUpd"></span>
       <span class="un" id="hUser"></span>
       <a href="home.html" class="lo" style="text-decoration:none">← Inicio</a>
@@ -800,127 +773,78 @@ async function cargarDatos(){
   }
 }
 
-// ── Calendario de cortes ─────────────────────────────────────
-let CAL_CORTES=[], CAL_MES=new Date().getMonth(), CAL_ANIO=new Date().getFullYear();
-let CAL_DIA_SEL=null, CAL_SEM_SEL=null, CAL_REF_SEL=null;
-const MESES_ES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const DOWS_ES=['Do','Lu','Ma','Mi','Ju','Vi','Sa'];
+// ── Dos selectores de fecha ─────────────────────────────────
+let TODOS_CORTES = [];
 
 function poblarSelector(cortes){
-  CAL_CORTES=cortes;
-  // Mostrar el corte más reciente como default
-  if(cortes.length>0){
-    const primero=cortes[0];
-    document.getElementById('hCorteText').textContent=primero.etiqueta;
-  }
-  // Iniciar calendario en el mes del corte más reciente
-  if(cortes.length>0){
-    const etiq=cortes[0].etiqueta;
-    const meses={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11};
-    const fc=(etiq.split(' vs ')[1]||etiq).trim();
-    const m=fc.match(/(\d{1,2})-([A-Za-z]{2,3})/);
-    if(m){ CAL_MES=meses[m[2]]||0; }
-  }
-  renderCalendario();
-}
+  TODOS_CORTES = cortes;
 
-function parseFechaCorte(etiq){
-  // Extrae la fecha actual del corte (parte derecha del "vs")
-  const fc=(etiq.split(' vs ')[1]||etiq).trim();
-  const match=fc.match(/(\d{1,2})-([A-Za-z]{2,3})/);
-  if(!match) return null;
-  const meses={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11,May:4};
-  return {dia:parseInt(match[1]), mes:meses[match[2]]};
-}
-
-function cortesDelDia(d,m,a){
-  // Solo mostrar cortes del año actual (2026) — los cortes no tienen año en la etiqueta
-  // Se asume que todos son del mismo año
-  return CAL_CORTES.filter(c=>{
-    const p=parseFechaCorte(c.etiqueta);
-    if(!p) return false;
-    // Verificar que el mes coincida con el año mostrado en el calendario
-    // Los cortes van de Abr a Dec 2026, así que solo mostramos en 2026
-    const anioCortes=CAL_CORTES.length>0?2026:a;
-    return p.dia===d && p.mes===m && a===anioCortes;
+  // Obtener fechas únicas de la parte anterior y actual
+  const fechasAnt = new Set();
+  const fechasAct = new Set();
+  cortes.forEach(c => {
+    const partes = c.etiqueta.split(' vs ');
+    if(partes.length === 2){
+      fechasAnt.add(partes[0].trim());
+      fechasAct.add(partes[1].trim());
+    }
   });
-}
 
-function renderCalendario(){
-  const titulo=document.getElementById('calTitle');
-  const dows=document.getElementById('calDows');
-  const cells=document.getElementById('calCells');
-  if(!titulo||!dows||!cells) return;
-  titulo.textContent=MESES_ES[CAL_MES]+' '+CAL_ANIO;
-  dows.innerHTML=DOWS_ES.map(d=>`<div style="text-align:center;font-size:10px;font-weight:500;color:#9ca3af;padding:2px 0">${d}</div>`).join('');
-  const pri=new Date(CAL_ANIO,CAL_MES,1).getDay();
-  const dias=new Date(CAL_ANIO,CAL_MES+1,0).getDate();
-  let html='';
-  for(let i=0;i<pri;i++) html+='<div></div>';
-  for(let d=1;d<=dias;d++){
-    const cs=cortesDelDia(d,CAL_MES,CAL_ANIO);
-    const hasSem=cs.some(c=>!c.etiqueta.startsWith('26-Abr')&&!c.etiqueta.startsWith('26 de'));
-    const hasRef=cs.some(c=>c.etiqueta.startsWith('26-Abr'));
-    const isSel=CAL_DIA_SEL===d+'_'+CAL_MES+'_'+CAL_ANIO;
-    const selType=isSel?(CAL_SEM_SEL&&!CAL_SEM_SEL.startsWith('—')?'sem':'ref'):'';
-    const bg=isSel?(selType==='sem'?'#1F3864':'#E26B0A'):'transparent';
-    const color=isSel?'#fff':(cs.length?'#111827':'#9ca3af');
-    const cursor=cs.length?'pointer':'default';
-    const dots=cs.length?`<div style="display:flex;gap:2px;justify-content:center">${hasSem?'<div style="width:4px;height:4px;border-radius:50%;background:'+(isSel?'rgba(255,255,255,.8)':'#1F3864')+'"></div>':''}${hasRef?'<div style="width:4px;height:4px;border-radius:50%;background:'+(isSel?'rgba(255,255,255,.8)':'#E26B0A')+'"></div>':''}</div>`:'';
-    html+=`<div onclick="${cs.length?`clickCalDia(${d})`:'void(0)'}" title="${cs.map(c=>c.etiqueta).join(' · ')}"
-      style="aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;font-size:11px;cursor:${cursor};background:${bg};color:${color};gap:2px;${cs.length&&!isSel?'&hover{background:#f3f4f6}':''}">
-      <span>${d}</span>${dots}</div>`;
+  const selAnt = document.getElementById('selAnterior');
+  const selAct = document.getElementById('selActual');
+  if(!selAnt || !selAct) return;
+
+  // Ordenar fechas cronológicamente
+  const mesesOrd = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12,Abr:4,Ene:1,Dic:12};
+  function numFecha(f){
+    const m = f.match(/(\d{1,2})-([A-Za-z]{2,3})/);
+    return m ? (mesesOrd[m[2]]||0)*100+parseInt(m[1]) : 0;
   }
-  cells.innerHTML=html;
-}
+  const sortedAnt = [...fechasAnt].sort((a,b) => numFecha(b)-numFecha(a));
+  const sortedAct = [...fechasAct].sort((a,b) => numFecha(b)-numFecha(a));
 
-function clickCalDia(d){
-  CAL_DIA_SEL=d+'_'+CAL_MES+'_'+CAL_ANIO;
-  const cs=cortesDelDia(d,CAL_MES,CAL_ANIO);
-  const sem=cs.find(c=>!c.etiqueta.startsWith('26-Abr')&&!c.etiqueta.startsWith('26 de'));
-  const ref=cs.find(c=>c.etiqueta.startsWith('26-Abr'));
-  const semEl=document.getElementById('calSelSem');
-  const refEl=document.getElementById('calSelRef');
-  CAL_SEM_SEL=sem?sem.archivo:null;
-  CAL_REF_SEL=ref?ref.archivo:null;
-  if(semEl) semEl.textContent=sem?sem.etiqueta:'—';
-  if(refEl) refEl.textContent=ref?ref.etiqueta:'—';
-  // Cargar el semanal por default al hacer clic en el día
-  if(sem) cargarCorte('sem');
-  renderCalendario();
-}
+  selAnt.innerHTML = sortedAnt.map(f => `<option value="${f}">${f}</option>`).join('');
+  selAct.innerHTML = sortedAct.map(f => `<option value="${f}">${f}</option>`).join('');
 
-async function cargarCorte(tipo){
-  const arch=tipo==='sem'?CAL_SEM_SEL:CAL_REF_SEL;
-  if(!arch) return;
-  const etiq=tipo==='sem'?(document.getElementById('calSelSem')||{}).textContent:(document.getElementById('calSelRef')||{}).textContent;
-  document.getElementById('hCorteText').textContent=etiq||'—';
-  const r=await fetch(arch+'?v='+Date.now());
-  if(r.ok){DATA=await r.json();DETALLE=DATA.detalle_cambios||[];renderizar(DATA);}
-  toggleCal();
-}
-
-function navMes(dir){
-  CAL_MES+=dir;
-  if(CAL_MES>11){CAL_MES=0;CAL_ANIO++;}
-  if(CAL_MES<0){CAL_MES=11;CAL_ANIO--;}
-  renderCalendario();
-}
-
-function toggleCal(){
-  const d=document.getElementById('calDropdown');
-  if(!d) return;
-  d.style.display=d.style.display==='none'?'block':'none';
-}
-
-// Cerrar calendario al hacer clic fuera
-document.addEventListener('click',function(e){
-  const drop=document.getElementById('calDropdown');
-  const btn=document.getElementById('hCorte');
-  if(drop&&btn&&!drop.contains(e.target)&&!btn.contains(e.target)){
-    drop.style.display='none';
+  // Seleccionar el corte más reciente por default
+  if(cortes.length > 0){
+    const partes = cortes[0].etiqueta.split(' vs ');
+    if(partes.length === 2){
+      selAnt.value = partes[0].trim();
+      selAct.value = partes[1].trim();
+    }
   }
-});
+
+  // Mostrar selectores
+  const wrap = document.getElementById('dosSelectores');
+  if(wrap) wrap.style.display = 'flex';
+
+  // Cargar el corte inicial
+  cambiarCorte();
+}
+
+async function cambiarCorte(){
+  const ant = document.getElementById('selAnterior').value;
+  const act = document.getElementById('selActual').value;
+  if(!ant || !act) return;
+
+  // Buscar el corte que coincida
+  const corte = TODOS_CORTES.find(c => c.etiqueta === `${ant} vs ${act}`);
+  if(!corte){
+    // Si no existe esa combinación exacta, avisar
+    const hCorte = document.getElementById('hCorte');
+    if(hCorte) hCorte.textContent = `${ant} vs ${act} (no disponible)`;
+    return;
+  }
+
+  const hCorte = document.getElementById('hCorte');
+  if(hCorte) hCorte.textContent = corte.etiqueta;
+
+  const r = await fetch(corte.archivo + '?v=' + Date.now());
+  if(r.ok){ DATA = await r.json(); DETALLE = DATA.detalle_cambios||[]; renderizar(DATA); }
+}
+
+
 
 // ── Render principal ─────────────────────────────────────────
 function renderizar(d){
