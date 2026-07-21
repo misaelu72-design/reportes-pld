@@ -769,12 +769,12 @@ async function procesarArchivo(){
       });
 
     } else if(esFormatoPLD){
-      // ── FORMATO PLD NYDIA: hojas con JUNIO ─────────────────────
-      // Mensual → hojas "JUNIO - DEPOSITO" / "JUNIO - RETIRO" → monto del último mes
-      // Semestral → hojas "DEPOSITO" / "RETIRO" → TOTAL ACUMULADO
+      // ── FORMATO PLD NYDIA: hojas "JUNIO - DEPOSITO"/"JUNIO - RETIRO" ──
+      // ya vienen filtradas al mes que cierra; Mensual toma Tipo de Reporte=Mensual,
+      // Semestral toma Tipo de Reporte=Semestral (ambos del mismo archivo)
       const esSemestral = tipoRep === 'SEMESTRAL';
-      const hDep = esSemestral ? 'DEPOSITO' : wb.SheetNames.find(h=>h.includes('JUNIO - DEPOSITO'))||'DEPOSITO';
-      const hRet = esSemestral ? 'RETIRO'   : wb.SheetNames.find(h=>h.includes('JUNIO - RETIRO'))||'RETIRO';
+      const hDep = wb.SheetNames.find(h=>h.includes('JUNIO - DEPOSITO'))||'DEPOSITO';
+      const hRet = wb.SheetNames.find(h=>h.includes('JUNIO - RETIRO'))||'RETIRO';
 
       [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([hoja,t])=>{
         if(!wb.SheetNames.includes(hoja)) return;
@@ -787,21 +787,19 @@ async function procesarArchivo(){
           const curp=String(obj['CURP']||'').trim().toUpperCase();
           if(curp.length!==18) return;
           if(!filaEsDeLaSucursalSeleccionada(obj)) return;
-          if(!esSemestral){
-            const tipoRepFila=String(obj['Tipo de Reporte']||'').trim();
-            if(tipoRepFila && tipoRepFila!=='Mensual') return; // Semestral/Restricción van en su propio reporte
-          }
+          const tipoRepFila=String(obj['Tipo de Reporte']||'').trim();
+          const tipoEsperado=esSemestral?'Semestral':'Mensual';
+          if(tipoRepFila && tipoRepFila!==tipoEsperado) return; // cada modo solo toma lo suyo
           const nombreCompleto=String(obj['Nombre del Cliente']||'').trim();
           const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
           let monto=0;
-          if(esSemestral){
+          const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
+          for(let i=meses.length-1;i>=0;i--){
+            const v=parseFloat(String(obj[meses[i]]||'0').replace(/[$,—\-]/g,''));
+            if(v>0){monto=v;break;}
+          }
+          if(!monto){
             monto=parseFloat(String(obj['TOTAL ACUMULADO']||'0').replace(/[$,—\-]/g,''))||0;
-          } else {
-            const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
-            for(let i=meses.length-1;i>=0;i--){
-              const v=parseFloat(String(obj[meses[i]]||'0').replace(/[$,—\-]/g,''));
-              if(v>0){monto=v;break;}
-            }
           }
           const cpRaw=String(obj['C.P.']||obj['PLD C.P.']||'').split('.')[0].trim();
           rows.push({
