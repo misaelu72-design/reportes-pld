@@ -813,7 +813,18 @@ function parseFechaCorte(etiq){
   return {dia:parseInt(m[1]), mes:MESES_NUM[m[2]]};
 }
 
+function anioDeCortes(){
+  // Detectar el año base del script desde los datos generados
+  if(typeof DATA !== 'undefined' && DATA && DATA.meta && DATA.meta.generado){
+    const m = DATA.meta.generado.match(/\/(\d{4})\s/);
+    if(m) return parseInt(m[1]);
+  }
+  return 2026; // fallback
+}
+
 function cortesEnDia(d, m){
+  // Solo mostrar puntos en el año actual de los cortes
+  if(CAL_ANIO !== anioDeCortes()) return [];
   return TODOS_CORTES.filter(c=>{
     const p=parseFechaCorte(c.etiqueta);
     return p && p.dia===d && p.mes===m;
