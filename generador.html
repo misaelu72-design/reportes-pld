@@ -850,7 +850,7 @@ async function procesarArchivo(){
       // Hojas: DEPOSITO/RETIRO (detalle de cliente) + Mensual/Semestral/Restricción
       // Depósito/Retiro (avisos ya clasificados por periodo)
       const esSemestral = tipoRep === 'SEMESTRAL';
-      const mesObjetivo = yyyymmAMesAbrev(cfg.mes);
+      const mesObjetivo = yyyymmAMesAbrev(mes);
 
       function leerHojaObjetos(hoja){
         if(!wb.SheetNames.includes(hoja)) return {arr:[], idx:{}};
