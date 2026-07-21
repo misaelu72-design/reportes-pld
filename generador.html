@@ -74,6 +74,18 @@ td{padding:9px 12px}
 td.mono{font-family:'DM Mono',monospace}
 td.right{text-align:right;font-family:'DM Mono',monospace}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.btn-tl{background:none;border:1px solid var(--border);color:var(--azul2);font-size:11px;padding:3px 9px;border-radius:14px;cursor:pointer}
+.btn-tl:hover{border-color:var(--azul2);background:#f8fbff}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:1.5rem}
+.modal-overlay.hidden{display:none!important}
+.modal-box{background:#fff;border-radius:12px;max-width:720px;width:100%;max-height:85vh;overflow-y:auto;padding:1.5rem}
+.modal-close{float:right;border:none;background:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1}
+.tl-track{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px}
+.tl-cell{min-width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0;text-align:center;line-height:1.1}
+.tl-label{min-width:40px;text-align:center;font-size:10px;color:var(--muted);flex-shrink:0}
+.tl-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:.75rem;font-size:11px;color:var(--muted)}
+.tl-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:-1px}
+.tl-aviso-row{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--border);font-size:12px}
 .b-dep{background:#dbeafe;color:#1e40af}
 .b-ret{background:#fce7f3;color:#9d174d}
 .val-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
@@ -115,6 +127,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
       <div><div class="lt">Generador XML JYS</div><div class="ls">CECOM — Prevención de Lavado de Dinero</div></div>
     </div>
     <a href="index.html" class="back">← Volver al inicio</a>
+    <a href="clientes.html" class="back" style="background:rgba(55,86,35,.4);border-color:rgba(55,86,35,.6)">🗂 Expediente de clientes</a>
   </div>
 </header>
 
@@ -138,7 +151,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
             <select id="cfg-sucursal" onchange="onSucursalChange()">
               <option value="">— Selecciona una sucursal —</option>
               <option value="MTY|64320|MTY">Mitras — Monterrey (MTY)</option>
-              <option value="GDL|45900|GDL">Guadalupe (GDL)</option>
+              <option value="GPE|45900|GPE">Guadalupe (GPE)</option>
               <option value="AJI|00000|AJI">Ajijic (AJI)</option>
               <option value="ALL|00000|ALL">Allende (ALL)</option>
               <option value="IRP|00000|IRP">Irapuato (IRP)</option>
@@ -150,7 +163,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           </div>
           <div class="field">
             <label>Mes reportado</label>
-            <input type="text" id="cfg-mes" value="202605" placeholder="YYYYMM" maxlength="6">
+            <input type="text" id="cfg-mes" value="" placeholder="YYYYMM" maxlength="6">
           </div>
         </div>
 
@@ -185,6 +198,14 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           <div class="upload-sub" id="upload-sub">Acepta .xlsx y .xlsm</div>
         </div>
 
+        <div class="section-label">Historial de avisos (opcional)</div>
+        <div class="upload-zone" id="zone-historial" onclick="document.getElementById('file-historial').click()" style="padding:1.5rem">
+          <input type="file" id="file-historial" accept=".json" onchange="historialSelected(this)">
+          <div class="upload-icon" id="hist-icon" style="font-size:24px;margin-bottom:6px">🔒</div>
+          <div class="upload-title" id="hist-title" style="font-size:13px">Sube <span style="font-family:'DM Mono',monospace">historial_avisos_cecom.json</span> para evitar duplicados</div>
+          <div class="upload-sub" id="hist-sub">Opcional — si no lo subes, no se filtra nada ya reportado</div>
+        </div>
+
         <div class="actions">
           <button class="btn btn-primary" onclick="procesarArchivo()">
             <span id="btn-procesar-text">Procesar y ver resumen</span>
@@ -211,6 +232,35 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           </table>
         </div>
         <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)" id="tabla-footer"></div>
+      </div>
+    </div>
+    <div class="card hidden" id="panel-bloqueados" style="border-color:#fca5a5">
+      <div class="card-head"><h3>🔒 Ya reportados (excluidos automáticamente)</h3><span id="bloqueados-count" style="font-size:11px;color:var(--muted)"></span></div>
+      <div id="barra-proporcion" style="padding:.75rem 1.25rem;border-bottom:1px solid var(--border)"></div>
+      <div class="card-body" style="padding:0">
+        <div class="tw">
+          <table>
+            <thead><tr><th>Cliente</th><th>CURP</th><th>Tipo</th><th>Motivo</th><th></th></tr></thead>
+            <tbody id="tabla-bloqueados"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay hidden" id="modal-timeline" onclick="if(event.target===this)cerrarTimeline()">
+      <div class="modal-box">
+        <button class="modal-close" onclick="cerrarTimeline()">&times;</button>
+        <h3 id="tl-titulo" style="font-size:15px;margin-bottom:2px"></h3>
+        <p id="tl-sub" style="font-size:12px;color:var(--muted);margin-bottom:1rem"></p>
+        <div class="tl-track" id="tl-track"></div>
+        <div class="tl-track" id="tl-labels" style="margin-top:2px"></div>
+        <div class="tl-legend">
+          <span><span class="tl-dot" style="background:#FAC775"></span>Dentro del periodo del aviso</span>
+          <span><span class="tl-dot" style="background:#378ADD"></span>Cierre Mensual</span>
+          <span><span class="tl-dot" style="background:#D4537E"></span>Cierre Semestral</span>
+          <span><span class="tl-dot" style="background:#E24B4A"></span>Cierre Restricción</span>
+          <span><span class="tl-dot" style="background:#e5e7eb"></span>Sin cierre registrado</span>
+        </div>
+        <div id="tl-avisos" style="margin-top:1rem"></div>
       </div>
     </div>
     <div class="val-panel">
@@ -253,7 +303,166 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 <script>
 const MAPA_PAIS={MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
 const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
-let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{}};
+let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{},historial:null,bloqueados:[]};
+
+// ── Historial de avisos (candado JSON) ──────────────────────────────
+function historialSelected(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      STATE.historial=JSON.parse(e.target.result);
+      const nClientes=Object.keys(STATE.historial).length;
+      document.getElementById('zone-historial').classList.add('upload-done');
+      document.getElementById('hist-icon').textContent='✅';
+      document.getElementById('hist-title').textContent=f.name;
+      document.getElementById('hist-sub').textContent=`${nClientes} clientes con avisos previos cargados`;
+    }catch(err){
+      STATE.historial=null;
+      document.getElementById('hist-title').textContent='Error al leer el JSON: '+err.message;
+    }
+  };
+  r.readAsText(f);
+}
+
+// Genera la lista de meses 'YYYY-MM' entre inicio y fin, inclusive
+// Devuelve YYYYMMDD del último día real del mes YYYYMM (respeta 28/29/30/31 y años bisiestos)
+function ultimoDiaMes(yyyymm){
+  const s=String(yyyymm||'').trim();
+  if(!/^\d{6}$/.test(s)) return s+'30';
+  const y=Number(s.slice(0,4)), m=Number(s.slice(4,6));
+  const ultimo=new Date(y, m, 0).getDate(); // día 0 del mes siguiente = último día del mes actual
+  return `${s}${String(ultimo).padStart(2,'0')}`;
+}
+
+function mesesEnRango(inicio,fin){
+  if(!inicio||!fin)return[];
+  const[ay,am]=inicio.split('-').map(Number);
+  const[by,bm]=fin.split('-').map(Number);
+  if(!ay||!am||!by||!bm)return[];
+  let y=ay,m=am;const out=[];
+  while(y<by||(y===by&&m<=bm)){
+    out.push(`${y}-${String(m).padStart(2,'0')}`);
+    m++;if(m>12){m=1;y++;}
+  }
+  return out;
+}
+
+// Divide "Nombre del Cliente" en Nombre / Apellido Paterno / Apellido Materno,
+// respetando apellidos compuestos con partículas (DE, DEL, LA, LOS, LAS, Y),
+// p.ej. "ABELARDO GAUCIN DE LA GARZA" -> Nombre: ABELARDO, Paterno: GAUCIN, Materno: DE LA GARZA
+const PARTICULAS_APELLIDO=new Set(['DE','DEL','LA','LOS','LAS','Y']);
+function partirNombreCompuesto(nombreCompleto){
+  const partes=String(nombreCompleto||'').trim().split(/\s+/).filter(Boolean);
+  if(partes.length===0) return {nombre:'',apPat:'XXXX',apMat:'XXXX'};
+  if(partes.length===1) return {nombre:partes[0],apPat:'XXXX',apMat:'XXXX'};
+  if(partes.length===2) return {nombre:partes[0],apPat:partes[1],apMat:'XXXX'};
+  if(partes.length===3) return {nombre:partes[0],apPat:partes[1],apMat:partes[2]};
+
+  let i=partes.length-1;
+  const materno=[partes[i]]; i--;
+  while(i>=1 && PARTICULAS_APELLIDO.has(partes[i].toUpperCase())){ materno.unshift(partes[i]); i--; }
+  const paterno=[partes[i]]; i--;
+  while(i>=1 && PARTICULAS_APELLIDO.has(partes[i].toUpperCase())){ paterno.unshift(partes[i]); i--; }
+  const nombre=partes.slice(0,i+1).join(' ')||paterno.join(' ');
+  return {nombre, apPat:paterno.join(' '), apMat:materno.join(' ')};
+}
+
+// Filtra las filas cuyo CURP+mes(es)+tipo de operación ya estén
+// cerrados en el historial. Devuelve {activos, bloqueados}.
+function aplicarHistorial(rows,mesCfgIso){
+  if(!STATE.historial)return{activos:rows,bloqueados:[]};
+  const activos=[],bloqueados=[];
+  rows.forEach(r=>{
+    const curp=String(r.CURP||'').trim().toUpperCase();
+    const op=r._tipo||'DEPOSITO';
+    const regOp=(STATE.historial[curp]||{})[op];
+    const mesesFila=(r._mesInicio&&r._mesFin)?mesesEnRango(r._mesInicio,r._mesFin):[mesCfgIso];
+    const cerrados=mesesFila.filter(m=>regOp&&regOp.meses_cerrados&&regOp.meses_cerrados[m]);
+    if(regOp&&cerrados.length){
+      r._motivoBloqueo=`Ya reportado (${cerrados.join(', ')})`;
+      bloqueados.push(r);
+    }else{
+      activos.push(r);
+    }
+  });
+  return{activos,bloqueados};
+}
+
+// ── Línea de tiempo por cliente (modal) ─────────────────────────────
+function abrirTimeline(curp,op){
+  const modal=document.getElementById('modal-timeline');
+  modal.classList.remove('hidden'); // se abre primero, pase lo que pase abajo
+  document.getElementById('tl-track').innerHTML='';
+  document.getElementById('tl-labels').innerHTML='';
+  document.getElementById('tl-avisos').innerHTML='';
+  try{
+    const regOp=(STATE.historial&&STATE.historial[curp])?STATE.historial[curp][op]:null;
+    if(!regOp||!regOp.avisos||!regOp.avisos.length){
+      document.getElementById('tl-titulo').textContent=curp+' · '+op;
+      document.getElementById('tl-sub').textContent='No hay avisos previos registrados en el historial para esta operación.';
+      return;
+    }
+    const avisos=[...regOp.avisos].filter(av=>av&&av.mes_inicio&&av.mes_fin)
+      .sort((a,b)=>String(a.mes_inicio).localeCompare(String(b.mes_inicio)));
+    if(!avisos.length){
+      document.getElementById('tl-titulo').textContent=curp+' · '+op;
+      document.getElementById('tl-sub').textContent='El historial tiene registros para este cliente, pero sin periodo (mes_inicio/mes_fin) legible.';
+      return;
+    }
+    const inicio=avisos[0].mes_inicio;
+    const fin=avisos[avisos.length-1].mes_fin;
+    const meses=mesesEnRango(inicio,fin);
+
+    const porMes={};
+    avisos.forEach(av=>{
+      mesesEnRango(av.mes_inicio,av.mes_fin).forEach(m=>{porMes[m]=av;});
+    });
+
+    document.getElementById('tl-titulo').textContent=curp+' · '+op;
+    document.getElementById('tl-sub').textContent=`${avisos.length} aviso(s) registrado(s) entre ${inicio} y ${fin}`;
+
+    const coloresTipo={
+      'Mensual':{cerrado:'#378ADD',fg:'#fff'},
+      'Semestral':{cerrado:'#D4537E',fg:'#fff'},
+      'Restricción':{cerrado:'#E24B4A',fg:'#fff'}
+    };
+
+    document.getElementById('tl-track').innerHTML=meses.map(m=>{
+      const av=porMes[m];
+      if(!av)return `<div class="tl-cell" style="background:#e5e7eb;color:#9ca3af">·</div>`;
+      const esFin=(m===av.mes_fin);
+      const c=coloresTipo[av.tipo]||{cerrado:'#888780',fg:'#fff'};
+      const color=esFin?c.cerrado:'#FAC775';
+      const texto=esFin?(av.tipo||''):'';
+      const monto=isNaN(Number(av.monto))?'':(' · $'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
+      return `<div class="tl-cell" style="background:${color}" title="${m} · ${av.tipo||''}${monto}">${texto}</div>`;
+    }).join('');
+
+    document.getElementById('tl-labels').innerHTML=meses.map(m=>`<div class="tl-label">${m.slice(2)}</div>`).join('');
+
+    document.getElementById('tl-avisos').innerHTML=avisos.map(av=>{
+      const monto=isNaN(Number(av.monto))?'—':('$'+Number(av.monto).toLocaleString('es-MX',{minimumFractionDigits:2}));
+      const periodo=av.mes_inicio===av.mes_fin?av.mes_inicio:av.mes_inicio+' → '+av.mes_fin;
+      const coloresTipo={
+        'Mensual':{bg:'#dbeafe',fg:'#1e40af'},
+        'Semestral':{bg:'#fde68a',fg:'#92400e'},
+        'Restricción':{bg:'#fee2e2',fg:'#991b1b'}
+      };
+      const c=coloresTipo[av.tipo]||{bg:'#e5e7eb',fg:'#374151'};
+      return `<div class="tl-aviso-row">
+        <span><span class="badge" style="background:${c.bg};color:${c.fg}">${av.tipo||'—'}</span>
+        &nbsp; ${periodo} · ${av.sucursal||''}</span>
+        <span style="font-weight:500">${monto}</span>
+      </div>`;
+    }).join('');
+  }catch(e){
+    document.getElementById('tl-titulo').textContent=curp+' · '+op;
+    document.getElementById('tl-sub').textContent='No se pudo construir la línea de tiempo: '+e.message;
+  }
+}
+function cerrarTimeline(){document.getElementById('modal-timeline').classList.add('hidden');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrarTimeline();});
 
 // ── Sucursal ───────────────────────────────────────────────────────
 function onSucursalChange(){
@@ -295,6 +504,20 @@ function fileSelected(input){
 function limpiarMonto(v){if(!v&&v!==0)return'0.00';try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return'0.00';}}
 function limpiarTel(v){if(!v)return'';const s=String(v).replace(/\D/g,'');return(s.length>=10&&s.length<=12)?s:'';}
 function normalizar(s){if(!s)return'';return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZN0-9 .,:\/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();}
+
+// Mapa de prefijo de sucursal -> nombre tal como aparece en la columna "Sucursal"
+// de los reportes de Nydia (usado para filtrar cuando el Excel trae varias sucursales juntas)
+const PREFIJO_A_SUCURSAL={
+  MTY:'MITRAS', GPE:'GUADALUPE', AJI:'AJIJIC', ALL:'ALLENDE',
+  IRP:'IRAPUATO', SND:'SENDERO', SAT:'SATELITE', NEZ:'NEZA', ESM:'ESMERALDA'
+};
+function filaEsDeLaSucursalSeleccionada(obj){
+  const nombreEsperado=PREFIJO_A_SUCURSAL[STATE.prefijo];
+  if(!nombreEsperado) return true; // si no reconocemos el prefijo, no filtramos (evita bloquear por error)
+  const sucFila=normalizar(obj['Sucursal']||'');
+  if(!sucFila) return true; // si la fila no trae sucursal, no la descartamos (formatos de una sola sucursal)
+  return sucFila===nombreEsperado;
+}
 function paisIso2(v){if(!v)return'MX';let s=String(v).toUpperCase().trim();if(s.includes(','))s=s.split(',').pop().trim();if(s.length===2)return s;return MAPA_PAIS[s]||'MX';}
 function codOcup(v){if(!v)return'1000000';let s=String(v).trim();if(s.includes('||'))s=s.split('||').pop().trim();s=s.split('.')[0].trim();return/^\d+$/.test(s)?s:'1000000';}
 function escXml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
@@ -366,11 +589,13 @@ async function procesarArchivo(){
     const esFormatoA = wb.SheetNames.includes('REPORTE UIF DEPOSITOS') && wb.SheetNames.includes('REPORTE UIF RETIROS');
     const esFormatoAcum = wb.SheetNames.some(h=>h.toLowerCase().includes('depositos acumulado')||h.toLowerCase().includes('depósitos acumulado'));
     const esFormatoC = wb.SheetNames.some(h=>h.toLowerCase().includes('reporte de umas'));
-    const esFormatoTransac = wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO');
+    // Formato PLD Nydia con hojas JUNIO - DEPOSITO / JUNIO - RETIRO
+    const esFormatoPLD = wb.SheetNames.some(h=>h.includes('JUNIO - DEPOSITO')||h.includes('JUNIO - RETIRO'));
+    const esFormatoTransac = !esFormatoPLD && wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO');
     // Formato semestral generado por el script Python — tiene columna Monto Acumulado
     const primeraHoja = wb.SheetNames[0];
     const primeraFila = XLSX.utils.sheet_to_json(wb.Sheets[primeraHoja],{header:1,defval:''})[1]||[];
-    const esFormatoSemestral = !esFormatoTransac && primeraFila.some(c=>String(c).includes('Monto Acumulado'));
+    const esFormatoSemestral = !esFormatoTransac && !esFormatoPLD && primeraFila.some(c=>String(c).includes('Monto Acumulado'));
 
     if(esFormatoC){
       // ── FORMATO C (estándar): hoja Reporte de UMAS ────────────
@@ -379,12 +604,7 @@ async function procesarArchivo(){
 
       raw.forEach(r=>{
         const nombreCompleto = String(r['Cliente']||'').trim();
-        const partes = nombreCompleto.split(' ').filter(Boolean);
-        let nombre='', apPat='', apMat='';
-        if(partes.length===1){ nombre=partes[0]; apPat='XXXX'; apMat='XXXX'; }
-        else if(partes.length===2){ nombre=partes[0]; apPat=partes[1]; apMat='XXXX'; }
-        else if(partes.length===3){ nombre=partes[0]; apPat=partes[1]; apMat=partes[2]; }
-        else{ nombre=partes.slice(0,-2).join(' '); apPat=partes[partes.length-2]; apMat=partes[partes.length-1]; }
+        const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
 
         const monto = String(r['Monto']||'0').replace(/[$,]/g,'');
         const tipo  = String(r['Tipo Mov']||'DEPOSITO').trim().toUpperCase();
@@ -548,6 +768,64 @@ async function procesarArchivo(){
         r.CONSECUTIVO=mapFolio2[key];
       });
 
+    } else if(esFormatoPLD){
+      // ── FORMATO PLD NYDIA: hojas con JUNIO ─────────────────────
+      // Mensual → hojas "JUNIO - DEPOSITO" / "JUNIO - RETIRO" → monto del último mes
+      // Semestral → hojas "DEPOSITO" / "RETIRO" → TOTAL ACUMULADO
+      const esSemestral = tipoRep === 'SEMESTRAL';
+      const hDep = esSemestral ? 'DEPOSITO' : wb.SheetNames.find(h=>h.includes('JUNIO - DEPOSITO'))||'DEPOSITO';
+      const hRet = esSemestral ? 'RETIRO'   : wb.SheetNames.find(h=>h.includes('JUNIO - RETIRO'))||'RETIRO';
+
+      [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([hoja,t])=>{
+        if(!wb.SheetNames.includes(hoja)) return;
+        const arr=XLSX.utils.sheet_to_json(wb.Sheets[hoja],{header:1,defval:''});
+        const hi=arr.findIndex(r=>r.some(c=>String(c).trim()==='CURP'));
+        if(hi<0) return;
+        const headers=arr[hi].map(h=>String(h).replace(/\n/g,' ').trim());
+        arr.slice(hi+1).forEach(r=>{
+          const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
+          const curp=String(obj['CURP']||'').trim().toUpperCase();
+          if(curp.length!==18) return;
+          if(!filaEsDeLaSucursalSeleccionada(obj)) return;
+          if(!esSemestral){
+            const tipoRepFila=String(obj['Tipo de Reporte']||'').trim();
+            if(tipoRepFila && tipoRepFila!=='Mensual') return; // Semestral/Restricción van en su propio reporte
+          }
+          const nombreCompleto=String(obj['Nombre del Cliente']||'').trim();
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+          let monto=0;
+          if(esSemestral){
+            monto=parseFloat(String(obj['TOTAL ACUMULADO']||'0').replace(/[$,—\-]/g,''))||0;
+          } else {
+            const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
+            for(let i=meses.length-1;i>=0;i--){
+              const v=parseFloat(String(obj[meses[i]]||'0').replace(/[$,—\-]/g,''));
+              if(v>0){monto=v;break;}
+            }
+          }
+          const cpRaw=String(obj['C.P.']||obj['PLD C.P.']||'').split('.')[0].trim();
+          rows.push({
+            'Nombre':nombre,'Apellido Paterno':apPat,'Apellido Materno':apMat,
+            'Fecha Nacimiento':obj['Fecha Nacimiento']||'',
+            'CURP':curp,'Clave Pais':String(obj['Nacionalidad']||'MEX'),
+            'PLD Ocupacion':String(obj['PLD Ocupación']||''),
+            'PLD Codigo Ocupacion':String(obj['Código Ocupación']||'1000000').split('.')[0],
+            'PLD C.P.':cpRaw,'PLD Colonia':String(obj['Colonia']||''),
+            'Calle':String(obj['Calle']||''),'No Exterior':String(obj['No. Ext']||''),
+            'No Interior':String(obj['No. Int']||''),
+            'Fecha Hora Ultima Trans':obj['Fecha Última Transac.']||obj['Fecha Última Transacción']||'',
+            'TOTAL GENERAL':monto,'EFECTIVO':'1','MONEDA':'1',
+            _tipo:t,_tipoReporte:tipoRep,_tel:'',
+          });
+        });
+      });
+      let ciP=1;const mapFolioP={};
+      rows.forEach(r=>{
+        const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
+        if(!mapFolioP[key])mapFolioP[key]=STATE.prefijo+String(ciP++).padStart(4,'0');
+        r.CONSECUTIVO=mapFolioP[key];
+      });
+
     } else if(esFormatoTransac){
       // ── FORMATO TRANSACCIONAL (Nydia): hojas DEPOSITO / RETIRO ─
       // Tiene columnas por mes + TOTAL ACUMULADO
@@ -564,14 +842,10 @@ async function procesarArchivo(){
           // Solo filas con CURP válido de 18 chars
           const curp = String(obj['CURP']||'').trim().toUpperCase();
           if(curp.length !== 18) return;
+          if(!filaEsDeLaSucursalSeleccionada(obj)) return;
           // Separar nombre completo
           const nombreCompleto = String(obj['Nombre del Cliente']||'').trim();
-          const partes = nombreCompleto.split(' ').filter(Boolean);
-          let nombre='', apPat='', apMat='';
-          if(partes.length===1){ nombre=partes[0]; apPat='XXXX'; apMat='XXXX'; }
-          else if(partes.length===2){ nombre=partes[0]; apPat=partes[1]; apMat='XXXX'; }
-          else if(partes.length===3){ nombre=partes[0]; apPat=partes[1]; apMat=partes[2]; }
-          else{ nombre=partes.slice(0,-2).join(' '); apPat=partes[partes.length-2]; apMat=partes[partes.length-1]; }
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
           const monto = parseFloat(String(obj['TOTAL ACUMULADO']||'0').replace(/[$,—\-]/g,''))||0;
           rows.push({
             'Nombre':           nombre,
@@ -618,12 +892,7 @@ async function procesarArchivo(){
           if(!obj['Cliente']&&!obj['CURP']) return;
           // Separar nombre completo
           const nombreCompleto = String(obj['Cliente']||'').trim();
-          const partes = nombreCompleto.split(' ').filter(Boolean);
-          let nombre='', apPat='', apMat='';
-          if(partes.length===1){ nombre=partes[0]; apPat='XXXX'; apMat='XXXX'; }
-          else if(partes.length===2){ nombre=partes[0]; apPat=partes[1]; apMat='XXXX'; }
-          else if(partes.length===3){ nombre=partes[0]; apPat=partes[1]; apMat=partes[2]; }
-          else{ nombre=partes.slice(0,-2).join(' '); apPat=partes[partes.length-2]; apMat=partes[partes.length-1]; }
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
           const monto = parseFloat(String(obj['Monto Acumulado']||'0').replace(/[$,]/g,''))||0;
           rows.push({
             'CONSECUTIVO':      String(obj['Folio']||''),
@@ -646,6 +915,8 @@ async function procesarArchivo(){
             _tipo:              'DEPOSITO',
             _tipoReporte:       tipoRep,
             _tel:               '',
+            _mesInicio:         String(obj['Mes Inicio']||'')||null,
+            _mesFin:            String(obj['Mes Fin']||'')||null,
           });
         });
       }
@@ -657,8 +928,20 @@ async function procesarArchivo(){
     }
 
     if(!rows.length){errEl.textContent='No se encontraron registros en el archivo.';errEl.style.display='block';return;}
-    STATE.datos=rows;
-    mostrarResumen(rows);
+
+    // ── Filtrar lo que ya está reportado según el historial JSON ────
+    const mesCfgIso=mes.slice(0,4)+'-'+mes.slice(4,6);
+    const{activos,bloqueados}=aplicarHistorial(rows,mesCfgIso);
+    STATE.datos=activos;
+    STATE.bloqueados=bloqueados;
+
+    if(!activos.length){
+      errEl.textContent=`✅ Los ${bloqueados.length} registro(s) de este archivo ya estaban reportados según el historial — no hay nada nuevo que generar.`;
+      errEl.style.display='block';
+      return;
+    }
+
+    mostrarResumen(activos,bloqueados);
   }catch(e){
     errEl.textContent='Error al leer el archivo: '+e.message;errEl.style.display='block';
   }finally{
@@ -668,20 +951,66 @@ async function procesarArchivo(){
 }
 
 // ── Resumen ────────────────────────────────────────────────────────
-function mostrarResumen(rows){
+function mostrarResumen(rows,bloqueados){
+  bloqueados=bloqueados||[];
   const avisos=[...new Set(rows.map(r=>r.CONSECUTIVO))];
   const dep=rows.filter(r=>r._tipo==='DEPOSITO').length;
   const ret=rows.filter(r=>r._tipo==='RETIRO').length;
   const total=rows.reduce((s,r)=>s+parseFloat(limpiarMonto(r['TOTAL GENERAL']||0)),0);
+  const totalEnExcel = rows.length + bloqueados.length;
+  const pctNuevos = totalEnExcel ? Math.round(rows.length/totalEnExcel*100) : 100;
+  const pctDup = 100 - pctNuevos;
 
-  document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo;
+  document.getElementById('resumen-badge').textContent=STATE.tipo+' · '+STATE.prefijo
+    +(bloqueados.length?` · 🔒 ${bloqueados.length} ya reportado(s) excluido(s)`:'');
+
+  // ── KPIs mejorados ────────────────────────────────────────────────
   document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total avisos</div><div class="kpi-val">${avisos.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:#2E75B6"></div><div class="kpi-label">Movimientos</div><div class="kpi-val">${rows.length}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Dep. / Ret.</div><div class="kpi-val">${dep} / ${ret}</div></div>
-    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto total</div><div class="kpi-val" style="font-size:16px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--azul)"></div><div class="kpi-label">Total en Excel</div><div class="kpi-val">${totalEnExcel}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#375623"></div><div class="kpi-label">Nuevos — irán al XML</div><div class="kpi-val" style="color:var(--verde)">${rows.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--neg)"></div><div class="kpi-label">Ya reportados</div><div class="kpi-val" style="color:var(--neg);font-size:${bloqueados.length>0?'22':'22'}px">${bloqueados.length}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:var(--naranja)"></div><div class="kpi-label">Monto XML</div><div class="kpi-val" style="font-size:15px">$${total.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
   `;
 
+  // ── Barra visual nuevos vs duplicados ─────────────────────────────
+  if(bloqueados.length){
+    document.getElementById('panel-bloqueados').classList.remove('hidden');
+    document.getElementById('bloqueados-count').textContent=bloqueados.length;
+
+    // Barra de proporción
+    document.getElementById('barra-proporcion').innerHTML=`
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:11px;color:var(--muted)">${rows.length} nuevos <span style="color:var(--verde);font-weight:500">(${pctNuevos}%)</span></span>
+        <span style="font-size:11px;color:var(--muted)">${bloqueados.length} ya reportados <span style="color:var(--neg);font-weight:500">(${pctDup}%)</span></span>
+      </div>
+      <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:${pctNuevos}%;background:var(--verde);border-radius:4px 0 0 4px"></div>
+        <div style="width:${pctDup}%;background:var(--neg);border-radius:0 4px 4px 0"></div>
+      </div>`;
+
+    // Tabla bloqueados
+    document.getElementById('tabla-bloqueados').innerHTML=bloqueados.slice(0,50).map(r=>{
+      const curp=String(r.CURP||'').trim().toUpperCase();
+      return `
+      <tr>
+        <td>${normalizar(r.Nombre||'')} ${normalizar(r['Apellido Paterno']||'')}</td>
+        <td class="mono" style="font-size:11px">${curp}</td>
+        <td><span class="badge ${r._tipo==='DEPOSITO'?'b-dep':'b-ret'}">${r._tipo}</span></td>
+        <td style="font-size:11px;color:var(--muted)">${r._motivoBloqueo||''}</td>
+        <td><button class="btn-tl" onclick="abrirTimeline('${curp}','${r._tipo}')">Ver línea de tiempo</button></td>
+      </tr>`;}).join('');
+
+    if(bloqueados.length>50){
+      document.getElementById('tabla-bloqueados').innerHTML+=`
+        <tr><td colspan="5" style="text-align:center;color:var(--muted);font-size:11px;padding:.5rem">
+          + ${bloqueados.length-50} más excluidos
+        </td></tr>`;
+    }
+  }else{
+    document.getElementById('panel-bloqueados').classList.add('hidden');
+  }
+
+  // ── Vista previa tabla ─────────────────────────────────────────────
   const validos=rows.filter(r=>String(r.Nombre||'').trim()&&String(r.CURP||'').trim().toUpperCase().length===18);
   const MAX=200;
   document.getElementById('tabla-resumen').innerHTML=validos.slice(0,MAX).map(r=>`
@@ -759,16 +1088,26 @@ function generarXML(){
   document.getElementById('btn-xml-spin').classList.remove('hidden');
   setTimeout(()=>{
     try{
-      const xml=buildXML(STATE.datos,STATE.cfg,STATE.tipo);
       const pref=STATE.tipo==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
-      const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}.xml`;
-      const blob=new Blob([xml],{type:'application/xml'});
-      const url=URL.createObjectURL(blob);
-      document.getElementById('xml-list').innerHTML=`
+      const grupos=[
+        {tipo:'DEPOSITO', datos: STATE.datos.filter(r=>r._tipo==='DEPOSITO')},
+        {tipo:'RETIRO',   datos: STATE.datos.filter(r=>r._tipo==='RETIRO')},
+      ].filter(g=>g.datos.length>0);
+
+      if(!grupos.length) throw new Error('No hay avisos para generar.');
+
+      const items=grupos.map(g=>{
+        const xml=buildXML(g.datos,STATE.cfg,STATE.tipo);
+        const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}_${g.tipo}.xml`;
+        const blob=new Blob([xml],{type:'application/xml'});
+        const url=URL.createObjectURL(blob);
+        return `
         <div class="xml-item">
-          <div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.prefijo} · ${STATE.tipo} · ${new Date().toLocaleString('es-MX')}</div></div>
+          <div><div class="xml-name">${nombre}</div><div class="xml-meta">${STATE.cfg.mes} · ${STATE.prefijo} · ${STATE.tipo} · ${g.tipo} · ${g.datos.length} aviso(s) · ${new Date().toLocaleString('es-MX')}</div></div>
           <a href="${url}" download="${nombre}" class="btn btn-green btn-sm">Descargar</a>
         </div>`;
+      }).join('');
+      document.getElementById('xml-list').innerHTML=items;
       setStep(2,3);
       document.getElementById('panel-resumen').classList.add('hidden');
       document.getElementById('panel-descarga').classList.remove('hidden');
@@ -793,9 +1132,9 @@ function buildXML(rows,cfg,tipoRep){
 
   Object.entries(grupos).forEach(([folio,grupo])=>{
     const tipoMov=grupo[0]._tipo||'DEPOSITO';
-    const desc=tipoRep==='SEMESTRAL'?(tipoMov==='RETIRO'?'SUPERACION UMA SEMESTRAL RETIROS':'SUPERACION UMA SEMESTRAL'):(tipoMov==='RETIRO'?'SUPERACION UMA MENSUAL RETIROS':'SUPERACION UMA MENSUAL');
-    x+=`    <aviso>\n      <referencia_aviso>${escXml(folio)}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
-    x+=`      <alerta>\n        <tipo_alerta>9999</tipo_alerta>\n        <descripcion_alerta>${desc}</descripcion_alerta>\n      </alerta>\n`;
+    const desc=tipoRep==='SEMESTRAL'?'SUPERACION UMA SEMESTRAL':'SUPERACION UMA MENSUAL';
+    x+=`    <aviso>\n      <referencia_aviso>${escXml(STATE.prefijo+'0001')}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
+    x+=`      <alerta>\n        <tipo_alerta>100</tipo_alerta>\n        <descripcion_alerta>${desc}</descripcion_alerta>\n      </alerta>\n`;
     grupo.forEach(r=>{
       const nom=normalizar(r.Nombre||'');if(!nom)return;
       const apPat=normalizar(r['Apellido Paterno']||'');
@@ -829,11 +1168,10 @@ function buildXML(rows,cfg,tipoRep){
       if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
       x+=`        </telefono>\n      </persona_aviso>\n`;
     });
-    const fechas=grupo.map(r=>fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')).filter(Boolean);
-    const fecOp=fechas.length?fechas.sort().pop():cfg.mes+'31';
+    const fecOp=ultimoDiaMes(cfg.mes);
     x+=`      <detalle_operaciones>\n        <datos_operacion>\n          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
     x+=`          <tipo_sucursal>\n            <datos_sucursal_propia>\n              <codigo_postal>${cfg.cp}</codigo_postal>\n            </datos_sucursal_propia>\n          </tipo_sucursal>\n`;
-    x+=`          <tipo_operacion>101</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
+    x+=`          <tipo_operacion>${tipoMov==='RETIRO'?103:101}</tipo_operacion>\n          <linea_negocio>9</linea_negocio>\n          <medio_operacion>1</medio_operacion>\n`;
     grupo.forEach(r=>{
       const fPago=fmtFecha(r['Fecha Hora Ultima Trans']||r['Fecha Hora Transaccion']||'')||fecOp;
       const monto=limpiarMonto(r['TOTAL GENERAL']||0);
@@ -866,11 +1204,12 @@ function volverConfig(){
   document.getElementById('panel-descarga').classList.add('hidden');
 }
 function nuevoReporte(){
-  STATE.datos=[];STATE.archivo=null;
+  STATE.datos=[];STATE.archivo=null;STATE.bloqueados=[];
   document.getElementById('zone-main').classList.remove('upload-done');
   document.getElementById('upload-icon').textContent='📂';
   document.getElementById('upload-title').textContent='Arrastra el archivo aquí o haz clic para seleccionar';
   document.getElementById('upload-sub').textContent='Acepta .xlsx y .xlsm';
+  document.getElementById('panel-bloqueados').classList.add('hidden');
   setStep(0,1);
   document.getElementById('panel-config').classList.remove('hidden');
   document.getElementById('panel-resumen').classList.add('hidden');

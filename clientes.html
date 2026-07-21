@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Expediente de clientes — CECOM</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F3864;--azul2:#2E75B6;--verde:#375623;--naranja:#E26B0A;--bg:#F4F6FA;--card:#fff;--texto:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--pos:#16a34a;--neg:#dc2626;--pos-bg:#dcfce7;--neg-bg:#fee2e2;--warn-bg:#fef3c7;--warn:#92400e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto);min-height:100vh}
+header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
+.hi{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px}
+.li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
+.nav-links{display:flex;gap:8px}
+.nav-link{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:20px;padding:5px 14px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.nav-link:hover{background:rgba(255,255,255,.2)}
+.layout{max-width:1400px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
+.panel{background:var(--card);border:0.5px solid var(--border);border-radius:12px;overflow:hidden}
+.panel-head{padding:1rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:14px;font-weight:500}
+.search-wrap{padding:1rem 1.25rem;border-bottom:0.5px solid var(--border)}
+.search-row{display:flex;gap:8px;margin-bottom:8px}
+.search-row input{flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none}
+.search-row input:focus{border-color:var(--azul2)}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--muted);font-family:'DM Sans',sans-serif}
+.filter-btn.active{border-color:var(--azul2);background:var(--azul2);color:#fff}
+.client-list{overflow-y:auto;max-height:calc(100vh - 280px)}
+.client-row{padding:.75rem 1.25rem;cursor:pointer;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:10px;transition:background .1s}
+.client-row:hover{background:#f9fafb}
+.client-row.active{background:#fff5ec;border-left:3px solid var(--naranja)}
+.client-row:last-child{border-bottom:none}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.av-dep{background:#dbeafe;color:#1e40af}
+.av-ret{background:#fce7f3;color:#9d174d}
+.av-both{background:#dcfce7;color:#15803d}
+.client-name{font-size:13px;font-weight:500;line-height:1.3}
+.client-sub{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1px}
+.client-badges{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
+.badge{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:500}
+.b-dep{background:#dbeafe;color:#1e40af}
+.b-ret{background:#fce7f3;color:#9d174d}
+.b-sem{background:var(--warn-bg);color:var(--warn)}
+.b-res{background:var(--neg-bg);color:var(--neg)}
+.count-pill{margin-left:auto;font-size:10px;font-family:'DM Mono',monospace;background:var(--bg);padding:2px 7px;border-radius:20px;color:var(--muted);flex-shrink:0}
+.exp-head{background:linear-gradient(135deg,#1F3864,#2E75B6);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:14px}
+.exp-avatar{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;flex-shrink:0;border:2px solid rgba(255,255,255,.3)}
+.exp-nombre{font-size:16px;font-weight:500;color:#fff}
+.exp-curp{font-size:11px;color:rgba(255,255,255,.7);font-family:'DM Mono',monospace;margin-top:2px}
+.exp-body{padding:1.25rem 1.5rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.stat{background:var(--bg);border-radius:8px;padding:10px 12px;text-align:center}
+.stat-val{font-size:20px;font-weight:600;letter-spacing:-0.5px}
+.stat-label{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+.section{margin-bottom:1.25rem}
+.section-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.meses-wrap{display:flex;flex-wrap:wrap;gap:4px}
+.mes-pill{font-size:10px;padding:2px 9px;border-radius:20px;font-family:'DM Mono',monospace;font-weight:500}
+.m-dep{background:#dbeafe;color:#1e40af}
+.m-ret{background:#fce7f3;color:#9d174d}
+.aviso-table{width:100%;border-collapse:collapse;font-size:12px}
+.aviso-table th{background:#f9fafb;padding:7px 10px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:0.5px solid var(--border)}
+.aviso-table td{padding:8px 10px;border-bottom:0.5px solid #f3f4f6}
+.aviso-table tr:last-child td{border-bottom:none}
+.aviso-table tr:hover td{background:#f9fafb}
+.td-mono{font-family:'DM Mono',monospace}
+.empty-exp{display:flex;flex-direction:column;align-items:center;justify-content:center;height:400px;color:var(--muted);text-align:center;gap:12px}
+.empty-icon{font-size:40px;opacity:.3}
+/* Barras de actividad por año */
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.bar-year{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);min-width:32px}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);min-width:16px;text-align:right}
+/* Mapa de calor */
+.heat-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:8px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--border);margin-bottom:8px;user-select:none;transition:border-color .15s}
+.heat-toggle:hover{border-color:var(--azul2)}
+.heat-toggle-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.heat-arrow{font-size:13px;color:var(--muted);transition:transform .25s}
+.heat-arrow.open{transform:rotate(180deg)}
+.heat-wrap{overflow:hidden;transition:max-height .3s ease;max-height:0}
+.heat-wrap.open{max-height:320px}
+.heat-header-row{display:flex;gap:6px;margin-bottom:4px;align-items:center}
+.heat-year-lbl{font-size:9px;font-family:'DM Mono',monospace;color:var(--muted);min-width:30px}
+.heat-months-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1}
+.heat-cell{height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500}
+.hc-sem{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
+.hc-men{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.hc-ret{background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4}
+.hc-sem-dep{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
+.hc-sem-ret{background:#fde8ff;color:#7e22ce;border:1px solid #d8b4fe}
+.hc-res{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.hc-both{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.hc-vac{background:#f3f4f6;color:#d1d5db}
+.heat-leg-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.heat-leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
+.heat-leg-dot{width:12px;height:12px;border-radius:2px}
+/* Top 10 */
+.top-panel{background:var(--card);border:0.5px solid var(--border);border-radius:12px;overflow:hidden}
+.top-tabs{display:flex;border-bottom:0.5px solid var(--border)}
+.top-tab{flex:1;padding:9px 8px;font-size:12px;font-weight:500;cursor:pointer;text-align:center;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s}
+.top-tab.active{color:var(--azul);border-bottom-color:var(--azul)}
+.top-tab:hover:not(.active){background:#f9fafb}
+.top-row{display:flex;align-items:center;gap:10px;padding:9px 1.25rem;border-bottom:0.5px solid var(--border);cursor:pointer;transition:background .1s}
+.top-row:last-child{border-bottom:none}
+.top-row:hover{background:#f9fafb}
+.top-num{font-size:12px;font-weight:500;color:var(--muted);min-width:18px;text-align:center;flex-shrink:0}
+.top-num.gold{color:#D97706}
+.top-num.silver{color:#6B7280}
+.top-num.bronze{color:#B45309}
+.upload-json{padding:1rem 1.25rem;background:var(--bg);border-bottom:0.5px solid var(--border)}
+.upload-zone{border:2px dashed var(--azul2);border-radius:8px;padding:1rem;text-align:center;cursor:pointer;transition:all .15s;background:#f8fbff}
+.upload-zone:hover{border-color:var(--naranja);background:#fff5ec}
+.upload-zone input{display:none}
+.upload-zone-title{font-size:13px;font-weight:500;color:var(--azul);margin-bottom:2px}
+.upload-zone-sub{font-size:11px;color:var(--muted)}
+.upload-done{border-color:var(--verde);background:#f0fdf4}
+.upload-done .upload-zone-title{color:var(--verde)}
+.result-count{padding:.5rem 1.25rem;font-size:11px;color:var(--muted);border-bottom:0.5px solid var(--border);background:#f9fafb}
+.no-results{padding:2rem;text-align:center;color:var(--muted);font-size:13px}
+.spinner-wrap{display:flex;align-items:center;justify-content:center;height:200px;gap:8px;color:var(--muted);font-size:13px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="logo">
+      <div class="li">C</div>
+      <div><div class="lt">Expediente de clientes</div><div class="ls">CECOM — Historial de avisos PLD</div></div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">← Inicio</a>
+      <a href="generador.html" class="nav-link">Generador XML</a>
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- PANEL IZQUIERDO -->
+  <div>
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Clientes en el historial</span>
+        <span id="total-badge" style="font-size:11px;color:var(--muted)">Carga el JSON</span>
+      </div>
+
+      <!-- Upload JSON -->
+      <div class="upload-json">
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('json-input').click()">
+          <input type="file" id="json-input" accept=".json" onchange="cargarJSON(this)">
+          <div class="upload-zone-title" id="upload-title">Sube historial_avisos_cecom.json</div>
+          <div class="upload-zone-sub">Haz clic o arrastra el archivo aquí</div>
+        </div>
+      </div>
+
+      <!-- Búsqueda -->
+      <div class="search-wrap">
+        <div class="search-row">
+          <input type="text" id="search-input" placeholder="Buscar por nombre, CURP o sucursal..." oninput="filtrar()">
+        </div>
+        <div class="filter-row">
+          <button class="filter-btn active" onclick="setFiltro('',this)">Todos</button>
+          <button class="filter-btn" onclick="setFiltro('dep',this)">Depósito</button>
+          <button class="filter-btn" onclick="setFiltro('ret',this)">Retiro</button>
+          <button class="filter-btn" onclick="setFiltro('sem',this)">Semestral</button>
+          <button class="filter-btn" onclick="setFiltro('res',this)">Restricción</button>
+        </div>
+      </div>
+
+      <div class="result-count" id="result-count">Carga el historial para comenzar</div>
+      <div class="client-list" id="client-list">
+        <div class="spinner-wrap">Carga el JSON para ver los clientes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL DERECHO — ESTADÍSTICAS + TOP 10 / EXPEDIENTE -->
+  <div>
+    <div id="top10-panel" class="top-panel">
+
+      <!-- Estadísticas globales -->
+      <div id="stats-global" style="border-bottom:0.5px solid var(--border)">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px 14px 0">
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:500;color:var(--azul)" id="sg-clientes">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Clientes</div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:500;color:var(--verde)" id="sg-meses">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Meses cerrados</div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:500;color:var(--naranja)" id="sg-avisos">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Avisos</div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center">
+            <div style="font-size:12px;font-weight:500;color:var(--muted);line-height:1.4" id="sg-cobertura">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Cobertura</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px">
+          <div style="padding-right:12px;border-right:0.5px solid var(--border)">
+            <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Por sucursal</div>
+            <div id="sg-barras-suc"></div>
+          </div>
+          <div style="padding-left:12px">
+            <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Por tipo</div>
+            <div id="sg-barras-tipo"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 10 -->
+      <div style="padding:.75rem 1.25rem .5rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:13px;font-weight:500">Top 10 clientes</span>
+        <div style="display:flex;gap:0;border:0.5px solid var(--border);border-radius:20px;overflow:hidden">
+          <div class="top-tab-pill active" onclick="setTopCriteria('monto',this)" style="padding:3px 12px;font-size:11px;font-weight:500;background:var(--azul);color:#fff;cursor:pointer">Mayor monto</div>
+          <div class="top-tab-pill" onclick="setTopCriteria('avisos',this)" style="padding:3px 12px;font-size:11px;color:var(--muted);cursor:pointer;border-left:0.5px solid var(--border);background:#fff">Más avisos</div>
+          <div class="top-tab-pill" onclick="setTopCriteria('reciente',this)" style="padding:3px 12px;font-size:11px;color:var(--muted);cursor:pointer;border-left:0.5px solid var(--border);background:#fff">Recientes</div>
+        </div>
+      </div>
+      <div id="top10-list">
+        <div class="empty-exp" style="height:200px">
+          <div class="empty-icon">📋</div>
+          <div style="font-size:12px">Carga el historial JSON para comenzar</div>
+        </div>
+      </div>
+      <div style="padding:8px 14px;text-align:center;font-size:11px;color:var(--muted);border-top:0.5px solid var(--border)" id="top10-hint">Haz clic en cualquier cliente para ver su expediente</div>
+    </div>
+    <div id="exp-panel" style="display:none"></div>
+  </div>
+
+</div>
+
+<script>
+// Verificar sesión
+const s = sessionStorage.getItem('pld');
+if(!s) window.location.href = 'index.html';
+
+let HISTORIAL = null;
+let CLIENTES = [];
+let filtroTipo = '';
+let clienteActivo = null;
+let topCriteria = 'monto';
+
+function setTopCriteria(c, el){
+  topCriteria = c;
+  document.querySelectorAll('.top-tab-pill').forEach(t=>{
+    t.classList.remove('active');
+    t.style.background='#fff';
+    t.style.color='var(--muted)';
+  });
+  el.classList.add('active');
+  el.style.background='var(--azul)';
+  el.style.color='#fff';
+  renderTop10();
+}
+
+function renderStatsGlobales(){
+  if(!CLIENTES.length) return;
+
+  // KPIs
+  const totalMeses = CLIENTES.reduce((s,c)=>{
+    return s + [...new Set([...c.mesesDep,...c.mesesRet])].length;
+  }, 0);
+  const totalAvisos = CLIENTES.reduce((s,c)=>s+c.todosAvisos.length, 0);
+  const todosMesesAll = CLIENTES.flatMap(c=>[...c.mesesDep,...c.mesesRet]).sort();
+  const mesMin = todosMesesAll[0]||'—';
+  const mesMax = todosMesesAll[todosMesesAll.length-1]||'—';
+
+  document.getElementById('sg-clientes').textContent = CLIENTES.length.toLocaleString('es-MX');
+  document.getElementById('sg-meses').textContent = totalMeses.toLocaleString('es-MX');
+  document.getElementById('sg-avisos').textContent = totalAvisos.toLocaleString('es-MX');
+  document.getElementById('sg-cobertura').innerHTML = `${mesMin}<br>→ ${mesMax}`;
+
+  // Por sucursal
+  const porSuc = {};
+  CLIENTES.forEach(c=>c.sucursales.forEach(s=>{ porSuc[s]=(porSuc[s]||0)+c.todosAvisos.length; }));
+  const topSuc = Object.entries(porSuc).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxSuc = topSuc[0]?.[1]||1;
+  document.getElementById('sg-barras-suc').innerHTML = topSuc.map(([s,v])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:11px;min-width:80px;color:var(--muted)">${s}</div>
+      <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+        <div style="height:100%;border-radius:3px;background:#2E75B6;width:${Math.round(v/maxSuc*100)}%"></div>
+      </div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);min-width:36px;text-align:right">${v.toLocaleString('es-MX')}</div>
+    </div>`).join('');
+
+  // Por tipo
+  const porTipo = {mensualDep:0,semestralDep:0,mensualRet:0,semestralRet:0,restriccion:0};
+  CLIENTES.forEach(c=>c.todosAvisos.forEach(a=>{
+    if(a.tipo==='Restricción') porTipo.restriccion++;
+    else if(a.tipo==='Semestral'&&a.op==='RETIRO') porTipo.semestralRet++;
+    else if(a.tipo==='Semestral') porTipo.semestralDep++;
+    else if(a.op==='RETIRO') porTipo.mensualRet++;
+    else porTipo.mensualDep++;
+  }));
+  const tiposArr = [
+    ['Mensual dep.','#1e40af',porTipo.mensualDep],
+    ['Semestral dep.','#92400e',porTipo.semestralDep],
+    ['Mensual ret.','#9d174d',porTipo.mensualRet],
+    ['Semestral ret.','#9d174d',porTipo.semestralRet],
+    ['Restricción','#dc2626',porTipo.restriccion],
+  ];
+  const maxTipo = Math.max(...tiposArr.map(t=>t[2]))||1;
+  document.getElementById('sg-barras-tipo').innerHTML = tiposArr.map(([l,c,v])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <div style="font-size:11px;min-width:90px;color:var(--muted)">${l}</div>
+      <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+        <div style="height:100%;border-radius:3px;background:${c};width:${Math.round(v/maxTipo*100)}%"></div>
+      </div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);min-width:36px;text-align:right">${v.toLocaleString('es-MX')}</div>
+    </div>`).join('');
+}
+
+function renderTop10(){
+  if(!CLIENTES.length) return;
+  let sorted = [...CLIENTES];
+  if(topCriteria==='monto') sorted.sort((a,b)=>b.todosAvisos.reduce((s,x)=>s+(x.monto||0),0)-a.todosAvisos.reduce((s,x)=>s+(x.monto||0),0));
+  else if(topCriteria==='avisos') sorted.sort((a,b)=>b.todosAvisos.length-a.todosAvisos.length);
+  else sorted.sort((a,b)=>b.ultimoMes.localeCompare(a.ultimoMes));
+  const top = sorted.slice(0,10);
+  document.getElementById('top10-hint').textContent = 'Haz clic para ver el expediente';
+  document.getElementById('top10-list').innerHTML = top.map((c,i)=>{
+    const montoTotal = c.todosAvisos.reduce((s,a)=>s+(a.monto||0),0);
+    const avType = c.mesesDep.length && c.mesesRet.length ? 'av-both' : c.mesesRet.length ? 'av-ret' : 'av-dep';
+    const numClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const badges = [
+      c.mesesDep.length?`<span class="badge b-dep">dep</span>`:'',
+      c.mesesRet.length?`<span class="badge b-ret">ret</span>`:'',
+      c.tieneSem?`<span class="badge b-sem">sem</span>`:'',
+    ].filter(Boolean).join('');
+    return `<div class="top-row" onclick="verExpediente('${c.curp}')">
+      <div class="top-num ${numClass}">${i+1}</div>
+      <div class="avatar ${avType}">${iniciales(c.curp)}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.curp}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:1px">${c.sucursales.slice(0,2).join(' · ')||'—'} · ${c.todosAvisos.length} avisos</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace">$${(montoTotal/1000).toFixed(0)}K</div>
+        <div style="display:flex;gap:3px;justify-content:flex-end;margin-top:2px">${badges}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Cargar JSON ──────────────────────────────────────────────────────
+function cargarJSON(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      HISTORIAL = JSON.parse(e.target.result);
+      procesarHistorial();
+      document.getElementById('upload-zone').classList.add('upload-done');
+      document.getElementById('upload-title').textContent = `✅ ${file.name}`;
+    } catch(err){
+      alert('Error al leer el JSON: ' + err.message);
+    }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+// ── Procesar historial → lista de clientes ───────────────────────────
+function procesarHistorial(){
+  CLIENTES = Object.entries(HISTORIAL).map(([curp, reg])=>{
+    const dep = reg['DEPOSITO'] || {};
+    const ret = reg['RETIRO']   || {};
+
+    const avisosDep = dep.avisos || [];
+    const avisosRet = ret.avisos || [];
+    const todosAvisos = [...avisosDep.map(a=>({...a,op:'DEPOSITO'})), ...avisosRet.map(a=>({...a,op:'RETIRO'}))];
+    todosAvisos.sort((a,b)=>a.mes_inicio.localeCompare(b.mes_inicio));
+
+    const mesesDep = Object.keys(dep.meses_cerrados||{}).sort();
+    const mesesRet = Object.keys(ret.meses_cerrados||{}).sort();
+
+    const sucursales = [...new Set(todosAvisos.map(a=>a.sucursal).filter(Boolean))];
+    // Nombre: desde campo raíz del JSON o desde el primer aviso
+    const nombre = reg.nombre || todosAvisos.find(a=>a.nombre_cliente)?.nombre_cliente || '';
+
+    return {
+      curp,
+      nombre,
+      sucursales,
+      mesesDep,
+      mesesRet,
+      avisosDep,
+      avisosRet,
+      todosAvisos,
+      tieneSem: todosAvisos.some(a=>a.tipo==='Semestral'),
+      tieneRes: todosAvisos.some(a=>a.tipo==='Restricción'),
+      ultimoMes: [...mesesDep,...mesesRet].sort().pop()||'',
+    };
+  }).sort((a,b)=>b.ultimoMes.localeCompare(a.ultimoMes));
+
+  const total = CLIENTES.length;
+  document.getElementById('total-badge').textContent = `${total.toLocaleString()} clientes`;
+  renderStatsGlobales();
+  renderTop10();
+  filtrar();
+}
+
+function iniciales(curp){ return curp.substring(0,2).toUpperCase(); }
+
+function setFiltro(tipo, btn){
+  filtroTipo = tipo;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filtrar();
+}
+
+// ── Filtrar y renderizar lista ───────────────────────────────────────
+function filtrar(){
+  if(!HISTORIAL){ return; }
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  const filtrados = CLIENTES.filter(c=>{
+    const matchQ = !q ||
+      c.curp.toLowerCase().includes(q) ||
+      c.sucursales.some(s=>s.toLowerCase().includes(q));
+    const matchT = !filtroTipo ||
+      (filtroTipo==='dep' && c.mesesDep.length) ||
+      (filtroTipo==='ret' && c.mesesRet.length) ||
+      (filtroTipo==='sem' && c.tieneSem) ||
+      (filtroTipo==='res' && c.tieneRes);
+    return matchQ && matchT;
+  });
+
+  document.getElementById('result-count').textContent =
+    `${filtrados.length.toLocaleString()} de ${CLIENTES.length.toLocaleString()} clientes`;
+
+  const list = document.getElementById('client-list');
+  if(!filtrados.length){
+    list.innerHTML = '<div class="no-results">Sin resultados</div>';
+    return;
+  }
+
+  list.innerHTML = filtrados.slice(0,200).map((c,i)=>{
+    const avType = c.mesesDep.length && c.mesesRet.length ? 'av-both' : c.mesesRet.length ? 'av-ret' : 'av-dep';
+    const badges = [
+      c.mesesDep.length ? `<span class="badge b-dep">${c.mesesDep.length} dep</span>` : '',
+      c.mesesRet.length ? `<span class="badge b-ret">${c.mesesRet.length} ret</span>` : '',
+      c.tieneSem ? `<span class="badge b-sem">semestral</span>` : '',
+      c.tieneRes ? `<span class="badge b-res">restricción</span>` : '',
+    ].filter(Boolean).join('');
+    const suc = c.sucursales.slice(0,2).join(', ')+(c.sucursales.length>2?'...':'');
+    const isActive = clienteActivo?.curp === c.curp;
+    return `<div class="client-row${isActive?' active':''}" onclick="verExpediente('${c.curp}')">
+      <div class="avatar ${avType}">${iniciales(c.curp)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="client-name">${c.nombre || c.curp}</div>
+        <div class="client-sub">${c.nombre ? c.curp+' · ' : ''}${suc || '—'} · último: ${c.ultimoMes||'—'}</div>
+        <div class="client-badges">${badges}</div>
+      </div>
+      <div class="count-pill">${c.todosAvisos.length}</div>
+    </div>`;
+  }).join('');
+
+  if(filtrados.length > 200){
+    list.innerHTML += `<div class="no-results" style="padding:.75rem">Mostrando 200 de ${filtrados.length}. Usa el buscador para filtrar más.</div>`;
+  }
+}
+
+// ── Ver expediente ───────────────────────────────────────────────────
+function verExpediente(curp){
+  clienteActivo = CLIENTES.find(c=>c.curp===curp);
+  if(!clienteActivo) return;
+  filtrar();
+  document.getElementById('top10-panel').style.display = 'none';
+  const expPanel = document.getElementById('exp-panel');
+  expPanel.style.display = 'block'; // Re-render para marcar el activo
+
+  const c = clienteActivo;
+  const totalMeses = [...new Set([...c.mesesDep,...c.mesesRet])].length;
+  const montoTotal = c.todosAvisos.reduce((s,a)=>s+(a.monto||0),0);
+
+  expPanel.innerHTML = `
+    <div class="top-panel">
+      <div style="padding:.6rem 1.25rem;border-bottom:0.5px solid var(--border)">
+        <button onclick="regresarTop10()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0;font-family:'DM Sans',sans-serif">← Regresar al Top 10</button>
+      </div>
+    <div class="exp-head">
+      <div class="exp-avatar">${c.nombre ? c.nombre.substring(0,2).toUpperCase() : iniciales(c.curp)}</div>
+      <div>
+        <div class="exp-nombre">${c.nombre || c.curp}</div>
+        <div class="exp-curp">${c.nombre ? c.curp+' · ' : ''}${c.sucursales.length ? c.sucursales.join(' · ') : 'Sin sucursal'} · último aviso: ${c.ultimoMes||'—'}</div>
+      </div>
+    </div>
+    <div class="exp-body">
+
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-val" style="color:var(--azul)">${c.todosAvisos.length}</div>
+          <div class="stat-label">Total avisos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" style="color:var(--verde)">${totalMeses}</div>
+          <div class="stat-label">Meses cerrados</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" style="color:var(--naranja);font-size:14px">$${(montoTotal/1000).toFixed(0)}K</div>
+          <div class="stat-label">Monto total</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" style="color:var(--muted);font-size:14px">${c.ultimoMes||'—'}</div>
+          <div class="stat-label">Último mes</div>
+        </div>
+      </div>
+
+      ${c.mesesDep.length ? `
+      <div class="section">
+        <div class="section-title">Meses cerrados — Depósito</div>
+        <div class="meses-wrap">
+          ${c.mesesDep.map(m=>`<span class="mes-pill m-dep">${m}</span>`).join('')}
+        </div>
+      </div>` : ''}
+
+      ${c.mesesRet.length ? `
+      <div class="section">
+        <div class="section-title">Meses cerrados — Retiro</div>
+        <div class="meses-wrap">
+          ${c.mesesRet.map(m=>`<span class="mes-pill m-ret">${m}</span>`).join('')}
+        </div>
+      </div>` : ''}
+
+      ${(()=>{
+        // Actividad por año
+        const todosMeses = [...c.mesesDep,...c.mesesRet];
+        const porAnio = {};
+        todosMeses.forEach(m=>{ const y=m.substring(0,4); porAnio[y]=(porAnio[y]||0)+1; });
+        const anios = Object.keys(porAnio).sort();
+        if(!anios.length) return '';
+        const max = Math.max(...Object.values(porAnio));
+        return `<div class="section">
+          <div class="section-title">Actividad por año</div>
+          ${anios.map(y=>`
+            <div class="bar-row">
+              <div class="bar-year">${y}</div>
+              <div class="bar-track"><div class="bar-fill" style="width:${Math.round((porAnio[y]/max)*100)}%;background:${y===anios[anios.length-1]?'var(--naranja)':'var(--azul2)'}"></div></div>
+              <div class="bar-count">${porAnio[y]}</div>
+            </div>`).join('')}
+        </div>`;
+      })()}
+
+      ${(()=>{
+        // Mapa de calor — usa el tipo real del aviso por mes
+        const MESES_LABEL = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+        const todosMeses = [...c.mesesDep,...c.mesesRet];
+        if(!todosMeses.length) return '';
+        const anioMin = Math.min(...todosMeses.map(m=>parseInt(m)));
+        const anioMax = Math.max(...todosMeses.map(m=>parseInt(m)));
+
+        // Construir mapa de tipo por mes desde los avisos reales
+        // Un mes puede tener DEP y RET con tipos distintos
+        const mapaDepTipo = {}; // mes → tipo (Mensual/Semestral/Restricción)
+        const mapaRetTipo = {};
+        c.avisosDep.forEach(a=>{
+          const meses = [];
+          if(a.mes_inicio === a.mes_fin) meses.push(a.mes_inicio);
+          else {
+            // rango: agregar todos los meses del periodo
+            let [y,m] = a.mes_inicio.split('-').map(Number);
+            const [ye,me] = a.mes_fin.split('-').map(Number);
+            while(y < ye || (y===ye && m<=me)){
+              meses.push(`${y}-${String(m).padStart(2,'0')}`);
+              m++; if(m>12){m=1;y++;}
+            }
+          }
+          meses.forEach(mes=>{ mapaDepTipo[mes]=a.tipo||'Mensual'; });
+        });
+        c.avisosRet.forEach(a=>{
+          const meses = [];
+          if(a.mes_inicio === a.mes_fin) meses.push(a.mes_inicio);
+          else {
+            let [y,m] = a.mes_inicio.split('-').map(Number);
+            const [ye,me] = a.mes_fin.split('-').map(Number);
+            while(y < ye || (y===ye && m<=me)){
+              meses.push(`${y}-${String(m).padStart(2,'0')}`);
+              m++; if(m>12){m=1;y++;}
+            }
+          }
+          meses.forEach(mes=>{ mapaRetTipo[mes]=a.tipo||'Mensual'; });
+        });
+
+        // Función para obtener clase CSS según tipo
+        function clasePorTipo(tipo, operacion){
+          if(tipo==='Restricción') return 'hc-res';
+          if(tipo==='Semestral') return operacion==='DEP'?'hc-sem-dep':'hc-sem-ret';
+          return operacion==='DEP'?'hc-men':'hc-ret';
+        }
+        function labelPorTipo(tipo){
+          if(tipo==='Restricción') return 'RES';
+          if(tipo==='Semestral') return 'S';
+          return 'M';
+        }
+        function prioridad(tipo){ return tipo==='Restricción'?3:tipo==='Semestral'?2:1; }
+
+        let filas = '';
+        for(let y=anioMin;y<=anioMax;y++){
+          let celdas = '';
+          for(let m=1;m<=12;m++){
+            const key = `${y}-${String(m).padStart(2,'0')}`;
+            const tipoDep = mapaDepTipo[key];
+            const tipoRet = mapaRetTipo[key];
+            if(tipoDep && tipoRet){
+              // Mostrar el tipo más grave de los dos
+              if(prioridad(tipoDep) >= prioridad(tipoRet)){
+                const cls = clasePorTipo(tipoDep,'DEP');
+                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">${labelPorTipo(tipoDep)}+R</div>`;
+              } else {
+                const cls = clasePorTipo(tipoRet,'RET');
+                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">D+${labelPorTipo(tipoRet)}</div>`;
+              }
+            } else if(tipoDep){
+              const cls = clasePorTipo(tipoDep,'DEP');
+              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoDep}">${labelPorTipo(tipoDep)}</div>`;
+            } else if(tipoRet){
+              const cls = clasePorTipo(tipoRet,'RET');
+              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoRet}">${labelPorTipo(tipoRet)}</div>`;
+            } else {
+              celdas += `<div class="heat-cell hc-vac" title="${key}">—</div>`;
+            }
+          }
+          filas += `<div class="heat-header-row" style="margin-bottom:3px">
+            <div class="heat-year-lbl">${y}</div>
+            <div class="heat-months-grid">${celdas}</div>
+          </div>`;
+        }
+        return `<div class="section">
+          <div class="heat-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.heat-arrow').classList.toggle('open')">
+            <span class="heat-toggle-title">🗓 Mapa de calor por mes</span>
+            <span class="heat-arrow">▾</span>
+          </div>
+          <div class="heat-wrap">
+            <div style="padding:4px 2px 8px">
+              <div class="heat-header-row" style="margin-bottom:6px">
+                <div class="heat-year-lbl"></div>
+                <div class="heat-months-grid" style="text-align:center">
+                  ${MESES_LABEL.map(l=>`<span style="font-size:9px;color:var(--muted)">${l}</span>`).join('')}
+                </div>
+              </div>
+              ${filas}
+              <div class="heat-leg-wrap">
+                <div class="heat-leg"><div class="heat-leg-dot hc-men"></div>Mensual dep.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-sem-dep"></div>Semestral dep.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-ret"></div>Mensual ret.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-sem-ret"></div>Semestral ret.</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-res"></div>Restricción</div>
+                <div class="heat-leg"><div class="heat-leg-dot hc-vac"></div>Sin aviso</div>
+                <div style="font-size:10px;color:var(--muted);width:100%;margin-top:4px">Cuando hay depósito y retiro en el mismo mes se muestra el tipo más grave</div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      })()}
+
+      <div class="section">
+        <div class="section-title">Historial de avisos (${c.todosAvisos.length})</div>
+        <table class="aviso-table">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Operación</th>
+              <th>Periodo</th>
+              <th>Monto</th>
+              <th>Sucursal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${c.todosAvisos.map(a=>`
+              <tr>
+                <td>
+                  <span class="badge ${a.tipo==='Semestral'?'b-sem':a.tipo==='Restricción'?'b-res':a.op==='RETIRO'?'b-ret':'b-dep'}">
+                    ${a.tipo}
+                  </span>
+                </td>
+                <td>${a.op}</td>
+                <td class="td-mono">${a.mes_inicio===a.mes_fin?a.mes_inicio:a.mes_inicio+' → '+a.mes_fin}</td>
+                <td class="td-mono">$${a.monto?Number(a.monto).toLocaleString('es-MX',{minimumFractionDigits:2}):'—'}</td>
+                <td>${a.sucursal||'—'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    </div>`;
+}
+
+function regresarTop10(){
+  clienteActivo = null;
+  document.getElementById('top10-panel').style.display = 'block';
+  document.getElementById('exp-panel').style.display = 'none';
+  document.getElementById('exp-panel').innerHTML = '';
+  filtrar();
+}
+
+</script>
+</body>
+</html>
