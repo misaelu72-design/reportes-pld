@@ -939,7 +939,8 @@ async function procesarArchivo(){
         const hoja = esSemestral ? `Semestral ${sufijo}` : `Mensual ${sufijo}`;
         const regs = filtrarPorPeriodo(hoja, esSemestral);
         regs.forEach(reg=>{
-          const rec=clientesInfo[reg.pid];
+          let rec=infoPorTipo[t][reg.pid];
+          if(!rec||(!rec['CURP']&&!rec['Nombre del Cliente'])) rec=clientesInfo[reg.pid]||rec;
           if(!rec) return;
           const curp=String(rec['CURP']||'').trim().toUpperCase();
           if(curp.length!==18) return;
