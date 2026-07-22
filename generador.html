@@ -302,6 +302,37 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 
 <script>
 const MAPA_PAIS={MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
+
+// Estados de México reconocidos (normalizados, sin acentos) — si el campo
+// "Estado" del cliente NO está en esta lista, se asume domicilio extranjero
+const ESTADOS_MEXICANOS=new Set([
+  'AGUASCALIENTES','BAJA CALIFORNIA','BAJA CALIFORNIA SUR','CAMPECHE','CHIAPAS','CHIHUAHUA',
+  'CIUDAD DE MEXICO','COAHUILA','COLIMA','DURANGO','ESTADO DE MEXICO','GUANAJUATO','GUERRERO',
+  'HIDALGO','JALISCO','MICHOACAN','MORELOS','NAYARIT','NUEVO LEON','OAXACA','PUEBLA','QUERETARO',
+  'QUINTANA ROO','SAN LUIS POTOSI','SINALOA','SONORA','TABASCO','TAMAULIPAS','TLAXCALA',
+  'VERACRUZ','YUCATAN','ZACATECAS'
+]);
+
+// Estados/provincias extranjeros -> país (ISO2). Cubre EE.UU. y Canadá;
+// cualquier otro valor no reconocido cae a MAPA_PAIS por Nacionalidad como respaldo
+const ESTADO_EXTRANJERO_A_PAIS={
+  ALABAMA:'US',ALASKA:'US',ARIZONA:'US',ARKANSAS:'US',CALIFORNIA:'US',COLORADO:'US',CONNECTICUT:'US',
+  DELAWARE:'US',FLORIDA:'US',GEORGIA:'US',HAWAII:'US',IDAHO:'US',ILLINOIS:'US',INDIANA:'US',IOWA:'US',
+  KANSAS:'US',KENTUCKY:'US',LOUISIANA:'US',MAINE:'US',MARYLAND:'US',MASSACHUSETTS:'US',MICHIGAN:'US',
+  MINNESOTA:'US',MISSISSIPPI:'US',MISSOURI:'US',MONTANA:'US',NEBRASKA:'US',NEVADA:'US',
+  'NEW HAMPSHIRE':'US','NEW JERSEY':'US','NEW MEXICO':'US','NEW YORK':'US','NORTH CAROLINA':'US',
+  'NORTH DAKOTA':'US',OHIO:'US',OKLAHOMA:'US',OREGON:'US',PENNSYLVANIA:'US','RHODE ISLAND':'US',
+  'SOUTH CAROLINA':'US','SOUTH DAKOTA':'US',TENNESSEE:'US',TEXAS:'US',UTAH:'US',VERMONT:'US',
+  VIRGINIA:'US',WASHINGTON:'US','WEST VIRGINIA':'US',WISCONSIN:'US',WYOMING:'US',
+  ONTARIO:'CA',QUEBEC:'CA','BRITISH COLUMBIA':'CA',ALBERTA:'CA',MANITOBA:'CA',
+  TOKYO:'JP',OSAKA:'JP',SEOUL:'KR',
+};
+function esEstadoMexicano(estado){
+  return ESTADOS_MEXICANOS.has(normalizar(estado||''));
+}
+function paisPorEstadoExtranjero(estado){
+  return ESTADO_EXTRANJERO_A_PAIS[normalizar(estado||'')]||null;
+}
 const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
 let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{},historial:null,bloqueados:[]};
 
@@ -528,7 +559,24 @@ function fmtFecha(v){
   if(/^\d{8}$/.test(s))return s;
   const m1=s.match(/(\d{4})-(\d{2})-(\d{2})/);if(m1)return m1[1]+m1[2]+m1[3];
   const m2=s.match(/(\d{2})\/(\d{2})\/(\d{4})/);if(m2)return m2[3]+m2[2]+m2[1];
+  const serial=parseFloat(s);
+  if(!isNaN(serial)&&serial>20000&&serial<80000){ // serial de Excel guardado como texto (rango ~1954-2119)
+    const d=new Date(Math.round((serial-25569)*86400*1000));
+    if(!isNaN(d))return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  }
   return'';
+}
+
+// Convierte YYYYMM (ej. "202606") al formato "mes-año" abreviado que usa
+// Nydia en sus columnas "Periodo (Mes)" / "Mes 1" / "Mes 2" (ej. "jun-26")
+const MESES_ABR=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+function yyyymmAMesAbrev(yyyymm){
+  const s=String(yyyymm||'').trim();
+  if(!/^\d{6}$/.test(s)) return '';
+  const anio2=s.slice(2,4);
+  const mes=Number(s.slice(4,6));
+  if(mes<1||mes>12) return '';
+  return `${MESES_ABR[mes-1]}-${anio2}`;
 }
 
 async function leerExcel(file){
@@ -591,11 +639,15 @@ async function procesarArchivo(){
     const esFormatoC = wb.SheetNames.some(h=>h.toLowerCase().includes('reporte de umas'));
     // Formato PLD Nydia con hojas JUNIO - DEPOSITO / JUNIO - RETIRO
     const esFormatoPLD = wb.SheetNames.some(h=>h.includes('JUNIO - DEPOSITO')||h.includes('JUNIO - RETIRO'));
-    const esFormatoTransac = !esFormatoPLD && wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO');
+    // Formato completo de Nydia (archivo "Validacion_Historica..."): hojas DEPOSITO/RETIRO
+    // + Mensual/Semestral/Restricción Depósito/Retiro, todo el histórico junto
+    const esFormatoValidacion = !esFormatoPLD && wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO') &&
+      (wb.SheetNames.includes('Mensual Depósito') || wb.SheetNames.includes('Semestral Depósito'));
+    const esFormatoTransac = !esFormatoPLD && !esFormatoValidacion && wb.SheetNames.includes('DEPOSITO') && wb.SheetNames.includes('RETIRO');
     // Formato semestral generado por el script Python — tiene columna Monto Acumulado
     const primeraHoja = wb.SheetNames[0];
     const primeraFila = XLSX.utils.sheet_to_json(wb.Sheets[primeraHoja],{header:1,defval:''})[1]||[];
-    const esFormatoSemestral = !esFormatoTransac && !esFormatoPLD && primeraFila.some(c=>String(c).includes('Monto Acumulado'));
+    const esFormatoSemestral = !esFormatoTransac && !esFormatoValidacion && !esFormatoPLD && primeraFila.some(c=>String(c).includes('Monto Acumulado'));
 
     if(esFormatoC){
       // ── FORMATO C (estándar): hoja Reporte de UMAS ────────────
@@ -769,12 +821,12 @@ async function procesarArchivo(){
       });
 
     } else if(esFormatoPLD){
-      // ── FORMATO PLD NYDIA: hojas con JUNIO ─────────────────────
-      // Mensual → hojas "JUNIO - DEPOSITO" / "JUNIO - RETIRO" → monto del último mes
-      // Semestral → hojas "DEPOSITO" / "RETIRO" → TOTAL ACUMULADO
+      // ── FORMATO PLD NYDIA: hojas "JUNIO - DEPOSITO"/"JUNIO - RETIRO" ──
+      // ya vienen filtradas al mes que cierra; Mensual toma Tipo de Reporte=Mensual,
+      // Semestral toma Tipo de Reporte=Semestral (ambos del mismo archivo)
       const esSemestral = tipoRep === 'SEMESTRAL';
-      const hDep = esSemestral ? 'DEPOSITO' : wb.SheetNames.find(h=>h.includes('JUNIO - DEPOSITO'))||'DEPOSITO';
-      const hRet = esSemestral ? 'RETIRO'   : wb.SheetNames.find(h=>h.includes('JUNIO - RETIRO'))||'RETIRO';
+      const hDep = wb.SheetNames.find(h=>h.includes('JUNIO - DEPOSITO'))||'DEPOSITO';
+      const hRet = wb.SheetNames.find(h=>h.includes('JUNIO - RETIRO'))||'RETIRO';
 
       [[hDep,'DEPOSITO'],[hRet,'RETIRO']].forEach(([hoja,t])=>{
         if(!wb.SheetNames.includes(hoja)) return;
@@ -787,21 +839,19 @@ async function procesarArchivo(){
           const curp=String(obj['CURP']||'').trim().toUpperCase();
           if(curp.length!==18) return;
           if(!filaEsDeLaSucursalSeleccionada(obj)) return;
-          if(!esSemestral){
-            const tipoRepFila=String(obj['Tipo de Reporte']||'').trim();
-            if(tipoRepFila && tipoRepFila!=='Mensual') return; // Semestral/Restricción van en su propio reporte
-          }
+          const tipoRepFila=String(obj['Tipo de Reporte']||'').trim();
+          const tipoEsperado=esSemestral?'Semestral':'Mensual';
+          if(tipoRepFila && tipoRepFila!==tipoEsperado) return; // cada modo solo toma lo suyo
           const nombreCompleto=String(obj['Nombre del Cliente']||'').trim();
           const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
           let monto=0;
-          if(esSemestral){
+          const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
+          for(let i=meses.length-1;i>=0;i--){
+            const v=parseFloat(String(obj[meses[i]]||'0').replace(/[$,—\-]/g,''));
+            if(v>0){monto=v;break;}
+          }
+          if(!monto){
             monto=parseFloat(String(obj['TOTAL ACUMULADO']||'0').replace(/[$,—\-]/g,''))||0;
-          } else {
-            const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
-            for(let i=meses.length-1;i>=0;i--){
-              const v=parseFloat(String(obj[meses[i]]||'0').replace(/[$,—\-]/g,''));
-              if(v>0){monto=v;break;}
-            }
           }
           const cpRaw=String(obj['C.P.']||obj['PLD C.P.']||'').split('.')[0].trim();
           rows.push({
@@ -811,6 +861,7 @@ async function procesarArchivo(){
             'PLD Ocupacion':String(obj['PLD Ocupación']||''),
             'PLD Codigo Ocupacion':String(obj['Código Ocupación']||'1000000').split('.')[0],
             'PLD C.P.':cpRaw,'PLD Colonia':String(obj['Colonia']||''),
+            'Estado':String(obj['Estado']||''),'Municipio':String(obj['Municipio']||''),
             'Calle':String(obj['Calle']||''),'No Exterior':String(obj['No. Ext']||''),
             'No Interior':String(obj['No. Int']||''),
             'Fecha Hora Ultima Trans':obj['Fecha Última Transac.']||obj['Fecha Última Transacción']||'',
@@ -826,6 +877,103 @@ async function procesarArchivo(){
         r.CONSECUTIVO=mapFolioP[key];
       });
 
+    } else if(esFormatoValidacion){
+      // ── FORMATO VALIDACIÓN HISTÓRICA (archivo completo de Nydia) ──
+      // Hojas: DEPOSITO/RETIRO (detalle de cliente) + Mensual/Semestral/Restricción
+      // Depósito/Retiro (avisos ya clasificados por periodo)
+      const esSemestral = tipoRep === 'SEMESTRAL';
+      const mesObjetivo = yyyymmAMesAbrev(mes);
+
+      function leerHojaObjetos(hoja){
+        if(!wb.SheetNames.includes(hoja)) return {arr:[], idx:{}};
+        const arr=XLSX.utils.sheet_to_json(wb.Sheets[hoja],{header:1,defval:''});
+        const hi=arr.findIndex(r=>r.some(c=>String(c).trim()==='Player ID'));
+        if(hi<0) return {arr:[], idx:{}};
+        const headers=arr[hi].map(h=>String(h).replace(/\n/g,' ').trim());
+        const idx={}; headers.forEach((h,i)=>{if(!(h in idx))idx[h]=i;});
+        return {arr:arr.slice(hi+1), idx};
+      }
+
+      function construirInfoClientes(hoja){
+        const {arr,idx}=leerHojaObjetos(hoja);
+        const info={};
+        arr.forEach(r=>{
+          const pid=r[idx['Player ID']];
+          if(!pid) return;
+          const rec={};
+          Object.keys(idx).forEach(h=>{rec[h]=r[idx[h]]!==undefined?r[idx[h]]:'';});
+          const curp=String(rec['CURP']||'').trim();
+          const nombre=String(rec['Nombre del Cliente']||'').trim();
+          if(!curp && !nombre){ if(!(pid in info)) info[pid]=rec; return; }
+          info[pid]=rec;
+        });
+        return info;
+      }
+      function fusionarClientes(base,nuevo){
+        Object.keys(nuevo).forEach(pid=>{
+          const rec=nuevo[pid];
+          if(!(pid in base)) base[pid]=rec;
+          else if(!base[pid]['CURP'] && !base[pid]['Nombre del Cliente'] && (rec['CURP']||rec['Nombre del Cliente'])) base[pid]=rec;
+        });
+        return base;
+      }
+      function filtrarPorPeriodo(hoja, esSem){
+        const {arr,idx}=leerHojaObjetos(hoja);
+        const out=[];
+        arr.forEach(r=>{
+          const periodo = esSem ? r[idx['Mes 2']] : r[idx['Periodo (Mes)']];
+          if(periodo!==mesObjetivo) return;
+          out.push({pid:r[idx['Player ID']], monto:r[idx['Monto a Reportar']]});
+        });
+        return out;
+      }
+
+      const infoRetiro=construirInfoClientes('RETIRO');
+      const infoDeposito=construirInfoClientes('DEPOSITO');
+      let clientesInfo={};
+      clientesInfo=fusionarClientes(clientesInfo, infoRetiro);
+      clientesInfo=fusionarClientes(clientesInfo, infoDeposito);
+      const infoPorTipo={DEPOSITO:infoDeposito, RETIRO:infoRetiro};
+
+      [['DEPOSITO','Depósito'],['RETIRO','Retiro']].forEach(([t,sufijo])=>{
+        const hoja = esSemestral ? `Semestral ${sufijo}` : `Mensual ${sufijo}`;
+        const regs = filtrarPorPeriodo(hoja, esSemestral);
+        regs.forEach(reg=>{
+          let rec=infoPorTipo[t][reg.pid];
+          if(!rec||(!rec['CURP']&&!rec['Nombre del Cliente'])) rec=clientesInfo[reg.pid]||rec;
+          if(!rec) return;
+          const curp=String(rec['CURP']||'').trim().toUpperCase();
+          if(curp.length!==18) return;
+          if(!filaEsDeLaSucursalSeleccionada(rec)) return;
+          const nombreCompleto=String(rec['Nombre del Cliente']||'').trim();
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+          const cpRaw=String(rec['C.P.']||'').split('.')[0].trim();
+          const propia=(infoPorTipo[t][reg.pid]||{})['Fecha Última Transac.'];
+          const otraTipo=t==='DEPOSITO'?'RETIRO':'DEPOSITO';
+          const otra=(infoPorTipo[otraTipo][reg.pid]||{})['Fecha Última Transac.'];
+          rows.push({
+            'Nombre':nombre,'Apellido Paterno':apPat,'Apellido Materno':apMat,
+            'Fecha Nacimiento':rec['Fecha Nacimiento']||'',
+            'CURP':curp,'Clave Pais':String(rec['Nacionalidad']||'MEX'),
+            'PLD Ocupacion':String(rec['PLD Ocupación']||''),
+            'PLD Codigo Ocupacion':String(rec['Código Ocupación']||'1000000').split('.')[0],
+            'PLD C.P.':cpRaw,'PLD Colonia':String(rec['Colonia']||''),
+            'Estado':String(rec['Estado']||''),'Municipio':String(rec['Municipio']||''),
+            'Calle':String(rec['Calle']||''),'No Exterior':String(rec['No. Ext']||''),
+            'No Interior':String(rec['No. Int']||''),
+            'Fecha Hora Ultima Trans': propia||otra||'',
+            'TOTAL GENERAL': parseFloat(String(reg.monto||'0').replace(/[$,—\-]/g,''))||0,
+            'EFECTIVO':'1','MONEDA':'1',
+            _tipo:t,_tipoReporte:tipoRep,_tel:'',
+          });
+        });
+      });
+      let ciV=1; const mapFolioV={};
+      rows.forEach(r=>{
+        const key=String(r['CURP']||'').trim().toUpperCase()+'|'+r._tipo;
+        if(!mapFolioV[key])mapFolioV[key]=STATE.prefijo+String(ciV++).padStart(4,'0');
+        r.CONSECUTIVO=mapFolioV[key];
+      });
     } else if(esFormatoTransac){
       // ── FORMATO TRANSACCIONAL (Nydia): hojas DEPOSITO / RETIRO ─
       // Tiene columnas por mes + TOTAL ACUMULADO
@@ -1158,12 +1306,27 @@ function buildXML(rows,cfg,tipoRep){
       x+=`            <pais_nacionalidad>${pais}</pais_nacionalidad>\n`;
       x+=`            <actividad_economica>${ocup}</actividad_economica>\n`;
       x+=`          </persona_fisica>\n        </tipo_persona>\n`;
-      x+=`        <tipo_domicilio>\n          <nacional>\n`;
-      x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
-      x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
-      if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
-      x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
-      x+=`          </nacional>\n        </tipo_domicilio>\n`;
+      const estadoCliente=r['Estado']||'';
+      if(estadoCliente && !esEstadoMexicano(estadoCliente)){
+        // Domicilio extranjero: el Estado no es mexicano (ej. TEXAS, CALIFORNIA)
+        const paisDom=paisPorEstadoExtranjero(estadoCliente)||pais;
+        const ciudadPob=normalizar(r['Municipio']||r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
+        x+=`        <tipo_domicilio>\n          <extranjero>\n`;
+        x+=`            <pais>${paisDom}</pais>\n`;
+        x+=`            <estado_provincia>${escXml(normalizar(estadoCliente).substring(0,50))}</estado_provincia>\n`;
+        x+=`            <ciudad_poblacion>${escXml(ciudadPob)}</ciudad_poblacion>\n`;
+        x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
+        x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+        x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
+        x+=`          </extranjero>\n        </tipo_domicilio>\n`;
+      } else {
+        x+=`        <tipo_domicilio>\n          <nacional>\n`;
+        x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
+        x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+        if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
+        x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
+        x+=`          </nacional>\n        </tipo_domicilio>\n`;
+      }
       x+=`        <telefono>\n          <clave_pais>${pais}</clave_pais>\n`;
       if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
       x+=`        </telefono>\n      </persona_aviso>\n`;
