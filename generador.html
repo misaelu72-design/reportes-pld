@@ -302,6 +302,37 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
 
 <script>
 const MAPA_PAIS={MEX:'MX',USA:'US',VEN:'VE',COL:'CO',ARG:'AR',ESP:'ES',CAN:'CA',BRA:'BR',CHL:'CL',PER:'PE',GTM:'GT',CUB:'CU',ECU:'EC',BOL:'BO',PRY:'PY',URY:'UY',HND:'HN',SLV:'SV',NIC:'NI',CRI:'CR',PAN:'PA',DOM:'DO',DEU:'DE',FRA:'FR',GBR:'GB',ITA:'IT',CHN:'CN',JPN:'JP',KOR:'KR'};
+
+// Estados de México reconocidos (normalizados, sin acentos) — si el campo
+// "Estado" del cliente NO está en esta lista, se asume domicilio extranjero
+const ESTADOS_MEXICANOS=new Set([
+  'AGUASCALIENTES','BAJA CALIFORNIA','BAJA CALIFORNIA SUR','CAMPECHE','CHIAPAS','CHIHUAHUA',
+  'CIUDAD DE MEXICO','COAHUILA','COLIMA','DURANGO','ESTADO DE MEXICO','GUANAJUATO','GUERRERO',
+  'HIDALGO','JALISCO','MICHOACAN','MORELOS','NAYARIT','NUEVO LEON','OAXACA','PUEBLA','QUERETARO',
+  'QUINTANA ROO','SAN LUIS POTOSI','SINALOA','SONORA','TABASCO','TAMAULIPAS','TLAXCALA',
+  'VERACRUZ','YUCATAN','ZACATECAS'
+]);
+
+// Estados/provincias extranjeros -> país (ISO2). Cubre EE.UU. y Canadá;
+// cualquier otro valor no reconocido cae a MAPA_PAIS por Nacionalidad como respaldo
+const ESTADO_EXTRANJERO_A_PAIS={
+  ALABAMA:'US',ALASKA:'US',ARIZONA:'US',ARKANSAS:'US',CALIFORNIA:'US',COLORADO:'US',CONNECTICUT:'US',
+  DELAWARE:'US',FLORIDA:'US',GEORGIA:'US',HAWAII:'US',IDAHO:'US',ILLINOIS:'US',INDIANA:'US',IOWA:'US',
+  KANSAS:'US',KENTUCKY:'US',LOUISIANA:'US',MAINE:'US',MARYLAND:'US',MASSACHUSETTS:'US',MICHIGAN:'US',
+  MINNESOTA:'US',MISSISSIPPI:'US',MISSOURI:'US',MONTANA:'US',NEBRASKA:'US',NEVADA:'US',
+  'NEW HAMPSHIRE':'US','NEW JERSEY':'US','NEW MEXICO':'US','NEW YORK':'US','NORTH CAROLINA':'US',
+  'NORTH DAKOTA':'US',OHIO:'US',OKLAHOMA:'US',OREGON:'US',PENNSYLVANIA:'US','RHODE ISLAND':'US',
+  'SOUTH CAROLINA':'US','SOUTH DAKOTA':'US',TENNESSEE:'US',TEXAS:'US',UTAH:'US',VERMONT:'US',
+  VIRGINIA:'US',WASHINGTON:'US','WEST VIRGINIA':'US',WISCONSIN:'US',WYOMING:'US',
+  ONTARIO:'CA',QUEBEC:'CA','BRITISH COLUMBIA':'CA',ALBERTA:'CA',MANITOBA:'CA',
+  TOKYO:'JP',OSAKA:'JP',SEOUL:'KR',
+};
+function esEstadoMexicano(estado){
+  return ESTADOS_MEXICANOS.has(normalizar(estado||''));
+}
+function paisPorEstadoExtranjero(estado){
+  return ESTADO_EXTRANJERO_A_PAIS[normalizar(estado||'')]||null;
+}
 const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
 let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{},historial:null,bloqueados:[]};
 
@@ -830,6 +861,7 @@ async function procesarArchivo(){
             'PLD Ocupacion':String(obj['PLD Ocupación']||''),
             'PLD Codigo Ocupacion':String(obj['Código Ocupación']||'1000000').split('.')[0],
             'PLD C.P.':cpRaw,'PLD Colonia':String(obj['Colonia']||''),
+            'Estado':String(obj['Estado']||''),'Municipio':String(obj['Municipio']||''),
             'Calle':String(obj['Calle']||''),'No Exterior':String(obj['No. Ext']||''),
             'No Interior':String(obj['No. Int']||''),
             'Fecha Hora Ultima Trans':obj['Fecha Última Transac.']||obj['Fecha Última Transacción']||'',
@@ -925,6 +957,7 @@ async function procesarArchivo(){
             'PLD Ocupacion':String(rec['PLD Ocupación']||''),
             'PLD Codigo Ocupacion':String(rec['Código Ocupación']||'1000000').split('.')[0],
             'PLD C.P.':cpRaw,'PLD Colonia':String(rec['Colonia']||''),
+            'Estado':String(rec['Estado']||''),'Municipio':String(rec['Municipio']||''),
             'Calle':String(rec['Calle']||''),'No Exterior':String(rec['No. Ext']||''),
             'No Interior':String(rec['No. Int']||''),
             'Fecha Hora Ultima Trans': propia||otra||'',
@@ -1272,12 +1305,27 @@ function buildXML(rows,cfg,tipoRep){
       x+=`            <pais_nacionalidad>${pais}</pais_nacionalidad>\n`;
       x+=`            <actividad_economica>${ocup}</actividad_economica>\n`;
       x+=`          </persona_fisica>\n        </tipo_persona>\n`;
-      x+=`        <tipo_domicilio>\n          <nacional>\n`;
-      x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
-      x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
-      if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
-      x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
-      x+=`          </nacional>\n        </tipo_domicilio>\n`;
+      const estadoCliente=r['Estado']||'';
+      if(estadoCliente && !esEstadoMexicano(estadoCliente)){
+        // Domicilio extranjero: el Estado no es mexicano (ej. TEXAS, CALIFORNIA)
+        const paisDom=paisPorEstadoExtranjero(estadoCliente)||pais;
+        const ciudadPob=normalizar(r['Municipio']||r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
+        x+=`        <tipo_domicilio>\n          <extranjero>\n`;
+        x+=`            <pais>${paisDom}</pais>\n`;
+        x+=`            <estado_provincia>${escXml(normalizar(estadoCliente).substring(0,50))}</estado_provincia>\n`;
+        x+=`            <ciudad_poblacion>${escXml(ciudadPob)}</ciudad_poblacion>\n`;
+        x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
+        x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+        x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
+        x+=`          </extranjero>\n        </tipo_domicilio>\n`;
+      } else {
+        x+=`        <tipo_domicilio>\n          <nacional>\n`;
+        x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
+        x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+        if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
+        x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
+        x+=`          </nacional>\n        </tipo_domicilio>\n`;
+      }
       x+=`        <telefono>\n          <clave_pais>${pais}</clave_pais>\n`;
       if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
       x+=`        </telefono>\n      </persona_aviso>\n`;
