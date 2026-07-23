@@ -515,16 +515,16 @@ function verExpediente(curp){
         ${(c.nivel||c.estatus||c.player_id||c.ultima_visita) ? `
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
           ${c.nivel ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">🏅 ${c.nivel}</span>` : ''}
-          ${c.estatus ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">● ${c.estatus}</span>` : ''}
+          ${c.estatus ? `<span style="font-size:11px;color:${/bloquead/i.test(c.estatus)?'#ff6b6b':'rgba(255,255,255,.7)'};font-weight:${/bloquead/i.test(c.estatus)?'700':'400'}">${/bloquead/i.test(c.estatus)?'🚫':'●'} ${c.estatus}</span>` : ''}
           ${c.ultima_visita ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">📅 Última visita: ${c.ultima_visita}</span>` : ''}
           ${c.player_id ? `<span style="font-size:11px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace">${c.player_id}</span>` : ''}
         </div>` : ''}
         ${c.difierenInfo ? `
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;padding-top:4px;border-top:1px solid rgba(255,255,255,.15)">
-          <span style="font-size:10.5px;color:rgba(255,255,255,.55)">
+          <span style="font-size:10.5px;color:${/bloquead/i.test(c.infoDep.estatus||'')?'#ff6b6b':'rgba(255,255,255,.55)'};font-weight:${/bloquead/i.test(c.infoDep.estatus||'')?'700':'400'}">
             🏦 Depósito: ${c.infoDep.nivel||'—'} · ${c.infoDep.estatus||'—'}${c.infoDep.ultima_visita?` · últ. visita ${c.infoDep.ultima_visita}`:''}
           </span>
-          <span style="font-size:10.5px;color:rgba(255,255,255,.55)">
+          <span style="font-size:10.5px;color:${/bloquead/i.test(c.infoRet.estatus||'')?'#ff6b6b':'rgba(255,255,255,.55)'};font-weight:${/bloquead/i.test(c.infoRet.estatus||'')?'700':'400'}">
             💸 Retiro: ${c.infoRet.nivel||'—'} · ${c.infoRet.estatus||'—'}${c.infoRet.ultima_visita?` · últ. visita ${c.infoRet.ultima_visita}`:''}
           </span>
         </div>` : ''}
