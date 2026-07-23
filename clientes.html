@@ -392,6 +392,10 @@ function procesarHistorial(){
     return {
       curp,
       nombre,
+      nivel:         reg.nivel || '',
+      estatus:       reg.estatus || '',
+      ultima_visita: reg.ultima_visita || '',
+      player_id:     reg.player_id || '',
       sucursales,
       mesesDep,
       mesesRet,
@@ -490,10 +494,17 @@ function verExpediente(curp){
         <button onclick="regresarTop10()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0;font-family:'DM Sans',sans-serif">← Regresar al Top 10</button>
       </div>
     <div class="exp-head">
-      <div class="exp-avatar">${c.nombre ? c.nombre.substring(0,2).toUpperCase() : iniciales(c.curp)}</div>
-      <div>
+      <div class="exp-avatar">${c.nombre ? c.nombre.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase() : iniciales(c.curp)}</div>
+      <div style="flex:1">
         <div class="exp-nombre">${c.nombre || c.curp}</div>
-        <div class="exp-curp">${c.nombre ? c.curp+' · ' : ''}${c.sucursales.length ? c.sucursales.join(' · ') : 'Sin sucursal'} · último aviso: ${c.ultimoMes||'—'}</div>
+        <div class="exp-curp">${c.nombre ? c.curp : ''} · ${c.sucursales.length ? c.sucursales.join(' · ') : 'Sin sucursal'} · último aviso: ${c.ultimoMes||'—'}</div>
+        ${(c.nivel||c.estatus||c.player_id||c.ultima_visita) ? `
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+          ${c.nivel ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">🏅 ${c.nivel}</span>` : ''}
+          ${c.estatus ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">● ${c.estatus}</span>` : ''}
+          ${c.ultima_visita ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">📅 Última visita: ${c.ultima_visita}</span>` : ''}
+          ${c.player_id ? `<span style="font-size:11px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace">${c.player_id}</span>` : ''}
+        </div>` : ''}
       </div>
     </div>
     <div class="exp-body">
