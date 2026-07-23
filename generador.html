@@ -833,7 +833,7 @@ async function procesarArchivo(){
         const arr=XLSX.utils.sheet_to_json(wb.Sheets[hoja],{header:1,defval:''});
         const hi=arr.findIndex(r=>r.some(c=>String(c).trim()==='CURP'));
         if(hi<0) return;
-        const headers=arr[hi].map(h=>String(h).replace(/\n/g,' ').trim());
+        const headers=arr[hi].map(h=>String(h).replace(/[\r\n]+/g,' ').trim());
         arr.slice(hi+1).forEach(r=>{
           const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
           const curp=String(obj['CURP']||'').trim().toUpperCase();
@@ -889,7 +889,7 @@ async function procesarArchivo(){
         const arr=XLSX.utils.sheet_to_json(wb.Sheets[hoja],{header:1,defval:''});
         const hi=arr.findIndex(r=>r.some(c=>String(c).trim()==='Player ID'));
         if(hi<0) return {arr:[], idx:{}};
-        const headers=arr[hi].map(h=>String(h).replace(/\n/g,' ').trim());
+        const headers=arr[hi].map(h=>String(h).replace(/[\r\n]+/g,' ').trim());
         const idx={}; headers.forEach((h,i)=>{if(!(h in idx))idx[h]=i;});
         return {arr:arr.slice(hi+1), idx};
       }
@@ -984,7 +984,7 @@ async function procesarArchivo(){
         // Buscar la fila de encabezados (tiene CURP)
         const hi = arr.findIndex(r=>r.some(c=>String(c).trim()==='CURP'));
         if(hi < 0) return;
-        const headers = arr[hi].map(h=>String(h).replace(/\n/g,' ').trim());
+        const headers = arr[hi].map(h=>String(h).replace(/[\r\n]+/g,' ').trim());
         arr.slice(hi+1).forEach(r=>{
           const obj={};headers.forEach((h,i)=>obj[h]=r[i]!==undefined?r[i]:'');
           // Solo filas con CURP válido de 18 chars
