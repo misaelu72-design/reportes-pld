@@ -389,13 +389,27 @@ function procesarHistorial(){
     // Nombre: desde campo raíz del JSON o desde el primer aviso
     const nombre = reg.nombre || todosAvisos.find(a=>a.nombre_cliente)?.nombre_cliente || '';
 
+    const infoDep = reg.info_deposito || null;
+    const infoRet = reg.info_retiro   || null;
+    // ¿Difieren Nivel/Estatus/Última Visita entre depósito y retiro?
+    const difierenInfo = !!(infoDep && infoRet && (
+      infoDep.nivel !== infoRet.nivel ||
+      infoDep.estatus !== infoRet.estatus ||
+      infoDep.ultima_visita !== infoRet.ultima_visita
+    ));
+
     return {
       curp,
       nombre,
+      // Consolidado: un solo valor (el más reciente entre depósito/retiro)
       nivel:         reg.nivel || '',
       estatus:       reg.estatus || '',
       ultima_visita: reg.ultima_visita || '',
       player_id:     reg.player_id || '',
+      // Separado por tipo de operación (puede ser null si no hay dato)
+      infoDep,
+      infoRet,
+      difierenInfo,
       sucursales,
       mesesDep,
       mesesRet,
@@ -504,6 +518,15 @@ function verExpediente(curp){
           ${c.estatus ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">● ${c.estatus}</span>` : ''}
           ${c.ultima_visita ? `<span style="font-size:11px;color:rgba(255,255,255,.7)">📅 Última visita: ${c.ultima_visita}</span>` : ''}
           ${c.player_id ? `<span style="font-size:11px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace">${c.player_id}</span>` : ''}
+        </div>` : ''}
+        ${c.difierenInfo ? `
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;padding-top:4px;border-top:1px solid rgba(255,255,255,.15)">
+          <span style="font-size:10.5px;color:rgba(255,255,255,.55)">
+            🏦 Depósito: ${c.infoDep.nivel||'—'} · ${c.infoDep.estatus||'—'}${c.infoDep.ultima_visita?` · últ. visita ${c.infoDep.ultima_visita}`:''}
+          </span>
+          <span style="font-size:10.5px;color:rgba(255,255,255,.55)">
+            💸 Retiro: ${c.infoRet.nivel||'—'} · ${c.infoRet.estatus||'—'}${c.infoRet.ultima_visita?` · últ. visita ${c.infoRet.ultima_visita}`:''}
+          </span>
         </div>` : ''}
       </div>
     </div>
