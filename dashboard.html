@@ -912,6 +912,25 @@ function toggleCal(){
   const d=document.getElementById('calDropdown');
   if(!d) return;
   if(d.style.display==='none'){
+    if(window.innerWidth<=640){
+      const hdr=document.querySelector('header');
+      const top=(hdr?hdr.getBoundingClientRect().bottom:64)+8;
+      d.style.position='fixed';
+      d.style.top=top+'px';
+      d.style.left='50%';
+      d.style.right='auto';
+      d.style.transform='translateX(-50%)';
+      d.style.width='92vw';
+      d.style.maxWidth='320px';
+    } else {
+      d.style.position='absolute';
+      d.style.top='calc(100% + 8px)';
+      d.style.left='auto';
+      d.style.right='0';
+      d.style.transform='none';
+      d.style.width='300px';
+      d.style.maxWidth='none';
+    }
     d.style.display='block';
     renderCalendario();
   } else {
