@@ -1,76 +1,76 @@
 {
   "meta": {
-    "generado": "20/07/2026 09:45",
+    "generado": "27/07/2026 09:46",
     "fecha_anterior_corta": "26-Abr",
-    "fecha_actual_corta": "19-Jul",
+    "fecha_actual_corta": "26-jul",
     "fecha_anterior_larga": "26 de Abril 2026",
-    "fecha_actual_larga": "19 de Julio 2026",
+    "fecha_actual_larga": "26 de Julio 2026",
     "num_sucursales": 9
   },
   "kpis": {
     "total_ant": 499193,
-    "total_act": 508589,
-    "delta_total": 9396,
-    "clientes_nuevos": 9398,
-    "cambios_status": 16509,
+    "total_act": 509272,
+    "delta_total": 10079,
+    "clientes_nuevos": 10081,
+    "cambios_status": 16819,
     "ops_ant": 147400,
-    "ops_act": 151850,
+    "ops_act": 152029,
     "kyc_ant": 23345,
-    "kyc_act": 24294,
+    "kyc_act": 24299,
     "re_ant": 328444,
-    "re_act": 332441,
+    "re_act": 332941,
     "bloq_ops_ant": 139785,
-    "bloq_ops_act": 139004,
+    "bloq_ops_act": 139079,
     "info_act_ops_ant": 945,
-    "info_act_ops_act": 1819,
+    "info_act_ops_act": 1895,
     "reg_completo_ant": 396,
-    "reg_completo_act": 2896,
+    "reg_completo_act": 3008,
     "verif_ops_ant": 6274,
-    "verif_ops_act": 8131,
+    "verif_ops_act": 8047,
     "bloq_kyc_ant": 4593,
-    "bloq_kyc_act": 5185,
+    "bloq_kyc_act": 5107,
     "info_act_kyc_ant": 2925,
-    "info_act_kyc_act": 772,
+    "info_act_kyc_act": 835,
     "pend_kyc_ant": 8607,
-    "pend_kyc_act": 2136,
+    "pend_kyc_act": 1985,
     "verif_kyc_ant": 7220,
-    "verif_kyc_act": 16201,
+    "verif_kyc_act": 16372,
     "id_venc_ant": 271972,
-    "id_venc_act": 268750,
+    "id_venc_act": 268665,
     "aviso_ant": 279952,
-    "aviso_act": 291595,
+    "aviso_act": 292344,
     "huella_ant": 206443,
-    "huella_act": 217103
+    "huella_act": 217867
   },
   "sucursales": [
     {
       "nombre": "Ajijic",
       "total_ant": 37713,
-      "total_act": 38207,
-      "delta": 494,
-      "nuevos": 495,
-      "cambios": 494,
-      "re_act": 17727,
-      "bloq_ops": 18936,
-      "info_act_ops": 114,
-      "reg_completo": 219,
-      "verif_ops": 452,
-      "bloq_kyc": 239,
-      "info_act_kyc": 39,
+      "total_act": 38249,
+      "delta": 536,
+      "nuevos": 537,
+      "cambios": 512,
+      "re_act": 17730,
+      "bloq_ops": 18947,
+      "info_act_ops": 117,
+      "reg_completo": 254,
+      "verif_ops": 443,
+      "bloq_kyc": 235,
+      "info_act_kyc": 43,
       "pend_kyc": 57,
       "verif_kyc": 422,
-      "id_venc_act": 23975,
-      "aviso_act": 16884,
-      "huella_act": 12583,
-      "pct_id_venc": 62.8,
+      "id_venc_act": 23965,
+      "aviso_act": 16921,
+      "huella_act": 12633,
+      "pct_id_venc": 62.7,
       "pct_aviso": 44.2,
-      "pct_huella": 32.9,
+      "pct_huella": 33.0,
       "pct_verif_kyc": 1.1,
-      "ops_reg_completo": 44,
-      "ops_verif_ops": 399,
-      "ops_bloq_ops": 565,
+      "ops_reg_completo": 68,
+      "ops_verif_ops": 397,
+      "ops_bloq_ops": 568,
       "ops_info_act_ops": 33,
-      "ops_re": 144,
+      "ops_re": 161,
       "ops_bloq_kyc": 2,
       "ops_info_act_kyc": 0,
       "ops_pend_kyc": 1,
@@ -79,31 +79,31 @@
     {
       "nombre": "Allende",
       "total_ant": 29057,
-      "total_act": 29370,
-      "delta": 313,
-      "nuevos": 313,
-      "cambios": 890,
-      "re_act": 13422,
-      "bloq_ops": 14458,
-      "info_act_ops": 102,
-      "reg_completo": 162,
+      "total_act": 29390,
+      "delta": 333,
+      "nuevos": 333,
+      "cambios": 902,
+      "re_act": 13432,
+      "bloq_ops": 14455,
+      "info_act_ops": 106,
+      "reg_completo": 170,
       "verif_ops": 205,
-      "bloq_kyc": 157,
-      "info_act_kyc": 24,
-      "pend_kyc": 10,
+      "bloq_kyc": 152,
+      "info_act_kyc": 29,
+      "pend_kyc": 11,
       "verif_kyc": 830,
-      "id_venc_act": 18823,
-      "aviso_act": 12104,
-      "huella_act": 8209,
-      "pct_id_venc": 64.1,
-      "pct_aviso": 41.2,
+      "id_venc_act": 18816,
+      "aviso_act": 12134,
+      "huella_act": 8239,
+      "pct_id_venc": 64.0,
+      "pct_aviso": 41.3,
       "pct_huella": 28.0,
       "pct_verif_kyc": 2.8,
-      "ops_reg_completo": 26,
+      "ops_reg_completo": 28,
       "ops_verif_ops": 200,
       "ops_bloq_ops": 165,
-      "ops_info_act_ops": 15,
-      "ops_re": 315,
+      "ops_info_act_ops": 16,
+      "ops_re": 332,
       "ops_bloq_kyc": 0,
       "ops_info_act_kyc": 0,
       "ops_pend_kyc": 0,
@@ -112,31 +112,31 @@
     {
       "nombre": "Esmeralda",
       "total_ant": 7092,
-      "total_act": 7434,
-      "delta": 342,
-      "nuevos": 342,
-      "cambios": 230,
-      "re_act": 5956,
-      "bloq_ops": 498,
-      "info_act_ops": 31,
-      "reg_completo": 119,
-      "verif_ops": 220,
-      "bloq_kyc": 152,
-      "info_act_kyc": 28,
+      "total_act": 7469,
+      "delta": 377,
+      "nuevos": 377,
+      "cambios": 233,
+      "re_act": 5985,
+      "bloq_ops": 500,
+      "info_act_ops": 33,
+      "reg_completo": 123,
+      "verif_ops": 218,
+      "bloq_kyc": 149,
+      "info_act_kyc": 31,
       "pend_kyc": 35,
       "verif_kyc": 395,
-      "id_venc_act": 1912,
-      "aviso_act": 6996,
-      "huella_act": 5852,
-      "pct_id_venc": 25.7,
+      "id_venc_act": 1909,
+      "aviso_act": 7031,
+      "huella_act": 5887,
+      "pct_id_venc": 25.6,
       "pct_aviso": 94.1,
-      "pct_huella": 78.7,
+      "pct_huella": 78.8,
       "pct_verif_kyc": 5.3,
-      "ops_reg_completo": 75,
-      "ops_verif_ops": 209,
-      "ops_bloq_ops": 197,
-      "ops_info_act_ops": 21,
-      "ops_re": 239,
+      "ops_reg_completo": 77,
+      "ops_verif_ops": 207,
+      "ops_bloq_ops": 198,
+      "ops_info_act_ops": 23,
+      "ops_re": 271,
       "ops_bloq_kyc": 2,
       "ops_info_act_kyc": 0,
       "ops_pend_kyc": 9,
@@ -178,31 +178,31 @@
     {
       "nombre": "Irapuato",
       "total_ant": 3557,
-      "total_act": 3939,
-      "delta": 382,
-      "nuevos": 382,
-      "cambios": 364,
-      "re_act": 2843,
+      "total_act": 3976,
+      "delta": 419,
+      "nuevos": 419,
+      "cambios": 371,
+      "re_act": 2867,
       "bloq_ops": 164,
-      "info_act_ops": 43,
-      "reg_completo": 128,
-      "verif_ops": 268,
+      "info_act_ops": 46,
+      "reg_completo": 140,
+      "verif_ops": 266,
       "bloq_kyc": 54,
-      "info_act_kyc": 33,
-      "pend_kyc": 24,
+      "info_act_kyc": 32,
+      "pend_kyc": 25,
       "verif_kyc": 382,
-      "id_venc_act": 499,
-      "aviso_act": 3069,
-      "huella_act": 3900,
-      "pct_id_venc": 12.7,
-      "pct_aviso": 77.9,
+      "id_venc_act": 497,
+      "aviso_act": 3108,
+      "huella_act": 3938,
+      "pct_id_venc": 12.5,
+      "pct_aviso": 78.2,
       "pct_huella": 99.0,
-      "pct_verif_kyc": 9.7,
-      "ops_reg_completo": 4,
-      "ops_verif_ops": 264,
-      "ops_bloq_ops": 125,
-      "ops_info_act_ops": 32,
-      "ops_re": 214,
+      "pct_verif_kyc": 9.6,
+      "ops_reg_completo": 10,
+      "ops_verif_ops": 263,
+      "ops_bloq_ops": 124,
+      "ops_info_act_ops": 35,
+      "ops_re": 244,
       "ops_bloq_kyc": 1,
       "ops_info_act_kyc": 0,
       "ops_pend_kyc": 7,
@@ -211,64 +211,64 @@
     {
       "nombre": "Mitras",
       "total_ant": 135669,
-      "total_act": 138132,
-      "delta": 2463,
-      "nuevos": 2463,
-      "cambios": 5011,
-      "re_act": 112244,
-      "bloq_ops": 15728,
-      "info_act_ops": 473,
-      "reg_completo": 835,
-      "verif_ops": 1976,
-      "bloq_kyc": 1449,
-      "info_act_kyc": 259,
-      "pend_kyc": 207,
-      "verif_kyc": 4961,
-      "id_venc_act": 63008,
-      "aviso_act": 91725,
-      "huella_act": 63736,
-      "pct_id_venc": 45.6,
-      "pct_aviso": 66.4,
-      "pct_huella": 46.1,
-      "pct_verif_kyc": 3.6,
-      "ops_reg_completo": 10,
-      "ops_verif_ops": 1631,
-      "ops_bloq_ops": 1065,
-      "ops_info_act_ops": 124,
-      "ops_re": 2908,
-      "ops_bloq_kyc": 3,
-      "ops_info_act_kyc": 5,
-      "ops_pend_kyc": 5,
-      "ops_verif_kyc": 40
+      "total_act": 138335,
+      "delta": 2666,
+      "nuevos": 2666,
+      "cambios": 5236,
+      "re_act": 112369,
+      "bloq_ops": 15769,
+      "info_act_ops": 509,
+      "reg_completo": 899,
+      "verif_ops": 1912,
+      "bloq_kyc": 1397,
+      "info_act_kyc": 305,
+      "pend_kyc": 41,
+      "verif_kyc": 5134,
+      "id_venc_act": 62956,
+      "aviso_act": 91986,
+      "huella_act": 63993,
+      "pct_id_venc": 45.5,
+      "pct_aviso": 66.5,
+      "pct_huella": 46.3,
+      "pct_verif_kyc": 3.7,
+      "ops_reg_completo": 16,
+      "ops_verif_ops": 1625,
+      "ops_bloq_ops": 1070,
+      "ops_info_act_ops": 127,
+      "ops_re": 3103,
+      "ops_bloq_kyc": 4,
+      "ops_info_act_kyc": 6,
+      "ops_pend_kyc": 2,
+      "ops_verif_kyc": 41
     },
     {
       "nombre": "Neza",
       "total_ant": 13804,
-      "total_act": 14254,
-      "delta": 450,
-      "nuevos": 450,
-      "cambios": 897,
-      "re_act": 10410,
-      "bloq_ops": 2379,
-      "info_act_ops": 33,
-      "reg_completo": 118,
-      "verif_ops": 321,
-      "bloq_kyc": 198,
-      "info_act_kyc": 19,
-      "pend_kyc": 75,
+      "total_act": 14314,
+      "delta": 510,
+      "nuevos": 510,
+      "cambios": 905,
+      "re_act": 10459,
+      "bloq_ops": 2386,
+      "info_act_ops": 35,
+      "reg_completo": 126,
+      "verif_ops": 315,
+      "bloq_kyc": 191,
+      "info_act_kyc": 20,
+      "pend_kyc": 81,
       "verif_kyc": 701,
-      "id_venc_act": 4589,
-      "aviso_act": 13631,
-      "huella_act": 8705,
-      "pct_id_venc": 32.2,
-      "pct_aviso": 95.6,
-      "pct_huella": 61.1,
+      "id_venc_act": 4583,
+      "aviso_act": 13692,
+      "huella_act": 8770,
+      "pct_id_venc": 32.0,
+      "pct_aviso": 95.7,
+      "pct_huella": 61.3,
       "pct_verif_kyc": 4.9,
       "ops_reg_completo": 24,
-      "ops_verif_ops": 288,
-      "ops_bloq_ops": 139,
+      "ops_verif_ops": 285,
+      "ops_bloq_ops": 144,
       "ops_info_act_ops": 9,
-      "ops_re": 528,
+      "ops_re": 586,
       "ops_bloq_kyc": 2,
       "ops_info_act_kyc": 0,
       "ops_pend_kyc": 3,
@@ -310,34 +310,34 @@
     {
       "nombre": "Sendero",
       "total_ant": 34836,
-      "total_act": 37776,
-      "delta": 2940,
-      "nuevos": 2940,
-      "cambios": 2394,
-      "re_act": 29220,
-      "bloq_ops": 1137,
-      "info_act_ops": 314,
-      "reg_completo": 237,
-      "verif_ops": 2753,
-      "bloq_kyc": 243,
-      "info_act_kyc": 163,
-      "pend_kyc": 492,
-      "verif_kyc": 3217,
-      "id_venc_act": 7022,
-      "aviso_act": 34793,
-      "huella_act": 36970,
-      "pct_id_venc": 18.6,
-      "pct_aviso": 92.1,
+      "total_act": 38062,
+      "delta": 3226,
+      "nuevos": 3226,
+      "cambios": 2431,
+      "re_act": 29480,
+      "bloq_ops": 1154,
+      "info_act_ops": 340,
+      "reg_completo": 218,
+      "verif_ops": 2752,
+      "bloq_kyc": 236,
+      "info_act_kyc": 168,
+      "pend_kyc": 499,
+      "verif_kyc": 3215,
+      "id_venc_act": 7017,
+      "aviso_act": 35079,
+      "huella_act": 37259,
+      "pct_id_venc": 18.4,
+      "pct_aviso": 92.2,
       "pct_huella": 97.9,
-      "pct_verif_kyc": 8.5,
-      "ops_reg_completo": 100,
-      "ops_verif_ops": 2587,
-      "ops_bloq_ops": 1028,
-      "ops_info_act_ops": 209,
-      "ops_re": 3592,
+      "pct_verif_kyc": 8.4,
+      "ops_reg_completo": 74,
+      "ops_verif_ops": 2614,
+      "ops_bloq_ops": 1026,
+      "ops_info_act_ops": 220,
+      "ops_re": 3867,
       "ops_bloq_kyc": 4,
       "ops_info_act_kyc": 1,
-      "ops_pend_kyc": 62,
+      "ops_pend_kyc": 63,
       "ops_verif_kyc": 66
     }
   ],
@@ -345,72 +345,77 @@
     {
       "_STATUS_ANT": "Por validar PLD",
       "_STATUS_ACT": "Verificado PLD",
-      "N": 5761
+      "N": 5883
     },
     {
       "_STATUS_ANT": "Info actualizada PLD",
       "_STATUS_ACT": "Verificado PLD",
-      "N": 2367
+      "N": 2375
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Registro completo",
-      "N": 2256
+      "N": 2350
     },
     {
       "_STATUS_ANT": "Por validar PLD",
       "_STATUS_ACT": "Bloqueado PLD",
-      "N": 1043
+      "N": 1019
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Verificado operaciones",
-      "N": 945
+      "N": 858
     },
     {
       "_STATUS_ANT": "Bloqueado operaciones",
       "_STATUS_ACT": "Info actualizada operaciones",
-      "N": 713
+      "N": 740
     },
     {
       "_STATUS_ANT": "Bloqueado PLD",
       "_STATUS_ACT": "Verificado PLD",
-      "N": 517
+      "N": 541
     },
     {
       "_STATUS_ANT": "Bloqueado operaciones",
       "_STATUS_ACT": "Verificado operaciones",
-      "N": 404
-    },
-    {
-      "_STATUS_ANT": "Por validar PLD",
-      "_STATUS_ACT": "Info actualizada PLD",
-      "N": 333
+      "N": 401
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Info actualizada operaciones",
-      "N": 324
+      "N": 368
+    },
+    {
+      "_STATUS_ANT": "Por validar PLD",
+      "_STATUS_ACT": "Info actualizada PLD",
+      "N": 362
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Verificado PLD",
-      "N": 290
+      "N": 304
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Por validar PLD",
-      "N": 256
+      "N": 242
     },
     {
       "_STATUS_ANT": "Info actualizada PLD",
       "_STATUS_ACT": "Bloqueado PLD",
-      "N": 196
+      "N": 187
     },
     {
       "_STATUS_ANT": "Info actualizada PLD",
       "_STATUS_ACT": "Por validar PLD",
-      "N": 158
+      "N": 153
+    },
+    {
+      "_STATUS_ANT": "Registro express",
+      "_STATUS_ACT": "Bloqueado operaciones",
+      "N": 148
     },
     {
       "_STATUS_ANT": "Bloqueado PLD",
@@ -420,52 +425,47 @@
     {
       "_STATUS_ANT": "Bloqueado PLD",
       "_STATUS_ACT": "Info actualizada PLD",
-      "N": 110
+      "N": 122
     },
     {
       "_STATUS_ANT": "Info actualizada operaciones",
       "_STATUS_ACT": "Verificado PLD",
-      "N": 92
-    },
-    {
-      "_STATUS_ANT": "Registro express",
-      "_STATUS_ACT": "Bloqueado operaciones",
-      "N": 78
-    },
-    {
-      "_STATUS_ANT": "Info actualizada operaciones",
-      "_STATUS_ACT": "Por validar PLD",
-      "N": 62
-    },
-    {
-      "_STATUS_ANT": "Registro completo",
-      "_STATUS_ACT": "Verificado operaciones",
-      "N": 62
+      "N": 96
     },
     {
       "_STATUS_ANT": "Verificado PLD",
       "_STATUS_ACT": "Info actualizada PLD",
+      "N": 66
+    },
+    {
+      "_STATUS_ANT": "Registro completo",
+      "_STATUS_ACT": "Verificado operaciones",
       "N": 61
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Info actualizada PLD",
-      "N": 51
+      "N": 58
+    },
+    {
+      "_STATUS_ANT": "Info actualizada operaciones",
+      "_STATUS_ACT": "Por validar PLD",
+      "N": 58
     },
     {
       "_STATUS_ANT": "Verificado PLD",
       "_STATUS_ACT": "Bloqueado PLD",
-      "N": 50
+      "N": 46
     },
     {
       "_STATUS_ANT": "Registro completo",
       "_STATUS_ACT": "Bloqueado operaciones",
-      "N": 39
+      "N": 43
     },
     {
       "_STATUS_ANT": "Registro express",
       "_STATUS_ACT": "Bloqueado PLD",
-      "N": 38
+      "N": 35
     },
     {
       "_STATUS_ANT": "Verificado operaciones",
@@ -499,13 +499,23 @@
     },
     {
       "_STATUS_ANT": "Bloqueado operaciones",
+      "_STATUS_ACT": "Info actualizada PLD",
+      "N": 7
+    },
+    {
+      "_STATUS_ANT": "Bloqueado operaciones",
       "_STATUS_ACT": "Por validar PLD",
-      "N": 8
+      "N": 7
     },
     {
       "_STATUS_ANT": "Registro completo",
       "_STATUS_ACT": "Por validar PLD",
       "N": 6
+    },
+    {
+      "_STATUS_ANT": "Info actualizada operaciones",
+      "_STATUS_ACT": "Info actualizada PLD",
+      "N": 5
     },
     {
       "_STATUS_ANT": "Registro completo",
@@ -515,22 +525,12 @@
     {
       "_STATUS_ANT": "Info actualizada operaciones",
       "_STATUS_ACT": "Bloqueado PLD",
-      "N": 5
-    },
-    {
-      "_STATUS_ANT": "Bloqueado operaciones",
-      "_STATUS_ACT": "Info actualizada PLD",
-      "N": 5
+      "N": 4
     },
     {
       "_STATUS_ANT": "Bloqueado operaciones",
       "_STATUS_ACT": "Bloqueado PLD",
-      "N": 4
-    },
-    {
-      "_STATUS_ANT": "Info actualizada operaciones",
-      "_STATUS_ACT": "Info actualizada PLD",
-      "N": 4
+      "N": 3
     },
     {
       "_STATUS_ANT": "Bloqueado operaciones",
@@ -677,12 +677,6 @@
     },
     {
       "sucursal": "Ajijic",
-      "id": "32F3ED42-A1A7-46FA-8461-7EB48927A5F2",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Ajijic",
       "id": "BFBCAF37-FCFB-4E65-9CF4-643B1C2D25B0",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -782,6 +776,12 @@
       "id": "49F1A1CD-60A1-4987-A79D-026027CB3BCA",
       "ant": "Bloqueado PLD",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "98CF8863-BBF7-4A1E-8DFC-F53A20F6EFFB",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -888,6 +888,12 @@
     {
       "sucursal": "Ajijic",
       "id": "17EA48BE-46D5-4363-9CCB-9BEF72AC4101",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "C38D95C9-32DE-45FD-96D4-C2002112252D",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -1004,6 +1010,12 @@
       "id": "13B62FB0-C115-48BC-A606-B63CA82809EF",
       "ant": "Registro express",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "3F677E7A-183B-4EC6-8BA2-3D07ACA186E8",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -1523,6 +1535,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "F221943C-1AC2-48B2-8E76-48C8CEE8B69C",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "96E1825A-717E-41BD-88AA-E2C24B46F383",
       "ant": "Info actualizada PLD",
       "act": "Por validar PLD"
@@ -1727,6 +1745,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "B6A1D5F4-15C4-40A4-8F42-F028B13CEFF9",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "BF5469E6-2A14-4D02-9C8C-F9DB7F46E6CF",
       "ant": "Registro completo",
       "act": "Verificado operaciones"
@@ -1787,6 +1811,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "CEA66C71-0407-4366-A80A-43C5BC540E31",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "570F996F-539B-4276-B829-0825F6957C64",
       "ant": "Registro express",
       "act": "Bloqueado operaciones"
@@ -1807,7 +1837,7 @@
       "sucursal": "Ajijic",
       "id": "8C5A8199-1CE4-4F3B-9793-8D83F6B03804",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -1843,7 +1873,7 @@
       "sucursal": "Ajijic",
       "id": "8352F548-EE99-4953-965A-3F53457FFDFA",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -1927,7 +1957,7 @@
       "sucursal": "Ajijic",
       "id": "ABD8E97C-BFEF-4EFE-9056-7A79C961A70E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -1976,6 +2006,12 @@
       "id": "582E19AB-F780-446C-9C99-6B0FAEE28804",
       "ant": "Info actualizada PLD",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "9D58C376-292F-432C-8991-4F9FD2201163",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Ajijic",
@@ -2173,13 +2209,13 @@
       "sucursal": "Ajijic",
       "id": "F72808F4-BCAB-4670-B20B-6407AA4F82B4",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
       "id": "DCDC01E5-9451-48C4-9426-075AB3349880",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -2191,7 +2227,7 @@
       "sucursal": "Ajijic",
       "id": "55B0A240-3232-46E3-BB13-3E2059AB0DC0",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -2234,6 +2270,12 @@
       "id": "330CE749-5901-497E-B076-B42C2F584AB7",
       "ant": "Info actualizada PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "0A59CC43-11B0-4367-92A7-B348E86E5484",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Ajijic",
@@ -2335,7 +2377,7 @@
       "sucursal": "Ajijic",
       "id": "397DAFFB-0AC1-45C6-A264-9845D0A2D886",
       "ant": "Verificado PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Ajijic",
@@ -2359,7 +2401,7 @@
       "sucursal": "Ajijic",
       "id": "1D30DF32-7527-4190-A30C-351EDDD21C8F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -2417,9 +2459,21 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "2DCD5ABE-E856-4270-8DAB-994701B5309F",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "0A2C6B59-6C50-44E3-A687-495BC1C939CD",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "EFC6D807-503A-44D8-B6B7-C92FAFF81B9C",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -2438,6 +2492,12 @@
       "id": "80C5444F-E6E6-41FB-8C19-84B778E97301",
       "ant": "Bloqueado PLD",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "25F3032F-AD3D-452B-AB7D-D28CDBB6846E",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Ajijic",
@@ -2497,7 +2557,7 @@
       "sucursal": "Ajijic",
       "id": "D65B49DB-BFEE-4600-8990-F20F42EE8DEF",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Ajijic",
@@ -2533,7 +2593,7 @@
       "sucursal": "Ajijic",
       "id": "1C37CB41-CE2A-4106-91E8-31F27720C063",
       "ant": "Registro completo",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -2663,12 +2723,6 @@
     },
     {
       "sucursal": "Ajijic",
-      "id": "A6DDEADF-182C-4F1E-BCD4-CC5175AC457C",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Ajijic",
       "id": "CAAF5CBD-07DA-42CB-8E9A-5FFE4A1415DC",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -2678,6 +2732,12 @@
       "id": "E37EAC0E-A2BB-405E-82B4-B577EEF75DB9",
       "ant": "Verificado PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "BFEF1E64-BE94-445E-9988-9EBAE148941E",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -2807,6 +2867,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "96CB9B49-AF45-4E64-A9C1-52D9D9B97A66",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "A8A92A90-B80B-4AFB-9624-A6515A1E62A6",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -2861,6 +2927,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "3530EFCE-73A7-4540-B3B8-8BB698764FD3",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "4A7AAF73-97E1-4F59-A6C8-C27D46BADFB8",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -2881,7 +2953,7 @@
       "sucursal": "Ajijic",
       "id": "2B892AC2-E4AE-4183-982E-B6F029446DB7",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Ajijic",
@@ -2981,6 +3053,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "AE84C8BA-6BFB-493B-AF22-BDD3EC6A9ED8",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "2D11DAF0-2A61-499D-BCFD-3EF38E4385DA",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -3035,6 +3113,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "71B5DDC4-54F0-466B-8CBB-21ABFDD0F635",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "88BA5725-5FCF-4E00-B37F-38F85097786D",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -3083,6 +3167,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "126D9006-7F97-4E55-8B0F-CFD7F06A28A2",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "6B70ACCF-990B-4C13-8177-0E6D8E1451BD",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -3128,6 +3218,12 @@
       "id": "BD597983-2ED8-4426-82C3-821816E86E7D",
       "ant": "Verificado PLD",
       "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "E9EFEA29-AC10-4CC7-B1D4-0763E5663081",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Ajijic",
@@ -3211,7 +3307,7 @@
       "sucursal": "Ajijic",
       "id": "D29F1C9C-0A0E-4F5F-BCC1-F7C8CFE13A4C",
       "ant": "Verificado PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Ajijic",
@@ -3365,6 +3461,12 @@
     },
     {
       "sucursal": "Ajijic",
+      "id": "ED2A05FD-00E5-4B38-9C25-420FB3881AC7",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Ajijic",
       "id": "32C2C774-A3F7-49C9-892E-DB3EB0126761",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
@@ -3421,13 +3523,19 @@
       "sucursal": "Ajijic",
       "id": "809C379C-F8DE-4F87-8317-475185B24060",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Ajijic",
       "id": "258F5C5A-C266-4C89-9A4D-C58AA8CCC132",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Ajijic",
+      "id": "E6D5CF2A-0250-4783-BB9E-99D71162B6D6",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Ajijic",
@@ -3575,9 +3683,21 @@
     },
     {
       "sucursal": "Allende",
+      "id": "4B910C6A-14E0-426B-9369-9043871D6755",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Allende",
       "id": "EBC0FD7B-CAD5-460D-9014-E8267BEAA5A7",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "261744CB-71EB-4CC8-9232-BB67DF99856E",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Allende",
@@ -3608,6 +3728,12 @@
       "id": "5831B545-3C1B-42E1-9AAF-F403C594B07D",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "0DD154CB-1D9D-40A7-BFBD-80E5C17A3E1B",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Allende",
@@ -4121,6 +4247,12 @@
     },
     {
       "sucursal": "Allende",
+      "id": "7CB5AC1E-7C9F-4060-B11F-EEF94E945E4F",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Allende",
       "id": "3EAA39C5-6AFB-43B6-98E0-82115D43BC50",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -4232,6 +4364,12 @@
       "id": "CD028645-1390-4B4E-A5FF-1A50A0CB71F9",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "4FE50B48-72B5-423C-BA23-C18347E1F6C1",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Allende",
@@ -4511,6 +4649,12 @@
     },
     {
       "sucursal": "Allende",
+      "id": "8AD535E2-875B-4CDC-A0E8-8FC7CEE6EAEC",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Allende",
       "id": "3377F52D-F5AB-4534-A6F2-BA836417CC94",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -4656,6 +4800,12 @@
     {
       "sucursal": "Allende",
       "id": "125E8A86-DC13-4A2E-BBDA-64BF5763E993",
+      "ant": "Registro express",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "386E8454-A125-438C-AC0A-D84B5E27B998",
       "ant": "Registro express",
       "act": "Por validar PLD"
     },
@@ -4903,7 +5053,7 @@
       "sucursal": "Allende",
       "id": "B78FBA4A-AC91-4001-82FD-45ACCBDF2FD2",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Allende",
@@ -5156,6 +5306,12 @@
       "id": "F1DA4B60-5973-40FF-A990-1CC22935C32B",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "3705B38C-839E-4FA9-9125-D15870DB086F",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Allende",
@@ -6035,6 +6191,12 @@
     },
     {
       "sucursal": "Allende",
+      "id": "11121DEA-D379-4EAF-9696-5DAE6B3A52A4",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Allende",
       "id": "B2719E1D-E280-4572-906A-97BAF0046DCA",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -6449,6 +6611,12 @@
     },
     {
       "sucursal": "Allende",
+      "id": "4E3F96D0-852F-441C-A069-C23F61E551AA",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Allende",
       "id": "14A99C72-E01F-4F23-B136-D51BE0F519DE",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -6559,7 +6727,7 @@
       "sucursal": "Allende",
       "id": "22E92DFD-CE7B-434A-85F5-EE8E9C376ED7",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Allende",
@@ -6602,6 +6770,12 @@
       "id": "8FDC756B-D0BE-438C-B3B8-FE52A32FABA6",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "1F6A2372-7488-485A-92B0-04210F309479",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Allende",
@@ -7375,7 +7549,7 @@
       "sucursal": "Allende",
       "id": "C2EE90E5-3E64-48F3-A21E-FF88AA5D9A89",
       "ant": "Verificado PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Allende",
@@ -8725,7 +8899,7 @@
       "sucursal": "Allende",
       "id": "40345EDF-B64C-40F8-85A9-3952640A91C5",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Allende",
@@ -8774,6 +8948,12 @@
       "id": "73BD1D97-A5E7-4B1F-9CFD-A1F49BE61F92",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Allende",
+      "id": "C73F4830-3AAF-4A24-9514-BCE2F7945204",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Allende",
@@ -9083,6 +9263,12 @@
     },
     {
       "sucursal": "Esmeralda",
+      "id": "840583EE-F103-4169-9AE1-34BBC3040E76",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Esmeralda",
       "id": "14456534-4DDC-4422-8434-0F16854AB635",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
@@ -9173,9 +9359,15 @@
     },
     {
       "sucursal": "Esmeralda",
+      "id": "4AB642A6-8962-424F-B8B9-69286A624F9C",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Esmeralda",
       "id": "F3DA33A9-6B95-44E7-8ECA-A438F028A970",
       "ant": "Verificado PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Esmeralda",
@@ -9289,7 +9481,7 @@
       "sucursal": "Esmeralda",
       "id": "2AC76077-5D89-48C5-B3E3-61C2D3BEBBBF",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Esmeralda",
@@ -9314,6 +9506,12 @@
       "id": "1F92ABBC-163B-4F96-9498-CCD9A1785D97",
       "ant": "Registro express",
       "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Esmeralda",
+      "id": "58A5CC08-D015-4F70-A5F8-D7E5D6F3FD84",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Esmeralda",
@@ -9599,12 +9797,6 @@
     },
     {
       "sucursal": "Esmeralda",
-      "id": "9B72F0BB-8CAF-4223-B56B-051798CA2C88",
-      "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Esmeralda",
       "id": "3450B2D5-BB17-4AC5-8B45-0501EF83833B",
       "ant": "Registro express",
       "act": "Por validar PLD"
@@ -9629,6 +9821,12 @@
     },
     {
       "sucursal": "Esmeralda",
+      "id": "3E39909F-C437-4D2C-9583-44A46A4CB4B8",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Esmeralda",
       "id": "369C13B0-A7EC-4DFC-BAED-C42E6133DC27",
       "ant": "Bloqueado PLD",
       "act": "Info actualizada PLD"
@@ -9638,12 +9836,6 @@
       "id": "9E44600A-E058-4D5E-A5DC-B6B35FAFDBDD",
       "ant": "Registro completo",
       "act": "Info actualizada operaciones"
-    },
-    {
-      "sucursal": "Esmeralda",
-      "id": "96E397B1-B7BD-4996-B348-071A39883D73",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Esmeralda",
@@ -9887,6 +10079,12 @@
     },
     {
       "sucursal": "Esmeralda",
+      "id": "689D98AD-C02D-4BA7-8E28-178CEA51081A",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Esmeralda",
       "id": "6FD4F46F-8759-4C6B-AB49-DCA12237E6C8",
       "ant": "Registro express",
       "act": "Verificado PLD"
@@ -10081,7 +10279,7 @@
       "sucursal": "Esmeralda",
       "id": "337DACCA-7A26-4549-85E9-E685A01F3221",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Esmeralda",
@@ -47549,6 +47747,12 @@
     },
     {
       "sucursal": "Irapuato",
+      "id": "1DA41884-7CE1-4126-BE82-1AB2E7DCD0BF",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Irapuato",
       "id": "4E350DD0-060E-475D-9A09-7077F93A8434",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -47717,6 +47921,12 @@
     },
     {
       "sucursal": "Irapuato",
+      "id": "1A8CE5EB-2260-4E3A-9020-DCF49047CA0C",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Irapuato",
       "id": "B2A0D9D0-0580-464E-8D7A-9E9EEAB2B323",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -47856,6 +48066,12 @@
     {
       "sucursal": "Irapuato",
       "id": "7050AD7C-4064-44DA-84E1-F93E08576720",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Irapuato",
+      "id": "F1C03B13-3F79-4CAC-96C1-8177FC4020E4",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -48023,6 +48239,12 @@
     },
     {
       "sucursal": "Irapuato",
+      "id": "FB7BD333-27BD-454D-BED6-FE04A63C3A83",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Irapuato",
       "id": "2A1B6DE2-95E7-4A06-B85A-CE3517191FD1",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -48030,6 +48252,12 @@
     {
       "sucursal": "Irapuato",
       "id": "BEFDDFC4-CF02-4D38-8676-545E64203D2A",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Irapuato",
+      "id": "3EF14B66-AF8A-4EEB-9361-58A48A01D62E",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -48074,6 +48302,12 @@
       "id": "F2AB0660-4B4E-4382-8097-C83E9A979531",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Irapuato",
+      "id": "DB555B9F-CC48-411E-8A49-94830BE2A316",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Irapuato",
@@ -48817,7 +49051,7 @@
       "sucursal": "Irapuato",
       "id": "DE22D05E-D8B6-41C0-9D82-B424DA7C61DA",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Irapuato",
@@ -49279,13 +49513,19 @@
       "sucursal": "Irapuato",
       "id": "8FDF672F-EA1F-46A3-95CC-2C8597FD0FE6",
       "ant": "Bloqueado PLD",
-      "act": "Info actualizada PLD"
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Irapuato",
       "id": "8D8A9F0A-E8DC-4D81-9C86-BB3BA6F58DBE",
       "ant": "Info actualizada PLD",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Irapuato",
+      "id": "3F1F2F30-FCA0-468A-8B1C-E60329BDFC42",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Irapuato",
@@ -49753,7 +49993,7 @@
       "sucursal": "Mitras",
       "id": "5C5BAB33-5F33-41F2-8D42-560DEE06B04F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -49841,6 +50081,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "89B0E5FF-FCC9-49CB-BE79-7AC86A317D49",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "2EE9952A-B9DF-404F-BC87-2AE22D74A7F6",
       "ant": "Bloqueado operaciones",
       "act": "Verificado operaciones"
@@ -49915,7 +50161,7 @@
       "sucursal": "Mitras",
       "id": "A067A42D-3822-469A-9221-B4A5938260D7",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50029,7 +50275,7 @@
       "sucursal": "Mitras",
       "id": "2F03DE9E-BE0F-4C05-B94B-FA0B2C8E00AD",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50095,7 +50341,7 @@
       "sucursal": "Mitras",
       "id": "0087ED6F-136C-486E-9049-97E71370D044",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50179,7 +50425,7 @@
       "sucursal": "Mitras",
       "id": "F8D0767E-8AC4-4239-8A12-E690CDFC3EC2",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50191,7 +50437,7 @@
       "sucursal": "Mitras",
       "id": "532071B8-B8C0-44A1-BF76-E0C500B3D429",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50221,7 +50467,7 @@
       "sucursal": "Mitras",
       "id": "8CA07C1E-020A-4EF9-A4CA-CD7E4D925078",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -50294,12 +50540,6 @@
       "id": "DEF2236C-CE2A-4ACF-B0D9-7D89C7DFE700",
       "ant": "Registro express",
       "act": "Registro completo"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "363DF4E6-5C75-43B0-9D60-777F1B613156",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50467,7 +50707,7 @@
       "sucursal": "Mitras",
       "id": "C98C789E-4A25-4B1E-80EE-05A91E62023A",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50492,6 +50732,12 @@
       "id": "04AADC80-57B4-43D7-A4CA-CFB72A1B6F6C",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "CABA5D48-B5C6-4FF7-8012-3A59D3E7944B",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -50563,12 +50809,18 @@
       "sucursal": "Mitras",
       "id": "E25043D6-1489-439A-930A-D55C9B1BABF2",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "052559E5-7222-46F8-84E1-8BC0E1820FA8",
       "ant": "Info actualizada PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "033B6CB1-69B9-477E-BC8E-FF700F1FCC2D",
+      "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
     },
     {
@@ -50695,19 +50947,13 @@
       "sucursal": "Mitras",
       "id": "C8120170-74E1-4D75-B70B-0221C93DC69E",
       "ant": "Bloqueado operaciones",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "996DE4E5-8F4F-4079-BB3B-9F1E70290CD0",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "6184D6E4-9A9F-4E60-8A71-D969CB3324B1",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -50791,11 +51037,17 @@
       "sucursal": "Mitras",
       "id": "E90DA60A-B233-4BD0-BFE9-7F6EDEEA69D8",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
       "id": "990B26BF-5820-478E-9CB9-E140DCD1CA36",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "D3B801D1-AC4D-4303-B2EA-DD8079AD7B0A",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -51035,12 +51287,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "947DB766-E02E-4786-82BA-E89F3BE44DC3",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "7EE5B8E2-298A-4310-89F5-CA9DB9A1ADF7",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
@@ -51103,7 +51349,7 @@
       "sucursal": "Mitras",
       "id": "41C59E3F-2B2E-4CD1-86CB-D06D4838ECC8",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -51131,6 +51377,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "F845D8D7-BDE1-4F41-929A-9B29DB9621D7",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2D148117-1967-4F74-B304-0DCF75D2BB74",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "F82FD2C4-EFB6-4AA4-8A60-0748102803FE",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -51144,6 +51402,12 @@
     {
       "sucursal": "Mitras",
       "id": "1C10163E-4DB7-42C2-B920-BC9B7BA28BAB",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "FE218D30-C54A-467E-80C1-7BA2E236A036",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -51235,7 +51499,7 @@
       "sucursal": "Mitras",
       "id": "D296E3E8-AF1C-45AF-8F4F-A5AE154B1F2E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -51655,7 +51919,7 @@
       "sucursal": "Mitras",
       "id": "F8604C8A-D882-449D-AF08-A0AE43C09DA9",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -51829,7 +52093,7 @@
       "sucursal": "Mitras",
       "id": "F033C037-CC24-4D08-AB38-911E1B193B03",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -51852,6 +52116,12 @@
     {
       "sucursal": "Mitras",
       "id": "5A697663-414F-4E89-AE6D-70EA6C66CD9A",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "98B87AAE-EB25-4386-9918-F87E0CDEA21F",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -51889,7 +52159,7 @@
       "sucursal": "Mitras",
       "id": "A9D5DA40-3241-4068-8D86-F09F291BCCFC",
       "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -51979,7 +52249,7 @@
       "sucursal": "Mitras",
       "id": "23F61CC4-978F-4CBB-8901-F2600461710E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -52223,6 +52493,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "CFF0BFE3-11C0-4028-8955-07542E4FA85D",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "73E4EDF9-7619-4C4D-93C3-A08EE653E8E5",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -52418,6 +52694,12 @@
       "id": "F6409E15-2CBC-4E04-B414-8D34E4405258",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "F3C0A93B-6411-4DA7-A784-01B05AFF3DEE",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -52823,6 +53105,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "CD1BA2DD-C573-441F-8C03-3070117D19B1",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "F5BF486F-4115-4360-803E-C762677C5218",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -52880,6 +53168,12 @@
       "id": "E1E0194F-6281-48EE-85AF-76F2D7DAB9E1",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "F844D230-0305-46F4-95E3-4101CF12E0DF",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -53045,9 +53339,15 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "FB6EB575-DCD5-4524-8C98-8DD52C6589AB",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "BE4E161A-B70A-44A3-8A6C-2BF812EA470A",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -53201,6 +53501,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "AEC8A9F1-0988-493B-AC84-5C75466A6095",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "810FB746-7EE9-4292-8906-E3B2D6CFFF70",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -53215,7 +53521,7 @@
       "sucursal": "Mitras",
       "id": "782149FC-F73B-48B4-A7BC-D11457846E11",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -53255,6 +53561,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "1CBA2177-45FE-4FD3-8F20-1DCA2FBA3E09",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "D9EE2FA1-E0EE-442E-92D5-0915BB393C79",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -53270,12 +53582,6 @@
       "id": "B8C2C876-0BD5-4A78-829F-6DCB9DD25BBF",
       "ant": "Registro express",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "ADA53072-F265-4FB8-8404-90638B848051",
-      "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -53519,6 +53825,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A2B8FEEA-A1F1-40EF-8700-CCE62FFAEC60",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "5804F48B-6B79-4383-88CA-1B4BC3C2392C",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -53689,7 +54001,7 @@
       "sucursal": "Mitras",
       "id": "AE515C90-EF93-4873-B346-D8288989605F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -53702,6 +54014,12 @@
       "id": "1C28BA18-8DDB-416D-B86A-9A4D2C8EDD31",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "531DF3DB-2B0E-4A92-A1D1-342EB6A9762D",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -53905,7 +54223,7 @@
       "sucursal": "Mitras",
       "id": "5C216D3B-30CF-4894-BB33-337C7FDD62AF",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -53971,7 +54289,7 @@
       "sucursal": "Mitras",
       "id": "CE67BE3D-F16C-40BB-99C6-4608EFEBCB03",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -54041,6 +54359,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "1A54183B-21CF-4164-8DD3-EB6A83C1D502",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "ED5B2B28-A803-49ED-81DF-B59CB2990F87",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -54086,6 +54410,12 @@
       "id": "3E12B2C3-5F45-41D8-AE8A-727AAC34D197",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "D1A5AB89-063C-495A-8F9A-4F9A2EB2F790",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -54209,6 +54539,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A6CD3FB5-3A8D-4C3E-B9EB-ECBA2F46E439",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "EFC552C2-E931-48F7-BB8D-A76466C8A79F",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -54271,7 +54607,7 @@
       "sucursal": "Mitras",
       "id": "FD535097-6BDA-4A95-8135-99335D0EF5A2",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -54359,6 +54695,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "5A6EC6EA-9648-4D4E-B5BB-C6C25EF88FFA",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "564DE8E5-5DCA-4758-A4C6-1D9B1FDC6565",
       "ant": "Registro completo",
       "act": "Info actualizada operaciones"
@@ -54409,7 +54751,7 @@
       "sucursal": "Mitras",
       "id": "923E60A8-F903-4E5C-8115-9454AF33709A",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -54575,6 +54917,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "C90EF925-4810-4BBF-8457-F4DCF863E2F5",
+      "ant": "Registro express",
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "55A3E968-9F4E-4B1C-B1F6-599E8FBD840F",
       "ant": "Por validar PLD",
       "act": "Info actualizada PLD"
@@ -54595,7 +54943,7 @@
       "sucursal": "Mitras",
       "id": "625CE1FF-D588-4B98-BFA0-A705CCBFDF29",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -54608,6 +54956,12 @@
       "id": "FFFDCED1-D483-47D4-94D7-173F1C8C4A85",
       "ant": "Info actualizada operaciones",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "25C41185-141C-4112-A161-486652BF6CC3",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -54692,6 +55046,12 @@
       "id": "059E2F72-53FE-4144-956A-B5F41002DE2F",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2D4487C0-55CA-483D-8B9D-4F97E16F6A05",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -54817,7 +55177,7 @@
       "sucursal": "Mitras",
       "id": "AA5314F6-F29C-427B-BEE0-0FBB71793F69",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -54991,7 +55351,7 @@
       "sucursal": "Mitras",
       "id": "6B588E49-26E3-4C01-A40B-A69C9A7D883E",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -55505,6 +55865,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "CFF0A2F8-1F6F-42C5-956F-7D641363B4EC",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "5ABCC930-4E68-48B6-9241-BDF82B90147C",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -55721,6 +56087,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "2B96781E-FA78-4A18-B8B0-72783073E49E",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "2203043B-D40B-40E2-B21A-FB6295B53B0D",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -55799,12 +56171,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "6710B0F6-5CDE-4384-835A-85B23E0C60FC",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "DF6F9F01-DD17-4C24-84D6-022396E359C8",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -55855,7 +56221,7 @@
       "sucursal": "Mitras",
       "id": "7B0EE561-A4D2-4CF8-9C60-D14BE58B87E3",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -55987,7 +56353,7 @@
       "sucursal": "Mitras",
       "id": "58C0C623-525B-441B-90E0-184765D2AA7E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -56309,6 +56675,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "4C39498F-A581-4D13-99AA-742B5DA765F2",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "0E5E16C7-E8A1-49BA-93C9-B90E06F1150C",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -56354,6 +56726,12 @@
       "id": "EDFC374A-A5AD-45A8-9356-A0E28857632D",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C822C651-A24F-4ECF-9A28-92D46D97AB88",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -56587,7 +56965,7 @@
       "sucursal": "Mitras",
       "id": "A0446104-8D2F-4994-877C-47E709455C29",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -56609,12 +56987,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "4380E382-29DA-4156-93CB-2A6A2D25E06E",
-      "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "E8D11BB4-1F8C-45F6-ADD2-DFE1C80DC185",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -56623,7 +56995,7 @@
       "sucursal": "Mitras",
       "id": "FAAE85B6-F22A-4811-B669-01B6C62CFF2C",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -56863,7 +57235,7 @@
       "sucursal": "Mitras",
       "id": "DC443AD3-C257-4D98-83DE-D6D49BE8963B",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -56959,7 +57331,7 @@
       "sucursal": "Mitras",
       "id": "41F1809D-3120-4019-A160-ACE4C2B66A17",
       "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Mitras",
@@ -57014,6 +57386,12 @@
       "id": "030CC44D-3CF5-4C5E-9AEC-3F3C0F1F2810",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "6C7E716E-7727-42AE-BE27-5CCB827F7651",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -57287,6 +57665,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "D3BAE5D9-36A3-4F95-9C2D-F155D9B916E2",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "E6D1D706-2D5C-4E3D-BB31-AE9CE1350707",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
@@ -57499,7 +57883,7 @@
       "sucursal": "Mitras",
       "id": "29F7F96F-B267-4296-AAE5-65E3913DC28E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -57554,12 +57938,6 @@
       "id": "83375761-513E-48F6-8C91-D479C852F5D2",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "A6115A86-CCAD-4F10-B691-EABF62E67D55",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -57644,6 +58022,12 @@
       "id": "AEA2A94A-80F6-4765-9453-7F1ABE2DAF63",
       "ant": "Registro express",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "B725853D-1CF6-4F3B-AD56-88F4DC5FD347",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -57803,6 +58187,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "00AC3507-1503-4051-B90F-5454E9C753BD",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "A81ED217-BB8F-4D20-B9F0-57AF387396DF",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -57935,12 +58325,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "78CF2777-BBA6-4A32-8287-9F50B5829500",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "F63AFECA-1345-4C66-94D9-A3F6F45C4912",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -57962,6 +58346,12 @@
       "id": "5D0768F6-CEBF-43FB-9ECD-7F96F6D97BE0",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "57DB4BA3-C735-4B68-AEF2-A187145DE20F",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -58225,7 +58615,7 @@
       "sucursal": "Mitras",
       "id": "7A9BA721-0E22-4135-9AF1-560E5E105291",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -58248,12 +58638,6 @@
     {
       "sucursal": "Mitras",
       "id": "F0165B65-24E3-465E-9641-08DF1C3DB762",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "5D920E82-45AC-4CD5-BD92-1E5B75DAF385",
       "ant": "Bloqueado operaciones",
       "act": "Verificado operaciones"
     },
@@ -58339,7 +58723,7 @@
       "sucursal": "Mitras",
       "id": "61F5B1F3-5733-45CA-B5D2-F37A8B02B6E5",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -58370,12 +58754,6 @@
       "id": "EAEBD10E-85B5-4FA0-8B19-4650500415A2",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "FFCD83C8-AF2B-4E9D-A9B2-8D6D7BF50DB1",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -58531,7 +58909,7 @@
       "sucursal": "Mitras",
       "id": "BAC72021-A27E-47D0-AE51-02C267530FF2",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -58555,12 +58933,6 @@
       "sucursal": "Mitras",
       "id": "EE35443A-1250-432C-9B53-D79865CBC29C",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "39759FCF-2DC5-44D9-B406-3F2BE2793930",
-      "ant": "Bloqueado operaciones",
       "act": "Verificado operaciones"
     },
     {
@@ -58637,9 +59009,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "EB09AAD7-34BD-4C44-B641-E556562BDAEC",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "D05D987C-2F85-4D2B-86CE-62CB475CADD1",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "42DE716D-5ABF-4AB7-82E2-B699BA0CC893",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -58877,6 +59261,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "3DC43CB5-6509-488E-A081-ACC8AE05154E",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "321406B6-B12B-4A66-9CFD-57CDA132444D",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -59018,6 +59408,12 @@
       "id": "90166FE2-DDA9-4F49-81F1-72942DE734FA",
       "ant": "Registro express",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "F0F8A11F-4891-4B75-A818-A103ECC7458D",
+      "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -59173,12 +59569,6 @@
       "sucursal": "Mitras",
       "id": "1FADAE0A-6C9A-426A-89CC-58379972266A",
       "ant": "Registro express",
-      "act": "Registro completo"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "41224C8B-DF6B-4E4A-A6FD-62CC919CEA5C",
-      "ant": "Bloqueado operaciones",
       "act": "Verificado operaciones"
     },
     {
@@ -59264,6 +59654,12 @@
       "id": "F2DBE95E-C604-49BF-8DBC-4292D6749393",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "52FF44E9-0288-4860-863E-3A18B5A9D0A6",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -59375,6 +59771,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "EEB21E7F-C753-49EB-BFA0-2CA961F69934",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "38AF9A53-7BD6-47E6-A960-55335EC03BD3",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -59384,6 +59786,12 @@
       "id": "B967317B-BACF-4BD1-9202-5181B7EE2970",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "E6E5423D-9AEB-4887-93A1-CE47B77A28AC",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -59479,7 +59887,7 @@
       "sucursal": "Mitras",
       "id": "CC5C5DAE-E947-448C-B3B9-ABA8989CCE50",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -59503,6 +59911,12 @@
       "sucursal": "Mitras",
       "id": "07FE79C9-8C85-4F45-812B-B18D89B5756B",
       "ant": "Info actualizada PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "29378008-CE89-4001-BE60-A89429B064A5",
+      "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
     },
     {
@@ -59641,7 +60055,7 @@
       "sucursal": "Mitras",
       "id": "F05E2BE5-82B1-434E-8C15-C04CBF8677C7",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -59821,7 +60235,7 @@
       "sucursal": "Mitras",
       "id": "A0524B5A-AA8E-498B-9D30-AEC8242D89D0",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -59881,7 +60295,7 @@
       "sucursal": "Mitras",
       "id": "E31F4623-E977-4483-8F36-AD68C1CB93E3",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -60092,12 +60506,6 @@
       "id": "3700DA50-24E2-4235-86FE-B60B186A3462",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "B43C184A-47E7-4143-AB7E-D89A0EEC594D",
-      "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -60551,6 +60959,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "7A8CE945-48E2-439A-9577-538D4FEA961F",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "AB394847-C171-4F86-AE39-1CBE61BDC103",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -60584,6 +60998,12 @@
       "id": "F6980FE3-8759-4B14-AB2B-077C9325C63B",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "7D2C4475-F00C-48EF-BEBB-1D60E6E8C711",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -60649,7 +61069,7 @@
       "sucursal": "Mitras",
       "id": "2F5EFB98-AC57-49EF-B6E2-912A03DEC137",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -60733,7 +61153,7 @@
       "sucursal": "Mitras",
       "id": "80EFB9A5-BCF9-4DBB-9B65-E05A8980C8C1",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -60745,7 +61165,7 @@
       "sucursal": "Mitras",
       "id": "B8B8F480-BFA1-4230-B243-7549614DE052",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -60829,7 +61249,7 @@
       "sucursal": "Mitras",
       "id": "C90CD4E6-10A7-43C3-A905-AC46EB364C78",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -60884,6 +61304,12 @@
       "id": "E7D78F96-CDF9-4200-B7FD-1257D724B549",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "7FEDBF49-81E1-4B6C-A99D-0D4AD4F4FEA6",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -60944,6 +61370,12 @@
       "id": "EAE12118-6F3B-4703-874A-217743F1BA83",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "46D66741-DFB4-49A4-987C-EC4685B36E3B",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -61028,6 +61460,18 @@
       "id": "5C615A14-2459-4F28-8569-F25D895F5DB9",
       "ant": "Verificado PLD",
       "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "48E00441-C86A-4074-B330-46BE63DBF9F9",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "A3FA239E-4846-4598-A6B4-FA5B217E04C9",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -61175,6 +61619,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "D9E66234-27B7-402D-B81F-42AFB2CB9E0F",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "585D6A76-EE8F-4BAE-A049-EED0C1BF08DC",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -61201,7 +61651,7 @@
       "sucursal": "Mitras",
       "id": "A2674DEB-768E-4955-87A9-47FA04CEF9E3",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -61273,12 +61723,18 @@
       "sucursal": "Mitras",
       "id": "703DDF36-B855-40BB-B528-F1888473E3BA",
       "ant": "Info actualizada PLD",
-      "act": "Verificado PLD"
+      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "2D306C46-909B-4157-A227-9DFE084F40DB",
       "ant": "Info actualizada PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "31D46120-4EAA-4C83-BEC1-11656F26E488",
+      "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
     },
     {
@@ -61469,6 +61925,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "6BD92F2B-0817-416D-B23D-3A93F73B1288",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "BD24C745-6A66-45E8-956C-11EAA3BBE3BC",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -61579,7 +62041,7 @@
       "sucursal": "Mitras",
       "id": "A11787CD-9A81-4274-A76E-996B630DA10F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -61610,6 +62072,12 @@
       "id": "C339846A-0C50-4F93-A7CD-E3B9222EA5EF",
       "ant": "Registro express",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "D8E5B764-0422-452E-AD41-063D2083D0F1",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Mitras",
@@ -61669,7 +62137,7 @@
       "sucursal": "Mitras",
       "id": "41586006-E5F8-43C6-9A0D-1EB9812CB9D0",
       "ant": "Registro express",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -61705,7 +62173,7 @@
       "sucursal": "Mitras",
       "id": "47D2B7C1-D1D6-42BD-B241-C7B2D7619548",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -61736,6 +62204,12 @@
       "id": "1C486912-E4C7-4639-8CCC-83861D58E9C3",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5CC4D691-AAAB-46F7-9D59-B98DDB11EB7E",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -61859,6 +62333,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "4E7ED1FF-26A3-4143-ABFF-FEF14166ACE5",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "982D1B3D-CA57-4698-BBD5-948C045F81FE",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
@@ -61885,6 +62365,12 @@
       "sucursal": "Mitras",
       "id": "E15C5391-BD90-43EF-AE2A-BF8B8102E84E",
       "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "E1CD9FC1-E855-4AF9-9848-4F94D9D28DD5",
+      "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
     },
     {
@@ -61975,7 +62461,7 @@
       "sucursal": "Mitras",
       "id": "853C2A34-57EB-43EF-98A1-5119BBAA76D8",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -62075,6 +62561,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A0205220-8E1B-4BED-A55B-B6F41AABD5BA",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "91811694-FA93-4F3A-BF5F-759CEE2D2571",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -62095,7 +62587,7 @@
       "sucursal": "Mitras",
       "id": "E37F1F8C-E1A9-47A2-85DA-2EC1F527EA38",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -62108,6 +62600,12 @@
       "id": "AFAF7134-2587-4D5C-9D26-6BD7229A0706",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "75C29E1C-E274-4B6A-9F04-DB8A0D434B33",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -62143,7 +62641,7 @@
       "sucursal": "Mitras",
       "id": "ADD372C8-3B8B-4A67-90BF-6BC6441B0738",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -62261,6 +62759,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "0E66C6DB-87A4-4399-AD0E-7B47A1976020",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "5116ED89-9DB9-4F72-ACFE-959A374604A5",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -62270,6 +62774,12 @@
       "id": "013BC9EA-D6C7-4116-A98B-18732FE79B53",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "47DBF517-F2FF-4023-AEB7-2AAA23F91FA7",
+      "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -62304,6 +62814,12 @@
     {
       "sucursal": "Mitras",
       "id": "2CDE3EF8-F75B-43B6-95ED-6A3F79665799",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "18093013-8786-4F63-8426-B4C492C5765A",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -62435,6 +62951,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "64DB4217-B13D-4D9B-BA9B-B4F787C45185",
+      "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "752D57BC-3521-4EAC-89FE-9C096974FCD7",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -62495,6 +63017,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "189A0BD8-13FD-497C-AA84-CACAAA6D8840",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "53F8AC3B-C337-4D8C-B3A5-75A8265D3ABA",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -62532,6 +63060,12 @@
     {
       "sucursal": "Mitras",
       "id": "BDE22A21-F76F-4A2C-AC1B-4DA2955CED34",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "D6F09411-CE02-4CA5-ADFC-2D7E6D857715",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -62659,7 +63193,7 @@
       "sucursal": "Mitras",
       "id": "05EBF710-337D-4CED-9761-A958CD62ED2A",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -62696,6 +63230,12 @@
       "id": "110C559C-059F-4E9C-9005-F033BE624692",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2C561FB6-5CB9-4CD5-A850-CB0E31776FCF",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -62743,7 +63283,7 @@
       "sucursal": "Mitras",
       "id": "8F2480D2-6413-4C07-BBAA-048D55D0810B",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -62760,6 +63300,12 @@
     {
       "sucursal": "Mitras",
       "id": "0ADF8E98-FCF1-4E34-AE43-B8C336EC145C",
+      "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "1A9D835A-7D88-4A1C-8A61-3977A5B3DDBE",
       "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
     },
@@ -62897,9 +63443,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "6C4AC741-ACC5-4D9F-A16A-D38FF66C886C",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "40148E4F-ABED-4EA0-BFD4-6D0DE58E3DBB",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "7052F2D4-A4BB-47B7-BB59-241B01B2BB6E",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -62953,7 +63511,7 @@
       "sucursal": "Mitras",
       "id": "CC5C7F23-7E5F-4521-B849-E9247ABCF18D",
       "ant": "Registro express",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -63065,9 +63623,27 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "8A3918D4-F91A-4B53-BC39-19A4EDB8AB5A",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "3545490F-D137-4DB6-99E1-1E219414DEE9",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "DF804768-EF56-4D8E-821A-0F6DD805A208",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "3E362183-6556-48E4-B20B-087156D93C16",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Mitras",
@@ -63103,13 +63679,13 @@
       "sucursal": "Mitras",
       "id": "9807B2FC-AFAD-41AB-9F17-5A2E67B2D5F3",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "21E0C2AB-9E1C-4FA1-B1FE-CAE121A330B4",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -63167,6 +63743,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "D7A51AC5-B698-4BBE-90A5-24802B3D7833",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "A791E7F7-84DC-41DA-B5E4-12B26122096F",
       "ant": "Registro completo",
       "act": "Verificado operaciones"
@@ -63204,6 +63786,12 @@
     {
       "sucursal": "Mitras",
       "id": "507CCB93-0EBB-41E2-BCED-B32242241438",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "3EF4D27D-069F-4B73-91AA-FCC52BDE0CB1",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -63290,12 +63878,6 @@
       "id": "F312D58B-FF13-4D33-807A-9343FD359A11",
       "ant": "Bloqueado PLD",
       "act": "Info actualizada PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "E85E28C8-32BD-4B91-909B-A3745459A55B",
-      "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
     },
     {
       "sucursal": "Mitras",
@@ -63419,6 +64001,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "45B85B68-E93D-4024-9881-3DBD0EBC21BA",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "A3ABFBF2-34A1-4A97-A96A-E4C2F9FB0947",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -63494,6 +64082,12 @@
       "id": "3E110333-3784-4949-BBB6-2D8D5E5D3D00",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "1C8AEE50-354B-40C7-BAA2-2E28833FD0F9",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -63638,6 +64232,12 @@
       "id": "9C98ACA8-2DC1-4E6A-A07C-A6BF04DBD023",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C1403256-4C02-4DBD-A7EB-4FCD8A9959F7",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -63827,12 +64427,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "51F52093-641D-47D8-9282-CED94CA64A05",
-      "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "35F81F51-C5F8-4822-819E-F39104476539",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -63956,6 +64550,18 @@
       "id": "BFC6CB9F-8B26-4B10-8F57-319506F7BD65",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "11C8BAEA-03F9-4544-9BBC-F480526E216B",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C34DFE92-C65C-46DF-B49A-34917796BEFF",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Mitras",
@@ -64097,12 +64703,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "D295D310-9BB0-478F-83CA-A9AFF44FF866",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "75DA465A-D5C4-4BA3-9665-E8DC742C2A66",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -64129,7 +64729,7 @@
       "sucursal": "Mitras",
       "id": "93E10C88-A9B1-4494-A527-D174F6E0563E",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -64274,6 +64874,12 @@
       "id": "26BFCBC3-1448-4F72-8B70-3AE4D603F96E",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5F93C06B-EC4D-4017-8650-D9658C323AAF",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -64477,7 +65083,7 @@
       "sucursal": "Mitras",
       "id": "D541DA50-4BC6-462C-A742-BF504AC28377",
       "ant": "Registro express",
-      "act": "Bloqueado PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -64526,6 +65132,12 @@
       "id": "67A6D795-79C3-4A0B-97CA-79CC10FA738D",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "A7486DB7-56CC-4999-9364-63C4CB59E9AA",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -64637,12 +65249,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "8AD764A3-7391-49FA-B26F-A88A00CE7296",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "BCFAEB3A-FE6B-46E9-9533-428F4F688360",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -64751,6 +65357,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "EFA1C2C7-BCBF-4C0F-A552-D6614E6B87AE",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "786A769A-42BD-4C4A-BEAF-F230B069C494",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -64765,7 +65377,7 @@
       "sucursal": "Mitras",
       "id": "460A46A9-BFC2-4432-97AC-8B25CA34CD05",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -64873,7 +65485,7 @@
       "sucursal": "Mitras",
       "id": "A5F6FDC1-CDF9-4F53-A300-6A3752076E69",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -64940,6 +65552,12 @@
       "id": "1AAF315C-0BC4-4860-BC72-4B274904BBEE",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "121FCF65-C943-4418-828B-8D807777ADB0",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -65419,7 +66037,7 @@
       "sucursal": "Mitras",
       "id": "7487537C-BC7B-4C04-93B2-B94CAC07F574",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -65555,6 +66173,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "C44D48E3-FCF4-4DF8-A62B-43DE7B610B61",
+      "ant": "Registro express",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "89414A93-CDCD-4917-B8CF-44934397142D",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -65570,6 +66194,12 @@
       "id": "CD3A3772-0E15-4886-B1DE-F139F2D2A491",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "038FF468-8645-494E-8925-54B36DEE268F",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -65659,7 +66289,7 @@
       "sucursal": "Mitras",
       "id": "AB7BFAB5-86FD-434D-89F9-7263EE04FDA7",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -65867,6 +66497,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "39439EF5-F4FF-4DC8-B4BD-46FFDAE1B27D",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "CB2673EC-4A8C-4211-AD1F-B5EEA27C863F",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -65984,6 +66620,12 @@
       "id": "344AE0BD-6829-4A3D-AE06-DC1183164801",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "1797980C-AEF6-4D84-B7D0-F7137D2EDCE3",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -66185,6 +66827,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "09FC778B-DAF5-499A-BCB0-088AAB61FBDD",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "86EC7485-1D38-470C-B3AA-D30A68F71408",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -66308,6 +66956,12 @@
       "id": "8257B5F1-9381-4655-877A-B94F190E823E",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "0BA58B67-4EF9-48ED-85F0-CCF19C40FC3F",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -66487,7 +67141,7 @@
       "sucursal": "Mitras",
       "id": "6EFF32F0-9EFF-4AD5-96C2-3EDFC21C35C9",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -66667,7 +67321,7 @@
       "sucursal": "Mitras",
       "id": "49AAECA8-385F-45CF-A871-D5B23A9DB79F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -66780,6 +67434,12 @@
     {
       "sucursal": "Mitras",
       "id": "EEA83DF8-CFC3-4A21-9EEE-EE69556371FB",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "226316AA-635D-4038-B51A-A14401072F2A",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -67463,6 +68123,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A185DC7B-F0E2-4EFE-BBB0-694B5CA95123",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "F3B2D609-6BD0-4B21-A10A-83F2C09AA1E4",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -67583,12 +68249,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "4D495FA3-3896-4ABF-9F11-2A7B5C7F706D",
-      "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "2B87FD2C-25DE-44D0-81E2-C12CF17411DF",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -67615,7 +68275,7 @@
       "sucursal": "Mitras",
       "id": "FCA61D2F-6B9B-4AC2-BB9F-2CA6E4FDF7E9",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -67717,7 +68377,7 @@
       "sucursal": "Mitras",
       "id": "D9CC3D70-D83F-4412-876E-62300EC1DD6B",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -67813,7 +68473,7 @@
       "sucursal": "Mitras",
       "id": "021EBC16-AE28-41E0-8BD3-A8BD69D28789",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -67952,12 +68612,6 @@
       "id": "D9C54EBE-C1F2-4490-8437-3CDE24D2647D",
       "ant": "Bloqueado PLD",
       "act": "Info actualizada PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "F7806026-F539-472F-B331-AB67380CBDFE",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -68147,6 +68801,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "5F1CF0E6-0DB3-4E67-8AD9-DFD88A5045EF",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "09EADA72-71FD-4BF1-92DB-2B63E74449CC",
       "ant": "Por validar PLD",
       "act": "Info actualizada PLD"
@@ -68249,6 +68909,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "8D1CDA81-9B7C-4A83-B522-D339D5440FBF",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "8E52B724-6851-4B78-A480-27C048C4ECFA",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -68335,7 +69001,7 @@
       "sucursal": "Mitras",
       "id": "EBBBE4C4-429C-4DFA-92A8-B0AB8D2C459F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -68441,12 +69107,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "6DCD7A6D-BEB9-4493-90B6-2CA91EB9DF00",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "97F83347-6B01-4F21-AE87-835AB7722B4F",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -68461,7 +69121,7 @@
       "sucursal": "Mitras",
       "id": "B5774411-08F3-48AA-AE50-9E3A77DE7F46",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -68873,6 +69533,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "E2358F49-F02B-4094-A7EF-ECBEA2BA7728",
+      "ant": "Por validar PLD",
+      "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "9224207B-508D-40AF-9C2F-7C51402DE42C",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -69139,7 +69805,7 @@
       "sucursal": "Mitras",
       "id": "4D7E0CBC-BB8F-4C56-84B6-F1DAD8AE08CB",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -69301,7 +69967,7 @@
       "sucursal": "Mitras",
       "id": "DC219133-8865-42B2-BE30-5936A8DF7B1F",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -69320,12 +69986,6 @@
       "id": "42967B44-E644-4B11-93BD-B85E1323D05A",
       "ant": "Registro express",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "642D41DA-04DB-4962-81C0-6482D9A67FA7",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -69407,6 +70067,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "786774C5-135B-4476-B3E1-0D142BD591BA",
+      "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "74917440-4008-4557-BEB2-E6F789186FE5",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -69419,9 +70085,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "F5C0543E-8A90-4C29-A252-DA903930562D",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "6C8328AC-7BA0-4A25-8835-CA18124F67C7",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9570E47D-E8CB-450D-BFDB-16E6665F6715",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -69494,6 +70172,12 @@
       "id": "8FFFC698-BF6E-4C3A-B4ED-DB3D308171C0",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "CA69131C-1AF7-4318-92AD-8F580135C0ED",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -69583,7 +70267,7 @@
       "sucursal": "Mitras",
       "id": "10B3C2D0-6C1C-42FF-BD31-4A11CB0DE196",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -69721,7 +70405,7 @@
       "sucursal": "Mitras",
       "id": "64018FCD-9769-4F00-B496-A796803B9E71",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -69859,7 +70543,7 @@
       "sucursal": "Mitras",
       "id": "397D2498-1C81-4658-B6D6-E8B618F3B69B",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -69895,7 +70579,7 @@
       "sucursal": "Mitras",
       "id": "EB6A33E8-7A6B-4534-BE02-D77A6B030AE0",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -70631,12 +71315,6 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "EA3FE344-7D72-4F27-BCD7-EBE551586C4B",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Mitras",
       "id": "EC0EBD2A-D485-4CFA-915F-4BC97315A5A3",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -70658,6 +71336,12 @@
       "id": "14850FCB-391F-42B2-96EB-0A3BAD207F32",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "79DA561F-9FF5-4A08-B19F-265DF5A3C36A",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -70889,6 +71573,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "426367A1-AE6A-44D4-BBA1-6044BA4E0756",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "1DA52457-7C7F-48B5-BB00-9B07EE7ECBE6",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -70922,6 +71612,12 @@
       "id": "270B385C-4144-44CC-A39C-44D9AF402191",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "4BE68371-DA22-45B9-A340-17401C2D1A23",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -71377,7 +72073,7 @@
       "sucursal": "Mitras",
       "id": "0A4E1F5B-FF7D-41C7-9C5C-266C6E0FF206",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -71969,6 +72665,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "FEB0A4DF-9C52-4BFF-9381-D4049D5B8BC8",
+      "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "FD37117D-9BFC-46F0-843F-82B03E160F53",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -72098,12 +72800,6 @@
       "id": "3B25EBA6-5F68-47CA-B194-44A9A594B5C0",
       "ant": "Registro express",
       "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "36C417AC-A14B-4AFF-9581-9F680530C0DF",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -72455,6 +73151,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A627E340-FFBB-4C7C-9293-502C17972990",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "775FB888-4B77-4209-94B0-4E09CBF61E75",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -72482,6 +73184,12 @@
       "id": "E764EB95-3EA3-431E-A913-221E5E9ED217",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "A1683503-3F7D-4CF1-B5F6-4000143F0A57",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -72530,6 +73238,12 @@
       "id": "77297F52-C9D9-4FCA-BAEE-807292E2AD11",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "95BD35CB-450D-42FF-9C6C-5AECDB8AEAF7",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -72727,7 +73441,7 @@
       "sucursal": "Mitras",
       "id": "D4EDFEB8-BB48-44D3-800D-DD29CE93565E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -72926,6 +73640,12 @@
       "id": "03FF1902-84B8-4E91-8DFA-2EFF78A2848F",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "939618C3-A899-4B55-8E9E-5BE7517BA51C",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -73244,12 +73964,6 @@
       "id": "A6269AAE-7B4B-4F55-901F-0F7B829F8C35",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "50BAB534-4052-4E62-A75D-88DBBD8A702B",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -73681,7 +74395,7 @@
       "sucursal": "Mitras",
       "id": "1D2E3980-5AC0-4580-BFEB-1CF5A3809ED0",
       "ant": "Info actualizada operaciones",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -74501,6 +75215,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "8FF592DF-1780-489B-A9A4-F954BF3D7AD7",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "26DF19BC-4E39-4174-ADA6-B5F688A4C8F4",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -74567,6 +75287,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "BECE7DDF-9369-455C-A0C9-E2B1247B6E4C",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "B49B0766-BFA6-4A4F-BAEF-31A6F91B8F09",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -74593,7 +75319,13 @@
       "sucursal": "Mitras",
       "id": "3903529A-BA64-4256-8173-976F7CD56629",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "A7078F56-F3E5-4D45-93AA-311D195B5701",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -74621,6 +75353,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "17AC0034-2229-497C-9772-F304422C6676",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "2FEF04F6-0D13-4986-81B8-324C676D096F",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -74628,6 +75366,12 @@
     {
       "sucursal": "Mitras",
       "id": "223EB7C1-A165-477B-B291-813E69790350",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "1078CF19-8F0E-4B4A-B2D3-FF6B7DAD4D08",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -74822,6 +75566,12 @@
       "id": "8B667E3B-E938-43EF-A90B-8C64621655F1",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "BA9F9B7E-E9C9-45C0-A7B2-1AD26BB83488",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -75145,7 +75895,7 @@
       "sucursal": "Mitras",
       "id": "1FFE6B2A-F5EE-4235-8C29-145FB4488EEF",
       "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -75271,7 +76021,7 @@
       "sucursal": "Mitras",
       "id": "0B07DD89-3B42-408C-A773-180BBEB7DC67",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -75301,12 +76051,18 @@
       "sucursal": "Mitras",
       "id": "C8131CC0-ACE3-44ED-91A7-737D87EE43F8",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "63FD68D1-0FBF-4D9D-BAA0-2F7CD3EC583F",
       "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "4B18BA48-A076-4C6C-980E-030485CB51D1",
+      "ant": "Bloqueado PLD",
       "act": "Verificado PLD"
     },
     {
@@ -75439,7 +76195,7 @@
       "sucursal": "Mitras",
       "id": "22EA9AB7-026C-47BA-901D-218FA454AD3F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -75649,7 +76405,7 @@
       "sucursal": "Mitras",
       "id": "423E8466-4945-4358-8D69-CA5B23BDBA08",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -75823,7 +76579,7 @@
       "sucursal": "Mitras",
       "id": "79EB018B-1226-42A9-8EAF-A16CEEC63BE4",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -75895,7 +76651,7 @@
       "sucursal": "Mitras",
       "id": "34A47CF1-77E9-4EC3-9D98-A4FB098CEA44",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -75947,6 +76703,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "2F2AF303-8905-4A15-B4E7-FB7EC102C751",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "8D244785-C6E5-4524-B38D-1EA3A72FE5FF",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -75973,7 +76735,13 @@
       "sucursal": "Mitras",
       "id": "05D4B7BE-642B-4022-907D-8C399CA81EC7",
       "ant": "Registro express",
-      "act": "Bloqueado PLD"
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "0AA3A87C-78E6-4A4B-A06E-3EECB7148F20",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -75986,6 +76754,12 @@
       "id": "91913252-A311-4718-A279-271D3666E965",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "1BED4A94-903A-43A0-879C-FA14E35FA196",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -76019,13 +76793,19 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "689669BA-015B-4A11-8980-F2B73D7C1161",
+      "id": "9392B564-CBF0-4811-A05D-26306C43FB60",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "2B9FDBAA-43F6-431C-BA48-33B924FB233E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "30D6F602-A10F-4CB1-912C-5791D5B4C6AE",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -76039,7 +76819,7 @@
       "sucursal": "Mitras",
       "id": "233B01CC-A780-4EEF-9E68-6A562BF553F6",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -76121,6 +76901,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "317601F3-D95C-4DDB-A92B-35E094C9DC29",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "8EF16522-F01A-4763-B9DF-B9A35913D6A6",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -76171,7 +76957,7 @@
       "sucursal": "Mitras",
       "id": "615A6D4C-96A3-4E5F-ADB7-53282440AA3A",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -76202,6 +76988,12 @@
       "id": "780E10A0-69E5-4CB7-AE87-6F80F1FD8D69",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "8E5E3B05-7581-40CD-BB79-E01D4B0AE4BB",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -76363,7 +77155,7 @@
       "sucursal": "Mitras",
       "id": "4A0B20D4-3BD5-47B6-BC8F-2DAA706A8C66",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -76393,7 +77185,7 @@
       "sucursal": "Mitras",
       "id": "CDA5E999-EAF5-4C01-8214-2F75664EC9CE",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -76561,7 +77353,7 @@
       "sucursal": "Mitras",
       "id": "D3A69FB7-4835-49FD-9705-734E32F45CF1",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -76698,6 +77490,12 @@
     {
       "sucursal": "Mitras",
       "id": "E36F5609-83CC-4926-9516-16A6CB4491F7",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2050BEA4-1E13-47A0-8CAF-FC550EB36A31",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -76847,6 +77645,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "16582E52-A714-4384-9B56-5B7F6728459B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "249BCF64-A3AE-400D-992F-CFC7C93C25CE",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "C1670D08-66AB-4403-A503-E2A7B8B44FC1",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
@@ -76889,6 +77699,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "00F03830-F758-4801-9235-A6294F0347E9",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "F87346D0-E0F6-4487-BEC4-423194E322CB",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "BED2049A-60C9-4B97-ACB1-0620600DBB90",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -76897,7 +77719,7 @@
       "sucursal": "Mitras",
       "id": "1D4E30AA-656C-4DDF-AC92-6F76981718BA",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -76908,6 +77730,12 @@
     {
       "sucursal": "Mitras",
       "id": "8510E68C-4E4A-4942-A614-60F3B310F978",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "B5B4F1FF-DEB6-49B7-A269-B721F67D0F7F",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -76938,6 +77766,12 @@
     {
       "sucursal": "Mitras",
       "id": "E6934EDA-56D7-450E-8A1E-1CC860388D5E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "FBAFAB5D-73D5-474E-A685-E264B03B3293",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -76975,7 +77809,7 @@
       "sucursal": "Mitras",
       "id": "D56A3967-5A40-480D-94A7-223D3D706756",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -76986,6 +77820,18 @@
     {
       "sucursal": "Mitras",
       "id": "6AC87086-659D-4A65-BF99-F89FE4D2600C",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "6F47D649-DFFB-4D16-9CCE-DFB9F11EB8BF",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "EF119963-0438-496B-9664-E03C3ED9AEE1",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77015,9 +77861,39 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "06E44081-A6BD-407D-B30D-6A8A24191C23",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5DAB2451-7E9C-4913-8251-CC5E328EB461",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "338D6EAB-DDFF-4610-AE3F-023688E3826B",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C8CD5CE6-3717-480F-96C0-659E87FAC5F4",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "273DA167-89D3-452B-AFED-818EC8AB63D3",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "FDA16503-3622-4ABC-BEDB-78572CBFE137",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77035,7 +77911,7 @@
       "sucursal": "Mitras",
       "id": "36E470FE-4296-4C72-BF05-0CECE8387752",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77089,7 +77965,19 @@
       "sucursal": "Mitras",
       "id": "E65A7FA9-E3D2-4B87-A2F7-7B1BEC958D52",
       "ant": "Info actualizada operaciones",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "71F35B27-1AA7-4C24-A315-FBBECB51C492",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "0ED9CC98-AC94-4A07-A4D6-EF7C97949C31",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77105,7 +77993,31 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "04FBF191-C63B-42B5-A53E-49F6D7AAD12E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "19EAD92A-4D80-4BBF-942C-AA717598F000",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "3E27E4B0-457E-4AAC-B55C-DAFB915704A6",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "41B4AB7E-555C-4A2E-BED8-6254B93014F8",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "4D75453D-E80F-4B42-B877-3C60D3DBABBD",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77141,6 +78053,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "F8BB20E6-87B2-474C-9A6A-9AC48E08A955",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "0E7FB5BD-3635-4F60-A5A2-E01E0A9C7329",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
@@ -77155,7 +78073,7 @@
       "sucursal": "Mitras",
       "id": "9F0C0360-032E-47BC-8976-C7CEE9019BC5",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77191,7 +78109,13 @@
       "sucursal": "Mitras",
       "id": "E2E9515A-E8D7-4F32-A24D-5C960D9DAE47",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "19A43EDD-1F79-4964-9CC1-53E20EA60BCD",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77233,7 +78157,7 @@
       "sucursal": "Mitras",
       "id": "40155384-9225-4D3A-88A5-D6AE3A3FE54F",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77269,7 +78193,7 @@
       "sucursal": "Mitras",
       "id": "C58EE2E8-2DEB-42D3-AA14-B33926315004",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77309,6 +78233,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "BBB2D132-9210-4B21-BA7E-69DCCE8255AA",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "9AAE82A5-923B-430C-9D89-9F1EEB61F125",
       "ant": "Info actualizada PLD",
       "act": "Bloqueado PLD"
@@ -77328,6 +78258,18 @@
     {
       "sucursal": "Mitras",
       "id": "05611953-604E-4170-860B-00BDED80B668",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "53E2B571-273A-4049-A650-19625E769526",
+      "ant": "Por validar PLD",
+      "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "CC192DF5-4C30-419B-8CBF-F9B3574C377C",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77393,9 +78335,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "E4750539-514A-482E-A8B9-438601E6A99C",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "5F889DCB-DB36-492F-A8BC-8631EDE119E1",
       "ant": "Por validar PLD",
       "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "DF8DCF30-F5F7-4294-9FCD-923285F95DD4",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77431,7 +78385,7 @@
       "sucursal": "Mitras",
       "id": "BAB69D71-9221-4B4C-A38C-959AB0DE47A9",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77456,6 +78410,12 @@
       "id": "B37C9638-0259-4DA3-86D5-CCD03194CD61",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "986D80BD-EC8B-48F8-B47A-744F396C7756",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77491,11 +78451,17 @@
       "sucursal": "Mitras",
       "id": "1221DC74-C852-4D2B-B7ED-5383B1442449",
       "ant": "Info actualizada operaciones",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "0AAD7849-559F-4BF4-AF04-1E65FF601EC2",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "D51FF31B-5BC7-4ABA-A6B7-979B0AA6FDA4",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77531,7 +78497,19 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "DD09A34C-DD99-4AC2-8646-7ECE98896DDC",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "17944761-C93A-4016-B455-EEFA8B5F8DFA",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "8667335C-BE64-4E66-8006-EF42E3E9CD32",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77546,6 +78524,18 @@
       "id": "14CFC469-2C7E-4352-989D-2F44BC5AA366",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "B3282205-A297-4B43-9296-AF67EADAF479",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "0DFC8C92-E279-42F6-8658-FBE416D6CA78",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77576,6 +78566,12 @@
       "id": "A53FB04F-5357-4D0D-9394-596F0A09B43B",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9F86EE7C-1912-4924-9082-49C8B3486E58",
+      "ant": "Por validar PLD",
+      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77615,6 +78611,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "6F683C0B-CB91-4075-B737-9ED4251B5ED2",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "5A877E61-FEDA-48BF-9211-946315C50A1E",
       "ant": "Registro express",
       "act": "Verificado operaciones"
@@ -77622,6 +78624,12 @@
     {
       "sucursal": "Mitras",
       "id": "3C9F13DE-F1FC-47D2-AC7A-18F83683A7A6",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "8B18FF0C-8463-4513-8DA1-FA34B1AD9C19",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77657,15 +78665,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "51422010-561E-4A56-B01E-51EDE456F7E9",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "512BFB86-4F11-4843-8884-819615840918",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "591C7FE0-8DB0-4A3B-816D-E7693617DC0F",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77735,6 +78749,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "13824B41-004E-4B7D-9DFD-A128EBD69A49",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "AE2D3782-6E43-4B6D-A68D-DA9CCF30DB80",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -77744,6 +78764,12 @@
       "id": "7CA69D36-1437-4353-8328-C24DF56ABD34",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "DF87B47D-263A-4DA5-84D5-00048BBE1B20",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -77759,6 +78785,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "F9B37D06-E5F8-43AB-8CA5-3C20EFBCD693",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "12BC4AF3-FDF9-4079-80C8-042A0FA83EF8",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -77767,7 +78799,13 @@
       "sucursal": "Mitras",
       "id": "24098646-5A26-4EB8-8504-489CD03A1A22",
       "ant": "Bloqueado operaciones",
-      "act": "Por validar PLD"
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C368ED06-98EC-445C-A873-0ED762968D1C",
+      "ant": "Por validar PLD",
+      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77783,7 +78821,25 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "820CB957-8259-4A07-91DC-F87B7A9DBA9F",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5B65EF80-00D7-43A0-9DD0-325420C001CC",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "0A329792-A750-4B6D-AFD8-491020056B9B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "577F7920-E2D1-4944-A02F-4BD1C13AD687",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77792,6 +78848,18 @@
       "id": "E5D32EE7-67D8-41AD-A801-538EBFF38D16",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "19B3786A-07F6-4324-8F97-A6F066B31F5E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "8B16EA5F-1418-4F41-AA57-FABB2E8443A9",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77807,9 +78875,15 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "AB85FE74-84DB-43DA-ACFF-B745278D1C86",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "69A546C0-EDB1-4EFC-A360-37AA80AE1BCF",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77819,9 +78893,27 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "7A9C1BCD-68CA-41F2-A938-DA0D10184BAD",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "09DAB08E-B5EE-4A85-BAA6-7CC379D8A227",
       "ant": "Registro express",
       "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "364C5247-A1A5-4BBE-9856-D64B96639C5B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5E8F615F-96DF-4AF7-AF9C-F0227F631772",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77851,7 +78943,13 @@
       "sucursal": "Mitras",
       "id": "A1CA596F-B78F-43E9-B95C-0020934314F6",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "27033B53-E8B7-43FA-812D-3BBFA98B60EB",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77875,7 +78973,7 @@
       "sucursal": "Mitras",
       "id": "53B9CABA-1D9C-477D-8D05-82325DECA6EE",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77921,6 +79019,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "2D0E9661-E298-49AF-A2F8-C959742FDD5C",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "754AE628-F1F5-4C47-BB0E-9DB038C05DB4",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -77959,7 +79063,31 @@
       "sucursal": "Mitras",
       "id": "036DC2DC-027E-405B-B350-417C2F10F538",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "FF5511B3-D1B4-403B-8CC9-520E02720294",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "0D7C0E93-116A-4A56-99E3-142439D0EBF8",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "20263A40-8F8F-403C-A936-A05D54E04E30",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "39B457C5-D360-41B0-A643-FD238ADD4213",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -77970,6 +79098,12 @@
     {
       "sucursal": "Mitras",
       "id": "8648C3F3-1989-4F7E-BF42-3021C3F0239A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "4A0B8A58-EC5D-4B23-BDE6-87D4A8563B67",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -77994,6 +79128,18 @@
     {
       "sucursal": "Mitras",
       "id": "0F040BF2-BCB2-46A8-A0E6-98BBC98CC30F",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C792D84C-106E-4199-A1F9-FA69D27CB8E0",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "AFC397A2-42AA-441B-8A18-7363800477A9",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78029,9 +79175,15 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "344AA298-ABA4-438B-85F5-F2330D56A2B5",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "E8455E0D-2852-42F9-9476-70B8014BB63D",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78047,9 +79199,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "B6F78B5C-C97E-4BA0-AD58-B99FB70FE650",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "F4703C46-C87F-4A67-912D-8AC36EBA919A",
       "ant": "Info actualizada operaciones",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "540FCE6B-69A3-4B29-BA5A-80F44DDCEE4F",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78113,6 +79277,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "5B5CEAEF-CBAC-4666-8804-D65FA888547A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "400D9920-D5E3-4EB0-9D91-6F95BC4B5E3C",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78126,6 +79296,12 @@
     {
       "sucursal": "Mitras",
       "id": "8CA97FA2-A814-4603-9DFC-3738CF544C40",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "94258823-D827-4BCB-9702-C3753902BDE0",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78174,6 +79350,12 @@
     {
       "sucursal": "Mitras",
       "id": "CF0A4AE0-6520-47FB-A4DB-9798A763F564",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "508FE0E9-CDBC-45A3-A135-AEEB641195E0",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78263,6 +79445,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "B762D9AE-81D4-4312-A27A-6FBB410F80B0",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "BB150066-F54F-48FE-B47C-18FF0176CABB",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78287,6 +79475,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "392A0348-4001-4719-9C8D-19F8ADB05E32",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2EB77879-6D76-456E-915F-609704DEF8F0",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "CDE1BF4F-FD6E-491D-B668-75DE444D4905",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78300,6 +79500,12 @@
     {
       "sucursal": "Mitras",
       "id": "B1B39B38-7E5F-4042-81D6-83BF8D6497B2",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C8BA386E-C286-48CF-8383-196FDE4327C5",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78323,6 +79529,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "E03AD0A5-BCA5-45DC-B13E-5EEDE4CA3FE2",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "FB45DC6D-8017-4047-AF5C-84CB684E7714",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "0FF2833F-A64D-4D20-88F2-E34BD16AA60A",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78341,15 +79559,27 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "B26281D7-8B15-4EA5-A467-F2C61834E910",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "6ECC036A-5C5B-445E-9C59-4FE346A18E5F",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "9CEA7D1F-E3E4-46F8-837D-0324BD69A807",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "E4F739BC-0A6A-40E9-8F70-0137FEB97B43",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78373,7 +79603,7 @@
       "sucursal": "Mitras",
       "id": "D483E275-93B8-4BCC-95D1-25420B58F292",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78395,6 +79625,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "9DE060E2-EC59-4C90-B2CB-3DD59C10D4A1",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "F47D6E00-A0BD-434B-9AFD-ACC2E254FE02",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78408,6 +79644,24 @@
     {
       "sucursal": "Mitras",
       "id": "B099C014-059F-4C8D-813A-30AF5A9F782E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "630179D2-E83F-4C79-BEE2-CE86C55CE00B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "FEFEF0C2-288D-4881-97C9-3339E220712D",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "B592A124-206F-460E-9F9E-05A628FEB7EF",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78443,7 +79697,43 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "783EB8D7-674B-470D-B0BD-9AAB46E71B20",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "CADFD144-7457-4378-ADF1-183E399F4187",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9CE24A23-2A7D-416D-A382-168AE9ED409B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "C5E22BB1-9222-444A-A376-E0A7ECFDC37E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "8257CF17-9202-4D0F-957F-E77BCF905348",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9EE26DDD-8834-4E31-BC61-06B581032A1A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9953F72D-50C7-449A-8353-6DF08603AEC5",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78451,7 +79741,7 @@
       "sucursal": "Mitras",
       "id": "7B50EB7B-B1CE-4F91-9FD7-07BE41853FEB",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78470,6 +79760,18 @@
       "id": "8556701B-69D4-4B3E-9490-38C1608B3025",
       "ant": "Bloqueado operaciones",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "53BB388E-DDF7-4794-BA01-488A76435820",
+      "ant": "Por validar PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "C2FF57D2-4F78-429B-A252-171C8E62F1FC",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78515,6 +79817,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "D8413166-A0E8-4233-A099-C0F7B275B980",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "07175A9F-0393-448D-AB8E-3EE16BB3489B",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78539,6 +79847,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "F740F9B1-6598-492B-9E89-25D41031D228",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "2B9834C2-BC04-4692-8C5A-1FE6D8A34DB7",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -78559,7 +79873,7 @@
       "sucursal": "Mitras",
       "id": "CF689B37-B959-458C-A2A8-11F897918765",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78571,12 +79885,18 @@
       "sucursal": "Mitras",
       "id": "06725529-0581-4CFF-8AF2-8204531B55C4",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
       "id": "F9FE881A-8727-4DF2-BE06-790E5DF82EF9",
       "ant": "Verificado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "73A7AEF8-AB5B-4972-B55E-63DE53321C3A",
+      "ant": "Por validar PLD",
       "act": "Info actualizada PLD"
     },
     {
@@ -78607,7 +79927,7 @@
       "sucursal": "Mitras",
       "id": "3F4E054D-59EE-4037-9FAA-66820EABEC24",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78618,6 +79938,12 @@
     {
       "sucursal": "Mitras",
       "id": "7A704BE4-E9F9-4EDA-B139-632B7B20ABEC",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "304DE4FD-6403-4E4C-8568-5D5E978CC26C",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78685,7 +80011,7 @@
       "sucursal": "Mitras",
       "id": "3DB35891-4742-47AB-A725-D600C9519C7D",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78695,7 +80021,19 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "84D9EE63-D74B-4C6D-8233-B8AE1427F11A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "A80D56D3-F86B-4019-8343-2301A420CDD3",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "ECCCA50A-A096-42D6-AEBA-FFFE446E23BF",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78707,6 +80045,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "269934FA-D18E-4700-8AB4-F9167D2839E6",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "6D64242E-B568-499B-9F5A-E56C51BA3A93",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -78715,13 +80059,7 @@
       "sucursal": "Mitras",
       "id": "1D0C93D6-A20E-47CF-ABD1-0CFCF69D2A42",
       "ant": "Verificado PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "1D4C7362-4C11-4D90-B716-7840C909B2C8",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78755,6 +80093,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "912B6820-037B-48B4-BB84-4BAEF5CABF70",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "070C663F-5541-480D-AA7A-8A37A0F3B688",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "8DC51132-BE6B-4767-BA5D-24424293FBC6",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -78767,15 +80117,27 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "0EBA0862-7BAD-45D2-9512-40F52D85278A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "29B82048-B451-4464-8832-623DBB138364",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "FD3ECDCB-FC87-46F5-A603-C96B4CD009F5",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "6A10A418-9D45-43E4-B406-5EA74E2EF93B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78803,6 +80165,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "FAD1183E-9789-4F1F-A913-D991E1D20A63",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "B26B079B-3D78-4EAF-9A3B-843F36A0FD16",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -78810,6 +80178,12 @@
     {
       "sucursal": "Mitras",
       "id": "7A8B0B4F-4E1A-47A1-B940-6711EE60D340",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9A8388F1-216F-416F-9ABF-A01B878F0731",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78869,7 +80243,19 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "672503EE-615D-40E8-B287-0C01DE015C2A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "3FD771E3-BA5A-4C5B-93D9-B1CCA2DFA549",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2E66AC3C-8763-4537-B2E6-51E2CCB78108",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -78935,9 +80321,9 @@
     },
     {
       "sucursal": "Mitras",
-      "id": "E6B4E69E-0C59-4ED3-88B4-CD9A05A32B64",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
+      "id": "C479CA7B-FFD2-4C68-B75A-3F68C71EDAFA",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -78961,13 +80347,25 @@
       "sucursal": "Mitras",
       "id": "C5E0FC3E-45A6-4E18-911B-2A1E130BFA36",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "7BAD9DE2-8E2A-46E0-9D9F-3FC4905B84C8",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
       "id": "A28EAA4D-FDCA-4F5D-AA75-9F0B1A978DAC",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "2F735C69-C33C-4A02-ADD1-6CAF6F30BE5F",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Mitras",
@@ -78984,6 +80382,12 @@
     {
       "sucursal": "Mitras",
       "id": "116456E6-F9BE-437B-B9B5-BCCA5739D908",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5A0FF4C5-E960-4005-9530-D7DB8BCADD3F",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -79013,6 +80417,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "2110956B-A2F3-40AC-8E57-2A779AE87431",
+      "ant": "Por validar PLD",
+      "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "E0BC4B25-271D-466B-8721-83916E4B51C5",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -79025,6 +80435,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "633687C2-BC7C-4611-9AC1-D8F4BDE5C3C6",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "D47D9733-D4A3-4695-9FD5-BEEAE022DE2E",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -79034,6 +80450,12 @@
       "id": "8C08E1E0-CFC7-4552-AC4F-A5BEC515778D",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "88400071-DA60-4A46-BDAF-50812A421BB5",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79073,6 +80495,18 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "C904B3D0-CD2D-4F46-9C9E-BE949700367E",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "83FDBD0A-EF52-4B58-A86D-554B497FBEF6",
+      "ant": "Por validar PLD",
+      "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "62DE4FBA-5BEA-4983-A819-CFCF8F6B6740",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -79091,9 +80525,27 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "59D15FC6-8564-45AE-B9B7-E947CEF4E5D3",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "E4813E57-756B-464F-A9DB-AB17D5498AAC",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "8F110341-113B-4C05-ACB1-FD34ED8978B7",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "AC703075-CBB2-43B4-AC5E-4EB76CBDACA2",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79109,9 +80561,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "17860D33-CDA6-480D-BC72-E13880279141",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "D4492530-E993-494F-957F-2C7BBB5E61CA",
       "ant": "Registro express",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "E30F2953-0EC9-474F-9AE0-11F3F8D69337",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79129,7 +80593,7 @@
       "sucursal": "Mitras",
       "id": "8D06E7C4-A8A3-47F8-92EF-98C931705881",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79160,12 +80624,6 @@
       "id": "EFD52962-7568-4960-8D7A-C4EE8D5F6C35",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
-    },
-    {
-      "sucursal": "Mitras",
-      "id": "B197997D-4D9B-478B-8B36-E8572115777E",
-      "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79201,7 +80659,7 @@
       "sucursal": "Mitras",
       "id": "A0CA8594-3317-404C-AB31-FA6A6210C96D",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79238,6 +80696,12 @@
       "id": "8F008BED-6948-419E-82B9-944CF3A0487C",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "BFFA61E1-EEEA-4F09-A2DD-17B5BC03115F",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -79297,7 +80761,19 @@
       "sucursal": "Mitras",
       "id": "D8DACFD6-B6F1-447F-8831-E8603C4CDFC7",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5F73E849-CD06-4D6E-8977-1C06D90FB0FF",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "29B8091D-2249-42DF-A999-3E5C5F178559",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79309,7 +80785,13 @@
       "sucursal": "Mitras",
       "id": "E03B84B6-5B42-4FD2-96A4-22AF74CC2D54",
       "ant": "Info actualizada PLD",
-      "act": "Por validar PLD"
+      "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "6E9C9FC7-762B-4949-9AFC-94CE89B94359",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79325,7 +80807,19 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "CA550BAA-2ECC-43C9-B007-6BA21056EBA4",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "C6CF353B-B3F1-4AB3-85A3-703FD881309C",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "BBEF11A5-96A6-4DBA-AE71-CCDA4F4D1DA3",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -79349,6 +80843,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "D93CECBF-EF25-4693-9A6A-CE738C38F0B0",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "8E0F7F92-A89C-4D28-875C-E313FF25DD37",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -79367,9 +80867,15 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "34A35CBE-BEED-4779-B934-1C2188B8F15A",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "F1C7969A-02B1-43B8-A2F9-B527DEBEB7A2",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79381,6 +80887,12 @@
       "sucursal": "Mitras",
       "id": "F35A7BAF-E500-492C-AF0D-ACB22F4BD789",
       "ant": "Bloqueado PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "E5474E89-285C-4590-8763-5F463A321E12",
+      "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
     {
@@ -79439,6 +80951,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "057CBC36-9C0C-43B8-8FFB-B74C4E5F88A1",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "C9D464A9-1554-4827-BA06-911EA01953B7",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
@@ -79465,7 +80983,7 @@
       "sucursal": "Mitras",
       "id": "F43C089B-51B8-455E-BBB3-65A8BDE87C92",
       "ant": "Bloqueado PLD",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79499,9 +81017,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A1E606AD-1ACC-496B-AD33-459E46B7BB8D",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "9D04604E-8DBA-4A44-95C0-5935DFB3E6C6",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "54D7DE05-9C74-4BF1-A0E8-EE814A3373BD",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79537,7 +81067,13 @@
       "sucursal": "Mitras",
       "id": "4BFB8E7F-7FD3-4FFF-8047-F2BA5E56CFB4",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "5CACCC00-AAD0-4568-8AB9-BE0E54B7978D",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -79553,9 +81089,15 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "49F9E75A-22F1-4D10-8E5B-B3E9B67A862B",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "EA7AB202-E761-444B-9A88-395437845E0A",
       "ant": "Registro express",
-      "act": "Por validar PLD"
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79583,7 +81125,25 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A102D396-85AB-43D8-90EF-BD9DDB732792",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "41003D6D-8A83-42BA-BEDB-2F42823D5CC9",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "3EF1AC0F-4600-40EB-84EF-65DF3D3BBBD7",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "4CAA6BB4-CECE-4719-8DC2-B5BDC8626AE7",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
     },
@@ -79597,7 +81157,13 @@
       "sucursal": "Mitras",
       "id": "6D3BBF12-9733-495B-A49F-4BAC4B254AA9",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "176CB598-1018-4204-A4B1-9032840321A8",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79625,9 +81191,21 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "071176FE-B79B-4F29-A6CE-24C6FFFADFC3",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "FAF239CC-C845-431A-9CFC-FB829E8F4119",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
+      "id": "CC402E31-C5EE-4B75-923B-73BA7CB5BDA2",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
     },
     {
       "sucursal": "Mitras",
@@ -79703,6 +81281,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "69834CAE-C826-4AC2-AEC5-1F06474A42F4",
+      "ant": "Por validar PLD",
+      "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "CB53D42E-F772-4157-93EE-AE671DA76520",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -79727,6 +81311,12 @@
     },
     {
       "sucursal": "Mitras",
+      "id": "A033D7F9-2D3D-479A-945D-4B62A8825F45",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Mitras",
       "id": "84E33177-D6E6-4F8C-8BEE-4387C3987D60",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -79747,7 +81337,7 @@
       "sucursal": "Mitras",
       "id": "ADAFB8A6-E54B-4F23-B89E-92F227B792BF",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -79783,7 +81373,7 @@
       "sucursal": "Mitras",
       "id": "2538D5A6-9C56-4F38-8A27-5FB49F47B94D",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Mitras",
@@ -79802,6 +81392,12 @@
       "id": "C90489F8-9CA7-41F2-BC97-D06D78D95F3F",
       "ant": "Registro express",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "A513D115-5E72-41E3-A411-6608F95D4341",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Neza",
@@ -80006,6 +81602,12 @@
       "id": "27CDB01B-5E9B-4F60-A858-7809A5A5279D",
       "ant": "Por validar PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "9B3E386B-75AC-4E01-B4DD-40C0B165DCC1",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Neza",
@@ -80491,7 +82093,7 @@
       "sucursal": "Neza",
       "id": "31C3FE26-C193-495B-8AB2-C280ADF888EC",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Neza",
@@ -80522,12 +82124,6 @@
       "id": "CE308B72-DDC0-421F-BF58-2FCAF96AAA34",
       "ant": "Registro express",
       "act": "Registro completo"
-    },
-    {
-      "sucursal": "Neza",
-      "id": "035AA136-F853-47A6-A1C1-F6376D01A278",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Neza",
@@ -80648,6 +82244,12 @@
       "id": "E665E9AF-BBF4-429D-8565-508C2ED4B8C4",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "97DC29B9-43BF-452D-8006-05B1F32A8E00",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Neza",
@@ -81229,7 +82831,7 @@
       "sucursal": "Neza",
       "id": "1FB2EA3B-D228-4E03-A66D-5F7DD19C4866",
       "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Neza",
@@ -81476,12 +83078,6 @@
       "id": "91D769B4-43BD-4366-81CA-9807A33BE37B",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Neza",
-      "id": "3262853B-0740-4C6E-9391-A61C9D362BA5",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
     },
     {
       "sucursal": "Neza",
@@ -81877,7 +83473,7 @@
       "sucursal": "Neza",
       "id": "3CF4D18B-8873-401F-B7F2-554359E7EEAB",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Neza",
@@ -82112,6 +83708,12 @@
       "id": "5F2A3C82-34AC-463E-8746-3BE1D1AF264D",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "6B9CC285-A81D-4DA7-B6FF-52796C7A598B",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Neza",
@@ -82364,6 +83966,12 @@
       "id": "4949F0C2-DAFC-4C07-AAB0-046565A4C8F8",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "CBD09AFA-C865-4345-AA41-C2B32A86F870",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Neza",
@@ -82717,7 +84325,7 @@
       "sucursal": "Neza",
       "id": "D20A32B4-A46E-4B36-BCA9-2B473E8A9887",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Neza",
@@ -83081,6 +84689,12 @@
     },
     {
       "sucursal": "Neza",
+      "id": "66A143F7-5F4B-419C-A4A5-A0056A80CE21",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Neza",
       "id": "50C87F4F-5CF4-4AC2-B41F-FA876C54BE6E",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -83094,6 +84708,12 @@
     {
       "sucursal": "Neza",
       "id": "3B80089A-E683-4F28-88E3-1DBE7AFFBA47",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "C49C87DA-70C3-4F7F-8C2C-7C68B48484D5",
       "ant": "Registro express",
       "act": "Registro completo"
     },
@@ -83221,7 +84841,7 @@
       "sucursal": "Neza",
       "id": "92D96F45-CADB-4C55-A076-69FE74093AEF",
       "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Neza",
@@ -83369,6 +84989,12 @@
     },
     {
       "sucursal": "Neza",
+      "id": "7BA7B7C8-A8DE-4727-BDEA-00C0A7582F4D",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Neza",
       "id": "46F86016-6915-4772-9F03-4CDAB11EFCD8",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -83378,12 +85004,6 @@
       "id": "53698819-D816-4D09-AB47-4BED602CC838",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Neza",
-      "id": "CACBF08C-F81A-46F1-A69D-0F1091BCF622",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Neza",
@@ -83549,6 +85169,12 @@
     },
     {
       "sucursal": "Neza",
+      "id": "79E5C66A-BAA1-4FEC-AFD6-C1756A4FE510",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Neza",
       "id": "884728D0-558A-4F67-B0E8-80BDECB477C6",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -83603,12 +85229,6 @@
     },
     {
       "sucursal": "Neza",
-      "id": "E920915C-B839-439C-81B6-6D7C4463B382",
-      "ant": "Por validar PLD",
-      "act": "Bloqueado PLD"
-    },
-    {
-      "sucursal": "Neza",
       "id": "09D6AB30-A4E3-45AB-81A1-A0634FDBED8A",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -83618,6 +85238,12 @@
       "id": "C6F35E47-CFF2-4FAE-B98D-380FAFC78B04",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "C8035A5C-6AAD-47EE-81CE-D28A26BFF159",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Neza",
@@ -83684,6 +85310,12 @@
       "id": "210B5142-C8D6-4C40-8595-C4F1F3DD3B67",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Neza",
+      "id": "A06D05AE-B1A5-4AEB-B10A-FAB761F60014",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Neza",
@@ -84977,6 +86609,12 @@
     },
     {
       "sucursal": "Neza",
+      "id": "4CD2373D-DB15-4F7B-B4F5-EC7976E5729F",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Neza",
       "id": "2D53A9EF-CB02-4C63-AE75-CC7A24B0E048",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -85021,7 +86659,7 @@
       "sucursal": "Neza",
       "id": "266F9C98-6A05-4965-9075-CEBA01B6C499",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Neza",
@@ -85525,7 +87163,7 @@
       "sucursal": "Sendero",
       "id": "4DB7D4E2-5919-414D-B6B2-FFD02BD40021",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -85727,9 +87365,21 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "6F24DC66-8887-432C-90DE-B2F119CD889E",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "8321D29F-2324-4274-8C0C-4A803A6C66EF",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "5A0DFE50-EBEB-464B-8C9A-99F9F07ED10C",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -85901,15 +87551,21 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "50690FDB-6EFD-4373-A80D-0FA56E1F6309",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "460E5FD3-9009-4010-AEAA-7E8AE4B82558",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
       "id": "25B8BDE5-432B-44BC-B8FA-3A66DEDB3AFF",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86060,6 +87716,12 @@
       "id": "91166405-AE17-4517-8218-62FF10842A57",
       "ant": "Bloqueado PLD",
       "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "3060CD7D-A2DE-4090-AEE7-B51F88EF9565",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86443,7 +88105,7 @@
       "sucursal": "Sendero",
       "id": "98A8219C-5B5C-48FB-9DB6-0DF6808D67DF",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86483,9 +88145,21 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "7F447D09-7C73-45F9-BDBA-F9A1D16FDDF3",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "84EA4EC6-F701-4C06-9DA4-C8E88B6792FD",
       "ant": "Bloqueado PLD",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "67EB3213-E6B4-43FC-B4E6-F04C6DCAD777",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86515,7 +88189,7 @@
       "sucursal": "Sendero",
       "id": "B6D6CF1A-EE6B-41E0-955B-C6FC2EB8D54B",
       "ant": "Registro express",
-      "act": "Registro completo"
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86537,9 +88211,15 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "A859E20C-9599-415F-B081-E3283388F613",
+      "id": "93B12F55-3D4E-4DE6-ACDB-21AD25B96074",
       "ant": "Registro express",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "A859E20C-9599-415F-B081-E3283388F613",
+      "ant": "Registro express",
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86557,7 +88237,7 @@
       "sucursal": "Sendero",
       "id": "D5114AB1-1C71-4DB2-9573-DE27766F980D",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86575,7 +88255,7 @@
       "sucursal": "Sendero",
       "id": "CB1FDCFC-D2BC-4D02-A39F-E441166622AD",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86593,7 +88273,7 @@
       "sucursal": "Sendero",
       "id": "02A7B0F0-641A-45EC-9BEE-0C0698DFACD9",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86795,6 +88475,24 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "82651F52-6ED0-4F50-B547-4305CB18B7CA",
+      "ant": "Registro completo",
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "229F4BA1-86EA-4924-AB30-9C43073C3749",
+      "ant": "Registro completo",
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "0C3D984E-A159-42B0-A8D5-D936F5D71DAD",
+      "ant": "Registro completo",
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "86451AA8-4F3E-41F6-A491-06DBBA1FD06A",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -86803,7 +88501,7 @@
       "sucursal": "Sendero",
       "id": "0C9A634B-0C01-4157-9BBF-77F1CC79B9D8",
       "ant": "Info actualizada PLD",
-      "act": "Bloqueado PLD"
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Sendero",
@@ -86834,6 +88532,12 @@
       "id": "C2DA4568-B4FA-4A62-8CB3-DE8096B2A6D1",
       "ant": "Verificado operaciones",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "76985F84-5686-4136-A2C6-960C573596B0",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -86923,7 +88627,7 @@
       "sucursal": "Sendero",
       "id": "1AE06C6F-35E1-4F6A-9812-5CD3C0203389",
       "ant": "Registro express",
-      "act": "Info actualizada operaciones"
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Sendero",
@@ -87079,7 +88783,7 @@
       "sucursal": "Sendero",
       "id": "D24C0497-96DF-430C-8C39-25E062407CF2",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87139,7 +88843,7 @@
       "sucursal": "Sendero",
       "id": "C04B7ACB-D036-4731-97EA-AFB4A89D7108",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87293,9 +88997,21 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "E2400696-6F26-4886-BE63-5A3F879D86B1",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "73F65C24-F1E3-4263-9EA0-E1785594A666",
       "ant": "Verificado operaciones",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "33674811-17A9-4204-8457-EB69FA30708A",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87314,6 +89030,12 @@
       "id": "51C65CDE-5C1B-44E4-86B7-E5BF7DA7D5D0",
       "ant": "Registro express",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "95CD34DB-F10E-4B8C-BE9C-AEA8BC387685",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87368,6 +89090,12 @@
       "id": "2A7F1ECD-6A28-4B94-8957-D5C1D60C2589",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "B2EF4C90-8C9A-4B82-9406-E7638B4D7C14",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87428,6 +89156,12 @@
       "id": "06ECCA9A-2551-4423-A799-4A638B5708D6",
       "ant": "Bloqueado operaciones",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "7D323571-86D2-4FD1-9743-D7457BE61B93",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Sendero",
@@ -87541,7 +89275,7 @@
       "sucursal": "Sendero",
       "id": "9B909E00-B5DF-433C-A323-2CB7022806F1",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87554,6 +89288,12 @@
       "id": "A600D716-1521-4A0A-8694-96761F8C95F2",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "1596DFDD-829F-4F73-BFF5-CBC846C6501D",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87607,7 +89347,7 @@
       "sucursal": "Sendero",
       "id": "7D308DCB-4D07-4623-A84C-3E055FBFE1DD",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87649,6 +89389,12 @@
       "sucursal": "Sendero",
       "id": "437052DF-3C89-495C-8EDD-B4F586F6872C",
       "ant": "Registro express",
+      "act": "Bloqueado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "3568CC23-E6B3-4064-A44C-230E6EC0744D",
+      "ant": "Registro express",
       "act": "Verificado operaciones"
     },
     {
@@ -87683,12 +89429,6 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "F465AC06-3B0A-46BC-B8AC-DE9C76BBAEF3",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Sendero",
       "id": "0AEFE2B0-CB2C-4089-9366-9C2B2665B9BB",
       "ant": "Info actualizada operaciones",
       "act": "Verificado PLD"
@@ -87703,7 +89443,7 @@
       "sucursal": "Sendero",
       "id": "7713DBF6-51BD-4183-9A6C-46D94CC79345",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87719,9 +89459,15 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "D53EFAB2-88DB-4949-9DDB-E2C7288E37B0",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "231B1B29-A09D-4744-81B2-8A4D00064EE6",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87757,7 +89503,7 @@
       "sucursal": "Sendero",
       "id": "35082F2F-2843-41A3-ABFE-54B18F812F6F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -87911,12 +89657,6 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "495BFF3F-C28E-4D93-8A0D-746641DF03CB",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Sendero",
       "id": "898679C8-7CDD-43C2-AD1B-E34BF887C008",
       "ant": "Registro express",
       "act": "Info actualizada operaciones"
@@ -87997,7 +89737,7 @@
       "sucursal": "Sendero",
       "id": "8FC3A271-9458-4E9A-91ED-82D24EB052C1",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -88291,7 +90031,7 @@
       "sucursal": "Sendero",
       "id": "C759D712-8039-4916-8E58-27F380C04563",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -88331,9 +90071,21 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "51BDF46F-45D4-48A5-B281-9121E05F831F",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "60BC9534-0368-4245-8177-FA46C7731149",
       "ant": "Bloqueado operaciones",
       "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "81673F9F-E982-4D66-A811-4D321B23E765",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -88399,7 +90151,19 @@
       "sucursal": "Sendero",
       "id": "1B93A518-3091-4B33-B14A-59B1FB94A0CB",
       "ant": "Info actualizada operaciones",
+      "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "F08EF2B9-5D8C-462F-B094-83286D644F87",
+      "ant": "Verificado PLD",
       "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "A273C82A-B132-4DA9-87E0-F2F633BEC195",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -88412,6 +90176,12 @@
       "id": "937C0C6E-0275-4D7C-9667-0BB51233CAF7",
       "ant": "Bloqueado PLD",
       "act": "Info actualizada PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "C0CE5166-0557-4424-B007-002E1976FCFE",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -88589,8 +90359,8 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "7AFA9A9D-48B2-4E5D-9049-342F46023D28",
-      "ant": "Bloqueado operaciones",
+      "id": "A8862DA0-C1F5-4AA7-8A55-7EC9BB1C4029",
+      "ant": "Registro express",
       "act": "Verificado operaciones"
     },
     {
@@ -88610,6 +90380,12 @@
       "id": "6441E639-6A04-4D7E-8485-257C092DB9AC",
       "ant": "Registro express",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "884E3A6F-5B96-4275-94E3-FC69E8909DC6",
+      "ant": "Registro express",
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -88694,6 +90470,12 @@
       "id": "292FD5C6-5B56-4A25-9921-78074894D87E",
       "ant": "Registro express",
       "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "9E43E1DB-C6F0-424C-AC36-0C360320CEBF",
+      "ant": "Bloqueado PLD",
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Sendero",
@@ -88838,6 +90620,12 @@
       "id": "9D6CCA07-871E-493E-9CDB-5AB16CB5EF33",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "D178635E-992C-4A56-846B-2D8A29D2D7DE",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Sendero",
@@ -89281,7 +91069,7 @@
       "sucursal": "Sendero",
       "id": "7CAB8B17-BFBF-4ECD-95DB-91D38DEE8FB1",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -89359,7 +91147,7 @@
       "sucursal": "Sendero",
       "id": "19CE2421-F780-48AB-AAD6-F66B5D93BE2F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -89585,6 +91373,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "FE6E4D09-425B-4F2E-B34C-63E4C51FFD25",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "92368D5D-735C-4390-9B21-2995EA7880C9",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -89678,6 +91472,12 @@
       "id": "13B72C85-7A72-4BDB-AB89-DC6F4AE1901D",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "94CA9B39-9584-48AA-9BD7-CD87C1E6E154",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -89887,7 +91687,7 @@
       "sucursal": "Sendero",
       "id": "81E33362-9F29-45E1-9243-A5939251A65A",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -89899,7 +91699,7 @@
       "sucursal": "Sendero",
       "id": "C7D0F7E5-EBDA-4AD7-9872-91704AF2202F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -89912,6 +91712,12 @@
       "id": "658226E6-E1C9-49F7-BE76-4F1460D7B2C7",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "6E86F126-5C61-4118-8565-F9D9A2D94A96",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -90007,7 +91813,7 @@
       "sucursal": "Sendero",
       "id": "7384A006-5B4F-4F26-8D9C-914975A1C986",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -90032,6 +91838,12 @@
       "id": "7EC7789E-9C67-4D26-9B3C-75D0EC9B5534",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "E8778A36-B991-4DB9-823E-194AE687860A",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
     },
     {
       "sucursal": "Sendero",
@@ -91001,12 +92813,6 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "6FE185F1-7DBF-466B-8099-A3E6899F515C",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Sendero",
       "id": "881954E4-FA5D-4753-AE82-6266C9BCCE23",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -91339,7 +93145,7 @@
       "sucursal": "Sendero",
       "id": "C03D1D2B-A4CC-480A-9469-A698E2689A41",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -91399,7 +93205,7 @@
       "sucursal": "Sendero",
       "id": "977D348B-9002-421B-A106-78A543BE3D32",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -91423,7 +93229,7 @@
       "sucursal": "Sendero",
       "id": "2D7E2C33-7FCF-4F3D-975E-E6CC2DEC5242",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -91466,6 +93272,12 @@
       "id": "425A82CB-F3DB-4F3F-A275-9A25FFFF7469",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "25040064-A445-4311-AE55-96857F62000C",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Sendero",
@@ -92573,6 +94385,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "BA4A5AC1-4C4B-49D1-9041-B6482EAEDB65",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "CB8A29BF-B99E-4A25-94CB-A19166121228",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -93211,7 +95029,7 @@
       "sucursal": "Sendero",
       "id": "CF45A42A-1310-4955-A033-C74E60C507B5",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -93577,7 +95395,7 @@
       "sucursal": "Sendero",
       "id": "E130D523-1781-4FAD-B9D6-ABB1007FF385",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -93725,12 +95543,6 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "B3336968-16CF-4E21-AB72-F2E6C543A511",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Sendero",
       "id": "7FF0B473-D819-40CC-B196-507FFCD400F6",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -93787,7 +95599,7 @@
       "sucursal": "Sendero",
       "id": "543B6000-D3FF-4493-8DB2-1B24317D5533",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -94148,12 +95960,6 @@
       "id": "6EE6C5A8-55C8-4596-BCAF-6B94884F9B2A",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
-    },
-    {
-      "sucursal": "Sendero",
-      "id": "10EBF3EF-E90F-4CF2-A12F-595096F6916E",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -94637,6 +96443,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "C0ABF487-261A-412F-8714-E60E1DD3894E",
+      "ant": "Registro express",
+      "act": "Registro completo"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "A07918FF-2C1F-43BB-BE1B-D7DFF08EACA5",
       "ant": "Registro express",
       "act": "Registro completo"
@@ -94699,7 +96511,13 @@
       "sucursal": "Sendero",
       "id": "2A8D1F37-F375-4810-A5DE-8B37308F35E0",
       "ant": "Por validar PLD",
-      "act": "Verificado PLD"
+      "act": "Bloqueado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "30A2D386-07F4-498A-8EAE-06F7AEAE8EB3",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Sendero",
@@ -94717,7 +96535,7 @@
       "sucursal": "Sendero",
       "id": "3F6200B0-6984-451D-8578-C530A818A7D6",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -94903,7 +96721,7 @@
       "sucursal": "Sendero",
       "id": "D2990802-1FEA-45F3-AF91-4FC443FA3CD6",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -94934,6 +96752,12 @@
       "id": "CF8DBAE7-AC7C-408E-8B8A-745669AC4315",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "056ECED9-4848-487E-9987-F581A9280F68",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -95831,12 +97655,6 @@
     },
     {
       "sucursal": "Sendero",
-      "id": "22186113-BA55-4B08-BB97-0D4D8C5CA1E8",
-      "ant": "Bloqueado operaciones",
-      "act": "Verificado operaciones"
-    },
-    {
-      "sucursal": "Sendero",
       "id": "68C24389-3A1F-4A32-AAF2-269CB28BD772",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -95975,6 +97793,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "A459F1C4-8C7F-4745-B0F6-755DDDC4490C",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "85D03835-E3D0-4EA2-85F2-12AF28E6779E",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -96068,6 +97892,12 @@
       "id": "D467085E-67F0-45F0-A93D-5A1C245BE80C",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "2E4B54D8-9568-490E-92A9-DB6B7A51709C",
+      "ant": "Registro express",
+      "act": "Registro completo"
     },
     {
       "sucursal": "Sendero",
@@ -96169,7 +97999,7 @@
       "sucursal": "Sendero",
       "id": "23F0211B-27CB-4403-BE62-0CD0BA915676",
       "ant": "Registro express",
-      "act": "Bloqueado PLD"
+      "act": "Info actualizada PLD"
     },
     {
       "sucursal": "Sendero",
@@ -96301,7 +98131,7 @@
       "sucursal": "Sendero",
       "id": "58907C8B-1D80-487D-BB7A-3A3115382F7B",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -96785,6 +98615,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "C5E714FD-3722-4835-87D6-845BC5E08794",
+      "ant": "Registro express",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "4C5B3DFA-1378-4679-83AE-524ECAD90C8E",
       "ant": "Info actualizada PLD",
       "act": "Verificado PLD"
@@ -97076,6 +98912,12 @@
       "id": "4A46ACE6-BC2D-48CD-92D1-D514AC3CD560",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "1DC3D1D3-05D0-46D4-9330-97372422249E",
+      "ant": "Registro express",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -97639,7 +99481,7 @@
       "sucursal": "Sendero",
       "id": "B9AA6FCB-7959-4135-AFBD-243E17894C3F",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -97772,6 +99614,12 @@
       "id": "68D97441-6F21-4F10-841F-22CDB6B5B33C",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
+    },
+    {
+      "sucursal": "Sendero",
+      "id": "7FAF87B2-EAA1-401B-831B-AF16299CCD16",
+      "ant": "Bloqueado operaciones",
+      "act": "Verificado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -98189,6 +100037,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "B0A00D8A-87C6-45FD-9BCC-DACF78864C66",
+      "ant": "Bloqueado operaciones",
+      "act": "Info actualizada operaciones"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "ED55D4ED-F0A9-46A4-9CF4-BD104C41E571",
       "ant": "Por validar PLD",
       "act": "Verificado PLD"
@@ -98305,7 +100159,7 @@
       "sucursal": "Sendero",
       "id": "15B1EA8B-234B-42EB-9E13-F9C820650C2E",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -98891,6 +100745,12 @@
     },
     {
       "sucursal": "Sendero",
+      "id": "D85A46D8-AD3F-4002-B706-6191FE727547",
+      "ant": "Bloqueado PLD",
+      "act": "Por validar PLD"
+    },
+    {
+      "sucursal": "Sendero",
       "id": "06A025D4-18A6-4754-9D03-46F2C4B473AF",
       "ant": "Bloqueado operaciones",
       "act": "Info actualizada operaciones"
@@ -99001,7 +100861,7 @@
       "sucursal": "Sendero",
       "id": "DD940ECF-8159-4F8E-8DB0-1FFB5C89F0BC",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Bloqueado operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -99541,7 +101401,7 @@
       "sucursal": "Sendero",
       "id": "390AC97A-87AF-4C57-95E2-6E954A10EE05",
       "ant": "Registro express",
-      "act": "Verificado operaciones"
+      "act": "Info actualizada operaciones"
     },
     {
       "sucursal": "Sendero",
@@ -99606,16 +101466,16 @@
   ],
   "reporte_operaciones": {
     "fecha_inicio": "01/01/2026",
-    "fecha_fin": "19/07/2026",
+    "fecha_fin": "26/07/2026",
     "sucursales": [
       {
         "nombre": "Ajijic",
-        "total": 1185,
-        "reg_completo": 44,
-        "verif_ops": 399,
-        "bloq_ops": 565,
+        "total": 1227,
+        "reg_completo": 68,
+        "verif_ops": 397,
+        "bloq_ops": 568,
         "info_act_ops": 33,
-        "re": 144,
+        "re": 161,
         "kyc_bloq": 2,
         "kyc_info_act": 0,
         "kyc_pend": 1,
@@ -99624,12 +101484,12 @@
       },
       {
         "nombre": "Allende",
-        "total": 721,
-        "reg_completo": 26,
+        "total": 741,
+        "reg_completo": 28,
         "verif_ops": 200,
         "bloq_ops": 165,
-        "info_act_ops": 15,
-        "re": 315,
+        "info_act_ops": 16,
+        "re": 332,
         "kyc_bloq": 0,
         "kyc_info_act": 0,
         "kyc_pend": 0,
@@ -99638,12 +101498,12 @@
       },
       {
         "nombre": "Esmeralda",
-        "total": 741,
-        "reg_completo": 75,
-        "verif_ops": 209,
-        "bloq_ops": 197,
-        "info_act_ops": 21,
-        "re": 239,
+        "total": 776,
+        "reg_completo": 77,
+        "verif_ops": 207,
+        "bloq_ops": 198,
+        "info_act_ops": 23,
+        "re": 271,
         "kyc_bloq": 2,
         "kyc_info_act": 0,
         "kyc_pend": 9,
@@ -99666,12 +101526,12 @@
       },
       {
         "nombre": "Irapuato",
-        "total": 639,
-        "reg_completo": 4,
-        "verif_ops": 264,
-        "bloq_ops": 125,
-        "info_act_ops": 32,
-        "re": 214,
+        "total": 676,
+        "reg_completo": 10,
+        "verif_ops": 263,
+        "bloq_ops": 124,
+        "info_act_ops": 35,
+        "re": 244,
         "kyc_bloq": 1,
         "kyc_info_act": 0,
         "kyc_pend": 7,
@@ -99680,26 +101540,26 @@
       },
       {
         "nombre": "Mitras",
-        "total": 5738,
-        "reg_completo": 10,
-        "verif_ops": 1631,
-        "bloq_ops": 1065,
-        "info_act_ops": 124,
-        "re": 2908,
-        "kyc_bloq": 3,
-        "kyc_info_act": 5,
-        "kyc_pend": 5,
-        "kyc_verif": 40,
+        "total": 5941,
+        "reg_completo": 16,
+        "verif_ops": 1625,
+        "bloq_ops": 1070,
+        "info_act_ops": 127,
+        "re": 3103,
+        "kyc_bloq": 4,
+        "kyc_info_act": 6,
+        "kyc_pend": 2,
+        "kyc_verif": 41,
         "kyc_total": 53
       },
       {
         "nombre": "Neza",
-        "total": 988,
+        "total": 1048,
         "reg_completo": 24,
-        "verif_ops": 288,
-        "bloq_ops": 139,
+        "verif_ops": 285,
+        "bloq_ops": 144,
         "info_act_ops": 9,
-        "re": 528,
+        "re": 586,
         "kyc_bloq": 2,
         "kyc_info_act": 0,
         "kyc_pend": 3,
@@ -99722,17 +101582,17 @@
       },
       {
         "nombre": "Sendero",
-        "total": 7516,
-        "reg_completo": 100,
-        "verif_ops": 2587,
-        "bloq_ops": 1028,
-        "info_act_ops": 209,
-        "re": 3592,
+        "total": 7801,
+        "reg_completo": 74,
+        "verif_ops": 2614,
+        "bloq_ops": 1026,
+        "info_act_ops": 220,
+        "re": 3867,
         "kyc_bloq": 4,
         "kyc_info_act": 1,
-        "kyc_pend": 62,
+        "kyc_pend": 63,
         "kyc_verif": 66,
-        "kyc_total": 133
+        "kyc_total": 134
       }
     ]
   }
