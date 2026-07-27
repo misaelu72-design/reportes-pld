@@ -356,6 +356,28 @@ function historialSelected(input){
   r.readAsText(f);
 }
 
+// ── Auto-carga: intenta traer historial_avisos_cecom.json directo del
+// mismo repo al abrir la página, sin que nadie tenga que subirlo a mano.
+// Si no existe o falla, se deja la zona de carga manual visible como
+// respaldo (el usuario puede seguir subiendo un archivo distinto si
+// quiere sobreescribir lo que se cargó solo).
+window.addEventListener('DOMContentLoaded', () => {
+  fetch('./historial_avisos_cecom.json?v=' + Date.now())
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+    .then(data => {
+      STATE.historial = data;
+      const nClientes = Object.keys(STATE.historial).length;
+      document.getElementById('zone-historial').classList.add('upload-done');
+      document.getElementById('hist-icon').textContent='✅';
+      document.getElementById('hist-title').textContent='Historial cargado automáticamente';
+      document.getElementById('hist-sub').textContent=`${nClientes} clientes con avisos previos — clic para reemplazar con otro archivo`;
+    })
+    .catch(err => {
+      console.warn('No se pudo auto-cargar historial_avisos_cecom.json:', err.message);
+      // Se deja la zona de carga manual tal cual, sin cambios.
+    });
+});
+
 // Genera la lista de meses 'YYYY-MM' entre inicio y fin, inclusive
 // Devuelve YYYYMMDD del último día real del mes YYYYMM (respeta 28/29/30/31 y años bisiestos)
 function ultimoDiaMes(yyyymm){

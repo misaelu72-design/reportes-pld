@@ -371,6 +371,28 @@ function cargarJSON(input){
   reader.readAsText(file, 'utf-8');
 }
 
+// ── Auto-carga: intenta traer historial_avisos_cecom.json directo del
+// mismo repo al abrir la página, sin que nadie tenga que subirlo a mano.
+// Si el archivo no existe todavía o falla la carga, se deja la zona de
+// "Sube el JSON" visible como respaldo manual.
+window.addEventListener('DOMContentLoaded', () => {
+  fetch('./historial_avisos_cecom.json?v=' + Date.now())
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+    .then(data => {
+      HISTORIAL = data;
+      procesarHistorial();
+      const zona = document.getElementById('upload-zone');
+      zona.classList.add('upload-done');
+      document.getElementById('upload-title').textContent = '✅ Historial cargado automáticamente';
+      const sub = zona.querySelector('.upload-zone-sub');
+      if (sub) sub.textContent = Object.keys(HISTORIAL).length + ' clientes — clic para reemplazar con otro archivo';
+    })
+    .catch(err => {
+      console.warn('No se pudo auto-cargar historial_avisos_cecom.json:', err.message);
+      // Se deja la zona de carga manual tal cual, sin cambios.
+    });
+});
+
 // ── Procesar historial → lista de clientes ───────────────────────────
 function procesarHistorial(){
   CLIENTES = Object.entries(HISTORIAL).map(([curp, reg])=>{
