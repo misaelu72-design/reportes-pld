@@ -878,7 +878,7 @@ function clickDia(d){
   if(btnSem){ btnSem.textContent=sem?sem.etiqueta:'—'; btnSem.style.opacity=sem?'1':'0.4'; btnSem.style.pointerEvents=sem?'auto':'none'; }
   if(btnRef){ btnRef.textContent=ref?ref.etiqueta:'—'; btnRef.style.opacity=ref?'1':'0.4'; btnRef.style.pointerEvents=ref?'auto':'none'; }
   // Auto cargar el semanal
-  if(sem){ document.getElementById('hCorte').textContent=sem.etiqueta; cargarCorteCalendario('sem'); }
+  if(sem){ cargarCorteCalendario('sem'); }
   renderCalendario();
 }
 
@@ -886,9 +886,21 @@ async function cargarCorteCalendario(tipo){
   const arch=tipo==='sem'?CAL_SEM_ARCH:CAL_REF_ARCH;
   const btn=document.getElementById(tipo==='sem'?'calBtnSem':'calBtnRef');
   if(!arch) return;
-  document.getElementById('hCorte').textContent=btn?btn.textContent:'—';
-  const r=await fetch(arch+'?v='+Date.now());
-  if(r.ok){DATA=await r.json();DETALLE=DATA.detalle_cambios||[];renderizar(DATA);}
+  try{
+    const r=await fetch(arch+'?v='+Date.now());
+    if(r.ok){
+      DATA=await r.json();
+      DETALLE=DATA.detalle_cambios||[];
+      renderizar(DATA);
+      document.getElementById('hCorte').textContent=btn?btn.textContent:'—';
+    } else {
+      console.warn('No se pudo cargar el corte:', arch, 'HTTP', r.status);
+      alert('No se encontró el archivo de este corte ('+arch+'). El contenido mostrado sigue siendo el del corte anterior.');
+    }
+  }catch(e){
+    console.warn('Error cargando corte:', arch, e);
+    alert('Error al cargar este corte. Revisa la consola para más detalle.');
+  }
   toggleCal();
 }
 
