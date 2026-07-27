@@ -11,7 +11,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--texto)}
 header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(31,56,100,.4)}
-.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:12px;flex-wrap:wrap;padding:10px 0}
+.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:12px}
 .li{width:36px;height:36px;background:var(--naranja);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
 .lt{font-size:16px;font-weight:600}.ls{font-size:11px;opacity:.65}
@@ -84,18 +84,7 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 .lin:focus{border-color:var(--azul2)}
 .lbtn{width:100%;padding:12px;background:var(--azul);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
 .lerr{background:#fee2e2;color:var(--neg);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
-@media(max-width:640px){
-main{padding:1rem}
-.ds{grid-template-columns:1fr}
-header{padding:0 1rem}
-.hi{gap:8px 10px;justify-content:center}
-.logo{flex:1 1 auto;min-width:0}
-.lt{font-size:14px}
-.ls{font-size:10px}
-.hr{gap:6px;flex-wrap:wrap;justify-content:center}
-.cb,.lo,.btn-panel{font-size:11px;padding:4px 10px}
-.ub,.un{display:none}
-}
+@media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
 .hr select option{background:#1F3864;color:white}
 
   .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
@@ -789,7 +778,9 @@ async function cargarDatos(){
         if(cortes && cortes.length){
           cortesData=cortes;
           poblarSelector(cortes);
-          const rd=await fetch(cortes[0].archivo+'?v='+Date.now());
+          // Usar el corte semanal (no el de referencia 26-Abr) como default
+          const semanal = cortes.find(c=>!c.etiqueta.startsWith('26-Abr')&&!c.etiqueta.startsWith('26 de')) || cortes[0];
+          const rd=await fetch(semanal.archivo+'?v='+Date.now());
           if(rd.ok) datos=await rd.json();
         }
       }
@@ -815,17 +806,13 @@ let TODOS_CORTES=[], CAL_MES=new Date().getMonth(), CAL_ANIO=2026;
 let CAL_DIA_SEL=null, CAL_SEM_ARCH=null, CAL_REF_ARCH=null;
 const MESES_CAL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DOWS_CAL=['Do','Lu','Ma','Mi','Ju','Vi','Sa'];
-const MESES_NUM={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11,Ago:7};
+const MESES_NUM={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11};
 
 function parseFechaCorte(etiq){
   const fc=(etiq.split(' vs ')[1]||etiq).trim();
   const m=fc.match(/(\d{1,2})-([A-Za-z]{2,3})/);
   if(!m) return null;
-  // Normaliza a "Jul", "Abr", etc. sin importar cómo venga escrito el
-  // mes en la etiqueta ("jul", "JUL", "Jul") — MESES_NUM es sensible a
-  // mayúsculas/minúsculas y por eso "26-jul" en minúsculas se perdía.
-  const mesStr = m[2].charAt(0).toUpperCase() + m[2].slice(1).toLowerCase();
-  return {dia:parseInt(m[1]), mes:MESES_NUM[mesStr]};
+  return {dia:parseInt(m[1]), mes:MESES_NUM[m[2]]};
 }
 
 function anioDeCortes(){
@@ -916,25 +903,6 @@ function toggleCal(){
   const d=document.getElementById('calDropdown');
   if(!d) return;
   if(d.style.display==='none'){
-    if(window.innerWidth<=640){
-      const hdr=document.querySelector('header');
-      const top=(hdr?hdr.getBoundingClientRect().bottom:64)+8;
-      d.style.position='fixed';
-      d.style.top=top+'px';
-      d.style.left='50%';
-      d.style.right='auto';
-      d.style.transform='translateX(-50%)';
-      d.style.width='92vw';
-      d.style.maxWidth='320px';
-    } else {
-      d.style.position='absolute';
-      d.style.top='calc(100% + 8px)';
-      d.style.left='auto';
-      d.style.right='0';
-      d.style.transform='none';
-      d.style.width='300px';
-      d.style.maxWidth='none';
-    }
     d.style.display='block';
     renderCalendario();
   } else {
@@ -955,17 +923,14 @@ function poblarSelector(cortes){
   // Iniciar en el mes del corte más reciente
   if(cortes.length>0){
     const p=parseFechaCorte(cortes[0].etiqueta);
-    // Si por alguna razón no se pudo interpretar el mes, no dejar
-    // CAL_MES en undefined (eso rompía el título del calendario) —
-    // se usa el mes actual como respaldo.
-    if(p) CAL_MES=(p.mes!==undefined && p.mes!==null) ? p.mes : new Date().getMonth();
+    if(p) CAL_MES=p.mes;
     // Mostrar botón
     const btn=document.getElementById('btnCalendario');
     if(btn) btn.style.display='flex';
     // Pre-seleccionar día del corte más reciente
     if(p){
-      CAL_DIA_SEL=p.dia+'_'+CAL_MES;
-      const cs=cortesEnDia(p.dia,CAL_MES);
+      CAL_DIA_SEL=p.dia+'_'+p.mes;
+      const cs=cortesEnDia(p.dia,p.mes);
       const sem=cs.find(c=>!c.etiqueta.startsWith('26-Abr')&&!c.etiqueta.startsWith('26 de'));
       const ref=cs.find(c=>c.etiqueta.startsWith('26-Abr'));
       CAL_SEM_ARCH=sem?sem.archivo:null;
@@ -974,7 +939,7 @@ function poblarSelector(cortes){
       const btnRef=document.getElementById('calBtnRef');
       if(btnSem) btnSem.textContent=sem?sem.etiqueta:'—';
       if(btnRef) btnRef.textContent=ref?ref.etiqueta:'—';
-      document.getElementById('hCorte').textContent=cortes[0].etiqueta;
+      document.getElementById('hCorte').textContent=(sem?sem.etiqueta:cortes[0].etiqueta);
     }
   }
 }
