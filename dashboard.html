@@ -815,13 +815,17 @@ let TODOS_CORTES=[], CAL_MES=new Date().getMonth(), CAL_ANIO=2026;
 let CAL_DIA_SEL=null, CAL_SEM_ARCH=null, CAL_REF_ARCH=null;
 const MESES_CAL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DOWS_CAL=['Do','Lu','Ma','Mi','Ju','Vi','Sa'];
-const MESES_NUM={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11};
+const MESES_NUM={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11,Ago:7};
 
 function parseFechaCorte(etiq){
   const fc=(etiq.split(' vs ')[1]||etiq).trim();
   const m=fc.match(/(\d{1,2})-([A-Za-z]{2,3})/);
   if(!m) return null;
-  return {dia:parseInt(m[1]), mes:MESES_NUM[m[2]]};
+  // Normaliza a "Jul", "Abr", etc. sin importar cómo venga escrito el
+  // mes en la etiqueta ("jul", "JUL", "Jul") — MESES_NUM es sensible a
+  // mayúsculas/minúsculas y por eso "26-jul" en minúsculas se perdía.
+  const mesStr = m[2].charAt(0).toUpperCase() + m[2].slice(1).toLowerCase();
+  return {dia:parseInt(m[1]), mes:MESES_NUM[mesStr]};
 }
 
 function anioDeCortes(){
@@ -951,14 +955,17 @@ function poblarSelector(cortes){
   // Iniciar en el mes del corte más reciente
   if(cortes.length>0){
     const p=parseFechaCorte(cortes[0].etiqueta);
-    if(p) CAL_MES=p.mes;
+    // Si por alguna razón no se pudo interpretar el mes, no dejar
+    // CAL_MES en undefined (eso rompía el título del calendario) —
+    // se usa el mes actual como respaldo.
+    if(p) CAL_MES=(p.mes!==undefined && p.mes!==null) ? p.mes : new Date().getMonth();
     // Mostrar botón
     const btn=document.getElementById('btnCalendario');
     if(btn) btn.style.display='flex';
     // Pre-seleccionar día del corte más reciente
     if(p){
-      CAL_DIA_SEL=p.dia+'_'+p.mes;
-      const cs=cortesEnDia(p.dia,p.mes);
+      CAL_DIA_SEL=p.dia+'_'+CAL_MES;
+      const cs=cortesEnDia(p.dia,CAL_MES);
       const sem=cs.find(c=>!c.etiqueta.startsWith('26-Abr')&&!c.etiqueta.startsWith('26 de'));
       const ref=cs.find(c=>c.etiqueta.startsWith('26-Abr'));
       CAL_SEM_ARCH=sem?sem.archivo:null;
