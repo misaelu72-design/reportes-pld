@@ -151,7 +151,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
             <select id="cfg-sucursal" onchange="onSucursalChange()">
               <option value="">— Selecciona una sucursal —</option>
               <option value="MTY|64320|MTY">Mitras — Monterrey (MTY)</option>
-              <option value="GPE|45900|GPE">Guadalupe (GPE)</option>
+              <option value="GPE|67110|GPE">Guadalupe (GPE)</option>
               <option value="AJI|00000|AJI">Ajijic (AJI)</option>
               <option value="ALL|00000|ALL">Allende (ALL)</option>
               <option value="IRP|00000|IRP">Irapuato (IRP)</option>
@@ -621,7 +621,7 @@ function codOcup(v){if(!v)return'1000000';let s=String(v).trim();if(s.includes('
 function escXml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
 function fmtFecha(v){
   if(!v||v==='')return'';
-  if(v instanceof Date||v instanceof Object){try{const d=new Date(v);if(!isNaN(d))return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');}catch{}}
+  if(v instanceof Date||v instanceof Object){try{const d=new Date(v);if(!isNaN(d))return d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,'0')+String(d.getUTCDate()).padStart(2,'0');}catch{}}
   const s=String(v).trim();
   if(/^\d{8}$/.test(s))return s;
   const m1=s.match(/(\d{4})-(\d{2})-(\d{2})/);if(m1)return m1[1]+m1[2]+m1[3];
@@ -629,7 +629,7 @@ function fmtFecha(v){
   const serial=parseFloat(s);
   if(!isNaN(serial)&&serial>20000&&serial<80000){ // serial de Excel guardado como texto (rango ~1954-2119)
     const d=new Date(Math.round((serial-25569)*86400*1000));
-    if(!isNaN(d))return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+    if(!isNaN(d))return d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,'0')+String(d.getUTCDate()).padStart(2,'0');
   }
   return'';
 }
@@ -1456,7 +1456,7 @@ function buildXML(rows,cfg,tipoRep){
   rows.forEach(r=>{const k=String(r.CONSECUTIVO||'');if(!grupos[k])grupos[k]=[];grupos[k].push(r);});
 
   let x=`<?xml version="1.0" encoding="UTF-8"?>\n`;
-  x+=`<archivo xmlns="${NS}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="${NS} jys.xsd">\n`;
+  x+=`<archivo xsi:schemaLocation="${NS} jys.xsd" xmlns="${NS}"\nxmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n`;
   x+=`  <informe>\n    <mes_reportado>${cfg.mes}</mes_reportado>\n`;
   x+=`    <sujeto_obligado>\n      <clave_sujeto_obligado>${cfg.rfc}</clave_sujeto_obligado>\n      <clave_actividad>JYS</clave_actividad>\n    </sujeto_obligado>\n`;
 
