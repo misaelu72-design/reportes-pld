@@ -198,7 +198,13 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           <div class="upload-sub" id="upload-sub">Acepta .xlsx y .xlsm</div>
         </div>
 
-        <div class="section-label">Historial de avisos (opcional)</div>
+        <div class="section-label" style="display:flex;align-items:center;justify-content:space-between">
+          <span>Historial de avisos (opcional)</span>
+          <button type="button" id="btn-toggle-historial" onclick="toggleHistorial()"
+            style="font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border,#e5e7eb);background:#fff;cursor:pointer;font-family:inherit">
+            🚫 Quitar historial
+          </button>
+        </div>
         <div class="upload-zone" id="zone-historial" onclick="document.getElementById('file-historial').click()" style="padding:1.5rem">
           <input type="file" id="file-historial" accept=".json" onchange="historialSelected(this)">
           <div class="upload-icon" id="hist-icon" style="font-size:24px;margin-bottom:6px">🔒</div>
@@ -210,6 +216,7 @@ td.right{text-align:right;font-family:'DM Mono',monospace}
           <button class="btn btn-primary" onclick="procesarArchivo()">
             <span id="btn-procesar-text">Procesar y ver resumen</span>
             <span id="btn-procesar-spin" class="hidden"><span class="spinner"></span></span>
+
           </button>
         </div>
       </div>
@@ -334,7 +341,32 @@ function paisPorEstadoExtranjero(estado){
   return ESTADO_EXTRANJERO_A_PAIS[normalizar(estado||'')]||null;
 }
 const NS='http://www.uif.shcp.gob.mx/recepcion/jys';
-let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{},historial:null,bloqueados:[]};
+let STATE={prefijo:'',cp:'',tipo:'MENSUAL',datos:[],archivo:null,cfg:{},historial:null,bloqueados:[],ignorarHistorial:false};
+
+// Prende/apaga el filtro de "ya reportado según el historial". Útil
+// cuando el historial tiene meses marcados como cerrados que en
+// realidad todavía no se han generado/enviado como XML (por ejemplo,
+// porque el historial se pobló de golpe desde el Excel completo de
+// validación de Nydia, que ya trae la clasificación de varios meses
+// aunque tú no los hayas reportado uno por uno todavía).
+function toggleHistorial(){
+  STATE.ignorarHistorial = !STATE.ignorarHistorial;
+  const btn = document.getElementById('btn-toggle-historial');
+  const zona = document.getElementById('zone-historial');
+  if(STATE.ignorarHistorial){
+    btn.textContent = '✅ Volver a usar historial';
+    btn.style.background = '#fff3e8';
+    btn.style.borderColor = '#E26B0A';
+    zona.style.opacity = '0.45';
+    zona.style.pointerEvents = 'none';
+  } else {
+    btn.textContent = '🚫 Quitar historial';
+    btn.style.background = '#fff';
+    btn.style.borderColor = 'var(--border,#e5e7eb)';
+    zona.style.opacity = '1';
+    zona.style.pointerEvents = 'auto';
+  }
+}
 
 // ── Historial de avisos (candado JSON) ──────────────────────────────
 function historialSelected(input){
@@ -424,7 +456,7 @@ function partirNombreCompuesto(nombreCompleto){
 // Filtra las filas cuyo CURP+mes(es)+tipo de operación ya estén
 // cerrados en el historial. Devuelve {activos, bloqueados}.
 function aplicarHistorial(rows,mesCfgIso){
-  if(!STATE.historial)return{activos:rows,bloqueados:[]};
+  if(!STATE.historial || STATE.ignorarHistorial)return{activos:rows,bloqueados:[]};
   const activos=[],bloqueados=[];
   rows.forEach(r=>{
     const curp=String(r.CURP||'').trim().toUpperCase();
