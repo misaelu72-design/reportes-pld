@@ -621,6 +621,11 @@ function codOcup(v){if(!v)return'1000000';let s=String(v).trim();if(s.includes('
 function escXml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
 function fmtFecha(v){
   if(!v||v==='')return'';
+  // Si ya viene como objeto Date (SheetJS lo convierte así cuando la
+  // celda de Excel está formateada como fecha real): se toma solo el
+  // AÑO/MES/DÍA en UTC — esto ignora la hora por completo, así que nunca
+  // puede "brincar" al día siguiente por culpa de un redondeo de horas,
+  // minutos o segundos.
   if(v instanceof Date||v instanceof Object){try{const d=new Date(v);if(!isNaN(d))return d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,'0')+String(d.getUTCDate()).padStart(2,'0');}catch{}}
   const s=String(v).trim();
   if(/^\d{8}$/.test(s))return s;
@@ -628,7 +633,11 @@ function fmtFecha(v){
   const m2=s.match(/(\d{2})\/(\d{2})\/(\d{4})/);if(m2)return m2[3]+m2[2]+m2[1];
   const serial=parseFloat(s);
   if(!isNaN(serial)&&serial>20000&&serial<80000){ // serial de Excel guardado como texto (rango ~1954-2119)
-    const d=new Date(Math.round((serial-25569)*86400*1000));
+    // Se descarta la parte decimal (la hora del día) ANTES de convertir
+    // a fecha — así el cálculo se queda solo con "qué día es", igual
+    // que se ve en la celda de Excel, sin importar la hora exacta.
+    const diasEnteros=Math.floor(serial);
+    const d=new Date(Date.UTC(1899,11,30)+diasEnteros*86400*1000);
     if(!isNaN(d))return d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,'0')+String(d.getUTCDate()).padStart(2,'0');
   }
   return'';
