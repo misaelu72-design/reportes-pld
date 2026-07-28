@@ -601,6 +601,99 @@ function yyyymmAMesAbrev(yyyymm){
   return `${MESES_ABR[mes-1]}-${anio2}`;
 }
 
+// Convierte "jun-26" (formato de columna de Nydia) a "2026-06" (formato
+// ISO que usa el historial JSON en meses_cerrados / _mesInicio / _mesFin)
+function mesAbrevAIso(label){
+  const m=String(label||'').toLowerCase().match(/^([a-z]{3})-(\d{2})$/);
+  if(!m) return null;
+  const i=MESES_ABR.indexOf(m[1]);
+  if(i<0) return null;
+  return `20${m[2]}-${String(i+1).padStart(2,'0')}`;
+}
+
+// ── Motor de acumulación semestral ──────────────────────────────────
+// Misma regla validada al 100% contra los 8,955 clientes reales del
+// Excel de Nydia (ver conversación): ventana móvil de 6 meses, solo
+// cuentan los meses ≥ umbral de identificación, el umbral de aviso a
+// comparar es el vigente en el MES EN QUE INICIÓ la ventana (no el mes
+// actual), y el acumulador se reinicia después de cada aviso.
+const UMA_TABLA={ // año -> [identificación, aviso, restricción]
+  2022:[31272,62062,308866], 2023:[33716,66912,333005],
+  2024:[35285,70028,348510], 2025:[36770,72975,363179],
+  2026:[38126,75665,376565],
+};
+function umbralesDeMes(mesLabel){
+  const anio=2000+parseInt(mesLabel.slice(-2),10);
+  return UMA_TABLA[anio]||UMA_TABLA[2026]; // si algún día no está el año, usa el más reciente
+}
+function ordenMes(mesLabel){
+  const m=mesLabel.toLowerCase().match(/^([a-z]{3})-(\d{2})$/);
+  return (2000+parseInt(m[2],10))*12 + MESES_ABR.indexOf(m[1]);
+}
+// montosOrdenados: array de [mesLabel, monto] ya ordenado cronológicamente.
+// Devuelve la lista de eventos {tipo, meses:[...], monto} en orden.
+function simularAcumuladorCliente(montosOrdenados){
+  const eventos=[];
+  let ventana=[];
+  for(const [mes,v] of montosOrdenados){
+    const [ident,rep,restr]=umbralesDeMes(mes);
+    if(v>=restr){ eventos.push({tipo:'Restricción',meses:[mes],monto:v}); ventana=[]; continue; }
+    if(v>=rep){ eventos.push({tipo:'Mensual',meses:[mes],monto:v}); ventana=[]; continue; }
+    if(v>=ident){
+      const idxActual=ordenMes(mes);
+      ventana=ventana.filter(([m])=>idxActual-ordenMes(m)<6);
+      ventana.push([mes,v]);
+      const suma=ventana.reduce((s,[,val])=>s+val,0);
+      const [,repInicio]=umbralesDeMes(ventana[0][0]);
+      if(suma>=repInicio){
+        eventos.push({tipo:'Semestral',meses:ventana.map(([m])=>m),monto:suma});
+        ventana=[];
+      }
+    }
+  }
+  return eventos;
+}
+
+// Toma las filas ya extraídas del archivo del mes actual (cada una con
+// CURP, _tipo y TOTAL GENERAL = monto de ESE mes) y decide, cliente por
+// cliente, si con ese monto se cierra un aviso Semestral este mes —
+// usando el historial de montos mensuales guardados desde 2022. Filas
+// que no cierran nada este mes (siguen acumulando, o el mes ya fue
+// Mensual/Restricción por sí solo) se descartan del resultado.
+function aplicarAcumuladorSemestral(rows,historial,mesActualLabel){
+  if(!historial){
+    console.warn('Semestral: no hay historial cargado — no se puede calcular el acumulador, se omite todo.');
+    return [];
+  }
+  const out=[];
+  rows.forEach(r=>{
+    const curp=String(r.CURP||'').trim().toUpperCase();
+    const tipoOp=r._tipo||'DEPOSITO';
+    const infoKey=tipoOp==='DEPOSITO'?'info_deposito':'info_retiro';
+    const reg=historial[curp];
+    const montosHist=(reg&&reg[infoKey]&&reg[infoKey].montos_mensuales)||{};
+    const montoActual=parseFloat(limpiarMonto(r['TOTAL GENERAL']||0))||0;
+
+    const combinados={...montosHist,[mesActualLabel]:montoActual};
+    const ordenados=Object.entries(combinados).sort((a,b)=>ordenMes(a[0])-ordenMes(b[0]));
+    const eventos=simularAcumuladorCliente(ordenados);
+    const ultimo=eventos[eventos.length-1];
+
+    // Solo nos interesa si el último evento es Semestral y termina
+    // justo en el mes que se está reportando ahora — eso significa que
+    // ESTE mes es el que cierra el aviso.
+    if(ultimo&&ultimo.tipo==='Semestral'&&ultimo.meses[ultimo.meses.length-1]===mesActualLabel){
+      const mesInicioIso=mesAbrevAIso(ultimo.meses[0]);
+      const mesFinIso=mesAbrevAIso(ultimo.meses[ultimo.meses.length-1]);
+      out.push({...r,'TOTAL GENERAL':ultimo.monto,_mesInicio:mesInicioIso,_mesFin:mesFinIso});
+    }
+    // Si no hay evento, o el evento es Mensual/Restricción, o el
+    // Semestral no termina en este mes (sigue acumulando o ya cerró
+    // antes): este cliente no se reporta en este lote.
+  });
+  return out;
+}
+
 async function leerExcel(file){
   return new Promise((res,rej)=>{
     const r=new FileReader();
@@ -1099,6 +1192,28 @@ async function procesarArchivo(){
 
     if(!rows.length){errEl.textContent='No se encontraron registros en el archivo.';errEl.style.display='block';return;}
 
+    // ── Acumulador semestral (nuevo) ────────────────────────────────
+    // Si el modo es Semestral y el archivo subido es "crudo" (el mismo
+    // tipo de archivo mensual de siempre, SIN que Nydia ya lo haya
+    // clasificado como Semestral en su propio script), calculamos
+    // nosotros mismos si el monto de este mes cierra un aviso
+    // semestral, usando el historial de montos guardados desde 2022.
+    // Si el archivo YA viene pre-clasificado por Nydia (esFormatoValidacion
+    // con hoja "Semestral X", o esFormatoSemestral de su script Python),
+    // se deja tal cual — ese monto ya es el acumulado correcto.
+    // IMPORTANTE: este bloque solo corre si tipoRep==='SEMESTRAL'. El
+    // flujo de Mensual (tipoRep==='MENSUAL') nunca entra aquí y queda
+    // exactamente igual que antes.
+    if(tipoRep==='SEMESTRAL' && !esFormatoValidacion && !esFormatoSemestral){
+      const mesActualLabel=yyyymmAMesAbrev(mes);
+      rows=aplicarAcumuladorSemestral(rows,STATE.historial,mesActualLabel);
+      if(!rows.length){
+        errEl.textContent='Ningún cliente de este archivo cierra un aviso Semestral en este mes según el historial acumulado (o falta cargar el historial para poder calcularlo).';
+        errEl.style.display='block';
+        return;
+      }
+    }
+
     // ── Filtrar lo que ya está reportado según el historial JSON ────
     const mesCfgIso=mes.slice(0,4)+'-'+mes.slice(4,6);
     const{activos,bloqueados}=aplicarHistorial(rows,mesCfgIso);
@@ -1312,7 +1427,7 @@ function buildXML(rows,cfg,tipoRep){
       const fecNac=fmtFecha(r['Fecha Nacimiento']||'');
       const curp=String(r.CURP||'').trim().toUpperCase();
       const pais=paisIso2(r['Clave Pais']||r['Clave Pais Nac.']||'MEX');
-      const ocup=codOcup(r['PLD Ocupacion']||r['PLD Codigo Ocupacion']||'');
+      const ocup=codOcup(r['PLD Codigo Ocupacion']||r['PLD Ocupacion']||'');
       const col=normalizar(r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
       const cal=normalizar(r['Calle']||'').substring(0,100)||'XXXX';
       const nExt=normalizar(String(r['No Exterior']||'SIN NUMERO').split('.')[0]).substring(0,56)||'SIN NUMERO';
