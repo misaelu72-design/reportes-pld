@@ -82,11 +82,11 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 .heat-arrow{font-size:13px;color:var(--muted);transition:transform .25s}
 .heat-arrow.open{transform:rotate(180deg)}
 .heat-wrap{overflow:hidden;transition:max-height .3s ease;max-height:0}
-.heat-wrap.open{max-height:320px}
+.heat-wrap.open{max-height:500px}
 .heat-header-row{display:flex;gap:6px;margin-bottom:4px;align-items:center}
 .heat-year-lbl{font-size:9px;font-family:'DM Mono',monospace;color:var(--muted);min-width:30px}
 .heat-months-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1}
-.heat-cell{height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500}
+.heat-cell{height:32px;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9.5px;font-weight:500;line-height:1.15}
 .hc-sem{background:#fef3c7;color:#92400e;border:1px solid #fbbf24}
 .hc-men{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
 .hc-ret{background:#fce7f3;color:#9d174d;border:1px solid #f9a8d4}
@@ -700,6 +700,8 @@ function verExpediente(curp){
         // Un mes puede tener DEP y RET con tipos distintos
         const mapaDepTipo = {}; // mes → tipo (Mensual/Semestral/Restricción)
         const mapaRetTipo = {};
+        const mapaDepCierre = {}; // mes → true si es el mes_fin exacto de un aviso
+        const mapaRetCierre = {};
         c.avisosDep.forEach(a=>{
           const meses = [];
           if(a.mes_inicio === a.mes_fin) meses.push(a.mes_inicio);
@@ -713,6 +715,7 @@ function verExpediente(curp){
             }
           }
           meses.forEach(mes=>{ mapaDepTipo[mes]=a.tipo||'Mensual'; });
+          mapaDepCierre[a.mes_fin]=true;
         });
         c.avisosRet.forEach(a=>{
           const meses = [];
@@ -726,6 +729,7 @@ function verExpediente(curp){
             }
           }
           meses.forEach(mes=>{ mapaRetTipo[mes]=a.tipo||'Mensual'; });
+          mapaRetCierre[a.mes_fin]=true;
         });
 
         // Función para obtener clase CSS según tipo
@@ -740,6 +744,13 @@ function verExpediente(curp){
           return 'M';
         }
         function prioridad(tipo){ return tipo==='Restricción'?3:tipo==='Semestral'?2:1; }
+        // Envuelve el label en dos líneas: el tipo arriba, "Aviso" abajo
+        // solo si esCierre es true (el mes exacto donde se generó el
+        // reporte, no los meses que solo iban acumulando).
+        function contenidoCelda(label, esCierre){
+          if(!esCierre) return label;
+          return `<span>${label}</span><span style="font-size:8px;font-weight:600;display:block;line-height:1.3">Aviso</span>`;
+        }
 
         let filas = '';
         for(let y=anioMin;y<=anioMax;y++){
@@ -748,21 +759,22 @@ function verExpediente(curp){
             const key = `${y}-${String(m).padStart(2,'0')}`;
             const tipoDep = mapaDepTipo[key];
             const tipoRet = mapaRetTipo[key];
+            const esCierre = !!(mapaDepCierre[key] || mapaRetCierre[key]);
             if(tipoDep && tipoRet){
               // Mostrar el tipo más grave de los dos
               if(prioridad(tipoDep) >= prioridad(tipoRet)){
                 const cls = clasePorTipo(tipoDep,'DEP');
-                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">${labelPorTipo(tipoDep)}+R</div>`;
+                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">${contenidoCelda(labelPorTipo(tipoDep)+'+R', esCierre)}</div>`;
               } else {
                 const cls = clasePorTipo(tipoRet,'RET');
-                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">D+${labelPorTipo(tipoRet)}</div>`;
+                celdas += `<div class="heat-cell ${cls}" title="${key} · Dep: ${tipoDep} / Ret: ${tipoRet}">${contenidoCelda('D+'+labelPorTipo(tipoRet), esCierre)}</div>`;
               }
             } else if(tipoDep){
               const cls = clasePorTipo(tipoDep,'DEP');
-              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoDep}">${labelPorTipo(tipoDep)}</div>`;
+              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoDep}${esCierre?' · aviso generado aquí':''}">${contenidoCelda(labelPorTipo(tipoDep), esCierre)}</div>`;
             } else if(tipoRet){
               const cls = clasePorTipo(tipoRet,'RET');
-              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoRet}">${labelPorTipo(tipoRet)}</div>`;
+              celdas += `<div class="heat-cell ${cls}" title="${key} · ${tipoRet}${esCierre?' · aviso generado aquí':''}">${contenidoCelda(labelPorTipo(tipoRet), esCierre)}</div>`;
             } else {
               celdas += `<div class="heat-cell hc-vac" title="${key}">—</div>`;
             }
