@@ -751,7 +751,16 @@ function aplicarAcumuladorSemestral(rows,historial,mesActualLabel){
 async function leerExcel(file){
   return new Promise((res,rej)=>{
     const r=new FileReader();
-    r.onload=e=>{try{res(XLSX.read(e.target.result,{type:'binary',cellDates:true}));}catch(err){rej(err);}};
+    // OJO: cellDates:true se quitó a propósito. Esa opción hacía que
+    // SheetJS convirtiera las fechas usando la hora LOCAL de la
+    // computadora que abre el portal — en una máquina configurada en
+    // horario de México (UTC-6), eso metía 6 horas de más y hacía que
+    // transacciones de la tarde/noche del último día del mes se vieran
+    // como si hubieran sido al día siguiente. Ahora las fechas llegan
+    // como el número de serie crudo de Excel, y fmtFecha() las convierte
+    // con matemática pura (sin Date de por medio), así el resultado es
+    // idéntico sin importar en qué zona horaria esté la computadora.
+    r.onload=e=>{try{res(XLSX.read(e.target.result,{type:'binary'}));}catch(err){rej(err);}};
     r.onerror=rej;r.readAsBinaryString(file);
   });
 }
