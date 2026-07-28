@@ -609,6 +609,76 @@ function verExpediente(curp){
       })()}
 
       ${(()=>{
+        // Línea de tiempo de acumulación: una barra por mes con el monto
+        // real (montos_mensuales), coloreada según qué tipo de aviso tocó
+        // ese mes — así se ve claro cómo se va formando un Semestral
+        // (dos o más barras azules seguidas que en conjunto cruzan el
+        // umbral), a diferencia de un Mensual (una sola barra naranja).
+        const MESES_ABR2ISO = {ene:'01',feb:'02',mar:'03',abr:'04',may:'05',jun:'06',jul:'07',ago:'08',sep:'09',oct:'10',nov:'11',dic:'12'};
+        function abrevAIso(label){
+          const m = String(label).toLowerCase().match(/^([a-z]{3})-(\d{2})$/);
+          if(!m || !MESES_ABR2ISO[m[1]]) return null;
+          return `20${m[2]}-${MESES_ABR2ISO[m[1]]}`;
+        }
+        const montosDepRaw = (c.infoDep && c.infoDep.montos_mensuales) || {};
+        const montosRetRaw = (c.infoRet && c.infoRet.montos_mensuales) || {};
+        const usaDep = Object.keys(montosDepRaw).length > 0;
+        const montosRaw = usaDep ? montosDepRaw : montosRetRaw;
+        if(!Object.keys(montosRaw).length) return '';
+
+        const puntos = Object.entries(montosRaw)
+          .map(([label,monto])=>({iso:abrevAIso(label), monto}))
+          .filter(p=>p.iso)
+          .sort((a,b)=>a.iso.localeCompare(b.iso));
+        if(!puntos.length) return '';
+
+        const avisosOp = usaDep ? c.avisosDep : c.avisosRet;
+        function tipoDelMes(mes){
+          for(const a of avisosOp){
+            if(mes >= a.mes_inicio && mes <= a.mes_fin) return a.tipo || 'Mensual';
+          }
+          return null;
+        }
+        function colorPorTipo(tipo){
+          if(tipo==='Restricción') return '#e24b4a';
+          if(tipo==='Semestral') return '#378add';
+          if(tipo) return '#eb6834';
+          return '#c3c2b7';
+        }
+
+        const maxMonto = Math.max(...puntos.map(p=>p.monto), 1);
+        const barras = puntos.map(p=>{
+          const tipo = tipoDelMes(p.iso);
+          const alturaPct = Math.max(4, Math.round((p.monto/maxMonto)*100));
+          const color = colorPorTipo(tipo);
+          return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:16px" title="${p.iso} · $${p.monto.toLocaleString('es-MX',{minimumFractionDigits:2})}${tipo?' · '+tipo:''}">
+            <div style="width:100%;max-width:22px;height:90px;display:flex;align-items:flex-end">
+              <div style="width:100%;height:${alturaPct}%;background:${color};border-radius:3px 3px 0 0"></div>
+            </div>
+            <div style="font-size:8.5px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);height:32px">${p.iso.slice(2)}</div>
+          </div>`;
+        }).join('');
+
+        return `<div class="section">
+          <div class="heat-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.heat-arrow').classList.toggle('open')">
+            <span class="heat-toggle-title">📈 Línea de tiempo de acumulación (${usaDep?'depósito':'retiro'})</span>
+            <span class="heat-arrow">▾</span>
+          </div>
+          <div class="heat-wrap">
+            <div style="padding:10px 4px 8px;display:flex;align-items:flex-end;gap:2px;overflow-x:auto">
+              ${barras}
+            </div>
+            <div class="heat-leg-wrap" style="padding:0 4px 8px">
+              <div class="heat-leg"><div class="heat-leg-dot" style="background:#eb6834"></div>Mensual</div>
+              <div class="heat-leg"><div class="heat-leg-dot" style="background:#378add"></div>Semestral (se va acumulando)</div>
+              <div class="heat-leg"><div class="heat-leg-dot" style="background:#e24b4a"></div>Restricción</div>
+              <div class="heat-leg"><div class="heat-leg-dot" style="background:#c3c2b7"></div>Sin aviso ese mes</div>
+            </div>
+          </div>
+        </div>`;
+      })()}
+
+      ${(()=>{
         // Mapa de calor — usa el tipo real del aviso por mes
         const MESES_LABEL = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
         const todosMeses = [...c.mesesDep,...c.mesesRet];
