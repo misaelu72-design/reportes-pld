@@ -588,7 +588,20 @@ function fileSelected(input){
 // ── Utilidades ─────────────────────────────────────────────────────
 function limpiarMonto(v){if(!v&&v!==0)return'0.00';try{return parseFloat(String(v).replace(/[$,]/g,'')).toFixed(2);}catch{return'0.00';}}
 function limpiarTel(v){if(!v)return'';const s=String(v).replace(/\D/g,'');return(s.length>=10&&s.length<=12)?s:'';}
-function normalizar(s){if(!s)return'';return String(s).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-ZN0-9 .,:\/'\-#&_@$]/g,' ').replace(/\s+/g,' ').trim();}
+function normalizar(s){
+  if(!s)return'';
+  // OJO: antes se usaba .normalize('NFD') + quitar marcas diacríticas para
+  // eliminar acentos (á→a, é→e, etc.), pero ese método también separa la
+  // Ñ en "N" + virgulilla y esa virgulilla se borra junto con los acentos
+  // — convirtiendo silenciosamente Ñ en N (ej. "PEÑA" → "PENA"). Por eso
+  // ahora se reemplazan las vocales acentuadas una por una, y la Ñ/ñ se
+  // deja intacta y explícitamente permitida en el domicilio/nombre.
+  return String(s).toUpperCase()
+    .replace(/[ÁÀÄÂ]/g,'A').replace(/[ÉÈËÊ]/g,'E').replace(/[ÍÌÏÎ]/g,'I')
+    .replace(/[ÓÒÖÔ]/g,'O').replace(/[ÚÙÜÛ]/g,'U')
+    .replace(/[^A-ZÑ0-9 .,:\/'\-#&_@$]/g,' ')
+    .replace(/\s+/g,' ').trim();
+}
 
 // Mapa de prefijo de sucursal -> nombre tal como aparece en la columna "Sucursal"
 // de los reportes de Nydia (usado para filtrar cuando el Excel trae varias sucursales juntas)
