@@ -633,9 +633,14 @@ function verExpediente(curp){
         if(!puntos.length) return '';
 
         const avisosOp = usaDep ? c.avisosDep : c.avisosRet;
-        function tipoDelMes(mes){
+        function infoDelMes(mes){
           for(const a of avisosOp){
-            if(mes >= a.mes_inicio && mes <= a.mes_fin) return a.tipo || 'Mensual';
+            if(mes >= a.mes_inicio && mes <= a.mes_fin){
+              // esCierre: este es el último mes del rango, o sea el mes en
+              // el que realmente se generó/cerró el aviso (los meses
+              // anteriores del mismo rango solo "iban acumulando").
+              return {tipo:a.tipo||'Mensual', esCierre: mes===a.mes_fin};
+            }
           }
           return null;
         }
@@ -648,10 +653,15 @@ function verExpediente(curp){
 
         const maxMonto = Math.max(...puntos.map(p=>p.monto), 1);
         const barras = puntos.map(p=>{
-          const tipo = tipoDelMes(p.iso);
+          const info = infoDelMes(p.iso);
+          const tipo = info ? info.tipo : null;
           const alturaPct = Math.max(4, Math.round((p.monto/maxMonto)*100));
           const color = colorPorTipo(tipo);
-          return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:16px" title="${p.iso} · $${p.monto.toLocaleString('es-MX',{minimumFractionDigits:2})}${tipo?' · '+tipo:''}">
+          const etiquetaAviso = (info && info.esCierre)
+            ? `<div style="height:10px;font-size:8px;font-weight:600;color:${color};white-space:nowrap;line-height:10px">✓ Aviso</div>`
+            : `<div style="height:10px"></div>`;
+          return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:16px" title="${p.iso} · $${p.monto.toLocaleString('es-MX',{minimumFractionDigits:2})}${tipo?' · '+tipo:''}${(info&&info.esCierre)?' · aviso generado aquí':''}">
+            ${etiquetaAviso}
             <div style="width:100%;max-width:22px;height:90px;display:flex;align-items:flex-end">
               <div style="width:100%;height:${alturaPct}%;background:${color};border-radius:3px 3px 0 0"></div>
             </div>
