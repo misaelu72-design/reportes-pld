@@ -1509,9 +1509,15 @@ function buildXML(rows,cfg,tipoRep){
         x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
         x+=`          </nacional>\n        </tipo_domicilio>\n`;
       }
-      x+=`        <telefono>\n          <clave_pais>${pais}</clave_pais>\n`;
-      if(tel)x+=`          <numero_telefono>${tel}</numero_telefono>\n`;
-      x+=`        </telefono>\n      </persona_aviso>\n`;
+      // El bloque <telefono> solo se agrega si de verdad hay un número —
+      // dejarlo con solo <clave_pais> y sin <numero_telefono> se ve
+      // incompleto (fue justo lo que Emma marcó). En cuanto el Excel
+      // traiga el teléfono real de los clientes, este bloque vuelve a
+      // aparecer solo, sin tener que tocar nada más aquí.
+      if(tel){
+        x+=`        <telefono>\n          <clave_pais>${pais}</clave_pais>\n          <numero_telefono>${tel}</numero_telefono>\n        </telefono>\n`;
+      }
+      x+=`      </persona_aviso>\n`;
     });
     const fecOp=ultimoDiaMes(cfg.mes);
     x+=`      <detalle_operaciones>\n        <datos_operacion>\n          <fecha_operacion>${fecOp}</fecha_operacion>\n`;
