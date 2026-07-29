@@ -599,7 +599,7 @@ function normalizar(s){
   return String(s).toUpperCase()
     .replace(/[ÁÀÄÂ]/g,'A').replace(/[ÉÈËÊ]/g,'E').replace(/[ÍÌÏÎ]/g,'I')
     .replace(/[ÓÒÖÔ]/g,'O').replace(/[ÚÙÜÛ]/g,'U')
-    .replace(/[^A-ZÑ0-9 .,:\/'\-#&_@$]/g,' ')
+    .replace(/[^A-ZÑ0-9 .,:\/'\-#&_@$()]/g,' ')
     .replace(/\s+/g,' ').trim();
 }
 
@@ -1444,8 +1444,14 @@ function generarXML(){
 
       if(!grupos.length) throw new Error('No hay avisos para generar.');
 
+      // El número de referencia_aviso debe ser distinto y consecutivo
+      // entre Depósito y Retiro (son dos archivos/reportes separados
+      // que se envían a la UIF): si Depósito usa GPE0001, Retiro debe
+      // usar GPE0002, no repetir el mismo número.
+      let refCounter=1;
       const items=grupos.map(g=>{
-        const xml=buildXML(g.datos,STATE.cfg,STATE.tipo);
+        const cfgConRef={...STATE.cfg, refNum:refCounter++};
+        const xml=buildXML(g.datos,cfgConRef,STATE.tipo);
         const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}_${g.tipo}.xml`;
         const blob=new Blob([xml],{type:'application/xml'});
         const url=URL.createObjectURL(blob);
@@ -1481,7 +1487,7 @@ function buildXML(rows,cfg,tipoRep){
   Object.entries(grupos).forEach(([folio,grupo])=>{
     const tipoMov=grupo[0]._tipo||'DEPOSITO';
     const desc=tipoRep==='SEMESTRAL'?'SUPERACION UMA SEMESTRAL':'SUPERACION UMA MENSUAL';
-    x+=`    <aviso>\n      <referencia_aviso>${escXml(STATE.prefijo+'0001')}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
+    x+=`    <aviso>\n      <referencia_aviso>${escXml(STATE.prefijo+String(cfg.refNum||1).padStart(4,'0'))}</referencia_aviso>\n      <prioridad>1</prioridad>\n`;
     x+=`      <alerta>\n        <tipo_alerta>100</tipo_alerta>\n        <descripcion_alerta>${desc}</descripcion_alerta>\n      </alerta>\n`;
     grupo.forEach(r=>{
       const nom=normalizar(r.Nombre||'');if(!nom)return;
