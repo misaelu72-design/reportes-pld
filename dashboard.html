@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Reportes PLD — CECOM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -1207,7 +1208,15 @@ function abrirAdmin(){
     alert('Solo el administrador puede acceder a esta sección.');
     return;
   }
-  ADM_USUARIOS = JSON.parse(JSON.stringify(USUARIOS)); // copia
+  // Copia y asignar roles por defecto si no existen
+  ADM_USUARIOS = JSON.parse(JSON.stringify(USUARIOS)).map(u => {
+    if(!u.rol){
+      if(u.u === 'misael') u.rol = 'Admin';
+      else if(u.u === 'nydia') u.rol = 'Gerente';
+      else u.rol = 'Analista';
+    }
+    return u;
+  });
   renderAdmTabla();
   document.getElementById('admSubtitle').textContent = ADM_USUARIOS.length + ' usuario(s) registrados';
   document.getElementById('admOverlay').classList.add('on');
@@ -1237,12 +1246,11 @@ function renderAdmTabla(){
       <td><span class="adm-rol adm-rol-${rol}">${rol}</span></td>
       <td>
         <div style="display:flex;gap:4px">
-          ${!u.desactivado ? `
-          <button class="adm-btn-icon" onclick="abrirFormEditar(${i})" title="Editar"><i class="ti ti-edit" aria-hidden="true"></i></button>
-          ${u.u !== 'misael' ? `<button class="adm-btn-icon" onclick="desactivarUsuario(${i})" title="Desactivar" style="color:#A32D2D"><i class="ti ti-user-off" aria-hidden="true"></i></button>` : ''}
-          ` : `
-          <button class="adm-btn-icon" onclick="activarUsuario(${i})" title="Reactivar" style="color:#3B6D11"><i class="ti ti-player-play" aria-hidden="true"></i></button>
-          `}
+          <button class="adm-btn-icon" onclick="abrirFormEditar(${i})" title="Editar" style="font-size:14px">✏️</button>
+          ${u.u !== 'misael' ? `
+          <button class="adm-btn-icon" onclick="${!u.desactivado ? `desactivarUsuario(${i})` : `activarUsuario(${i})`}" title="${!u.desactivado ? 'Desactivar' : 'Reactivar'}" style="font-size:14px">${!u.desactivado ? '🚫' : '✅'}</button>
+          <button class="adm-btn-icon" onclick="eliminarUsuario(${i})" title="Eliminar" style="font-size:14px;color:#A32D2D">🗑️</button>
+          ` : ''}
         </div>
       </td>
     </tr>`;
@@ -1314,6 +1322,13 @@ function desactivarUsuario(idx){
 
 function activarUsuario(idx){
   ADM_USUARIOS[idx].desactivado = false;
+  renderAdmTabla();
+}
+
+function eliminarUsuario(idx){
+  if(ADM_USUARIOS[idx].u === 'misael'){ alert('No puedes eliminar al administrador.'); return; }
+  if(!confirm('¿Eliminar definitivamente a ' + ADM_USUARIOS[idx].n + '?\nEsta acción no se puede deshacer.')) return;
+  ADM_USUARIOS.splice(idx, 1);
   renderAdmTabla();
 }
 
