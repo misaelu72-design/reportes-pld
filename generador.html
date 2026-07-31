@@ -1530,6 +1530,7 @@ function buildXML(rows,cfg,tipoRep){
         x+=`            <ciudad_poblacion>${escXml(ciudadPob)}</ciudad_poblacion>\n`;
         x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
         x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
+        if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
         x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
         x+=`          </extranjero>\n        </tipo_domicilio>\n`;
       } else {
