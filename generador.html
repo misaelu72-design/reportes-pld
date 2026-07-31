@@ -1438,7 +1438,6 @@ function generarXML(){
   document.getElementById('btn-xml-spin').classList.remove('hidden');
   setTimeout(()=>{
     try{
-      const pref=STATE.tipo==='SEMESTRAL'?'XML_SEMESTRAL':'XML_MENSUAL';
       const grupos=[
         {tipo:'DEPOSITO', datos: STATE.datos.filter(r=>r._tipo==='DEPOSITO')},
         {tipo:'RETIRO',   datos: STATE.datos.filter(r=>r._tipo==='RETIRO')},
@@ -1452,9 +1451,15 @@ function generarXML(){
       // usar GPE0002, no repetir el mismo número.
       let refCounter=1;
       const items=grupos.map(g=>{
-        const cfgConRef={...STATE.cfg, refNum:refCounter++};
+        const refNum=refCounter++;
+        const cfgConRef={...STATE.cfg, refNum};
         const xml=buildXML(g.datos,cfgConRef,STATE.tipo);
-        const nombre=`${pref}_${STATE.prefijo}_${STATE.cfg.mes}_${g.tipo}.xml`;
+        // Nombre del archivo pedido por Emma: la referencia del aviso
+        // (ej. "MTY0001") + "VENTAS" para depósitos o "PAGOS" para
+        // retiros — en vez del nombre técnico "XML_MENSUAL_..._DEPOSITO".
+        const referencia=STATE.prefijo+String(refNum).padStart(4,'0');
+        const etiquetaTipo=g.tipo==='DEPOSITO'?'VENTAS':'PAGOS';
+        const nombre=`${referencia} ${etiquetaTipo}.xml`;
         const blob=new Blob([xml],{type:'application/xml'});
         const url=URL.createObjectURL(blob);
         return `
