@@ -244,6 +244,13 @@ header{background:var(--azul);color:#fff;padding:0 2rem;position:sticky;top:0;z-
 const s = sessionStorage.getItem('pld');
 if(!s) window.location.href = 'index.html';
 
+function formatMonto(monto){
+  if(monto >= 1000000){
+    return `$${(monto/1000000).toFixed(2)}M`;
+  }
+  return `$${(monto/1000).toFixed(0)}K`;
+}
+
 let HISTORIAL = null;
 let CLIENTES = [];
 let filtroTipo = '';
@@ -346,7 +353,7 @@ function renderTop10(){
         <div style="font-size:10px;color:var(--muted);margin-top:1px">${c.sucursales.slice(0,2).join(' · ')||'—'} · ${c.todosAvisos.length} avisos</div>
       </div>
       <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace">$${(montoTotal/1000).toFixed(0)}K</div>
+        <div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace">${formatMonto(montoTotal)}</div>
         <div style="display:flex;gap:3px;justify-content:flex-end;margin-top:2px">${badges}</div>
       </div>
     </div>`;
@@ -564,7 +571,7 @@ function verExpediente(curp){
           <div class="stat-label">Meses cerrados</div>
         </div>
         <div class="stat">
-          <div class="stat-val" style="color:var(--naranja);font-size:14px">$${(montoTotal/1000).toFixed(0)}K</div>
+          <div class="stat-val" style="color:var(--naranja);font-size:14px">${formatMonto(montoTotal)}</div>
           <div class="stat-label">Monto total</div>
         </div>
         <div class="stat">
