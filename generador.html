@@ -439,7 +439,7 @@ function mesesEnRango(inicio,fin){
 // respetando apellidos compuestos con partículas (DE, DEL, LA, LOS, LAS, Y),
 // p.ej. "ABELARDO GAUCIN DE LA GARZA" -> Nombre: ABELARDO, Paterno: GAUCIN, Materno: DE LA GARZA
 const PARTICULAS_APELLIDO=new Set(['DE','DEL','LA','LOS','LAS','Y']);
-function partirNombreCompuesto(nombreCompleto){
+function partirNombreCompuesto(nombreCompleto,curp){
   const partes=String(nombreCompleto||'').trim().split(/\s+/).filter(Boolean);
   if(partes.length===0) return {nombre:'',apPat:'XXXX',apMat:'XXXX'};
   if(partes.length===1) return {nombre:partes[0],apPat:'XXXX',apMat:'XXXX'};
@@ -452,7 +452,28 @@ function partirNombreCompuesto(nombreCompleto){
   const paterno=[partes[i]]; i--;
   while(i>=1 && PARTICULAS_APELLIDO.has(partes[i].toUpperCase())){ paterno.unshift(partes[i]); i--; }
   const nombre=partes.slice(0,i+1).join(' ')||paterno.join(' ');
-  return {nombre, apPat:paterno.join(' '), apMat:materno.join(' ')};
+  const base={nombre, apPat:paterno.join(' '), apMat:materno.join(' ')};
+
+  // Si la CURP está disponible, validamos el corte contra sus iniciales
+  // (pos.1=apellido paterno, pos.3=apellido materno). Si no coincide y no
+  // hubo partículas de por medio, probamos un corte alterno con apellido
+  // paterno compuesto de 2 palabras sin partícula (ej. "GOMEZ MONROY"),
+  // que es el caso típico que el corte estándar (últimas 2 palabras =
+  // apellidos) parte mal.
+  const curpNorm=String(curp||'').toUpperCase();
+  if(curpNorm.length>=4 && partes.length>=4 && materno.length===1 && paterno.length===1){
+    const inicial=w=>String(w||'').trim().charAt(0).toUpperCase();
+    const coincideBase = inicial(base.apPat)===curpNorm[0] && inicial(base.apMat)===curpNorm[2];
+    if(!coincideBase){
+      const idxCorte=partes.length-3;
+      const altPaterno=partes.slice(idxCorte, partes.length-1).join(' ');
+      const altMaterno=partes[partes.length-1];
+      const altNombre=partes.slice(0, idxCorte).join(' ');
+      const coincideAlt = altNombre && inicial(altPaterno)===curpNorm[0] && inicial(altMaterno)===curpNorm[2];
+      if(coincideAlt) return {nombre:altNombre, apPat:altPaterno, apMat:altMaterno};
+    }
+  }
+  return base;
 }
 
 // Filtra las filas cuyo CURP+mes(es)+tipo de operación ya estén
@@ -836,7 +857,7 @@ async function procesarArchivo(){
 
       raw.forEach(r=>{
         const nombreCompleto = String(r['Cliente']||'').trim();
-        const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+        const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto, r['CURP']);
 
         const monto = String(r['Monto']||'0').replace(/[$,]/g,'');
         const tipo  = String(r['Tipo Mov']||'DEPOSITO').trim().toUpperCase();
@@ -1023,7 +1044,7 @@ async function procesarArchivo(){
           const tipoEsperado=esSemestral?'Semestral':'Mensual';
           if(tipoRepFila && tipoRepFila!==tipoEsperado) return; // cada modo solo toma lo suyo
           const nombreCompleto=String(obj['Nombre del Cliente']||'').trim();
-          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto, curp);
           let monto=0;
           const meses=headers.filter(h=>/^[a-z]{3}-\d{2}$/.test(h));
           for(let i=meses.length-1;i>=0;i--){
@@ -1126,7 +1147,7 @@ async function procesarArchivo(){
           if(curp.length!==18) return;
           if(!filaEsDeLaSucursalSeleccionada(rec)) return;
           const nombreCompleto=String(rec['Nombre del Cliente']||'').trim();
-          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto, curp);
           const cpRaw=String(rec['C.P.']||'').split('.')[0].trim();
           const propia=(infoPorTipo[t][reg.pid]||{})['Fecha Última Transac.'];
           const otraTipo=t==='DEPOSITO'?'RETIRO':'DEPOSITO';
@@ -1173,7 +1194,7 @@ async function procesarArchivo(){
           if(!filaEsDeLaSucursalSeleccionada(obj)) return;
           // Separar nombre completo
           const nombreCompleto = String(obj['Nombre del Cliente']||'').trim();
-          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto, curp);
           const monto = parseFloat(String(obj['TOTAL ACUMULADO']||'0').replace(/[$,—\-]/g,''))||0;
           rows.push({
             'Nombre':           nombre,
@@ -1220,7 +1241,7 @@ async function procesarArchivo(){
           if(!obj['Cliente']&&!obj['CURP']) return;
           // Separar nombre completo
           const nombreCompleto = String(obj['Cliente']||'').trim();
-          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto);
+          const {nombre, apPat, apMat} = partirNombreCompuesto(nombreCompleto, obj['CURP']);
           const monto = parseFloat(String(obj['Monto Acumulado']||'0').replace(/[$,]/g,''))||0;
           rows.push({
             'CONSECUTIVO':      String(obj['Folio']||''),
