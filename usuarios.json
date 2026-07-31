@@ -1,32 +1,32 @@
 [
   {
     "u": "misael",
+    "n": "Misael Urbina",
     "h": "27b166efcfde2a17b04c09e6e32619f6bde625621fa9471e716475eb98a2c6db",
-    "n": "Misael Urbina"
+    "rol": "Admin"
   },
   {
     "u": "nydia",
+    "n": "Nydia Salas",
     "h": "27b166efcfde2a17b04c09e6e32619f6bde625621fa9471e716475eb98a2c6db",
-    "n": "Nydia Salas"
+    "rol": "Analista"
   },
   {
     "u": "pld",
+    "n": "Equipo PLD",
     "h": "27b166efcfde2a17b04c09e6e32619f6bde625621fa9471e716475eb98a2c6db",
-    "n": "Equipo PLD"
+    "rol": "Analista"
   },
   {
     "u": "ricardo",
+    "n": "Ricardo Treviño",
     "h": "16411b8ac548c647f6e1ab646054de75770efc6e4902b41ac2477d7fa7a1f58b",
-    "n": "Ricardo Treviño"
-  },
-  {
-    "u": "perla",
-    "h": "ab234a5a71fb9ed47acd8feeb046fe321d8004f887ff6558933d78f02b291421",
-    "n": "Perla Rojas"
+    "rol": "Analista"
   },
   {
     "u": "edgar",
+    "n": "Edgar Duarte",
     "h": "a7fcec99c963dc70bbfc15d9e0025e746f5abb7759a9a82b3b1de92d479ec9f1",
-    "n": "Edgar Duarte"
+    "rol": "Analista"
   }
 ]
