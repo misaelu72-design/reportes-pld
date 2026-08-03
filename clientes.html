@@ -835,7 +835,7 @@ function verExpediente(curp){
               <option value="DEPOSITO" ${filtroOpTabla==='DEPOSITO'?'selected':''}>Depósito</option>
               <option value="RETIRO" ${filtroOpTabla==='RETIRO'?'selected':''}>Retiro</option>
             </select>
-            ${c.sucursales.length>1 ? `
+            ${c.sucursales.length>0 ? `
             <select onchange="filtroSucTabla=this.value; verExpediente('${c.curp}')" style="font-size:11px;padding:4px 8px;border:0.5px solid var(--border);border-radius:6px;background:#fff;color:var(--text-primary,#333);cursor:pointer;text-transform:none;letter-spacing:normal;font-weight:400">
               <option value="" ${filtroSucTabla===''?'selected':''}>Todas las sucursales</option>
               ${c.sucursales.map(s=>`<option value="${s}" ${filtroSucTabla===s?'selected':''}>${s}</option>`).join('')}
