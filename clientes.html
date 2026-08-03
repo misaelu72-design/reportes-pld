@@ -255,6 +255,7 @@ let HISTORIAL = null;
 let CLIENTES = [];
 let filtroTipo = '';
 let filtroOpTabla = '';
+let filtroSucTabla = '';
 let clienteActivo = null;
 let topCriteria = 'monto';
 
@@ -521,7 +522,7 @@ function filtrar(){
 
 // ── Ver expediente ───────────────────────────────────────────────────
 function verExpediente(curp){
-  if(!clienteActivo || clienteActivo.curp !== curp) filtroOpTabla = '';
+  if(!clienteActivo || clienteActivo.curp !== curp){ filtroOpTabla = ''; filtroSucTabla = ''; }
   clienteActivo = CLIENTES.find(c=>c.curp===curp);
   if(!clienteActivo) return;
   filtrar();
@@ -532,7 +533,10 @@ function verExpediente(curp){
   const c = clienteActivo;
   const totalMeses = [...new Set([...c.mesesDep,...c.mesesRet])].length;
   const montoTotal = c.todosAvisos.reduce((s,a)=>s+(a.monto||0),0);
-  const avisosFiltrados = filtroOpTabla ? c.todosAvisos.filter(a=>a.op===filtroOpTabla) : c.todosAvisos;
+  const avisosFiltrados = c.todosAvisos.filter(a=>
+    (!filtroOpTabla || a.op===filtroOpTabla) &&
+    (!filtroSucTabla || a.sucursal===filtroSucTabla)
+  );
 
   expPanel.innerHTML = `
     <div class="top-panel">
@@ -825,11 +829,18 @@ function verExpediente(curp){
       <div class="section">
         <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
           <span>Historial de avisos (${avisosFiltrados.length}${avisosFiltrados.length!==c.todosAvisos.length?` de ${c.todosAvisos.length}`:''})</span>
-          <select onchange="filtroOpTabla=this.value; verExpediente('${c.curp}')" style="font-size:11px;padding:4px 8px;border:0.5px solid var(--border);border-radius:6px;background:#fff;color:var(--text-primary,#333);cursor:pointer;text-transform:none;letter-spacing:normal;font-weight:400">
-            <option value="" ${filtroOpTabla===''?'selected':''}>Todas las operaciones</option>
-            <option value="DEPOSITO" ${filtroOpTabla==='DEPOSITO'?'selected':''}>Depósito</option>
-            <option value="RETIRO" ${filtroOpTabla==='RETIRO'?'selected':''}>Retiro</option>
-          </select>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <select onchange="filtroOpTabla=this.value; verExpediente('${c.curp}')" style="font-size:11px;padding:4px 8px;border:0.5px solid var(--border);border-radius:6px;background:#fff;color:var(--text-primary,#333);cursor:pointer;text-transform:none;letter-spacing:normal;font-weight:400">
+              <option value="" ${filtroOpTabla===''?'selected':''}>Todas las operaciones</option>
+              <option value="DEPOSITO" ${filtroOpTabla==='DEPOSITO'?'selected':''}>Depósito</option>
+              <option value="RETIRO" ${filtroOpTabla==='RETIRO'?'selected':''}>Retiro</option>
+            </select>
+            ${c.sucursales.length>1 ? `
+            <select onchange="filtroSucTabla=this.value; verExpediente('${c.curp}')" style="font-size:11px;padding:4px 8px;border:0.5px solid var(--border);border-radius:6px;background:#fff;color:var(--text-primary,#333);cursor:pointer;text-transform:none;letter-spacing:normal;font-weight:400">
+              <option value="" ${filtroSucTabla===''?'selected':''}>Todas las sucursales</option>
+              ${c.sucursales.map(s=>`<option value="${s}" ${filtroSucTabla===s?'selected':''}>${s}</option>`).join('')}
+            </select>` : ''}
+          </div>
         </div>
         <table class="aviso-table">
           <thead>
@@ -853,7 +864,7 @@ function verExpediente(curp){
                 <td class="td-mono">${a.mes_inicio===a.mes_fin?a.mes_inicio:a.mes_inicio+' → '+a.mes_fin}</td>
                 <td class="td-mono">$${a.monto?Number(a.monto).toLocaleString('es-MX',{minimumFractionDigits:2}):'—'}</td>
                 <td>${a.sucursal||'—'}</td>
-              </tr>`).join('') : `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:16px">Sin avisos de este tipo de operación</td></tr>`}
+              </tr>`).join('') : `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:16px">Sin avisos con estos filtros</td></tr>`}
           </tbody>
         </table>
       </div>
