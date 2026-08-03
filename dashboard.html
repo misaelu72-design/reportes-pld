@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Reportes PLD — CECOM</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -88,38 +87,6 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
 @media(max-width:640px){main{padding:1rem}.ds{grid-template-columns:1fr}}
 .hr select option{background:#1F3864;color:white}
 
-  /* ── Panel Admin Usuarios ── */
-  .adm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem}
-  .adm-overlay.on{display:flex}
-  .adm-modal{background:#fff;border-radius:14px;width:100%;max-width:640px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}
-  .adm-head{padding:1rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-  .adm-title{font-size:14px;font-weight:500;color:var(--texto)}
-  .adm-body{overflow-y:auto;flex:1}
-  .adm-table{width:100%;border-collapse:collapse;font-size:12px}
-  .adm-table th{padding:8px 14px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);background:#f9fafb;border-bottom:0.5px solid var(--border)}
-  .adm-table td{padding:10px 14px;border-bottom:0.5px solid #f3f4f6;vertical-align:middle}
-  .adm-table tr:last-child td{border-bottom:none}
-  .adm-table tr.desactivado td{opacity:.45}
-  .adm-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
-  .adm-rol{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:500;border:0.5px solid transparent}
-  .adm-rol-Admin{background:#EEF3FB;color:#1F3864;border-color:rgba(31,56,100,.2)}
-  .adm-rol-Gerente{background:#EAF3DE;color:#3B6D11;border-color:rgba(59,109,17,.2)}
-  .adm-rol-Analista{background:#FAEEDA;color:#854F0B;border-color:rgba(133,79,11,.2)}
-  .adm-rol-Viewer{background:#f3f4f6;color:#374151;border-color:#e5e7eb}
-  .adm-foot{padding:.875rem 1.25rem;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#f9fafb}
-  .adm-btn{font-size:12px;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:5px;border:none}
-  .adm-btn-primary{background:#1F3864;color:#fff}
-  .adm-btn-secondary{background:#fff;color:var(--texto);border:0.5px solid var(--border) !important}
-  .adm-btn-icon{width:28px;height:28px;border-radius:6px;border:0.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
-  .adm-btn-icon:hover{background:#f3f4f6}
-  .adm-form{padding:1rem 1.25rem;border-bottom:0.5px solid var(--border);background:#f9fafb;display:none}
-  .adm-form.on{display:block}
-  .adm-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-  .adm-input{width:100%;padding:7px 10px;border:0.5px solid var(--border);border-radius:7px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--texto);box-sizing:border-box}
-  .adm-input:focus{border-color:#2E75B6}
-  .adm-label{font-size:10px;font-weight:500;color:var(--muted);margin-bottom:3px;display:block;text-transform:uppercase;letter-spacing:.6px}
-  .adm-select{width:100%;padding:7px 10px;border:0.5px solid var(--border);border-radius:7px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--texto)}
-
   .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;display:none;opacity:0;transition:opacity .25s}
   .panel-overlay.on{display:block;opacity:1}
   .panel{position:fixed;top:0;right:0;bottom:0;width:680px;max-width:96vw;background:#ffffff;box-shadow:-4px 0 32px rgba(0,0,0,.25);z-index:501;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
@@ -202,9 +169,6 @@ td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
       <span class="ub" id="hUpd"></span>
       <span class="un" id="hUser"></span>
       <a href="home.html" class="lo" style="text-decoration:none">← Inicio</a>
-      <button class="btn-panel" id="btnAdmin" onclick="abrirAdmin()" style="display:none;background:rgba(255,255,255,.08)">
-        <i class="ti ti-users" style="font-size:13px" aria-hidden="true"></i> Usuarios
-      </button>
       <button class="btn-panel" id="btnPanel" onclick="abrirPanel()" style="display:none">⭐ Resumen</button>
       <button class="lo" id="hLogout" onclick="logout()" style="display:none">Cerrar sesión</button>
     </div>
@@ -445,10 +409,6 @@ function mostrarApp(nombre){
   document.getElementById('hUser').textContent=nombre;
   document.getElementById('hLogout').style.display='inline-block';
   document.getElementById('btnPanel').style.display='flex';
-  // Mostrar botón admin solo para misael
-  const _sess = JSON.parse(sessionStorage.getItem('pld')||'{}');
-  const btnAdm = document.getElementById('btnAdmin');
-  if(btnAdm) btnAdm.style.display = (_sess.u === 'misael') ? 'flex' : 'none';
   document.getElementById('main').style.display='block';
   if(DATA){
     renderizar(DATA);
@@ -846,7 +806,7 @@ let TODOS_CORTES=[], CAL_MES=new Date().getMonth(), CAL_ANIO=2026;
 let CAL_DIA_SEL=null, CAL_SEM_ARCH=null, CAL_REF_ARCH=null;
 const MESES_CAL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DOWS_CAL=['Do','Lu','Ma','Mi','Ju','Vi','Sa'];
-const MESES_NUM={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11};
+const MESES_NUM={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11,Abr:3,Ene:0,Dic:11,Ago:7,Sep:8,Oct:9,Nov:10,Mar:2,Jul:6};
 
 function parseFechaCorte(etiq){
   const fc=(etiq.split(' vs ')[1]||etiq).trim();
@@ -1191,232 +1151,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
   // Si no hay sesión el login ya está visible
 });
-
-// ── Panel Admin Usuarios ─────────────────────────────────────
-let ADM_USUARIOS = [];
-let ADM_EDIT_IDX = -1;
-
-async function sha256adm(msg){
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-function abrirAdmin(){
-  // Solo el usuario misael puede acceder
-  const s = JSON.parse(sessionStorage.getItem('pld')||'{}');
-  if(s.u !== 'misael'){
-    alert('Solo el administrador puede acceder a esta sección.');
-    return;
-  }
-  // Copia y asignar roles por defecto si no existen
-  ADM_USUARIOS = JSON.parse(JSON.stringify(USUARIOS)).map(u => {
-    if(!u.rol){
-      if(u.u === 'misael') u.rol = 'Admin';
-      else if(u.u === 'nydia') u.rol = 'Gerente';
-      else u.rol = 'Analista';
-    }
-    return u;
-  });
-  renderAdmTabla();
-  document.getElementById('admSubtitle').textContent = ADM_USUARIOS.length + ' usuario(s) registrados';
-  document.getElementById('admOverlay').classList.add('on');
-}
-
-function cerrarAdmin(){
-  document.getElementById('admOverlay').classList.remove('on');
-  cerrarForm();
-}
-
-function renderAdmTabla(){
-  const tb = document.getElementById('admTbody');
-  const colores = ['#EEF3FB','#EAF3DE','#FAEEDA','#f3f4f6','#FCE8FB','#FFF3E8'];
-  const txtcol  = ['#1F3864','#3B6D11','#854F0B','#374151','#7B1F7A','#854F0B'];
-  tb.innerHTML = ADM_USUARIOS.map((u,i)=>{
-    const inits = u.n.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase();
-    const rol = u.rol || 'Viewer';
-    const desact = u.desactivado ? 'desactivado' : '';
-    return `<tr class="${desact}">
-      <td>
-        <div style="display:flex;align-items:center;gap:8px">
-          <div class="adm-avatar" style="background:${colores[i%colores.length]};color:${txtcol[i%txtcol.length]}">${inits}</div>
-          <span style="font-family:monospace;font-size:11px">${u.u}</span>
-        </div>
-      </td>
-      <td style="font-weight:500">${u.n}</td>
-      <td><span class="adm-rol adm-rol-${rol}">${rol}</span></td>
-      <td>
-        <div style="display:flex;gap:4px">
-          <button class="adm-btn-icon" onclick="abrirFormEditar(${i})" title="Editar" style="font-size:14px">✏️</button>
-          ${u.u !== 'misael' ? `
-          <button class="adm-btn-icon" onclick="${!u.desactivado ? `desactivarUsuario(${i})` : `activarUsuario(${i})`}" title="${!u.desactivado ? 'Desactivar' : 'Reactivar'}" style="font-size:14px">${!u.desactivado ? '🚫' : '✅'}</button>
-          <button class="adm-btn-icon" onclick="eliminarUsuario(${i})" title="Eliminar" style="font-size:14px;color:#A32D2D">🗑️</button>
-          ` : ''}
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-  document.getElementById('admSubtitle').textContent = ADM_USUARIOS.filter(u=>!u.desactivado).length + ' activos · ' + ADM_USUARIOS.filter(u=>u.desactivado).length + ' desactivados';
-}
-
-function abrirFormNuevo(){
-  ADM_EDIT_IDX = -1;
-  document.getElementById('admFormTitle').textContent = 'Nuevo usuario';
-  document.getElementById('admPwdHint').textContent = '(requerida)';
-  document.getElementById('admU').value = '';
-  document.getElementById('admN').value = '';
-  document.getElementById('admP').value = '';
-  document.getElementById('admR').value = 'Analista';
-  document.getElementById('admU').disabled = false;
-  document.getElementById('admForm').classList.add('on');
-  document.getElementById('admU').focus();
-}
-
-function abrirFormEditar(idx){
-  ADM_EDIT_IDX = idx;
-  const u = ADM_USUARIOS[idx];
-  document.getElementById('admFormTitle').textContent = 'Editar usuario';
-  document.getElementById('admPwdHint').textContent = '(dejar vacío = no cambiar)';
-  document.getElementById('admU').value = u.u;
-  document.getElementById('admN').value = u.n;
-  document.getElementById('admP').value = '';
-  document.getElementById('admR').value = u.rol || 'Analista';
-  document.getElementById('admU').disabled = true;
-  document.getElementById('admForm').classList.add('on');
-  document.getElementById('admN').focus();
-}
-
-function cerrarForm(){
-  document.getElementById('admForm').classList.remove('on');
-  ADM_EDIT_IDX = -1;
-}
-
-async function guardarUsuario(){
-  const u = document.getElementById('admU').value.trim().toLowerCase();
-  const n = document.getElementById('admN').value.trim();
-  const p = document.getElementById('admP').value;
-  const r = document.getElementById('admR').value;
-
-  if(!u || !n){ alert('Usuario y nombre son requeridos.'); return; }
-  if(ADM_EDIT_IDX === -1 && !p){ alert('La contraseña es requerida para nuevos usuarios.'); return; }
-  if(ADM_EDIT_IDX === -1 && ADM_USUARIOS.find(x=>x.u===u)){ alert('Ese usuario ya existe.'); return; }
-
-  if(ADM_EDIT_IDX === -1){
-    // Nuevo usuario
-    const h = await sha256adm(p);
-    ADM_USUARIOS.push({u, n, h, rol: r});
-  } else {
-    // Editar
-    ADM_USUARIOS[ADM_EDIT_IDX].n = n;
-    ADM_USUARIOS[ADM_EDIT_IDX].rol = r;
-    if(p){ ADM_USUARIOS[ADM_EDIT_IDX].h = await sha256adm(p); }
-  }
-  cerrarForm();
-  renderAdmTabla();
-}
-
-function desactivarUsuario(idx){
-  if(!confirm('¿Desactivar a ' + ADM_USUARIOS[idx].n + '?')) return;
-  ADM_USUARIOS[idx].desactivado = true;
-  renderAdmTabla();
-}
-
-function activarUsuario(idx){
-  ADM_USUARIOS[idx].desactivado = false;
-  renderAdmTabla();
-}
-
-function eliminarUsuario(idx){
-  if(ADM_USUARIOS[idx].u === 'misael'){ alert('No puedes eliminar al administrador.'); return; }
-  if(!confirm('¿Eliminar definitivamente a ' + ADM_USUARIOS[idx].n + '?\nEsta acción no se puede deshacer.')) return;
-  ADM_USUARIOS.splice(idx, 1);
-  renderAdmTabla();
-}
-
-function descargarUsuariosJson(){
-  // Generar JSON sin campo desactivado=false (limpio)
-  const limpio = ADM_USUARIOS.map(u => {
-    const obj = {u: u.u, n: u.n, h: u.h, rol: u.rol || 'Viewer'};
-    if(u.desactivado) obj.desactivado = true;
-    return obj;
-  });
-  const blob = new Blob([JSON.stringify(limpio, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'usuarios.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
 </script>
-
-<!-- Panel Admin Usuarios -->
-<div class="adm-overlay" id="admOverlay" onclick="if(event.target===this)cerrarAdmin()">
-  <div class="adm-modal">
-    <div class="adm-head">
-      <div>
-        <div class="adm-title">Usuarios del portal</div>
-        <div style="font-size:11px;color:var(--muted)" id="admSubtitle"></div>
-      </div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <button class="adm-btn adm-btn-primary" onclick="abrirFormNuevo()">
-          <i class="ti ti-plus" style="font-size:13px" aria-hidden="true"></i> Nuevo usuario
-        </button>
-        <button class="adm-btn-icon" onclick="cerrarAdmin()">✕</button>
-      </div>
-    </div>
-    <!-- Formulario nuevo/editar usuario -->
-    <div class="adm-form" id="admForm">
-      <div style="font-size:12px;font-weight:500;color:var(--texto);margin-bottom:10px" id="admFormTitle">Nuevo usuario</div>
-      <div class="adm-form-grid">
-        <div>
-          <label class="adm-label">Usuario</label>
-          <input class="adm-input" id="admU" type="text" placeholder="ej. juan" autocomplete="off">
-        </div>
-        <div>
-          <label class="adm-label">Nombre completo</label>
-          <input class="adm-input" id="admN" type="text" placeholder="ej. Juan Pérez" autocomplete="off">
-        </div>
-        <div>
-          <label class="adm-label">Contraseña <span id="admPwdHint" style="font-weight:400;text-transform:none">(dejar vacío = no cambiar)</span></label>
-          <input class="adm-input" id="admP" type="password" placeholder="Nueva contraseña" autocomplete="new-password">
-        </div>
-        <div>
-          <label class="adm-label">Rol</label>
-          <select class="adm-select" id="admR">
-            <option value="Admin">Admin</option>
-            <option value="Gerente">Gerente</option>
-            <option value="Analista" selected>Analista</option>
-            <option value="Viewer">Viewer</option>
-          </select>
-        </div>
-      </div>
-      <div style="display:flex;gap:6px;justify-content:flex-end">
-        <button class="adm-btn adm-btn-secondary" onclick="cerrarForm()">Cancelar</button>
-        <button class="adm-btn adm-btn-primary" onclick="guardarUsuario()">Guardar usuario</button>
-      </div>
-    </div>
-    <!-- Tabla de usuarios -->
-    <div class="adm-body">
-      <table class="adm-table">
-        <thead>
-          <tr>
-            <th>Usuario</th>
-            <th>Nombre</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="admTbody"></tbody>
-      </table>
-    </div>
-    <div class="adm-foot">
-      <span style="font-size:11px;color:var(--muted)">Los cambios se guardan en <code style="font-family:monospace">usuarios.json</code></span>
-      <button class="adm-btn adm-btn-primary" onclick="descargarUsuariosJson()">
-        <i class="ti ti-download" style="font-size:13px" aria-hidden="true"></i> Descargar usuarios.json
-      </button>
-    </div>
-  </div>
-</div>
 
 <div class="panel-overlay" id="panelOverlay" onclick="cerrarPanel()"></div>
 <div class="panel" id="panel">
