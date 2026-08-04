@@ -1543,13 +1543,17 @@ function buildXML(rows,cfg,tipoRep){
       const estadoCliente=r['Estado']||'';
       if(estadoCliente && !esEstadoMexicano(estadoCliente)){
         // Domicilio extranjero: el Estado no es mexicano (ej. TEXAS, CALIFORNIA)
+        // Nota: el campo "Municipio" de la hoja de Nydia no es confiable aquí (a veces
+        // trae la ciudad de la sucursal en vez de la del cliente), así que ciudad_poblacion
+        // y colonia se derivan de la MISMA fuente (Colonia), quitando el ", TX"/estado si viene pegado.
         const paisDom=paisPorEstadoExtranjero(estadoCliente)||pais;
-        const ciudadPob=normalizar(r['Municipio']||r['PLD Colonia']||r['Colonia']||'').substring(0,50)||'XXXX';
+        const colonRaw=String(r['PLD Colonia']||r['Colonia']||'').split(',')[0].trim();
+        const ciudadExt=normalizar(colonRaw||r['Municipio']||'').substring(0,50)||'XXXX';
         x+=`        <tipo_domicilio>\n          <extranjero>\n`;
         x+=`            <pais>${paisDom}</pais>\n`;
         x+=`            <estado_provincia>${escXml(normalizar(estadoCliente).substring(0,50))}</estado_provincia>\n`;
-        x+=`            <ciudad_poblacion>${escXml(ciudadPob)}</ciudad_poblacion>\n`;
-        x+=`            <colonia>${escXml(col)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
+        x+=`            <ciudad_poblacion>${escXml(ciudadExt)}</ciudad_poblacion>\n`;
+        x+=`            <colonia>${escXml(ciudadExt)}</colonia>\n            <calle>${escXml(cal)}</calle>\n`;
         x+=`            <numero_exterior>${escXml(nExt)}</numero_exterior>\n`;
         if(nInt)x+=`            <numero_interior>${escXml(nInt)}</numero_interior>\n`;
         x+=`            <codigo_postal>${/^\d{5}$/.test(cpR)?cpR:'00000'}</codigo_postal>\n`;
